@@ -1,0 +1,1 @@
+web: java -jar build/libs/jangbogoProject-0.0.1-SNAPSHOT.jar
