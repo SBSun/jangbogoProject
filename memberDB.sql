@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.29, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: example
+-- Host: 127.0.0.1    Database: MemberDB
 -- ------------------------------------------------------
 -- Server version	8.0.29
 
@@ -19,9 +19,11 @@
 -- Table structure for table `member`
 --
 
+use heroku_f2943a6fafed644;
+
 DROP TABLE IF EXISTS `member`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `member` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `email` varchar(100) NOT NULL,
@@ -32,7 +34,7 @@ CREATE TABLE `member` (
   `enabled` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -51,7 +53,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `member_role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `member_role` (
   `member_id` bigint NOT NULL,
   `role_id` bigint NOT NULL,
@@ -59,7 +61,7 @@ CREATE TABLE `member_role` (
   KEY `role_id` (`role_id`),
   CONSTRAINT `member_role_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `member` (`id`),
   CONSTRAINT `member_role_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -78,12 +80,12 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `role` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
