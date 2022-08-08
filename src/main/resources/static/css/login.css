@@ -1,0 +1,389 @@
+/* 전체 */
+:root {
+    --white-color: white;
+    --black-color: #2c2c2c;
+    --gray-color: #c1c1c1;
+    --red-color: #FE4A1C;
+    --orange-color: #ff6f00;
+}
+
+body, h3 {
+    font-family: 'Do Hyeon', sans-serif;
+    margin: 0px;
+    padding: 0px;
+}
+
+h1 {
+    margin-bottom: 15px;
+}
+
+hr, p, dl, dt, dd, button {
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    font-family: 'Do Hyeon', sans-serif;
+    outline: 0;
+    border: 0;
+}
+
+ul, ol, li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: var(--black-color);
+}
+
+
+/* nav */
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 90%;
+    background-color: var(--white-color);
+    padding: 12px 24px;
+    border-bottom: 1px solid #c1c1c1;
+    z-index: 3;
+}
+
+.navbar__logo {
+    position: relative;
+    right: 12%;
+    font-size: 24px;
+    font-weight: 700;
+    z-index: 3;
+}
+
+
+
+/* nav 사이드 메뉴 */
+#navbar__sidebtn {
+    display: none;
+}
+
+#navbar__sidebtn + label {
+    display: block;
+    width: 24px;
+    height: 20px;
+    position: relative;
+    cursor: pointer;
+}
+
+#navbar__sidebtn + label span {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    border-radius: 30px;
+    background: var(--black-color);
+    transition: all .35s;
+}
+
+#navbar__sidebtn + label span:nth-child(1) {
+    top: 0;
+    z-index: 2;
+}
+
+#navbar__sidebtn + label span:nth-child(2) {
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+#navbar__sidebtn + label span:nth-child(3) {
+    bottom: 0;
+    z-index: 2;
+}
+
+#navbar__sidebtn:checked + label span:nth-child(1) {
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    z-index: 2;
+}
+
+#navbar__sidebtn:checked + label span:nth-child(2) {
+    opacity: 0;
+    z-index: 2;
+}
+
+#navbar__sidebtn:checked + label span:nth-child(3) {
+    bottom: 50%;
+    transform: translateY(50%) rotate(-45deg);
+    z-index: 2;
+}
+
+.navbar__sidebar {
+    width: 100%;
+    height: 100%;
+    background: var(--white-color);
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    left: -100%;
+    transition: all .35s;
+    
+}
+
+#navbar__sidebtn:checked + label + div {
+    left: 0;
+}
+
+.sidebar__content {
+    font-size: 20px;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-content: space-between;
+}
+
+.sidebar__content nav {
+    height: 54px;
+    border-bottom: 1px solid #c1c1c1;
+}
+
+.category {
+    width: 100%;
+}
+
+.category .category__meet, .category__seafood, 
+.category__fruit, .category__vegetable, 
+.sidebar__mypage, .sidebar__favorit {
+    border-bottom: 1px solid #c1c1c1;
+    padding: 16px;
+}
+
+.category a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sidebar__account_content i {
+    font-size: 20px;
+    padding-right: 12px;
+}
+
+.sidebar__account_content .sidebar__mypage i {
+    margin-right: 2.5px;
+}
+
+
+
+/* nav 검색 */
+.navbar__search {
+    position: relative;
+    right: 12%;
+}
+
+#navbar__searchbtn {
+    display: none;
+}
+
+#navbar__searchbtn + label {
+    display: block;
+    width: 24px;
+    height: 24px;
+    position: relative;
+    cursor: pointer;
+    z-index: 2;
+}
+
+#navbar__searchbtn + label i {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.navbar__searchbar {
+    width: 100%;
+    height: 120px;
+    background: var(--white-color);
+    position: fixed;
+    top: -120px;
+    left: 0;
+    z-index: 1;
+    transition: all .35s;
+    border-bottom: 1px solid #c1c1c1;
+}
+
+#navbar__searchbtn:checked + label + div {
+    top: 0;
+}
+
+.navbar__searchbar nav {
+    height: 54px;
+    border-bottom: 1px solid #c1c1c1;
+}
+
+.navbar__searchbar .search__content {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.navbar__searchbar .search__content label {
+    padding: 8px;
+}
+
+.navbar__searchbar .search__content input {
+    width: 80%;
+    height: 40px;
+    text-indent: 1rem;
+    border: 1px solid #fff;
+}
+
+/* nav 로그인 */
+.navbar__sign {
+    visibility: hidden;
+    font-size: 24px;
+}
+
+/* 로그인 폼 */
+.login__content {
+    padding: 20px;
+}
+
+.login__content input {
+    border: 1px solid #c1c1c1;
+    padding: 0;
+    margin: 0;
+}
+
+.login__header_title {
+    text-align: center;
+    margin-top: 12px;
+    font-size: 18px;
+}
+
+.login__close {
+    color: var(--black-color);
+}
+
+.login__form {
+    display: block;
+}
+
+.login__form .login__form_title {
+    padding-bottom: 14px;
+    font-size: 18px;
+    font-weight: bolder;
+}
+
+.login__form label {
+    margin: 0px 0px 8px;
+    font-size: 12px;
+}
+
+.login__form .login__email_board, .login__password_board {
+    padding: 0px 3px;
+}
+
+.login__form #login__email, #login__password {
+    width: 100%;
+    height: 40px;
+    text-indent: 1rem;
+}
+.login__form .login__form_findPass {
+    font-size: 6px;
+    text-decoration: underline;
+    background-color: var(--white-color);
+    padding: 0px 3px;
+}
+
+.login__form .login__form_loginBtn {
+    color: var(--white-color);
+    background-color: var(--black-color);
+    width: 100%;
+    height: 48px;
+    margin: 50px 0px;
+    font-size: 14px;
+}
+
+.login__register .login__register_title {
+    padding: 20px 0px;
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.login__register {
+    font-size: 16px;
+}
+
+.login__register p {
+    margin: 0;
+    font-size: 12px;
+}
+
+.login__register a {
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--white-color);
+    background-color: var(--black-color);
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+/* 비밀번호 찾기 */
+.login__findpass {
+    display: none;
+}
+
+.findpass_title {
+    margin: 0;
+    margin-bottom: 24px;
+    font-size: 17px;
+    font-weight: bolder;
+}
+
+.login__findpass p {
+    margin: 0;
+    margin-bottom: 24px;
+    font-size: 12px;
+}
+
+.login__findpass label {
+    margin: 0px 0px 8px;
+    font-size: 12px;
+}
+
+.findpass__email_board {
+    padding: 0px 3px;
+    margin-bottom: 24px;
+}
+
+#findpass__email {
+    width: 100%;
+    height: 40px;
+    text-indent: 1rem;
+}
+
+.findpass_ok {
+    color: var(--white-color);
+    background-color: var(--black-color);
+    width: 100%;
+    height: 48px;
+    font-size: 14px;
+    margin: 8px 0px 0px;
+    padding: 16px 24px;
+}
+
+.findpass_cancle {
+    color: var(--black-color);
+    background-color: var(--white-color);
+    width: 100%;
+    height: 48px;
+    font-size: 14px;
+    border: 1px solid #2c2c2c;
+    margin: 8px 0px 0px;
+    padding: 16px 24px;
+}

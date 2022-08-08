@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>찜 목록 - 장보고 식자재 조회</title>
+
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/favorite.css">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
+    <script defer src="js/go-back.js"></script>
+    <script defer src="js/scroll-up.js"></script>
+    <script src="https://kit.fontawesome.com/bb430ea525.js" 
+    crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <!-- 로고 -->
+        <span class="navbar__logo">찜 목록</span>
+        <button id="navbar-cancle"><i class="fa-regular fa-x"></i></button>
+    </nav>
+    <main class="main-board">
+        <div class="hidden" id="scroll-up">
+            <a href="#" class="scrollBtn"><i class="fa-solid fa-arrow-up"></i></a>
+        </div>
+        <ul class="item-list">
+            <li>
+                <img src="/file/items/pork.png">
+                <div id="item-info">
+                    <span id="market-name">동원시장</span>
+                    <dl>
+                        <dt>돼지고기(생삼겹살)</dt>
+                        <dd>100g</dd>
+                    </dl>
+                    <div id="item-price">
+                        <span>2,100원</span>
+                    </div>
+                </div>
+                <button type="button" id="item-remove"><i class="fa-regular fa-x"></i></button>
+            </li>
+        </ul>
+    </main>
+</body>
+</html>

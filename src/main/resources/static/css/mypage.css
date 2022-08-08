@@ -1,0 +1,48 @@
+.navbar {
+    display: block;
+    position: relative;
+}
+
+.navbar .navbar__logo {
+    position: relative;
+    left: 0;
+}
+
+.main-board .greeting {
+    background-color: var(--black-color);
+    color: var(--white-color);
+    padding: 2rem 1rem 4rem 1rem;
+}
+
+.greeting #user-name {
+    font-size: 44px;
+    font-weight: 100;
+}
+
+.my-activity {
+    padding: 1rem;
+}
+
+.my-activity h4 {
+    margin: 2rem 0 0 0;
+    padding: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+    border-bottom: 1px solid var(--black-color);
+    font-weight: 100;
+}
+
+.my-activity li {
+    padding: 1rem;
+    color: var(--gray-color);
+}
+
+ul:last-child li:last-child {
+    margin: 1rem 0 0 0;
+    padding: 0;
+}
+
+li:last-child button {
+    width: 100%;
+    height: 48px;
+    border: 1px solid var(--black-color);
+}

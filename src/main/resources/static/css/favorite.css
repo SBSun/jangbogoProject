@@ -1,0 +1,68 @@
+.navbar {
+    border-bottom: 1px solid var(--black-color);
+}
+
+.navbar__logo {
+    position: relative;
+    left: 40%;
+}
+
+#navbar-cancle {
+    position: absolute;
+    right: 1.5rem;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.navbar__cancle a, .navbar__cancle a i {
+    text-align: center;
+}
+
+.main-board {
+    padding: 59px 0 0 0;
+}
+
+.item-list li {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid var(--black-color);
+}
+
+.item-list img {
+    width: 30%;
+    height: 30%;
+}
+
+#item-info {
+    position: relative;
+    top: 1.2rem;
+    right: 1rem;
+}
+
+#market-name {
+    font-size: 0.75rem;
+    color: var(--orange-color);
+}
+
+#item-info dl dd {
+    font-size: 0.75rem;
+    color: var(--gray-color);
+}
+
+#item-price {
+    position: relative;
+    top: 1rem;
+    left: 8rem;
+    font-size: 1.5rem;
+    color: var(--red-color);
+    text-align: center;
+}
+
+#item-remove {
+    position: relative;
+    top: 1rem;
+    left: 1.5rem;
+    width: 1rem;
+    height: 1rem;
+    font-size: 1rem;
+}

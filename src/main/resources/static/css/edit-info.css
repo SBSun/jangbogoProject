@@ -1,0 +1,105 @@
+.navbar {
+    display: block;
+    position: fixed;
+    top: 0;
+    border: 0;
+}
+
+.navbar .navbar__logo {
+    position: relative;
+    left: 0;
+}
+
+section {
+    padding: 54px 1rem 3rem 1rem;
+}
+
+h3 {
+    margin: 0 0 0.5rem 0;
+    padding: 1rem 1rem 1.5rem 1rem;
+    text-align: center;
+    border-bottom: 1px solid var(--black-color);
+    font-weight: 100;
+}
+
+h4 {
+    padding: 0 0 1.25rem 0;
+    border-bottom: 1px solid var(--gray-color);
+    font-size: 1.15rem;
+    font-weight: 100;
+}
+
+.login-info, .user-info, .alert-service {
+    padding: 1rem 0 0 0;
+}
+
+#email, #email-form {
+    display: grid;
+    padding: 1.25rem 0 1.25rem 0;
+}
+
+#email span,  #password-form label, .user-info div label {
+    padding: 0.5rem 0 0 0;
+}
+
+#email button {
+    position: absolute;
+    right: 1rem;
+    width: 88px;
+    height: 48px;
+    border: 1px solid var(--gray-color);
+}
+
+#email-form form, #password-form {
+    margin: 0 0 1rem 0;
+    display: grid;
+}
+
+#email-form div, #password-form div {
+    margin: 1rem 0 0 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+#email-form div button:first-child, #password-form div button:first-child {
+    width: 48%;
+    height: 48px;
+    border: 1px solid var(--gray-color);
+}
+
+#email-form div button:last-child, #password-form div button:last-child {
+    width: 48%;
+    height: 48px;
+    color: var(--white-color);
+    background-color: var(--black-color);
+}
+
+#email-form input, #password-form input, .user-info div input {
+    margin: 0.5rem 0 0 0;
+    padding: 0 0 0 1rem ;
+    height: 48px;
+    border: 1px solid var(--gray-color);
+}
+#edit-password, #save-info {
+    margin: 1rem 0 1rem 0;
+    width: 100%;
+    height: 48px;
+    color: var(--white-color);
+    background-color: var(--black-color);
+}
+
+.user-info form div {
+    display: grid;
+}
+
+.alert-service {
+    margin: 0 0 3rem 0;
+}
+
+.alert-service div, .alert-service p {
+    padding: 1rem 0 0 0;
+}
+
+#remove-user {
+    text-decoration: underline;
+}

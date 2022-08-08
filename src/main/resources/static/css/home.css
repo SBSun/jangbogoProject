@@ -1,0 +1,478 @@
+/* 전체 */
+:root {
+    --white-color: white;
+    --black-color: #2c2c2c;
+    --gray-color: #c1c1c1;
+    --red-color: #FE4A1C;
+    --orange-color: #ff6f00;
+}
+
+body, h3 {
+    font-family: 'Do Hyeon', sans-serif;
+    margin: 0px;
+    padding: 0px;
+}
+
+h1 {
+    margin-bottom: 15px;
+}
+
+hr, p, dl, dt, dd, button {
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    font-family: 'Do Hyeon', sans-serif;
+    outline: 0;
+    border: 0;
+}
+
+ul, ol, li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: var(--black-color);
+}
+
+
+/* nav */
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 90%;
+    background-color: var(--white-color);
+    padding: 12px 24px;
+    border-bottom: 1px solid #c1c1c1;
+    z-index: 3;
+}
+
+.navbar__logo {
+    position: relative;
+    right: 12%;
+    font-size: 24px;
+    font-weight: 700;
+    z-index: 3;
+}
+
+
+
+/* nav 사이드 메뉴 */
+#navbar__sidebtn {
+    display: none;
+}
+
+#navbar__sidebtn + label {
+    display: block;
+    width: 24px;
+    height: 20px;
+    position: relative;
+    cursor: pointer;
+}
+
+#navbar__sidebtn + label span {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    border-radius: 30px;
+    background: var(--black-color);
+    transition: all .35s;
+}
+
+#navbar__sidebtn + label span:nth-child(1) {
+    top: 0;
+    z-index: 2;
+}
+
+#navbar__sidebtn + label span:nth-child(2) {
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+#navbar__sidebtn + label span:nth-child(3) {
+    bottom: 0;
+    z-index: 2;
+}
+
+#navbar__sidebtn:checked + label span:nth-child(1) {
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    z-index: 2;
+}
+
+#navbar__sidebtn:checked + label span:nth-child(2) {
+    opacity: 0;
+    z-index: 2;
+}
+
+#navbar__sidebtn:checked + label span:nth-child(3) {
+    bottom: 50%;
+    transform: translateY(50%) rotate(-45deg);
+    z-index: 2;
+}
+
+.navbar__sidebar {
+    width: 100%;
+    height: 100%;
+    background: var(--white-color);
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    left: -100%;
+    transition: all .35s;
+
+}
+
+#navbar__sidebtn:checked + label + div {
+    left: 0;
+}
+
+.sidebar__content {
+    font-size: 20px;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-content: space-between;
+}
+
+.sidebar__content nav {
+    height: 54px;
+    border-bottom: 1px solid #c1c1c1;
+}
+
+.category {
+    width: 100%;
+}
+
+.category .category__meet, .category__seafood,
+.category__fruit, .category__vegetable,
+.sidebar__mypage, .sidebar__favorit {
+    border-bottom: 1px solid #c1c1c1;
+    padding: 16px;
+}
+
+.category a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sidebar__account_content i {
+    font-size: 20px;
+    padding-right: 12px;
+}
+
+.sidebar__account_content .sidebar__mypage i {
+    margin-right: 2.5px;
+}
+
+
+
+/* nav 검색 */
+.navbar__search {
+    position: relative;
+    right: 12%;
+}
+
+#navbar__searchbtn {
+    display: none;
+}
+
+#navbar__searchbtn + label {
+    display: block;
+    width: 24px;
+    height: 24px;
+    position: relative;
+    cursor: pointer;
+    z-index: 2;
+}
+
+#navbar__searchbtn + label i {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.navbar__searchbar {
+    width: 100%;
+    height: 120px;
+    background: var(--white-color);
+    position: fixed;
+    top: -120px;
+    left: 0;
+    z-index: 1;
+    transition: all .35s;
+    border-bottom: 1px solid #c1c1c1;
+}
+
+#navbar__searchbtn:checked + label + div {
+    top: 0;
+}
+
+.navbar__searchbar nav {
+    height: 54px;
+    border-bottom: 1px solid #c1c1c1;
+}
+
+.navbar__searchbar .search__content {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.navbar__searchbar .search__content label {
+    padding: 8px;
+}
+
+.navbar__searchbar .search__content input {
+    width: 80%;
+    height: 40px;
+    text-indent: 1rem;
+    border: 1px solid #fff;
+}
+
+/* nav 로그인 */
+.navbar__sign {
+    font-size: 24px;
+    z-index: 1;
+}
+
+/* 메인 화면 */
+.home__banner {
+    width: 100%;
+    height: 260px;
+    position: absolute;
+    margin-top: 55px;
+    overflow: hidden;
+}
+
+.home__banner_list li {
+    position: absolute;
+    width: 100%;
+    height: 260px;
+    left: 100%;
+}
+
+.home__banner_list li img {
+    width: 100%;
+    height: 100%;
+}
+
+.home__banner_list li.currentroll {
+    left: 0;
+    transition: left .5s ease-in-out, right .5s ease-in-out;
+}
+
+.home__banner_list li.prevroll {
+    left: -100%;
+    transition: left .5s ease-in-out, right .5s ease-in-out;
+}
+
+.home__banner_list.reverse li.prevroll {
+    transition: none;
+}
+
+.home__banner_list li.nextroll {
+    left: 100%;
+    display: block;
+    transition: none;
+}
+.home__banner_list.reverse li.nextroll {
+    transition: left .5s ease-in-out, right .5s ease-in-out;
+}
+
+.blank {
+    width: 100%;
+    height: 260px;
+}
+
+.home__category {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    align-items: center;
+    margin-top: 55px;
+    padding: 6px;
+    border-top: 1px solid #c1c1c1;
+    border-bottom: 1px solid #c1c1c1;
+}
+
+.home__category a {
+    width: 80px;
+    height: 60px;
+}
+
+.home__category img {
+    width: 32px;
+    height: auto;
+}
+
+.home__category div {
+    margin-top: 4px;
+    font-size: 12px;
+    color: #666666;
+}
+
+/* 지역 설정*/
+.home__location {
+    text-align: center;
+    border-bottom: 1px solid var(--gray-color);
+}
+
+.home__locationBtn {
+    padding: 13px 50px;
+    background-color: var(--white-color);
+}
+
+.home__location #locationTitle {
+    font-size: 15px;
+    color: var(--black-color);
+}
+
+.setLocation {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 70%;
+    bottom: 0;
+    left: 0;
+    border: 1px solid var(--gray-color);
+    background-color: var(--white-color);
+    overflow-y: scroll;
+    z-index: 2;
+}
+
+.setLocation p {
+    position: fixed;
+    width: 90%;
+    padding: 1rem;
+    border-bottom: 1px solid var(--gray-color);
+    background-color: var(--white-color);
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.location_type {
+    margin-top: 3rem;
+    padding: 1rem;
+    height: 50%;
+}
+
+.location_type li {
+    width: 40%;
+    display: inline-block;
+    text-align: center;
+    padding: 1rem 0.5rem 0.5rem 0.5rem;
+}
+
+
+
+/* 품목 추천 */
+.home__recommendItems, .home__recommendMarket {
+    padding: 0px 16px 20px;
+    border-bottom: 1px solid #c1c1c1;
+}
+
+.title_area {
+    margin-bottom: 18px;
+}
+
+.recommendName {
+    margin-top: 10px;
+}
+
+.itemList {
+    display: flex;
+    align-items: center;
+    overflow-x: scroll;
+    padding-bottom: 1rem;
+}
+
+.item img {
+    width: 130px;
+    height: 130px;
+}
+
+.item dl dt {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--black-color);
+}
+
+.item dl dd {
+    color: #666666;
+}
+
+.marketName {
+    color: #ff6f00;
+}
+
+.marketName, .item dl dd {
+    font-size: 12px;
+    margin: 0;
+}
+
+.itemPrice {
+    font-weight: 800;
+    color: var(--red-color);
+}
+
+.title_area p {
+    font-size: 12px;
+    color: var(--gray-color);
+}
+
+.item span.marketName, .item dl {
+    margin-bottom: 10px;
+}
+
+.itemBtn {
+    width: 100%;
+    height: 28px;
+    margin: 5px 0 0 0;
+    border: 1px solid var(--black-color);
+    background-color: var(--white-color);
+}
+
+/* 추천 매장 */
+.home__recommendMarket {
+    padding: 0 1rem 1rem 0;
+}
+
+.home__recommendMarket .recommendName {
+    margin-left: 1rem;
+}
+
+.marketList {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+    padding-bottom: 1rem;
+    overflow-x: scroll;
+}
+
+.marketList .market {
+    margin-left: 1rem;
+}
+
+.marketList .market img {
+    width: 130px;
+    height: 130px;
+}
+
+.marketList .marketName {
+    margin-top: 5px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 550;
+    color: var(--black-color);
+}

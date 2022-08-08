@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>내 정보 - 장보고 식자재 조회</title>
+
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/mypage.css">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/bb430ea525.js" 
+    crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <!-- 로고 -->
+        <a th:href="@{/}" class="navbar__logo">JANGBOGO</a>
+    </nav>
+
+    <main class="main-board">
+        <section class="greeting">
+            <h3 id="user-name" th:text="${member.get().getName() + '님 환영합니다.'}"></h3>
+        </section>
+        <section class="my-activity">
+            <h4>활동 내역</h4>
+            <ul>
+                <li><a href="favorite.html">찜 목록</a></li>
+                <li><a href="#">내가 작성한 리뷰</a></li>
+            </ul>
+
+            <h4>내 계정 설정</h4>
+            <ul>
+                <li>
+                    <a th:href="@{/member/editInfo}">내 정보 수정</a>
+                </li>
+                <li>
+                    <button type="button">로그아웃</button>
+                </li>
+            </ul>
+        </section>
+    </main>
+</body>
+</html>
