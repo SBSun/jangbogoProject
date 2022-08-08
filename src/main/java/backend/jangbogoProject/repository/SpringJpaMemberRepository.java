@@ -1,6 +1,6 @@
 package backend.jangbogoProject.repository;
 
-import jangbogo.jangbogospring.domain.Member;
+import backend.jangbogoProject.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
