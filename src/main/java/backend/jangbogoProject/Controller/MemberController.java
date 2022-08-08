@@ -1,9 +1,9 @@
 package backend.jangbogoProject.Controller;
 
 import com.google.gson.JsonObject;
-import jangbogo.jangbogospring.domain.Member;
-import jangbogo.jangbogospring.dto.MemberDto;
-import jangbogo.jangbogospring.service.MemberService;
+import backend.jangbogoProject.domain.Member;
+import backend.jangbogoProject.dto.MemberDto;
+import backend.jangbogoProject.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
