@@ -1,5 +1,6 @@
 package backend.jangbogoProject.config.auth;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
 
+@Configuration
 public class CustomAuthFailureHandler extends SimpleUrlAuthenticationFailureHandler {
     /*
      * HttpServletRequest : request 정보
