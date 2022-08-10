@@ -55,7 +55,7 @@ public class MemberController {
     }
 
     // http://localhost:8080/member/emailCheck
-    @PostMapping("/member/emailCheck")
+    @GetMapping("/member/emailCheck")
     @ResponseBody
     public Map<String, Object> emailCheck(@RequestParam("email") String email)
     {

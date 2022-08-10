@@ -33,7 +33,7 @@ function emailCheck(){
     {
         $.ajax({
             async: true,
-            type:'POST',
+            type:'GET',
             dataType:'json',
             data:{"email":email},
             url:"/member/emailCheck",
