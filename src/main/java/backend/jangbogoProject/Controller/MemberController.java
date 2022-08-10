@@ -39,8 +39,8 @@ public class MemberController {
         return mav;
     }
 
-    // http://localhost:8080/member/register
-    @PostMapping("/member/register")
+    // http://localhost:8080/member/registerForm
+    @PostMapping("/member/registerForm")
     public ModelAndView create(MemberDto memberDto){
 
         memberService.save(memberDto.toEntity());
