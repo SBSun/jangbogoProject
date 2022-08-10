@@ -9,23 +9,22 @@ const canclePassword = document.querySelector('#password-cancle');
 
 const HIDDEN_CLASSNAME = 'hidden';
 
-setEmail.addEventListener('click', function() {
-    email.classList.add(HIDDEN_CLASSNAME);
-    emailForm.classList.remove(HIDDEN_CLASSNAME);
+setEmail.addEventListener('click', function () {
+  email.classList.add(HIDDEN_CLASSNAME);
+  emailForm.classList.remove(HIDDEN_CLASSNAME);
 });
 
-cancleEmail.addEventListener('click', function() {
-    email.classList.remove(HIDDEN_CLASSNAME);
-    emailForm.classList.add(HIDDEN_CLASSNAME);
+cancleEmail.addEventListener('click', function () {
+  email.classList.remove(HIDDEN_CLASSNAME);
+  emailForm.classList.add(HIDDEN_CLASSNAME);
 });
 
-setPassword.addEventListener('click', function() {
-    setPassword.classList.add(HIDDEN_CLASSNAME);
-    passwordForm.classList.remove(HIDDEN_CLASSNAME);
+setPassword.addEventListener('click', function () {
+  setPassword.classList.add(HIDDEN_CLASSNAME);
+  passwordForm.classList.remove(HIDDEN_CLASSNAME);
 });
 
-canclePassword.addEventListener('click', function() {
-    setPassword.classList.remove(HIDDEN_CLASSNAME);
-    passwordForm.classList.add(HIDDEN_CLASSNAME);
+canclePassword.addEventListener('click', function () {
+  setPassword.classList.remove(HIDDEN_CLASSNAME);
+  passwordForm.classList.add(HIDDEN_CLASSNAME);
 });
-

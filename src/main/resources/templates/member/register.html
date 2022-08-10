@@ -1,108 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
-<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/public.css" />
+    <link rel="stylesheet" href="/css/register.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap"
+      rel="stylesheet"
+    />
 
-    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/register.css">
-
-    <script src="https://kit.fontawesome.com/bb430ea525.js" 
-    crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script defer src="/js/register.js"></script>
-    <title>계정 만들기</title>
-</head>
-<body>
-    <!-- 헤더-->
+    <script
+      src="https://kit.fontawesome.com/bb430ea525.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <title>계정 만들기 - 장보고 식자재 조회</title>
+  </head>
+  <body>
     <header class="register__header">
-        <a th:href="@{/}" class="register__header_logo">
-            <span>JANGBOGO</span>
-        </a>
-        <span class="register__header_title">새로운 계정 생성</span>
+      <a href="/" class="register__header_logo">
+        <span>JANGBOGO</span>
+      </a>
     </header>
-
-    <!-- 회원 가입 입력 -->
-    <h1 class="register__content_title">
-        <span>계정 만들기</span>
-    </h1>
     <section class="register__content">
-        <form class="register_form" action="/member/register" method="post">
-            <div class="register__form_inputPage">
-                <h2 class="h3_personal">
-                    <span class="register__section_title">로그인 정보</span>
-                </h2>
+      <form class="register_form">
+        <div class="register__form_inputPage">
+          <h2>
+            <span class="register__section_title">로그인 정보</span>
+          </h2>
 
-                <div class="register__form_email_section">
-                    <div class="register__form_email">
-                        <label class="register__form_email_label" for="register__email">이메일*</label>
-                        <div class="email-check">
-                            <input id="register__email" type="email" name = "email" onchange="inputEmail()" placeholder="예) name@example.com" required>
-                            <button id="register__email-check" type="button" onclick="emailCheck();">중복 확인</button>
-                        </div>
-                        <p id="email-check-message">이메일을 입력해주세요.</p>
-                        <span class="blankspan"></span>
-                    </div>
-                </div>
-    
-                <div class="register__form_password_section">
-                    <div class="register__form_password">
-                        <label class="register__form_password_label" for="register__password">비밀번호*</label>
-                        <input id="register__password" type="password" name="password"required>
-                        <p id="password-message">비밀번호를 입력해주세요.</p>
-                        <span class="blankspan"></span>
-                    </div>
-                    <div class="register__form_passwordCheck">
-                        <label class="register__form_password_label" for="register__passwordCheck">비밀번호 확인*</label>
-                        <input id="register__passwordCheck" type="password" required>
-                        <p id="password-check-message">비밀번호가 다릅니다.</p>
-                        <span class="blankspan"></span>
-                    </div>
-                </div>
+          <div class="register__form_email_section">
+            <div class="register__form_email">
+              <label class="register__form_email_label" for="register__email"
+                >이메일*</label
+              >
+              <div class="email-check">
+                <input
+                  id="register__email"
+                  type="email"
+                  placeholder="예) name@example.com"
+                  required
+                />
+                <button type="button" id="register__email-check" required>
+                  중복 확인
+                </button>
+              </div>
+              <p id="email-check-message">이메일을 입력해주세요.</p>
+              <span class="blankspan"></span>
+            </div>
+          </div>
 
-                <h2 class="h3_personal">
-                    <span class="register__section_title">사용자 정보</span>
-                </h2>
+          <div class="register__form_password_section">
+            <div class="register__form_password">
+              <label
+                class="register__form_password_label"
+                for="register__password"
+                >비밀번호*</label
+              >
+              <input id="register__password" type="password" required />
+              <p class="hidden" id="password-message">
+                비밀번호를 입력해주세요.
+              </p>
+              <span class="blankspan"></span>
+            </div>
+            <div class="register__form_passwordCheck">
+              <label
+                class="register__form_password_label"
+                for="register__passwordCheck"
+                >비밀번호 확인*</label
+              >
+              <input id="register__passwordCheck" type="password" required />
+              <p class="hidden" id="password-check-message">
+                비밀번호가 다릅니다.
+              </p>
+              <span class="blankspan"></span>
+            </div>
+          </div>
 
-                <div class="register__form_user_section">
-                    <div class="register__form_name">
-                        <label class="register__form_name_label" for="register__form_name">이름*</label>
-                        <input type="text" id="register__form_name" name="name" required>
-                        <span class="blankspan"></span>
-                    </div>
+          <h2>
+            <span class="register__section_title">사용자 정보</span>
+          </h2>
 
-                    <div class="register__form_address">
-                        <label class="register__form_name_label" for="register__form_address">주소*</label>
-                        <input type="text" id="register__form_address" name="address" placeholder="예) 서울시 중랑구" required>
-                        <span class="blankspan"></span>
-                    </div>
-
-                    <div class="register__form_tel">
-                        <label class="register__form_tel_label" for="register__form_tel">전화번호*</label>
-                        <input type="tel" id="register__form_tel" name="tel" placeholder="예) 010-1234-5678" required>
-                        <span class="blankspan"></span>
-                    </div>
-                </div>
-
-                <div class="register__form_alter">
-                    <div class="alter_explain">(선택) 이메일 혹은 휴대폰으로 빠르게 최저가 정보를 얻어보세요!</div>
-                    <label class="alter_service_email">
-                        <input type="checkbox" name="alter_service_email" id="alter_service_email">
-                        <span class="alter_title">이메일</span>
-                    </label>
-                    <label class="alter_service_tel">
-                        <input type="checkbox" name="alter_service_tel" id="alter_service_tel">
-                        <span class="alter_title">휴대폰</span>
-                    </label>
-                </div>
+          <div class="register__form_user_section">
+            <div class="register__form_name">
+              <label class="register__form_name_label" for="register__form_name"
+                >이름*</label
+              >
+              <input type="text" id="register__form_name" required />
+              <span class="blankspan"></span>
             </div>
 
-            <button id="register__form_submit" type="submit" onclick="submitRegister()">확인</button>
-            <button id="register__form_cancle" type="button" onclick="backHome()">취소</button>
-        </form>
+            <div class="register__form_address">
+              <label
+                class="register__form_name_label"
+                for="register__form_address"
+                >주소*</label
+              >
+              <input
+                type="text"
+                id="register__form_address"
+                placeholder="예) 서울시 중랑구"
+                required
+              />
+              <span class="blankspan"></span>
+            </div>
+
+            <div class="register__form_tel">
+              <label class="register__form_tel_label" for="register__form_tel"
+                >전화번호*</label
+              >
+              <input
+                type="tel"
+                id="register__form_tel"
+                placeholder="예) 010 1234 5678"
+                required
+              />
+              <span class="blankspan"></span>
+            </div>
+          </div>
+
+          <div class="register__form_alert">
+            <div class="alert_explain">
+              (선택) 이메일 혹은 휴대폰으로 빠르게 최저가 정보를 얻어보세요!
+            </div>
+            <label class="alert_service_email">
+              <input
+                type="checkbox"
+                name="alert_service_email"
+                id="alert_service_email"
+              />
+              <span class="alert_title">이메일</span>
+            </label>
+            <label class="alert_service_tel">
+              <input
+                type="checkbox"
+                name="alert_service_tel"
+                id="alert_service_tel"
+              />
+              <span class="alert_title">휴대폰</span>
+            </label>
+          </div>
+        </div>
+
+        <button id="register__form_submit" type="submit">확인</button>
+        <button id="register__form_cancle" type="button" onclick="backLogin()">
+          취소
+        </button>
+      </form>
     </section>
-</body>
+  </body>
 </html>

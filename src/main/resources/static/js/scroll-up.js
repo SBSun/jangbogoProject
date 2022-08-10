@@ -1,14 +1,18 @@
-'use strict';
+const scrollBtn = document.getElementById('scroll-up');
 
-window.addEventListener('scroll', (event) => {
-    let scrollY = this.scrollY;
-    const scrollBtn = document.querySelector('#scroll-up');
+function onScrollClick() {
+  window.scrollTo(0, 0);
+}
 
-    const HIDDEN_CLASSNAME = 'hidden';
+window.addEventListener('scroll', event => {
+  let scrollY = this.scrollY;
 
-    if (scrollY > 20) {
-        scrollBtn.classList.remove(HIDDEN_CLASSNAME);
-    } else {
-        scrollBtn.classList.add(HIDDEN_CLASSNAME);
-    }
+  const HIDDEN_CLASSNAME = 'hidden';
+
+  if (scrollY > 20) {
+    scrollBtn.classList.remove(HIDDEN_CLASSNAME);
+  } else {
+    scrollBtn.classList.add(HIDDEN_CLASSNAME);
+  }
 });
+scrollBtn.addEventListener('click', onScrollClick);

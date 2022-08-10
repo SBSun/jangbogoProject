@@ -1,44 +1,47 @@
 'use strict';
 
-// 비밀번호 찾기
-function findPass() {
-    let login = document.getElementsByClassName('login__form')[0];
-    let pass = document.getElementsByClassName('login__findpass')[0];
+const loginForm = document.querySelector('#login__form');
+const goFindPass = document.querySelector('.login__form_findPass');
+const findPassword = document.querySelector('#findPassword');
+const goLoginForm = document.querySelector('.findpass_cancle');
+const emailInput = document.querySelector('#login__email');
+const passInput = document.querySelector('#login__password');
+const findBtn = document.querySelector('.login__form_findPass');
+const sendMailInput = document.querySelector('#findpass__email');
+const loginBtn = document.querySelector('.login__form_loginBtn');
+const sendMailBtn = document.querySelector('.findpass_ok');
+const cancleFindMailBtn = document.querySelector('.findpass_cancle');
 
-    login.style.display = 'none';
-    pass.style.display = 'block';
+const HIDDEN_CLASSNAME = 'hidden';
+
+function onLoginBtnClick(event) {
+  event.preventDefault();
+  const userMail = emailInput.value;
+  const userPass = passInput.value;
+  console.log(userMail, userPass);
+}
+function onSendMailBtnClick(event) {
+  event.preventDefault();
+  const userMail = findMailInput.value;
+  console.log(userMail);
+}
+function onFindBtnClick() {
+  emailInput.value = null;
+  passInput.value = null;
+}
+function onCancleFindMailBtnClick() {
+  sendMailInput.value = null;
 }
 
-// 비밀번호 찾기 => 로그인 폼
-function backLogin() {
-    let login = document.getElementsByClassName('login__form')[0];
-    let pass = document.getElementsByClassName('login__findpass')[0];
-
-    login.style.display = 'block';
-    pass.style.display = 'none';
-}
-
-
-// 메뉴 옵션
-function menuOn() {
-    let searbtn = document.getElementById("navbar__searchbtn");
-    let backgro = document.getElementsByClassName('login__board')[0];
-
-    searbtn.checked = false;
-    backgro.style.filter = 'none';
-}
-
-function searchOn() {
-    let sidebtn = document.getElementById("navbar__sidebtn");
-    let searbtn = document.getElementById("navbar__searchbtn");
-    let backgro = document.getElementsByClassName('login__board')[0];
-
-    sidebtn.checked = false;
-
-    if (searbtn.checked) {
-        backgro.style.filter = 'blur(10px)';
-    } else {
-        backgro.style.filter = 'none';
-    }
-    
-}
+goFindPass.addEventListener('click', function () {
+  loginForm.classList.add(HIDDEN_CLASSNAME);
+  findPassword.classList.remove(HIDDEN_CLASSNAME);
+});
+goLoginForm.addEventListener('click', function () {
+  loginForm.classList.remove(HIDDEN_CLASSNAME);
+  findPassword.classList.add(HIDDEN_CLASSNAME);
+});
+loginBtn.addEventListener('click', onLoginBtnClick);
+findBtn.addEventListener('click', onFindBtnClick);
+sendMailBtn.addEventListener('click', onSendMailBtnClick);
+cancleFindMailBtn.addEventListener('click', onCancleFindMailBtnClick);

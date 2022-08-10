@@ -1,170 +1,127 @@
-/* 전체 */
-:root {
-    --back-color: white;
-    --black-color: #2c2c2c;
-    --gray-color: #c1c1c1;
-    --red-color: #FE4A1C;
-    --orange-color: #ff6f00;
-    --green-color: #4caf50;
-}
-
-body {
-    font-family: 'Do Hyeon', sans-serif;
-    margin: 0px;
-    padding: 0px;
-}
-
-h1 {
-    margin-bottom: 15px;
-}
-
-button {
-    outline: 0;
-    border: 0;
-}
-
-ul, ol, li, p {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-}
-
-a {
-    text-decoration: none;
-    color: var(--black-color);
-}
-
-
 /* 헤더 */
 .register__header {
-    display: flex;
-    position: relative;
-    align-items: center;
-    padding: 0.5rem 1rem;
-    border-bottom: 1px solid #c1c1c1;
-    background-color: #ffffff;
-    color: black;
-    z-index: 1;
+  display: flex;
+  position: relative;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #c1c1c1;
+  background-color: #ffffff;
+  color: black;
+  z-index: 1;
 }
 
 .register__header_logo span {
-    font-size: 1.5rem;
-    color: #424242;
-    font-weight: 800;
-    padding: 0px 8px 0px 0px;
-    margin: 0px 8px 0px 0px;
+  font-size: 1.5rem;
+  color: #424242;
+  font-weight: 800;
+  padding: 0px 8px 0px 0px;
+  margin: 0px 8px 0px 0px;
 }
-
-.register__header_title {
-    font-size: 11px;
-    color: #424242;
-}
-
 
 /* 회원 가입 폼 */
+h2 {
+  margin: 0 0 1rem 0;
+}
+
 .register__form_inputPage {
-    padding: 0px 24px 24px;
+  padding: 0px 24px 24px;
 }
 
 .register__content {
-    padding: 0px 24px 24px;
-}
-
-.register__content_title {
-    margin: 0;
-    left: 30px;
-    font-size: 20px;
-    padding: 20px;
-    border-bottom: 1px solid #c1c1c1;
+  padding: 1.5rem;
 }
 
 /* 회원 가입 이메일 */
-.register__form_email_section .register__form_email, .register__form_password_section div{
-    display: flex;
-    flex-direction: column;
+.register__form_email_section .register__form_email,
+.register__form_password_section div {
+  display: flex;
+  flex-direction: column;
 }
 
 .email-check {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 #register__email {
-    width: 50%;
+  width: 50%;
 }
 
 #register__email-check {
-    width: 30%;
-    color: var(--back-color);
-    background-color: var(--black-color);
+  width: 30%;
+  color: var(--white-color);
+  background-color: var(--black-color);
 }
 
 #email-check-message {
-    font-size: 13px;
-    color: var(--red-color);
+  display: none;
+  font-size: 13px;
+  color: var(--red-color);
 }
 
 .blankspan {
-    display: block;
-    margin: 10px;
+  display: block;
+  margin: 10px;
 }
 
 /* 회원 가입 비밀번호*/
-#password-message {
-    font-size: 13px;
-    color: var(--red-color);
-}
-
+#password-message,
 #password-check-message {
-    font-size: 13px;
-    color: var(--red-color);
+  margin: 8px 0 0 0;
+  font-size: 13px;
+  color: var(--red-color);
 }
-
 
 /* 사용자 정보 */
 .register__form_user_section div {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
-.register__form_email_label, .register__form_password_label, .register__form_user_section label {
-    font-size: 14px;
-    padding: 0px 0px 4px;
+.register__form_email_label,
+.register__form_password_label,
+.register__form_user_section label {
+  font-size: 14px;
+  padding: 0px 0px 4px;
 }
 
-.register__form_email_section input, .register__form_password_section input, .register__form_user_section input, #register__form_tel {
-    padding: 0px 16px;
-    height: 48px;
-    border: 1px solid #c1c1c1;
+.register__form_email_section input,
+.register__form_password_section input,
+.register__form_user_section input,
+#register__form_tel {
+  padding: 0px 16px;
+  height: 48px;
+  border: 1px solid #c1c1c1;
 }
 
 /* 알림 여부 */
-.register__form_alter .alter_explain {
-    margin-bottom: 8px;
-    font-size: 13px;
+.register__form_alert .alert_explain {
+  margin-bottom: 8px;
+  font-size: 13px;
 }
 
-.alter_service_email, .alter_service_tel {
-    font-size: 13px;
-    margin-right: 10px;
+.alert_service_email,
+.alert_service_tel {
+  font-size: 13px;
+  margin-right: 10px;
 }
 
 /* 확인, 취소 */
 #register__form_submit {
-    margin-bottom: 8px;
-    padding: 12px;
-    width: 100%;
-    height: 48px;
-    color: #ffffff;
-    background-color: #000;
+  margin-bottom: 8px;
+  padding: 12px;
+  width: 100%;
+  height: 48px;
+  color: #ffffff;
+  background-color: #000;
 }
 
 #register__form_cancle {
-    margin-bottom: 24px;
-    padding: 12px;
-    width: 100%;
-    height: 48px;
-    color: #000;
-    background-color: #fff;
-    border: 1px solid var(--black-color);
+  margin-bottom: 24px;
+  padding: 12px;
+  width: 100%;
+  height: 48px;
+  color: #000;
+  background-color: #fff;
+  border: 1px solid var(--black-color);
 }

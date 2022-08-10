@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="/css/public.css" />
+    <link rel="stylesheet" href="/css/write-review.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap"
+      rel="stylesheet"
+    />
+
+    <script defer src="/js/go-back.js"></script>
+    <script defer src="/js/rating.js"></script>
+    <script
+      src="https://kit.fontawesome.com/bb430ea525.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <title>리뷰 작성 - 장보고 식자재 조회</title>
+  </head>
+  <body>
+    <nav class="navbar">
+      <button id="navbar-cancle"><i class="fa-solid fa-arrow-left"></i></button>
+      <span class="navbar__logo">리뷰 쓰기</span>
+    </nav>
+
+    <main class="main-board">
+      <form>
+        <div class="market-area">
+          <span>이마트 역삼점</span>
+        </div>
+        <div class="rating-area">
+          <p class="none-active">매장에 대한 평가를 매겨주세요!</p>
+          <div id="button-area">
+            <button type="button" class="none-active" id="like">
+              <i class="fa-solid fa-thumbs-up"></i>
+            </button>
+            <button type="button" class="none-active" id="unlike">
+              <i class="fa-solid fa-thumbs-down"></i>
+            </button>
+          </div>
+        </div>
+        <div class="text-area">
+          <textarea
+            cols="30"
+            rows="10"
+            minlength="15"
+            placeholder="최소 15자 이상 적어주세요."
+            required
+          ></textarea>
+        </div>
+        <button type="submit" id="confirm">
+          <span>등록하기</span>
+        </button>
+      </form>
+    </main>
+  </body>
+</html>

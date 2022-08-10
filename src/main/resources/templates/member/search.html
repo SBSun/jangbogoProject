@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" href="/css/public.css" />
-    <link rel="stylesheet" href="/css/category.css" />
+    <link rel="stylesheet" href="/css/search.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap"
       rel="stylesheet"
@@ -21,7 +21,7 @@
       crossorigin="anonymous"
     ></script>
 
-    <title>과일 - 장보고 식자재 조회</title>
+    <title>검색 결과 - 장보고 식자재 조회</title>
   </head>
   <body>
     <nav class="navbar">
@@ -41,25 +41,25 @@
             <!-- 메뉴 카테고리 -->
             <div class="category">
               <div class="category__meet">
-                <a href="category/meat">
+                <a href="/category/meat">
                   <span>축산물</span>
                   <i class="fa-solid fa-angle-right"></i>
                 </a>
               </div>
               <div class="category__seafood">
-                <a href="category/seafood">
+                <a href="/category/seafood">
                   <span>해산물</span>
                   <i class="fa-solid fa-angle-right"></i>
                 </a>
               </div>
               <div class="category__fruit">
-                <a href="category/fruit">
+                <a href="/category/fruit">
                   <span>과일</span>
                   <i class="fa-solid fa-angle-right"></i>
                 </a>
               </div>
               <div class="category__vegetable">
-                <a href="category/vegeta">
+                <a href="/category/vegeta">
                   <span>채소</span>
                   <i class="fa-solid fa-angle-right"></i>
                 </a>
@@ -69,13 +69,13 @@
             <!-- 메뉴 사용자 콘텐츠 -->
             <div class="sidebar__account_content">
               <div class="sidebar__mypage">
-                <a href="/member/mypage">
+                <a href="mypage">
                   <i class="fa-regular fa-user"></i>
                   <span>마이페이지</span>
                 </a>
               </div>
               <div class="sidebar__favorit">
-                <a href="/member/favorite">
+                <a href="favorite">
                   <i class="fa-regular fa-heart"></i>
                   <span>찜 목록</span>
                 </a>
@@ -115,7 +115,7 @@
       <!-- 로그인 -->
       <div class="navbar__sign">
         <label for="navbar__signbtn">
-          <a href="member/login"
+          <a href="login"
             ><i id="goLogin" class="fa-solid fa-arrow-right-to-bracket"></i
           ></a>
         </label>
@@ -123,9 +123,12 @@
     </nav>
 
     <main class="main-board">
+      <header>
+        <h1 class="search__title">검색 결과 "사과"</h1>
+      </header>
+
       <!-- 정렬 -->
       <div class="line__top">
-        <p class="cate_title">과일</p>
         <div class="sort_area">
           <div class="dropdown">
             <ul class="dropdown_menu">
@@ -154,95 +157,11 @@
         </div>
       </div>
 
-      <div class="cate_itemlist">
+      <div class="search_itemlist">
         <div class="hidden" id="scroll-up">
           <i class="fa-solid fa-arrow-up"></i>
         </div>
 
-        <div class="item">
-          <img src="/file/items/apple.png" alt="apple" />
-          <div class="itemInfo">
-            <span class="marketName">동원시장</span>
-            <dl>
-              <dt>사과(부사, 300g)</dt>
-              <dd>300g / 1개</dd>
-            </dl>
-            <div class="price_area">
-              <span class="itemPrice">2,225원</span>
-            </div>
-          </div>
-          <button class="itemBtn">찜 목록에 추가</button>
-        </div>
-        <div class="item">
-          <img src="/file/items/apple.png" alt="apple" />
-          <div class="itemInfo">
-            <span class="marketName">동원시장</span>
-            <dl>
-              <dt>사과(부사, 300g)</dt>
-              <dd>300g / 1개</dd>
-            </dl>
-            <div class="price_area">
-              <span class="itemPrice">2,225원</span>
-            </div>
-          </div>
-          <button class="itemBtn">찜 목록에 추가</button>
-        </div>
-        <div class="item">
-          <img src="/file/items/apple.png" alt="apple" />
-          <div class="itemInfo">
-            <span class="marketName">동원시장</span>
-            <dl>
-              <dt>사과(부사, 300g)</dt>
-              <dd>300g / 1개</dd>
-            </dl>
-            <div class="price_area">
-              <span class="itemPrice">2,225원</span>
-            </div>
-          </div>
-          <button class="itemBtn">찜 목록에 추가</button>
-        </div>
-        <div class="item">
-          <img src="/file/items/apple.png" alt="apple" />
-          <div class="itemInfo">
-            <span class="marketName">동원시장</span>
-            <dl>
-              <dt>사과(부사, 300g)</dt>
-              <dd>300g / 1개</dd>
-            </dl>
-            <div class="price_area">
-              <span class="itemPrice">2,225원</span>
-            </div>
-          </div>
-          <button class="itemBtn">찜 목록에 추가</button>
-        </div>
-        <div class="item">
-          <img src="/file/items/apple.png" alt="apple" />
-          <div class="itemInfo">
-            <span class="marketName">동원시장</span>
-            <dl>
-              <dt>사과(부사, 300g)</dt>
-              <dd>300g / 1개</dd>
-            </dl>
-            <div class="price_area">
-              <span class="itemPrice">2,225원</span>
-            </div>
-          </div>
-          <button class="itemBtn">찜 목록에 추가</button>
-        </div>
-        <div class="item">
-          <img src="/file/items/apple.png" alt="apple" />
-          <div class="itemInfo">
-            <span class="marketName">동원시장</span>
-            <dl>
-              <dt>사과(부사, 300g)</dt>
-              <dd>300g / 1개</dd>
-            </dl>
-            <div class="price_area">
-              <span class="itemPrice">2,225원</span>
-            </div>
-          </div>
-          <button class="itemBtn">찜 목록에 추가</button>
-        </div>
         <div class="item">
           <img src="/file/items/apple.png" alt="apple" />
           <div class="itemInfo">
