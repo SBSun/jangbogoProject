@@ -27,8 +27,13 @@ public class MemberController {
 
     // http://localhost:8080/member/login
     @GetMapping("/member/login")
-    public ModelAndView loginForm() {
+    public ModelAndView loginForm(@RequestParam(value = "error", required = false) String error,
+                                  @RequestParam(value = "exception", required = false) String exception,
+                                  Model model) {
         ModelAndView mav = new ModelAndView("member/login");
+        mav.addObject("error", error);
+        mav.addObject("exception", exception);
+
         return mav;
     }
 

@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 import javax.sql.DataSource;
 
@@ -20,6 +21,8 @@ public class WebSecurityConfig {
 
     @Autowired
     private DataSource dataSource;
+
+    private final AuthenticationFailureHandler customFailureHandler;
 
     // 규칙 설정
     @Bean
@@ -39,6 +42,7 @@ public class WebSecurityConfig {
                     .usernameParameter("email")
                     .passwordParameter("password")
                     .defaultSuccessUrl("/") // 로그인 성공 후 redirect 주소
+                    .failureHandler(customFailureHandler)
                     .permitAll()
                 .and()
                 // 로그아웃을 지원하는 메서드이며 HTTP 세션을 제거
