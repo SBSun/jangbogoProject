@@ -1,100 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>내 정보 수정 - 장보고 식자재 조회</title>
 
-    <link rel="stylesheet" href="css/public.css">
-    <link rel="stylesheet" href="css/edit-info.css">
-    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/public.css" />
+    <link rel="stylesheet" href="/css/edit-info.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap"
+      rel="stylesheet"
+    />
 
-    <script defer src="js/edit-info.js"></script>
-    <script src="https://kit.fontawesome.com/bb430ea525.js" 
-    crossorigin="anonymous"></script>
-</head>
-<body>
+    <script defer src="/js/edit-info.js"></script>
+    <script
+      src="https://kit.fontawesome.com/bb430ea525.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
     <nav class="navbar">
-        <!-- 로고 -->
-        <a th:href="@{/}" class="navbar__logo">JANGBOGO</a>
+      <!-- 로고 -->
+      <a href="/" class="navbar__logo">JANGBOGO</a>
     </nav>
     <section>
-        <h3>내 정보 수정</h3>
-        <fieldset>
-            <div class="login-info">
-                <h4>로그인 정보</h4>
-                <div class="" id="login-1">
-                    <div id="email">
-                        <label>이메일</label>
-                        <div th:text="${member.get().getEmail()}"></div>
-                        <button id="email-btn" type="button">변경</button>
-                    </div>
-                </div>
-                <div class="hidden" id="login-2">
-                    <form id="email-form">
-                        <label>이메일</label>
-                        <input type="email" id="modify-email" placeholder="이메일 입력">
-                        <div>
-                            <button id="email-cancle" type="button">변경 취소</button>
-                            <button type="button">인증메일 발송</button>
-                        </div>
-                    </form>
-                </div>
-                <div id="password">
-                    <button id="edit-password" type="button">비밀번호 수정</button>
-                    <div class="hidden">
-                        <form id="password-form">
-                            <label for="modify-password">비밀번호</label>
-                            <input type="password" id="modify-password">
-                            <label for="modify-password-check">비밀번호 확인</label>
-                            <input type="password" id="modify-password-check">
-                            <div>
-                                <button id="password-cancle" type="button">변경 취소</button>
-                                <button type="button">비밀번호 변경</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+      <h3>내 정보 수정</h3>
+      <fieldset>
+        <div class="login-info">
+          <h4>로그인 정보</h4>
+          <div class="" id="login-1">
+            <div id="email">
+              <label>이메일</label>
+              <span>name@example.com</span>
+              <button id="email-btn" type="button">변경</button>
             </div>
-            <div class="user-info">
-                <h4>사용자 정보</h4>
-                <form>
-                    <div>
-                        <label>성명</label>
-                        <input type="text" id="modify-name" th:value="${member.get().getName()}">
-                    </div>
-                    <div>
-                        <label>연락처</label>
-                        <input type="tel" id="modify-tel" th:value="${member.get().getTel()}">
-                    </div>
-                    <div>
-                        <label>주소</label>
-                        <input type="text" id="modify-address" th:value="${member.get().getAddress()}">
-                    </div>
-                    <button id="save-info" type="button">저장하기</button>
-                </form>
-            </div>
-            <div class="alert-service">
-                <h4>최저가 정보 수신 동의</h4>
+          </div>
+          <div class="hidden" id="login-2">
+            <form id="email-form">
+              <label for="">이메일</label>
+              <input type="email" id="modify-email" placeholder="이메일 입력" />
+              <div>
+                <button id="email-cancle" type="button">변경 취소</button>
+                <button type="button">인증메일 발송</button>
+              </div>
+            </form>
+          </div>
+          <div id="password">
+            <button id="edit-password" type="button">비밀번호 수정</button>
+            <div class="hidden">
+              <form id="password-form">
+                <label for="modify-password">비밀번호</label>
+                <input type="password" id="modify-password" />
+                <label for="modify-password-check">비밀번호 확인</label>
+                <input type="password" id="modify-password-check" />
                 <div>
-                    <span class="alert-email">
-                        <input type="checkbox" id="email-whether">
-                        <label for="email-whether">이메일</label>
-                    </span>
-                    <span class="alert-tel">
-                        <input type="checkbox" id="tel-whether">
-                        <label for="tel-whether">휴대폰</label>
-                    </span>
+                  <button id="password-cancle" type="button">변경 취소</button>
+                  <button type="button">비밀번호 변경</button>
                 </div>
-                <p>
-                    원하는 방식으로 최저가 정보 알림을 선택할 수 있습니다.
-                </p>
+              </form>
             </div>
-            <a href="#" id="remove-user">회원탈퇴</a>
-        </fieldset>
+          </div>
+        </div>
+        <div class="user-info">
+          <h4>사용자 정보</h4>
+          <form>
+            <div>
+              <label for="">성명</label>
+              <input type="text" id="modify-name" value="아무개" />
+            </div>
+            <div>
+              <label for="">연락처</label>
+              <input type="tel" id="modify-tel" value="010 1234 1234" />
+            </div>
+            <div>
+              <label for="">주소</label>
+              <input type="text" id="modify-address" value="서울시 중랑구" />
+            </div>
+            <button id="save-info" type="button">저장하기</button>
+          </form>
+        </div>
+        <div class="alert-service">
+          <h4>최저가 정보 수신 동의</h4>
+          <div>
+            <span class="alert-email">
+              <input type="checkbox" id="email-whether" />
+              <label for="email-whether">이메일</label>
+            </span>
+            <span class="alert-tel">
+              <input type="checkbox" id="tel-whether" />
+              <label for="tel-whether">휴대폰</label>
+            </span>
+          </div>
+          <p>원하는 방식으로 최저가 정보 알림을 선택할 수 있습니다.</p>
+        </div>
+        <a href="#" id="remove-user">회원탈퇴</a>
+      </fieldset>
     </section>
-</body>
+  </body>
 </html>

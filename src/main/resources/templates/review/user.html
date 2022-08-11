@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="/css/public.css" />
+    <link rel="stylesheet" href="/css/user-review.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap"
+      rel="stylesheet"
+    />
+
+    <script defer src="/js/nav-activity.js"></script>
+    <script
+      src="https://kit.fontawesome.com/bb430ea525.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <title>내가 작성한 리뷰 - 장보고 식자재 조회</title>
+  </head>
+  <body>
+    <nav class="navbar">
+      <!-- 사이드 메뉴 -->
+      <div class="navber__side">
+        <input type="checkbox" id="navbar__sidebtn" onclick="menuOn()" />
+        <label for="navbar__sidebtn">
+          <span></span>
+          <span></span>
+          <span></span>
+        </label>
+
+        <!-- 사이드 메뉴 클릭 시 화면-->
+        <div class="navbar__sidebar">
+          <div class="sidebar__content">
+            <nav></nav>
+            <!-- 메뉴 카테고리 -->
+            <div class="category">
+              <div class="category__meet">
+                <a href="category/meat">
+                  <span>축산물</span>
+                  <i class="fa-solid fa-angle-right"></i>
+                </a>
+              </div>
+              <div class="category__seafood">
+                <a href="category/seafood">
+                  <span>해산물</span>
+                  <i class="fa-solid fa-angle-right"></i>
+                </a>
+              </div>
+              <div class="category__fruit">
+                <a href="category/fruit">
+                  <span>과일</span>
+                  <i class="fa-solid fa-angle-right"></i>
+                </a>
+              </div>
+              <div class="category__vegetable">
+                <a href="category/vegeta">
+                  <span>채소</span>
+                  <i class="fa-solid fa-angle-right"></i>
+                </a>
+              </div>
+            </div>
+
+            <!-- 메뉴 사용자 콘텐츠 -->
+            <div class="sidebar__account_content">
+              <div class="sidebar__mypage">
+                <a href="member/mypage">
+                  <i class="fa-regular fa-user"></i>
+                  <span>마이페이지</span>
+                </a>
+              </div>
+              <div class="sidebar__favorit">
+                <a href="/member/favorite">
+                  <i class="fa-regular fa-heart"></i>
+                  <span>찜 목록</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 검색 -->
+      <div class="navbar__search">
+        <input type="checkbox" id="navbar__searchbtn" onclick="searchOn()" />
+        <label for="navbar__searchbtn">
+          <i class="fa-brands fa-sistrix"></i>
+        </label>
+        <!-- 검색 버튼 클릭 시 화면 -->
+        <div class="navbar__searchbar">
+          <form action="">
+            <nav></nav>
+            <div class="search__content">
+              <label for="navbar__search_input">
+                <i class="fa-brands fa-sistrix"></i>
+              </label>
+              <input
+                type="text"
+                id="navbar__search_input"
+                placeholder="장보고에서 '최저가'를 찾아드려요!"
+              />
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- 로고 -->
+      <a href="/" class="navbar__logo">JANGBOGO</a>
+
+      <!-- 로그인 -->
+      <div class="navbar__sign">
+        <a href="/member/login"
+          ><i id="goLogin" class="fa-solid fa-arrow-right-to-bracket"></i
+        ></a>
+      </div>
+    </nav>
+    <main class="main-board">
+      <section class="greeting">
+        <h3 id="title">내가 작성한 리뷰</h3>
+      </section>
+      <section class="review-list">
+        <div class="review">
+          <span class="review-like"><i class="fa-solid fa-thumbs-up"></i></span>
+          <div class="review-info">
+            <div>
+              <span>작성자 : 아무개</span>
+              <span>이마트 역삼점</span>
+            </div>
+            <p>
+              리뷰 리뷰 아아아아아아아앙
+              크크크크크크크크크크크크크크히히히히히히히히히 ㅣ하하하하하하하
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
