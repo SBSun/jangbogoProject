@@ -32,9 +32,9 @@ public class WebSecurityConfig {
                 // HttpServletRequest에 따라 접근(access)을 제한
                 // antMatchers() 메서드로 특정 경로를 지정하며, permitAll(), hasRole() 메서드로 역할(Role)에 따른 접근 설정을 잡아준다.
                 .authorizeRequests()
-                    .antMatchers(   "/", "/member/login", "/member/register", "/category/**","/css/**", "/js/**", "/File/**").permitAll() // 해당 경로들에 대해서는 권한없이 접근 가능
+                    .antMatchers(   "/", "/member/login", "/member/emailCheck", "/member/register", "/category/**","/css/**", "/js/**", "/File/**").permitAll() // 해당 경로들에 대해서는 권한없이 접근 가능
                     .antMatchers("/logout", "/member/mypage", "/member/editInfo", "/member/favorite").hasRole("MEMBER") // ROLE_MEMBER 권한을 가지고 있는 사용자만 접근 가능
-                    //.anyRequest().authenticated()   // 모든 요청에 대해, 인증된 사용자만 접근하도록 설정
+                    .anyRequest().authenticated()   // 모든 요청에 대해, 인증된 사용자만 접근하도록 설정
                 .and()
                 // form 기반으로 인증을 하도록 합니다. 로그인 정보는 기본적으로 HttpSession을 이용
                 .formLogin()
@@ -42,7 +42,7 @@ public class WebSecurityConfig {
                     .usernameParameter("email")
                     .passwordParameter("password")
                     .defaultSuccessUrl("/") // 로그인 성공 후 redirect 주소
-                    .failureHandler(customFailureHandler)
+                .failureHandler(customFailureHandler)
                     .permitAll()
                 .and()
                 // 로그아웃을 지원하는 메서드이며 HTTP 세션을 제거

@@ -1,5 +1,3 @@
-'use strict';
-
 const emailInput = document.querySelector('#register__email');
 const emailCheck = document.querySelector('#register__email-check');
 const passInput = document.querySelector('#register__password');
@@ -18,10 +16,45 @@ const HIDDEN_CLASSNAME = 'hidden';
 function backLogin() {
   location.replace('login.html');
 }
-function onEmailCheck() {
-  if (emailInput.value === '') {
-    alert('이메일을 입력해주세요');
-  }
+function emailCheck(){
+    var email = document.getElementById('register__email').value;
+    var email_regex = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+
+    if(email == ""){
+        alert.log("이메일을 입력해주세요.");
+        return;
+    }
+
+    if(email_regex.test(email))
+    {
+        $.ajax({
+            async: true,
+            type:'GET',
+            dataType:'json',
+            data:{"email":email},
+            url:"/member/emailCheck",
+
+            success: function(data){
+
+                if(data.result == 1){
+                    alert("존재하는 이메일입니다.");
+                }
+                else if(data.result == 0){
+                    alert("사용가능한 이메일입니다.");
+                    isCheckedEmail = true;
+                    $("#register__form_submit").attr("type", "submit");
+                }
+            },
+           error: function (jqXHR, textStatus, errorThrown)
+           {
+                  alert(errorThrown + " " + textStatus);
+           }
+        });
+    }
+    else
+    {
+         alert.log("이메일 형식으로 작성해주세요.");
+    }
 }
 function onPasswordCheck() {
   if (passInput.value === '') {
@@ -47,7 +80,7 @@ function onSubmitBtnClick(event) {
     alertMail.checked,
     alertTel.checked
   );
-}
+ }
 onPasswordCheck();
 setInterval(onPasswordCheck, 500);
 emailCheck.addEventListener('click', onEmailCheck);
