@@ -23,7 +23,7 @@
   <body>
     <nav class="navbar">
       <!-- 로고 -->
-      <a href="/index.html" class="navbar__logo">JANGBOGO</a>
+      <a href="/" class="navbar__logo">JANGBOGO</a>
     </nav>
 
     <main class="main-board">
@@ -49,6 +49,7 @@
                 비밀번호를 잊어버리셨나요?
               </button>
             </div>
+            <p>아이디 혹은 비밀번호가 잘못되었습니다. 다시 로그인해주세요.</p>
 
             <button type="submit" class="login__form_loginBtn">로그인</button>
           </form>
@@ -57,7 +58,7 @@
         <!-- 비밀번호 찾기 -->
         <section class="hidden" id="findPassword">
           <h1 class="findpass_title">비밀번호 찾기</h1>
-          <p>
+          <p class="error-message">
             이메일로 새로운 비밀번호를 받으시려면 아래에 이메일 주소를
             입력해주세요.
           </p>
@@ -83,7 +84,7 @@
         <section class="login__register">
           <div class="login__register_title">새로 오셨나요?</div>
           <p>개인 계정을 생성하시면 다양한 기능을 사용하실 수 있습니다.</p>
-          <a href="register">새로운 계정 만들기</a>
+          <a href="/member/register">새로운 계정 만들기</a>
         </section>
       </div>
     </main>
