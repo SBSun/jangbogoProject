@@ -1,13 +1,17 @@
-const itemBtn = document.querySelectorAll('.itemBtn');
+const itemBtns = Array.from(document.querySelectorAll('.itemBtn'));
 
-function onFavoriteClick() {
-  if (itemBtn.innerText === '찜 목록에 추가') {
-    itemBtn.classList.toggle('active');
-    itemBtn.innerText = '찜 목록에서 제거';
-  } else {
-    itemBtn.classList.toggle('active');
-    itemBtn.innerText = '찜 목록에 추가';
-  }
-}
+const ACTIVE_KEY = 'active';
 
-itemBtn.addEventListener('click', onFavoriteClick);
+itemBtns.forEach(itemBtn =>
+  itemBtn.addEventListener('click', function () {
+    if (itemBtn.innerText === '찜 목록에 추가') {
+      itemBtn.classList.toggle(ACTIVE_KEY);
+      itemBtn.innerText = '찜 목록에서 제거';
+      alert('찜 목록에 추가되었습니다.');
+    } else {
+      itemBtn.classList.toggle(ACTIVE_KEY);
+      itemBtn.innerText = '찜 목록에 추가';
+      alert('찜 목록에서 제거되었습니다.');
+    }
+  })
+);

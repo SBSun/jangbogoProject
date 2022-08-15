@@ -1,5 +1,3 @@
-'use strict';
-
 const loginForm = document.querySelector('#login__form');
 const goFindPass = document.querySelector('.login__form_findPass');
 const findPassword = document.querySelector('#findPassword');
@@ -14,15 +12,24 @@ const cancleFindMailBtn = document.querySelector('.findpass_cancle');
 
 const HIDDEN_CLASSNAME = 'hidden';
 
-function onLoginBtnClick(event) {
+async function onLoginBtnClick(event) {
   event.preventDefault();
-  const userMail = emailInput.value;
-  const userPass = passInput.value;
-  console.log(userMail, userPass);
+  let response = await fetch('/member/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email: emailInput.value,
+      password: passInput.value,
+    }),
+  });
+  let result = await response.json();
+  alert(result.message);
 }
 function onSendMailBtnClick(event) {
   event.preventDefault();
-  const userMail = findMailInput.value;
+  const userMail = sendMailInput.value;
   console.log(userMail);
 }
 function onFindBtnClick() {

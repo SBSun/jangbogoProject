@@ -1,5 +1,3 @@
-'use strict';
-
 /* 추천 품목 마진 넣기 */
 function margin() {
   let item = document.querySelectorAll('.item');
