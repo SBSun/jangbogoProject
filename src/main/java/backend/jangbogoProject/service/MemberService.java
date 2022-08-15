@@ -30,8 +30,8 @@ public class MemberService {
                 });
 
         // 비밀번호 암호화
-        String encodedPassword = passwordEncoder.encode(member.getPassword());
-        member.setPassword(encodedPassword);
+        //String encodedPassword = passwordEncoder.encode(member.getPassword());
+        //member.setPassword(encodedPassword);
         member.setEnabled(true);
         
         // 권한을 1 - ROLE_MEMBER로 설정, 현재는 ROLE_MEMBER 이외의 권한이 없음.
