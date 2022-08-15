@@ -64,6 +64,18 @@ function onPasswordCheck() {
 }
 function onSubmitBtnClick(event) {
   event.preventDefault();
+  fetch('/member/register', {
+    method: 'POST',
+    body: JSON.stringify({
+      email: emailInput.value,
+      password: passInput.value,
+      name: userName.value,
+      address: userAddress.value,
+      tel: userTel.value,
+    }),
+  })
+    .then(res => res.json())
+    .catch(error => console.log(error));
 }
 onPasswordCheck();
 setInterval(onPasswordCheck, 500);
