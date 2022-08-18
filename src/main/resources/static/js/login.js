@@ -12,9 +12,9 @@ const cancleFindMailBtn = document.querySelector('.findpass_cancle');
 
 const HIDDEN_CLASSNAME = 'hidden';
 
-async function onLoginBtnClick(event) {
+function onLoginBtnClick(event) {
   event.preventDefault();
-  let response = await fetch('/member/login', {
+  fetch('/member/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -23,9 +23,9 @@ async function onLoginBtnClick(event) {
       email: emailInput.value,
       password: passInput.value,
     }),
-  });
-  let result = await response.json();
-  alert(result.message);
+  })
+    .then(res => res.json())
+    .then(data => console.log(data));
 }
 function onSendMailBtnClick(event) {
   event.preventDefault();
