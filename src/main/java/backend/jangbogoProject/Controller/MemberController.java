@@ -46,9 +46,8 @@ public class MemberController {
 
     // http://localhost:8080/member/register
     @PostMapping("/member/register")
-    public ModelAndView create(MemberDto memberDto){
-
-        memberService.save(memberDto.toEntity());
+    public ModelAndView create(@RequestBody MemberDto MemberDto){
+        memberService.save(MemberDto.toEntity());
         //존재하는 이메일이면
         ModelAndView mav = new ModelAndView("redirect:/");
         return mav;

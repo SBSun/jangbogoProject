@@ -38,12 +38,12 @@ public class Member {
     private List<Role> roles = new ArrayList<>();
 
     @Builder
-    public Member(Long id, String address, String email, String name, String password, String tel, Boolean enabled) {
+    public Member(Long id, String email, String password, String name, String address, String tel, Boolean enabled) {
         this.id = id;
-        this.address = address;
         this.email = email;
-        this.name = name;
         this.password = password;
+        this.name = name;
+        this.address = address;
         this.tel = tel;
         this.enabled = enabled;
     }

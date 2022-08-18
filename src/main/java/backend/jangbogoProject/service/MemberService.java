@@ -23,6 +23,7 @@ public class MemberService {
     //회원가입
     public Member save(Member member)
     {
+        System.out.println(member.getName());
         //해당 email을 가진 회원이 있으면
         memberRepository.findByEmail(member.getEmail())
                 .ifPresent(member1 -> {

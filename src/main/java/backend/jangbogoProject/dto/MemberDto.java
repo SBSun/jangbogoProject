@@ -2,11 +2,9 @@ package backend.jangbogoProject.dto;
 
 import backend.jangbogoProject.domain.Member;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class MemberDto {
 
     private Long id;
@@ -30,14 +28,8 @@ public class MemberDto {
         return build;
     }
 
-    public MemberDto()
-    {
-        super();
-    }
-
     @Builder
     public MemberDto(Long id, String email, String password, String name, String address, String tel, Boolean enabled) {
-        super();
         this.id = id;
         this.email = email;
         this.password = password;
@@ -46,5 +38,4 @@ public class MemberDto {
         this.tel = tel;
         this.enabled = enabled;
     }
-
 }

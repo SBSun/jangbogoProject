@@ -66,6 +66,9 @@ function onSubmitBtnClick(event) {
   event.preventDefault();
   fetch('/member/register', {
     method: 'POST',
+    headers: {
+                    "Content-Type": "application/json"
+                },
     body: JSON.stringify({
       email: emailInput.value,
       password: passInput.value,
