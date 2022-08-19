@@ -36,11 +36,7 @@ public class MemberController {
 
         return mav;
     }
-    @GetMapping("/text")
-    public String text(@RequestParam String email){
 
-        return email;
-    }
     // http://localhost:8080/member/register
     @GetMapping("/member/register")
     public ModelAndView registerForm(){
