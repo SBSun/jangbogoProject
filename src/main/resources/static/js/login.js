@@ -14,23 +14,43 @@ const HIDDEN_CLASSNAME = 'hidden';
 
 function onLoginBtnClick(event) {
   event.preventDefault();
-  fetch('/member/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      email: emailInput.value,
-      password: passInput.value,
-    }),
-  })
-    .then(res => res.json())
-    .then(data => console.log(data));
+  const userEmail = emailInput.value;
+  const userPassword = passInput.value;
+  if (userEmail !== '' && userPassword !== '') {
+    fetch('member/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: userEmail,
+        password: userPassword,
+      }),
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (res.token) {
+          localStorage.setItem('token', res.token);
+        } else {
+          window.alert(res.msg);
+        }
+      });
+  } else {
+    alert('이메일 혹은 비밀번호를 입력해주세요.');
+    emailInput.value = '';
+    passInput.value = '';
+    emailInput.focus();
+  }
 }
 function onSendMailBtnClick(event) {
   event.preventDefault();
   const userMail = sendMailInput.value;
-  console.log(userMail);
+  if (userMail !== '') {
+    console.log(userMail);
+  } else {
+    alert('이메일을 입력해주세요.');
+    sendMailInput.focus();
+  }
 }
 function onFindBtnClick() {
   emailInput.value = null;

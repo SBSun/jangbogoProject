@@ -1,5 +1,3 @@
-'use strict';
-
 // 메뉴 옵션
 function menuOn() {
   let searchBtn = document.getElementById('navbar__searchbtn');
@@ -19,7 +17,9 @@ function searchOn() {
 
   if (searchBtn.checked) {
     background.style.filter = 'blur(10px)';
+    background.style.pointerEvents = 'none';
   } else {
     background.style.filter = 'none';
+    background.style.pointerEvents = 'auto';
   }
 }
