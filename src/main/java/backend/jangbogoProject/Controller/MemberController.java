@@ -36,7 +36,11 @@ public class MemberController {
 
         return mav;
     }
+    @GetMapping("/text")
+    public String text(@RequestParam String email){
 
+        return email;
+    }
     // http://localhost:8080/member/register
     @GetMapping("/member/register")
     public ModelAndView registerForm(){
@@ -49,8 +53,14 @@ public class MemberController {
     public ModelAndView create(@RequestBody MemberDto MemberDto){
         memberService.save(MemberDto.toEntity());
         //존재하는 이메일이면
-        ModelAndView mav = new ModelAndView("redirect:/");
+        ModelAndView mav = new ModelAndView("member/login");
         return mav;
+    }
+
+    @PostMapping("/info")
+    public Object projectInfo() {
+        MemberDto dto = new MemberDto(1L, "sbs0216@naver.com", "1", "sbs", "sbs", "010", true);
+        return dto;
     }
 
     // http://localhost:8080/member/emailCheck
