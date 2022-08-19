@@ -14,7 +14,7 @@ const submitBtn = document.querySelector('#register__form_submit');
 const HIDDEN_CLASSNAME = 'hidden';
 
 function backLogin() {
-  location.replace('/member/login');
+  location.replace('member/login');
 }
 function onEmailCheck() {
   const email = emailInput.value;
@@ -47,7 +47,7 @@ function onEmailCheck() {
       },
     });
   } else {
-    alert.log('이메일 형식으로 작성해주세요.');
+    alert('이메일 형식으로 작성해주세요.');
   }
 }
 function onPasswordCheck() {
@@ -62,23 +62,35 @@ function onPasswordCheck() {
     checkPassMessage.classList.remove(HIDDEN_CLASSNAME);
   }
 }
+
 function onSubmitBtnClick(event) {
   event.preventDefault();
-  fetch('/member/register', {
-    method: 'POST',
-    headers: {
-                    "Content-Type": "application/json"
-                },
-    body: JSON.stringify({
-      email: emailInput.value,
-      password: passInput.value,
-      name: userName.value,
-      address: userAddress.value,
-      tel: userTel.value,
-    }),
-  })
-    .then(res => res.json())
-    .catch(error => console.log(error));
+  if (
+    emailInput.value === '' ||
+    passInput.value === '' ||
+    checkPassInput.value === '' ||
+    userName.value === '' ||
+    userAddress.value === '' ||
+    userTel.value === ''
+  ) {
+    alert('필수 정보들을 전부 입력해주세요.');
+  } else {
+    fetch('member/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: emailInput.value,
+        password: passInput.value,
+        name: userName.value,
+        address: userAddress.value,
+        tel: userTel.value,
+      }),
+    })
+      .then(res => res.json())
+      .then(res => console.log(res));
+  }
 }
 onPasswordCheck();
 setInterval(onPasswordCheck, 500);
