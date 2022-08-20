@@ -21,7 +21,7 @@ const itemCode = {
 
 function onSearch(event) {
   event.preventDefault();
-  console.log(event);
+  location.replace('/member/search');
 }
 
 searchForm.addEventListener('submit', onSearch);
