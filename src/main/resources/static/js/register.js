@@ -75,7 +75,7 @@ function onSubmitBtnClick(event) {
   ) {
     alert('필수 정보들을 전부 입력해주세요.');
   } else {
-    fetch('member/register', {
+    fetch('/member/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

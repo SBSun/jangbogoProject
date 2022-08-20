@@ -45,11 +45,12 @@ public class MemberController {
     }
 
     // http://localhost:8080/member/register
-    @PostMapping(value = "/member/register")
+    @PostMapping("/member/register")
     public ModelAndView create(@RequestBody MemberDto MemberDto){
         memberService.save(MemberDto.toEntity());
         //존재하는 이메일이면
-        ModelAndView mav = new ModelAndView("index");
+        ModelAndView mav = new ModelAndView("jsonView");
+        mav.addObject("res", "회원가입 성공");
         return mav;
     }
 
@@ -105,7 +106,7 @@ public class MemberController {
 
         ModelAndView mav = new ModelAndView("member/mypage");
         return mav;
-}
+    }
 
     @GetMapping("/member/editInfo")
     public ModelAndView editInfo(){
