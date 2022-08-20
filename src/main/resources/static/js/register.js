@@ -14,7 +14,7 @@ const submitBtn = document.querySelector('#register__form_submit');
 const HIDDEN_CLASSNAME = 'hidden';
 
 function backLogin() {
-  location.replace('member/login');
+  location.replace('/member/login');
 }
 function onEmailCheck() {
   const email = emailInput.value;
@@ -90,6 +90,8 @@ function onSubmitBtnClick(event) {
     })
       .then(res => res.json())
       .then(res => console.log(res));
+    alert('회원가입되었습니다.');
+    location.replace('/');
   }
 }
 onPasswordCheck();

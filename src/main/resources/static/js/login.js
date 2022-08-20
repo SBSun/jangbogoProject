@@ -31,8 +31,10 @@ function onLoginBtnClick(event) {
       .then(res => {
         if (res.token) {
           localStorage.setItem('token', res.token);
+          alert('로그인되었습니다.');
+          location.replace('/');
         } else {
-          window.alert(res.msg);
+          alert('다시 로그인해주세요.');
         }
       });
   } else {
