@@ -42,8 +42,10 @@ public class MemberController {
         Member member = memberService.findEmail(loginMember.get("email"))
                 .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 이메일입니다."));
 
-        String token = "123";
-        return token;
+        JsonObject data = new JsonObject();
+        data.addProperty("token", "123");
+
+        return data.toString();
     }
 
     // http://localhost:8080/member/register
