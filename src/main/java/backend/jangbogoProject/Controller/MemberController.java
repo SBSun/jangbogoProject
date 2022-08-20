@@ -45,15 +45,15 @@ public class MemberController {
     }
 
     // http://localhost:8080/member/register
-    @PostMapping("/member/register")
+    @RequestMapping(value = "/member/register", method = RequestMethod.POST, produces = "application/json")
     public ModelAndView create(@RequestBody MemberDto MemberDto){
         memberService.save(MemberDto.toEntity());
         //존재하는 이메일이면
-        ModelAndView mav = new ModelAndView("member/login");
+        ModelAndView mav = new ModelAndView("index");
         return mav;
     }
 
-    @PostMapping("/info")
+    @GetMapping("/info")
     public Object projectInfo() {
         MemberDto dto = new MemberDto(1L, "sbs0216@naver.com", "1", "sbs", "sbs", "010", true);
         return dto;
