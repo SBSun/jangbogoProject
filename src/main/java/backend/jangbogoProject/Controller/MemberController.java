@@ -37,6 +37,15 @@ public class MemberController {
         return mav;
     }
 
+    @PostMapping("/member/login")
+    public String login(@RequestBody Map<String, String> loginMember) {
+        Member member = memberService.findEmail(loginMember.get("email"))
+                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 이메일입니다."));
+
+        String token = "123";
+        return token;
+    }
+
     // http://localhost:8080/member/register
     @GetMapping("/member/register")
     public ModelAndView registerForm(){

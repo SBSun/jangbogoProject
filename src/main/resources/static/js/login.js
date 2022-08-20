@@ -17,7 +17,7 @@ function onLoginBtnClick(event) {
   const userEmail = emailInput.value;
   const userPassword = passInput.value;
   if (userEmail !== '' && userPassword !== '') {
-    fetch('member/login', {
+    fetch('/member/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

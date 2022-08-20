@@ -36,21 +36,7 @@ public class WebSecurityConfig {
                     .antMatchers(   "/","/info", "/member/login", "/member/emailCheck", "/member/register", "/category/**","/css/**", "/js/**", "/File/**").permitAll() // 해당 경로들에 대해서는 권한없이 접근 가능
                     .antMatchers("/logout", "/member/mypage", "/member/editInfo", "/member/favorite").hasRole("MEMBER") // ROLE_MEMBER 권한을 가지고 있는 사용자만 접근 가능
                     .anyRequest().authenticated()   // 모든 요청에 대해, 인증된 사용자만 접근하도록 설정*/
-                .antMatchers("/**").permitAll()
-                .and()
-                // form 기반으로 인증을 하도록 합니다. 로그인 정보는 기본적으로 HttpSession을 이용
-                .formLogin()
-                    .loginPage("/member/login")
-                    .usernameParameter("email")
-                    .passwordParameter("password")
-                    .defaultSuccessUrl("/") // 로그인 성공 후 redirect 주소
-                .failureHandler(customFailureHandler)
-                    .permitAll()
-                .and()
-                // 로그아웃을 지원하는 메서드이며 HTTP 세션을 제거
-                .logout()
-                    .logoutSuccessUrl("/")
-                    .invalidateHttpSession(true); // 세션 날리기
+                .antMatchers("/**").permitAll();
         return http.build();
     }
 
