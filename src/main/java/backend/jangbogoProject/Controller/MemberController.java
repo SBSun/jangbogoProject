@@ -132,4 +132,10 @@ public class MemberController {
         ModelAndView mav = new ModelAndView("member/favorite");
         return mav;
     }
+
+    @GetMapping("/member/search")
+    public ModelAndView search(){
+        ModelAndView mav = new ModelAndView("member/search");
+        return mav;
+    }
 }
