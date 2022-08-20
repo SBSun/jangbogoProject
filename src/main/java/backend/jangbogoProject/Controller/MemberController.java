@@ -45,18 +45,12 @@ public class MemberController {
     }
 
     // http://localhost:8080/member/register
-    @RequestMapping(value = "/member/register", method = RequestMethod.POST, produces = "application/json")
+    @PostMapping(value = "/member/register")
     public ModelAndView create(@RequestBody MemberDto MemberDto){
         memberService.save(MemberDto.toEntity());
         //존재하는 이메일이면
         ModelAndView mav = new ModelAndView("index");
         return mav;
-    }
-
-    @GetMapping("/info")
-    public Object projectInfo() {
-        MemberDto dto = new MemberDto(1L, "sbs0216@naver.com", "1", "sbs", "sbs", "010", true);
-        return dto;
     }
 
     // http://localhost:8080/member/emailCheck
@@ -83,7 +77,7 @@ public class MemberController {
 
         return resultMap;
     }
-
+/*
     // http://localhost:8080/member/mypage
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/member/mypage")
@@ -105,7 +99,20 @@ public class MemberController {
         ModelAndView mav = new ModelAndView("member/edit-info");
         return mav;
     }
+*/
+    @GetMapping("/member/mypage")
+    public ModelAndView mypageForm() {
 
+        ModelAndView mav = new ModelAndView("member/mypage");
+        return mav;
+}
+
+    @GetMapping("/member/editInfo")
+    public ModelAndView editInfo(){
+
+        ModelAndView mav = new ModelAndView("member/edit-info");
+        return mav;
+    }
     // http://localhost:8080/member/favorite
     @GetMapping("/member/favorite")
     public ModelAndView favorite() {
