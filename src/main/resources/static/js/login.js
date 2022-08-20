@@ -17,7 +17,7 @@ function onLoginBtnClick(event) {
   const userEmail = emailInput.value;
   const userPassword = passInput.value;
   if (userEmail !== '' && userPassword !== '') {
-    fetch('member/login', {
+    fetch('/member/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -31,8 +31,10 @@ function onLoginBtnClick(event) {
       .then(res => {
         if (res.token) {
           localStorage.setItem('token', res.token);
+          alert('로그인되었습니다.');
+          location.replace('/');
         } else {
-          window.alert(res.msg);
+          alert('다시 로그인해주세요.');
         }
       });
   } else {
