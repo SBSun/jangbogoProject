@@ -16,6 +16,7 @@
     <script defer src="js/nav-activity.js"></script>
     <script defer src="js/favorite-component.js"></script>
     <script defer src="js/search-component.js"></script>
+    <script defer src="js/move-component.js"></script>
     <script
       src="https://kit.fontawesome.com/bb430ea525.js"
       crossorigin="anonymous"
@@ -69,13 +70,13 @@
             <!-- 메뉴 사용자 콘텐츠 -->
             <div class="sidebar__account_content">
               <div class="sidebar__mypage">
-                <a href="/member/mypage">
+                <a href="javascript:moveMypage()">
                   <i class="fa-regular fa-user"></i>
                   <span>마이페이지</span>
                 </a>
               </div>
               <div class="sidebar__favorit">
-                <a href="/member/favorite">
+                <a href="javascript:moveFavorite()">
                   <i class="fa-regular fa-heart"></i>
                   <span>찜 목록</span>
                 </a>
@@ -114,9 +115,7 @@
 
       <!-- 로그인 -->
       <div class="navbar__sign">
-        <a href="/member/login"
-          ><i id="goLogin" class="fa-solid fa-arrow-right-to-bracket"></i
-        ></a>
+        <a href="#" class="sign-btn"></a>
       </div>
     </nav>
 
