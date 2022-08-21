@@ -30,7 +30,7 @@ function onLoginBtnClick(event) {
       .then(res => res.json())
       .then(res => {
         if (res.token) {
-          localStorage.setItem('token', res.token);
+          sessionStorage.setItem('token', res.token);
           alert('로그인되었습니다.');
           location.replace('/');
         } else {
