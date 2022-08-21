@@ -19,7 +19,7 @@ public class ItemServiceTest {
     @Test
     void FindAllA_SEQ()
     {
-        List<Item> items = itemService.findAllByMarketSerialNum(26);
+        List<Item> items = itemService.findAllByItemName("닭고기");
 
         for (int i = 0; i < items.size(); i++) {
             System.out.println(items.get(i).getItemName());

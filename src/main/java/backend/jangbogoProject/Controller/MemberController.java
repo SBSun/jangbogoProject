@@ -1,5 +1,6 @@
 package backend.jangbogoProject.Controller;
 
+import backend.jangbogoProject.item.domain.Item;
 import com.google.gson.JsonObject;
 import backend.jangbogoProject.domain.Member;
 import backend.jangbogoProject.dto.MemberDto;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -133,9 +135,13 @@ public class MemberController {
         return mav;
     }
 
-    @GetMapping("/member/search")
-    public ModelAndView search(){
-        ModelAndView mav = new ModelAndView("member/search");
+    /*
+    // http://localhost:8080/category/fruit
+    @GetMapping("/category")
+    public List<Item> category(@RequestParam String type)
+    {
+
+        ModelAndView mav = new ModelAndView("category/" + type);
         return mav;
-    }
+    }*/
 }
