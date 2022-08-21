@@ -26,12 +26,7 @@ function onSearch(event) {
 }
 function searchInit() {
   const content = sessionStorage.getItem('searchContent');
-  fetch(`/member/search`, {
-    method: 'GET',
-    body: JSON.stringify({
-      content: content,
-    }),
-  })
+  fetch(`/member/search?content=${content}`)
     .then(res => res.json())
     .then(res => console.log(res))
     .then(data => console.log(data));
