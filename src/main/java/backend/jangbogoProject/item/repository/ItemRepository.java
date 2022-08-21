@@ -10,8 +10,8 @@ import java.util.List;
 public interface ItemRepository extends JpaRepository<Item, Integer> {
     public List<Item> findAllByItemSerialNum(int itemSerialNum);
 
-    @Query(value = "SELECT i from Item i where i.itemName like %?1% or i.marketName like %?1%")
-    public List<Item> findAllBySearch(String itemName);
+    @Query(value = "SELECT DISTINCT i from Item i where i.itemName like %?1% or i.marketName like %?1%")
+    public List<Item> findAllBySearch(String search);
 
     public List<Item> findAllByMarketSerialNum(int marketSerialNum);
 
