@@ -1,6 +1,6 @@
 const searchForm = document.querySelector('.navbar__searchbar form');
-const searchInput = document.querySelector('#navbar__search_input');
-const itemCode = {
+const searchContent = document.querySelector('#navbar__search_input').value;
+/*const itemCode = {
   apple: 305,
   beef: 58,
   cabbage: [26, 307],
@@ -17,11 +17,19 @@ const itemCode = {
   pumpkin: 199,
   radish: [25, 133, 274, 308],
   squid: [254, 256],
-};
+}; */
 
 function onSearch(event) {
   event.preventDefault();
+  localStorage.setItem('searchContent', searchContent);
   location.replace('/member/search');
+}
+function searchInit() {
+  const content = localStorage.getItem('searchContent');
+  fetch(`/member/search`)
+    .then(res => res.json())
+    .then(res => console.log(res))
+    .then(data => console.log(data));
 }
 
 searchForm.addEventListener('submit', onSearch);
