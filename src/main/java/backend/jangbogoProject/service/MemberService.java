@@ -16,7 +16,6 @@ public class MemberService {
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
-
     @Autowired
     private PasswordEncoder passwordEncoder;
 
