@@ -3,6 +3,8 @@ package backend.jangbogoProject.item.controller;
 import backend.jangbogoProject.item.domain.Item;
 import backend.jangbogoProject.item.service.ItemService;
 import backend.jangbogoProject.service.MemberService;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,9 +20,11 @@ public class ItemController {
     private ItemService itemService;
 
     @GetMapping("/member/search")
-    public List<Item> search(@RequestParam String content){
+    public ModelAndView search(@RequestParam(required = false) String content){
 
-        return itemService.findAllByItemName(content);
+        ModelAndView mav = new ModelAndView("member/search");
+        mav.addObject("return", itemService.findAllByItemName(content));
+        return mav;
     }
 
     // http://localhost:8080/category/fruit
