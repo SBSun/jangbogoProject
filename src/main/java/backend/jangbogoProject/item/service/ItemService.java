@@ -23,9 +23,9 @@ public class ItemService {
         return itemRepository.findAllByItemSerialNum(itemSerialNum);
     }
 
-    public List<Item> findAllByItemName(String itemName)
+    public List<Item> findAllBySearch(String itemName)
     {
-        return itemRepository.findAllByItemName(itemName);
+        return itemRepository.findAllBySearch(itemName);
     }
 
     public List<Item> findAllByMarketSerialNum(int marketSerialNum)

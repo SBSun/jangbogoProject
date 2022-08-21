@@ -23,7 +23,7 @@ public class ItemController {
     public ModelAndView search(@RequestParam(required = false) String content){
 
         ModelAndView mav = new ModelAndView("member/search");
-        mav.addObject("return", itemService.findAllByItemName(content));
+        mav.addObject("return", itemService.findAllBySearch(content));
         return mav;
     }
 
