@@ -127,6 +127,7 @@ public class MemberController {
         ModelAndView mav = new ModelAndView("member/edit-info");
         return mav;
     }
+
     // http://localhost:8080/member/favorite
     @GetMapping("/member/favorite")
     public ModelAndView favorite() {

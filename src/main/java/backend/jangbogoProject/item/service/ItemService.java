@@ -25,7 +25,7 @@ public class ItemService {
 
     public List<Item> findAllByItemName(String itemName)
     {
-        return itemRepository.findAllByItemNameContains(itemName);
+        return itemRepository.findAllByItemName(itemName);
     }
 
     public List<Item> findAllByMarketSerialNum(int marketSerialNum)
