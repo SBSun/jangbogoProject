@@ -26,7 +26,7 @@ function onSearch(event) {
 }
 function searchInit() {
   const content = localStorage.getItem('searchContent');
-  fetch(`/member/search`)
+  fetch(`/member/search?content=${content}`)
     .then(res => res.json())
     .then(res => console.log(res))
     .then(data => console.log(data));

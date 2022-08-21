@@ -20,9 +20,11 @@ public class ItemController {
     private ItemService itemService;
 
     @GetMapping("/member/search")
-    public List<Item> search(@RequestParam String content){
+    public ModelAndView search(@RequestParam(required = false) String content){
 
-        return itemService.findAllByItemName(content);
+        ModelAndView mav = new ModelAndView("member/search");
+        mav.addObject("return", itemService.findAllByItemName(content));
+        return mav;
     }
 
     // http://localhost:8080/category/fruit
