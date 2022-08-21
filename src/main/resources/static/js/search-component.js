@@ -1,5 +1,5 @@
 const searchForm = document.querySelector('.navbar__searchbar form');
-const searchContent = document.querySelector('#navbar__search_input').value;
+const searchContent = document.querySelector('#navbar__search_input');
 /*const itemCode = {
   apple: 305,
   beef: 58,
@@ -21,12 +21,17 @@ const searchContent = document.querySelector('#navbar__search_input').value;
 
 function onSearch(event) {
   event.preventDefault();
-  localStorage.setItem('searchContent', searchContent);
+  sessionStorage.setItem('searchContent', searchContent.value);
   location.replace('/member/search');
 }
 function searchInit() {
-  const content = localStorage.getItem('searchContent');
-  fetch(`/member/search?content=${content}`)
+  const content = sessionStorage.getItem('searchContent');
+  fetch(`/member/search`, {
+    method: 'GET',
+    body: JSON.stringify({
+      content: content,
+    }),
+  })
     .then(res => res.json())
     .then(res => console.log(res))
     .then(data => console.log(data));
