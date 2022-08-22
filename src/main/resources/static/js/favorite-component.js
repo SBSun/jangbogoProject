@@ -4,7 +4,7 @@ const ACTIVE_KEY = 'active';
 
 itemBtns.forEach(itemBtn =>
   itemBtn.addEventListener('click', function () {
-    if (localStorage.getItem('token') !== null) {
+    if (sessionStorage.getItem('token') !== null) {
       if (itemBtn.innerText === '찜 목록에 추가') {
         itemBtn.classList.toggle(ACTIVE_KEY);
         itemBtn.innerText = '찜 목록에서 제거';
