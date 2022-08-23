@@ -1,9 +1,9 @@
-let subMenu = document.querySelector('.dropdown_subMenu');
-let sortBtn = document.getElementById('sortBtn');
+const subMenu = document.querySelector('.dropdown_subMenu');
+const sortBtn = document.getElementById('sortBtn');
 
-let favorit = document.getElementById('sort_favorit');
-let low = document.getElementById('sort_low');
-let high = document.getElementById('sort_high');
+const favorit = document.getElementById('sort_favorit');
+const low = document.getElementById('sort_low');
+const high = document.getElementById('sort_high');
 
 function clickSort() {
   if (subMenu.style.display == 'block') {
