@@ -16,6 +16,7 @@
     <script defer src="/js/nav-activity.js"></script>
     <script defer src="/js/scroll-up.js"></script>
     <script defer src="/js/favorite-component.js"></script>
+    <script defer src="/js/move-component.js"></script>
     <script defer src="/js/search-component.js"></script>
     <script
       src="https://kit.fontawesome.com/bb430ea525.js"
@@ -115,7 +116,7 @@
 
       <!-- 로그인 -->
       <div class="navbar__sign">
-        <a href="../member/login" class="sign-btn"></a>
+        <a href="#" class="sign-btn"></a>
       </div>
     </nav>
 
@@ -132,11 +133,6 @@
               <li data-option="standard_sort">
                 <a href="#" id="sortBtn">정렬 기준</a>
                 <ul class="dropdown_subMenu">
-                  <li>
-                    <a href="#" id="sort_favorit" data-option="favorit"
-                      >찜 많은 순</a
-                    >
-                  </li>
                   <li>
                     <a href="#" id="sort_low" data-option="lowPrice"
                       >낮은 가격순</a
@@ -157,21 +153,6 @@
       <div class="search_itemlist">
         <div class="hidden" id="scroll-up">
           <i class="fa-solid fa-arrow-up"></i>
-        </div>
-
-        <div class="item">
-          <img src="/File/items/apple.png" alt="apple" />
-          <div class="itemInfo">
-            <span class="marketName">동원시장</span>
-            <dl>
-              <dt>사과(부사, 300g)</dt>
-              <dd>300g / 1개</dd>
-            </dl>
-            <div class="price_area">
-              <span class="itemPrice">2,225원</span>
-            </div>
-          </div>
-          <button class="itemBtn">찜 목록에 추가</button>
         </div>
       </div>
     </main>
