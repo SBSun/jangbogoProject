@@ -16,8 +16,4 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
     public List<Item> findAllByMarketSerialNum(int marketSerialNum);
 
     public List<Item> findAllByMarketGuCode(int marketGuCode);
-
-    @Query(value = "SELECT DISTINCT i from Item i where i.marketGuCode = ?1" +
-            "and i.itemPrice = (select max(i.itemPrice) from Item where i.itemSerialNum = Item.itemSerialNum)")
-    public List<Item> findAllByLowestPriceInGu(int marketGuCode);
 }

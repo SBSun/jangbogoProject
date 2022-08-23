@@ -25,14 +25,4 @@ public class ItemServiceTest {
             System.out.println(items.get(i).getMarketName() + ", " + items.get(i).getItemName());
         }
     }
-
-    @Test
-    void FindAllByLowestPriceInGu()
-    {
-        List<Item> items = itemService.findAllByLowestPriceInGu(320000);
-
-        for (int i = 0; i < items.size(); i++) {
-            System.out.println(items.get(i).getMarketName() + ", " + items.get(i).getItemName());
-        }
-    }
 }
