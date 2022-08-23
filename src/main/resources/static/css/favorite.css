@@ -1,6 +1,6 @@
 .navbar {
   display: block;
-  border-bottom: none;
+  border-bottom: 1px solid var(--black-color);
 }
 
 #navbar-cancle {
@@ -19,46 +19,42 @@
 }
 
 .item-list li {
-  display: flex;
-  justify-content: space-around;
-  border-bottom: 1px solid var(--black-color);
+  display: inline-block;
+  width: 40%;
+  height: 40%;
+  text-align: center;
+  padding: 1rem;
 }
 
 .item-list img {
-  width: 30%;
-  height: 30%;
-}
-
-#item-info {
-  position: relative;
-  top: 1.2rem;
-  right: 1rem;
+  width: 60%;
+  height: 60%;
 }
 
 #market-name {
-  font-size: 0.75rem;
+  font-size: 14px;
   color: var(--orange-color);
 }
 
-#item-info dl dd {
-  font-size: 0.75rem;
+dl dt {
+  font-size: 18px;
+}
+
+dl dd {
+  font-size: 16px;
   color: var(--gray-color);
 }
 
 #item-price {
-  position: relative;
-  top: 1rem;
-  left: 8rem;
-  font-size: 1.5rem;
+  margin: 5px 0 0 0;
+  font-size: 18px;
   color: var(--red-color);
-  text-align: center;
 }
 
 #item-remove {
-  position: relative;
-  top: 1rem;
-  left: 1.5rem;
-  width: 1rem;
-  height: 1rem;
-  font-size: 1rem;
+  width: 80%;
+  height: 28px;
+  margin: 5px 0 0 0;
+  border: 1px solid var(--black-color);
+  cursor: pointer;
 }
