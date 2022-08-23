@@ -26,12 +26,13 @@ function onSearch(event) {
 }
 function searchInit() {
   const content = sessionStorage.getItem('searchContent');
-  fetch(`/member/search?content=${content}`)
+  const title = document.querySelector('.search__title');
+  title.innerText = `검색 결과 "${content}"`;
+  fetch(`/member/searchContent?content=${content}`)
     .then(res => res.json())
-    .then(res => console.log(res))
-    .then(
-      data => console.log(data) /* {
-      for (let i = 0; i < data.length; i++) {
+    .then(res => console.log(res));
+}
+/*
         const div = document.createElement('div');
         const marketName = document.createElement('span');
         const dl = document.createElement('dl');
@@ -43,8 +44,6 @@ function searchInit() {
         priceArea.appendChild(itemPrice);
         dl.appendChild(itemName, itemUnit);
         div.appendChild(marketName, dl, priceArea, favorite);
-      } */
-    );
-}
+    */
 
 searchForm.addEventListener('submit', onSearch);
