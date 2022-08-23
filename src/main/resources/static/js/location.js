@@ -22,10 +22,25 @@ function offLocationFilter() {
 function onLocationClick(event) {
   const id = parseInt(event.target.id);
   locationTitle.innerText = `서울시 ${locations[id].innerText}`;
+  if (sessionStorage.getItem('location')) {
+    sessionStorage.removeItem('location');
+    sessionStorage.setItem('location', id);
+  } else {
+    sessionStorage.setItem('location', id);
+  }
   offLocationFilter();
+}
+function setLocation() {
+  if (sessionStorage.getItem('location')) {
+    const id = sessionStorage.getItem('location');
+    locationTitle.innerText = `서울시 ${locations[id].innerText}`;
+  } else {
+    onLocationFilter();
+  }
 }
 
 locationBtn.addEventListener('click', onLocationFilter);
 locations.forEach(location => {
   location.addEventListener('click', onLocationClick);
 });
+setLocation();
