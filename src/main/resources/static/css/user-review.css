@@ -63,7 +63,19 @@
   align-items: center;
 }
 
-.review-info p {
-  margin: 0.5rem 0 0 0;
+#writer {
+  font-size: 16px;
+  font-weight: lighter;
+  color: var(--black-color);
+}
+
+#market-name {
   font-size: 14px;
+  color: var(--orange-color);
+}
+
+.review-info p {
+  margin: 10px 0 0 0;
+  font-size: 14px;
+  color: var(--black-color);
 }

@@ -1,7 +1,7 @@
 /* nav 로그인 */
 .navbar__sign {
   font-size: 24px;
-  z-index: 1;
+  z-index: 3;
 }
 
 /* 정렬 */
@@ -45,6 +45,7 @@
 
 .search__title {
   text-align: center;
+  font-size: 24px;
 }
 
 .main-board {
@@ -69,6 +70,7 @@
   height: 28px;
   margin: 5px 0 0 0;
   border: 1px solid var(--black-color);
+  cursor: pointer;
 }
 
 .active {
@@ -87,6 +89,7 @@
 }
 
 .item dl dt {
+  margin: 5px 0 0 0;
   font-size: 1.15rem;
   font-weight: 600;
   color: var(--black-color);
