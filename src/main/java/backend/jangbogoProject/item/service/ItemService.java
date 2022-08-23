@@ -37,4 +37,9 @@ public class ItemService {
     {
         return itemRepository.findAllByMarketGuCode(marketGuCode);
     }
+
+    public List<Item> findAllByLowestPriceInGu(int marketGuCode)
+    {
+        return itemRepository.findAllByLowestPriceInGu(marketGuCode);
+    }
 }
