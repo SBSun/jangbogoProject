@@ -29,7 +29,22 @@ function searchInit() {
   fetch(`/member/search?content=${content}`)
     .then(res => res.json())
     .then(res => console.log(res))
-    .then(data => console.log(data));
+    .then(
+      data => console.log(data) /* {
+      for (let i = 0; i < data.length; i++) {
+        const div = document.createElement('div');
+        const marketName = document.createElement('span');
+        const dl = document.createElement('dl');
+        const itemName = document.createElement('dt');
+        const itemUnit = document.createElement('dd');
+        const priceArea = document.createElement('div');
+        const itemPrice = document.createElement('span');
+        const favorite = document.createElement('button');
+        priceArea.appendChild(itemPrice);
+        dl.appendChild(itemName, itemUnit);
+        div.appendChild(marketName, dl, priceArea, favorite);
+      } */
+    );
 }
 
 searchForm.addEventListener('submit', onSearch);
