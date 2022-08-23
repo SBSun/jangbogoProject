@@ -21,21 +21,20 @@ public class ItemController {
     @Autowired
     private ItemService itemService;
 
-    @GetMapping("/member/searchPage")
+    @GetMapping("/member/search")
     public ModelAndView searchPage(){
         ModelAndView mav = new ModelAndView("member/search");
         return mav;
     }
 
-    @GetMapping("/member/search")
-    public String search(@RequestParam(required = false) String content, Model model){
+    @GetMapping("/member/searchContent")
+    public String search(@RequestParam(required = false) String content){
         System.out.println("검색한 내용 : " + content);
         List<Item> items = itemService.findAllBySearch(content);
 
         Gson gson = new Gson();
         String listJson = gson.toJson(items, List.class).toString();
         System.out.println(listJson);
-        model.addAttribute("res", listJson);
         return listJson;
     }
 
