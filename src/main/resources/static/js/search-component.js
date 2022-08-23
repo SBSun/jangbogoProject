@@ -40,38 +40,73 @@ function searchInit() {
     .then(res => {
       for (let i = 0; i < res.length; i++) {
         console.log(res[i].itemSerialNum);
-        if (res[i].itemSerialNum === 305) {
-          itemImg = 'apple';
-        } else if (res[i].itemSerialNum === 58) {
-          itemImg = 'beef';
-        } else if (res[i].itemSerialNum === 26 || 307) {
-          itemImg = 'cabbage';
-        } else if (res[i].itemSerialNum === 18 || 275 || 283) {
-          itemImg = 'chicken';
-        } else if (res[i].itemSerialNum === 311) {
-          itemImg = 'cucumber';
-        } else if (res[i].itemSerialNum === 171 || 320) {
-          itemImg = 'eggs';
-        } else if (res[i].itemSerialNum === 266 || 267 || 268) {
-          itemImg = 'godeung';
-        } else if (res[i].itemSerialNum === 136 || 144 || 259 || 260) {
-          itemImg = 'jogi';
-        } else if (res[i].itemSerialNum === 23 || 310) {
-          itemImg = 'lettuce';
-        } else if (res[i].itemSerialNum === 152 || 264 || 265) {
-          itemImg = 'myeong';
-        } else if (res[i].itemSerialNum === 309) {
-          itemImg = 'onion';
-        } else if (res[i].itemSerialNum === 306) {
-          itemImg = 'pear';
-        } else if (res[i].itemSerialNum === 52 || 99 || 202) {
-          itemImg = 'pork';
-        } else if (res[i].itemSerialNum === 199) {
-          itemImg = 'pumpkin';
-        } else if (res[i].itemSerialNum === 25 || 133 || 274 || 308) {
-          itemImg = 'radish';
-        } else if (res[i].itemSerialNum === 254 || 256) {
-          itemImg = 'squid';
+        switch (res[i].itemSerialNum) {
+          case 305:
+            itemImg = 'apple';
+            break;
+          case 58:
+            itemImg = 'beef';
+            break;
+          case 26:
+          case 207:
+            itemImg = 'cabbage';
+            break;
+          case 18:
+          case 275:
+          case 283:
+            itemImg = 'chicken';
+            break;
+          case 311:
+            itemImg = 'cucumber';
+            break;
+          case 171:
+          case 320:
+            itemImg = 'eggs';
+            break;
+          case 266:
+          case 267:
+          case 268:
+            itemImg = 'godeung';
+            break;
+          case 136:
+          case 144:
+          case 259:
+          case 260:
+            itemImg = 'jogi';
+            break;
+          case 23:
+          case 310:
+            itemImg = 'lettuce';
+            break;
+          case 152:
+          case 264:
+          case 265:
+            itemImg = 'myeong';
+            break;
+          case 309:
+            itemImg = 'onion';
+            break;
+          case 306:
+            itemImg = 'pear';
+            break;
+          case 52:
+          case 99:
+          case 202:
+            itemImg = 'pork';
+            break;
+          case 199:
+            itemImg = 'pumpkin';
+            break;
+          case 25:
+          case 133:
+          case 274:
+          case 308:
+            itemImg = 'radish';
+            break;
+          case 254:
+          case 256:
+            itemImg = 'squid';
+            break;
         }
 
         const div = document.createElement('div');
