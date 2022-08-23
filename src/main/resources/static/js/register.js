@@ -89,9 +89,16 @@ function onSubmitBtnClick(event) {
       }),
     })
       .then(res => res.json())
-      .then(res => console.log(res));
-    alert('회원가입되었습니다.');
-    location.replace('/');
+      .then(res => {
+        if (res.ok) {
+          console.log(res);
+          alert('회원가입되었습니다.');
+          location.replace('/');
+        } else {
+          console.log(res);
+          alert('회원가입 오류');
+        }
+      });
   }
 }
 onPasswordCheck();
