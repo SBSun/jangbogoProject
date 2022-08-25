@@ -33,8 +33,8 @@ public class ItemService {
         return itemRepository.findAllByMarketSerialNum(marketSerialNum);
     }
 
-    public List<Item> findAllByMarketGuCode(int marketGuCode)
+    public List<Item> findAllByLowestPriceInGu(int marketGuCode)
     {
-        return itemRepository.findAllByMarketGuCode(marketGuCode);
+        return itemRepository.findAllByLowestPriceInGu(marketGuCode);
     }
 }

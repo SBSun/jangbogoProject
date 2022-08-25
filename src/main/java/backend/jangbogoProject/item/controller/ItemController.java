@@ -38,6 +38,18 @@ public class ItemController {
         return listJson;
     }
 
+    @GetMapping("/lowestPriceInGu")
+    public String getLowestPriceInGu(@RequestParam int guCode)
+    {
+        System.out.println("최저가 검색할 구 : " + guCode);
+        List<Item> items = itemService.findAllByLowestPriceInGu(guCode);
+
+        Gson gson = new Gson();
+        String listJson = gson.toJson(items, List.class).toString();
+        System.out.println(listJson);
+        return listJson;
+    }
+
     // http://localhost:8080/category/fruit
     @GetMapping("/category/{type}")
     public ModelAndView category(@PathVariable String type)
