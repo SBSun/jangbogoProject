@@ -1,4 +1,4 @@
-package backend.jangbogoProject.domain;
+package backend.jangbogoProject.member.domain;
 
 import lombok.Data;
 

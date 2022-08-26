@@ -2,13 +2,10 @@ package backend.jangbogoProject.item.service;
 
 import backend.jangbogoProject.item.domain.Item;
 import backend.jangbogoProject.item.repository.ItemRepository;
-import backend.jangbogoProject.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 
 @Transactional

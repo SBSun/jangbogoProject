@@ -1,20 +1,16 @@
 package backend.jangbogoProject.Controller;
 
-import backend.jangbogoProject.item.domain.Item;
 import com.google.gson.JsonObject;
-import backend.jangbogoProject.domain.Member;
-import backend.jangbogoProject.dto.MemberDto;
-import backend.jangbogoProject.service.MemberService;
+import backend.jangbogoProject.member.domain.Member;
+import backend.jangbogoProject.member.dto.MemberDto;
+import backend.jangbogoProject.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.security.Principal;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 public class MemberController {
@@ -124,6 +120,13 @@ public class MemberController {
 
         ModelAndView mav = new ModelAndView("member/edit-info");
         return mav;
+    }
+
+    @PutMapping("/member/editInfo")
+    public Map<String, Object> updateMember(@RequestBody Member member){
+        Map<String, Object> response = new HashMap<>();
+
+        return response;
     }
 
     // http://localhost:8080/member/favorite

@@ -1,8 +1,8 @@
-package backend.jangbogoProject.service;
+package backend.jangbogoProject.member.service;
 
-import backend.jangbogoProject.domain.Role;
-import backend.jangbogoProject.repository.MemberRepository;
-import backend.jangbogoProject.domain.Member;
+import backend.jangbogoProject.member.domain.Role;
+import backend.jangbogoProject.member.repository.MemberRepository;
+import backend.jangbogoProject.member.domain.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -40,6 +40,20 @@ public class MemberService {
         member.getRoles().add(role);
         memberRepository.save(member);
         return member;
+    }
+
+    public int update(Member member){
+        Optional<Member> findMember = memberRepository.findByEmail(member.getEmail());
+
+        if(findMember.isPresent())
+        {
+            return 0;
+        }
+
+        Member saveMember = findMember.get();
+
+
+        return 1;
     }
 
     public Optional<Member> findEmail(String memberEmail){

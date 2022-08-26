@@ -1,6 +1,6 @@
-package backend.jangbogoProject.repository;
+package backend.jangbogoProject.member.repository;
 
-import backend.jangbogoProject.domain.Member;
+import backend.jangbogoProject.member.domain.Member;
 
 import java.util.List;
 import java.util.Optional;

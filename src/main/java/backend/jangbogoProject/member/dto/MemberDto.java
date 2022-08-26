@@ -1,6 +1,6 @@
-package backend.jangbogoProject.dto;
+package backend.jangbogoProject.member.dto;
 
-import backend.jangbogoProject.domain.Member;
+import backend.jangbogoProject.member.domain.Member;
 import lombok.Builder;
 import lombok.Data;
 
