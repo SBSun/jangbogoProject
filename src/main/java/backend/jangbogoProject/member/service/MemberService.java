@@ -1,16 +1,21 @@
 package backend.jangbogoProject.member.service;
 
 import backend.jangbogoProject.member.domain.Role;
+import backend.jangbogoProject.member.dto.MemberDto;
 import backend.jangbogoProject.member.repository.MemberRepository;
 import backend.jangbogoProject.member.domain.Member;
+import backend.jangbogoProject.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Transactional
-public class MemberService {
+public class MemberService implements UserDetailsService {
     private final MemberRepository memberRepository;
 
     public MemberService(MemberRepository memberRepository) {
@@ -30,8 +35,8 @@ public class MemberService {
                 });
 
         // 비밀번호 암호화
-        //String encodedPassword = passwordEncoder.encode(member.getPassword());
-        //member.setPassword(encodedPassword);
+        String encodedPassword = passwordEncoder.encode(member.getPassword());
+        member.setPassword(encodedPassword);
         member.setEnabled(true);
         
         // 권한을 1 - ROLE_MEMBER로 설정, 현재는 ROLE_MEMBER 이외의 권한이 없음.
@@ -51,7 +56,18 @@ public class MemberService {
         }
 
         Member saveMember = findMember.get();
-
+        if(StringUtils.isNotBlank(member.getPassword()))
+        {
+            saveMember.setPassword(member.getPassword());
+        }
+        if(StringUtils.isNotBlank(member.getAddress()))
+        {
+            saveMember.setPassword(member.getPassword());
+        }
+        if(StringUtils.isNotBlank(member.getPassword()))
+        {
+            saveMember.setPassword(member.getPassword());
+        }
 
         return 1;
     }
@@ -89,5 +105,15 @@ public class MemberService {
 
         //로그인 가능
         return true;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Optional<Member> member = memberRepository.findByEmail(email);
+
+        if(member.isPresent())
+            throw new UsernameNotFoundException("Not Found Email");
+
+        return member.get();
     }
 }
