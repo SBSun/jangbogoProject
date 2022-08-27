@@ -39,7 +39,6 @@ function searchInit() {
     .then(res => res.json())
     .then(res => {
       for (let i = 0; i < res.length; i++) {
-        console.log(res[i].itemSerialNum);
         switch (res[i].itemSerialNum) {
           case 305:
             itemImg = 'apple';
@@ -130,7 +129,7 @@ function searchInit() {
         itemPrice.innerText = `${res[i].itemPrice}원`;
         const favorite = document.createElement('button');
         favorite.className = 'itemBtn';
-        favorite.innerText = '찜 목록애 추가';
+        favorite.innerText = '찜 목록에 추가';
 
         list.appendChild(div);
         div.appendChild(img);

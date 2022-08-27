@@ -84,13 +84,13 @@
 }
 
 .item .marketName {
-  font-size: 12px;
+  font-size: 14.5px;
   color: var(--orange-color);
 }
 
 .item dl dt {
   margin: 5px 0 0 0;
-  font-size: 1.15rem;
+  font-size: 16px;
   font-weight: 600;
   color: var(--black-color);
 }
