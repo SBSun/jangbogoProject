@@ -1,4 +1,4 @@
-package backend.jangbogoProject.Controller;
+package backend.jangbogoProject.member.controller;
 
 import com.google.gson.JsonObject;
 import backend.jangbogoProject.member.domain.Member;

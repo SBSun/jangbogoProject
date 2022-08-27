@@ -1,5 +1,7 @@
 package backend.jangbogoProject.config;
 
+import backend.jangbogoProject.config.auth.CustomAuthFailureHandler;
+import backend.jangbogoProject.config.auth.CustomAuthSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 import javax.sql.DataSource;
 
@@ -21,8 +22,6 @@ public class WebSecurityConfig {
 
     @Autowired
     private DataSource dataSource;
-
-    private final AuthenticationFailureHandler customFailureHandler;
 
     // 규칙 설정
     @Bean
@@ -36,7 +35,15 @@ public class WebSecurityConfig {
                     .antMatchers(   "/","/info", "/member/login", "/member/emailCheck", "/member/register", "/category/**","/css/**", "/js/**", "/File/**").permitAll() // 해당 경로들에 대해서는 권한없이 접근 가능
                     .antMatchers("/logout", "/member/mypage", "/member/editInfo", "/member/favorite").hasRole("MEMBER") // ROLE_MEMBER 권한을 가지고 있는 사용자만 접근 가능
                     .anyRequest().authenticated()   // 모든 요청에 대해, 인증된 사용자만 접근하도록 설정*/
-                .antMatchers("/**").permitAll();
+                    .antMatchers("/**").permitAll();
+                /*
+                .and()
+                .formLogin()
+                    .loginPage("/member/login")
+                    .usernameParameter("email")
+                    .passwordParameter("password")
+                    .successHandler(new CustomAuthSuccessHandler())
+                    .failureHandler(new CustomAuthFailureHandler());*/
         return http.build();
     }
 
@@ -52,6 +59,7 @@ public class WebSecurityConfig {
                         + "from member_role mr inner join member m on mr.member_id = m.id "
                         + "inner join role r on mr.role_id = r.id "
                         + "where m.email = ?");
+
     }
 
     @Bean PasswordEncoder passwordEncoder(){

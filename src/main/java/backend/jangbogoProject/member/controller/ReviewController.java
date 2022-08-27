@@ -1,4 +1,4 @@
-package backend.jangbogoProject.Controller;
+package backend.jangbogoProject.member.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

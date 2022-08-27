@@ -27,7 +27,6 @@ public class MemberService implements UserDetailsService {
     //회원가입
     public Member save(Member member)
     {
-        System.out.println(member.getName());
         //해당 email을 가진 회원이 있으면
         memberRepository.findByEmail(member.getEmail())
                 .ifPresent(member1 -> {
@@ -98,9 +97,9 @@ public class MemberService implements UserDetailsService {
         if(!findMember.isPresent()){
             return false;
         }
-
+        System.out.println(member.getPassword() + ", " + findMember.get().getPassword());
         //비밀번호 동일하지 않으면 로그인 X
-        if(!findMember.get().getPassword().equals(member.getPassword())){
+        if(!passwordEncoder.matches(member.getPassword(), findMember.get().getPassword())){
             return false;
         }
 
@@ -111,9 +110,13 @@ public class MemberService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<Member> member = memberRepository.findByEmail(email);
-
+        System.out.println("loadUserByUsername");
         if(member.isPresent())
+            System.out.println(email + " 존재");
+        else
+        {
             throw new UsernameNotFoundException("Not Found Email");
+        }
 
         return member.get();
     }
