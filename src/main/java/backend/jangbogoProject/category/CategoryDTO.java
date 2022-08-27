@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class CategoryDTO {
     private Long categoryId;
+    private String branch;
+    private String code;
     private String name;
     private String parentCategoryName;
     private Integer level;
@@ -20,6 +22,8 @@ public class CategoryDTO {
     public CategoryDTO (Category entity) {
 
         this.categoryId = entity.getId();
+        this.branch = entity.getBranch();
+        this.code = entity.getCode();
         this.name = entity.getName();
         this.level = entity.getLevel();
         if(entity.getParentCategory() == null) {
@@ -39,8 +43,10 @@ public class CategoryDTO {
 
     public Category toEntity () {
         return Category.builder()
-                .level(level)
+                .branch(branch)
+                .code(code)
                 .name(name)
+                .level(level)
                 .build();
     }
 }

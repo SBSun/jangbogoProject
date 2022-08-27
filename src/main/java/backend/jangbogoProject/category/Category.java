@@ -16,8 +16,10 @@ import java.util.List;
 public class Category {
     @Id @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
-
+    private String branch;
+    private String code;
     private String name;
+    private Integer level;
 
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn (name ="parent_id")
@@ -26,12 +28,13 @@ public class Category {
     @OneToMany (mappedBy = "parentCategory", cascade = CascadeType.ALL)
     private List<Category> subCategory = new ArrayList<>();
 
-    private Integer level;
-
     @Builder
-    public Category(String name, Category parentCategory, Integer level) {
+    public Category(Long id, String branch, String code, String name, Integer level, List<Category> subCategory) {
+        this.id = id;
+        this.branch = branch;
+        this.code = code;
         this.name = name;
-        this.parentCategory = parentCategory;
         this.level = level;
+        this.subCategory = subCategory;
     }
 }

@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     Optional<Category> findByName (String name);
-
+    Optional<Category> findByBranchAndName (String branch, String name);
     //DB를 탐색해서 해당 카테고리가 있는지 없는지 여부
-    Boolean existsByName(String name);
+    Boolean existsByBranchAndName(String branch, String name);
 }
