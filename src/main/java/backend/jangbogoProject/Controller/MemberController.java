@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 public class MemberController {
@@ -34,12 +35,20 @@ public class MemberController {
     }
 
     @PostMapping("/member/login")
-    public String login(@RequestBody Map<String, String> loginMember) {
-        Member member = memberService.findEmail(loginMember.get("email"))
-                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 이메일입니다."));
-
+    public String login(@RequestBody MemberDto memberDto) {
         JsonObject data = new JsonObject();
-        data.addProperty("token", "123");
+        Member member = memberDto.toEntity();
+
+        if(memberService.login(member))
+        {
+            System.out.println("로그인 성공");
+            data.addProperty("token", "123");
+        }
+        else
+        {
+            System.out.println("존재하지 않는 이메일이거나 비밀번호가 일치하지 않습니다.");
+            data.addProperty("res", "존재하지 않는 이메일이거나 비밀번호가 일치하지 않습니다.");
+        }
 
         return data.toString();
     }

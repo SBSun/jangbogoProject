@@ -46,7 +46,8 @@ public class MemberService implements UserDetailsService {
         memberRepository.save(member);
         return member;
     }
-
+    
+    @Transactional
     public int update(Member member){
         Optional<Member> findMember = memberRepository.findByEmail(member.getEmail());
 
