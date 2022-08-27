@@ -39,6 +39,7 @@ function searchInit() {
     .then(res => res.json())
     .then(res => {
       for (let i = 0; i < res.length; i++) {
+        console.log(res[i].itemSerialNum);
         switch (res[i].itemSerialNum) {
           case 305:
             itemImg = 'apple';
@@ -47,7 +48,7 @@ function searchInit() {
             itemImg = 'beef';
             break;
           case 26:
-          case 207:
+          case 307:
             itemImg = 'cabbage';
             break;
           case 18:
@@ -93,7 +94,7 @@ function searchInit() {
           case 202:
             itemImg = 'pork';
             break;
-          case 199:
+          case 119:
             itemImg = 'pumpkin';
             break;
           case 25:
