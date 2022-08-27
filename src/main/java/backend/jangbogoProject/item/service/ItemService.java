@@ -1,11 +1,13 @@
 package backend.jangbogoProject.item.service;
 
 import backend.jangbogoProject.item.domain.Item;
+import backend.jangbogoProject.item.domain.Market;
 import backend.jangbogoProject.item.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Transactional
@@ -33,5 +35,16 @@ public class ItemService {
     public List<Item> findAllByLowestPriceInGu(int marketGuCode)
     {
         return itemRepository.findAllByLowestPriceInGu(marketGuCode);
+    }
+
+    public List<Market> findAllByMarketsInGu(int marketGuCode)
+    {
+        List<Market> marketList = new ArrayList<>();
+        List<Item> itemList = itemRepository.findAllByMarketsInGu(marketGuCode);
+        for (int i = 0; i < itemList.size(); i++) {
+            Market market = new Market(itemList.get(i).getMarketGuCode(), itemList.get(i).getMarketSerialNum(), itemList.get(i).getMarketName());
+            marketList.add(market);
+        }
+        return marketList;
     }
 }

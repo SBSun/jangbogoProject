@@ -1,10 +1,12 @@
 package backend.jangbogoProject;
 
 import backend.jangbogoProject.item.domain.Item;
+import backend.jangbogoProject.item.domain.Market;
 import backend.jangbogoProject.item.service.ItemService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.yaml.snakeyaml.error.Mark;
 
 import java.util.List;
 
@@ -26,10 +28,10 @@ public class ItemServiceTest {
     @Test
     void FindAllByMarketGuCode()
     {
-        List<Item> items = itemService.findAllByLowestPriceInGu(320000);
+        List<Market> marketList = itemService.findAllByMarketsInGu(320000);
 
-        for (int i = 0; i < items.size(); i++) {
-            System.out.println(items.get(i).getMarketName() + ", " + items.get(i).getItemName());
+        for (int i = 0; i < marketList.size(); i++) {
+            System.out.println(marketList.get(i).getGuCode() + ", " + marketList.get(i).getMarketName());
         }
     }
 }

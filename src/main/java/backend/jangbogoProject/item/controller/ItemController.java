@@ -1,6 +1,7 @@
 package backend.jangbogoProject.item.controller;
 
 import backend.jangbogoProject.item.domain.Item;
+import backend.jangbogoProject.item.domain.Market;
 import backend.jangbogoProject.item.service.ItemService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,16 @@ public class ItemController {
         Gson gson = new Gson();
         String listJson = gson.toJson(items, List.class).toString();
         System.out.println(listJson);
+        return listJson;
+    }
+
+    @GetMapping("/marketsInGu")
+    public String getMarketsInGu(@RequestParam int guCode)
+    {
+        List<Market> marketList = itemService.findAllByMarketsInGu(guCode);
+
+        Gson gson = new Gson();
+        String listJson = gson.toJson(marketList, List.class).toString();
         return listJson;
     }
 
