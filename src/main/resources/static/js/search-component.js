@@ -48,7 +48,7 @@ function searchInit() {
             itemImg = 'beef';
             break;
           case 26:
-          case 207:
+          case 307:
             itemImg = 'cabbage';
             break;
           case 18:
@@ -94,7 +94,7 @@ function searchInit() {
           case 202:
             itemImg = 'pork';
             break;
-          case 199:
+          case 119:
             itemImg = 'pumpkin';
             break;
           case 25:
@@ -130,7 +130,7 @@ function searchInit() {
         itemPrice.innerText = `${res[i].itemPrice}원`;
         const favorite = document.createElement('button');
         favorite.className = 'itemBtn';
-        favorite.innerText = '찜 목록애 추가';
+        favorite.innerText = '찜 목록에 추가';
 
         list.appendChild(div);
         div.appendChild(img);
