@@ -173,20 +173,28 @@ function onLoadMarket() {
     .then(res => {
       for (let i = 0; i < res.length; i++) {
         if (res[i].marketName.includes('홈플러스')) {
-          marketImg = 'homeplus.png';
+          marketImg = 'homeplus';
         } else if (res[i].marketName.includes('이마트')) {
-          marketImg = 'emart.png';
-        } else if (res[i].marketName.includes('롯데')) {
-          marketImg = 'lotte.png';
+          marketImg = 'emart';
+        } else if (res[i].marketName.includes('롯데백화점')) {
+          marketImg = 'lotte';
+        } else if (res[i].marketName.includes('롯데슈퍼')) {
+          marketImg = 'lottesuper';
+        } else if (res[i].marketName.includes('하나로')) {
+          marketImg = 'hanaro';
+        } else if (res[i].marketName.includes('현대백화점')) {
+          marketImg = 'hyundai';
+        } else if (res[i].marketName.includes('신세계')) {
+          marketImg = 'sinsekai';
         } else {
-          marketImg = 'tradition.jpg';
+          marketImg = 'tradition';
         }
 
         const div = document.createElement('div');
         div.className = 'market';
         const a = document.createElement('a');
         const img = document.createElement('img');
-        img.src = `../File/market/${marketImg}`;
+        img.src = `../File/market/${marketImg}.png`;
         const name = document.createElement('div');
         name.className = 'marketName';
         name.innerText = res[i].marketName;
