@@ -51,13 +51,13 @@ function setLocation() {
 function onLoadItem() {
   const list = document.querySelector('.itemList');
   const guCode = sessionStorage.getItem('guCode');
+  let itemImg = 'item';
   fetch(`/lowestPriceInGu?guCode=${guCode}`, {
     method: 'GET',
   })
     .then(res => res.json())
     .then(res => {
       for (let i = 0; i < res.length; i++) {
-        console.log(res[i].itemSerialNum);
         switch (res[i].itemSerialNum) {
           case 305:
             itemImg = 'apple';
@@ -160,8 +160,41 @@ function onLoadItem() {
         info.appendChild(priceArea);
         priceArea.appendChild(itemPrice);
         div.appendChild(favorite);
-
         margin();
+      }
+    });
+}
+function onLoadMarket() {
+  const list = document.querySelector('.marketList');
+  const guCode = sessionStorage.getItem('guCode');
+  let marketImg = 'tradition';
+  fetch(`/marketsInGu?guCode=${guCode}`)
+    .then(res => res.json())
+    .then(res => {
+      for (let i = 0; i < res.length; i++) {
+        if (res[i].marketName.includes('홈플러스')) {
+          marketImg = 'homeplus.png';
+        } else if (res[i].marketName.includes('이마트')) {
+          marketImg = 'emart.png';
+        } else if (res[i].marketName.includes('롯데')) {
+          marketImg = 'lotte.png';
+        } else {
+          marketImg = 'tradition.jpg';
+        }
+
+        const div = document.createElement('div');
+        div.className = 'market';
+        const a = document.createElement('a');
+        const img = document.createElement('img');
+        img.src = `../File/market/${marketImg}`;
+        const name = document.createElement('div');
+        name.className = 'marketName';
+        name.innerText = res[i].marketName;
+
+        list.appendChild(div);
+        div.appendChild(a);
+        a.appendChild(img);
+        a.appendChild(name);
       }
     });
 }
@@ -173,3 +206,4 @@ locations.forEach(location => {
 
 setLocation();
 onLoadItem();
+onLoadMarket();
