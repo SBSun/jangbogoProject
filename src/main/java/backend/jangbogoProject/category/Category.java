@@ -1,5 +1,6 @@
 package backend.jangbogoProject.category;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,6 +28,7 @@ public class Category {
 
     private Integer level;
 
+    @Builder
     public Category(String name, Category parentCategory, Integer level) {
         this.name = name;
         this.parentCategory = parentCategory;
