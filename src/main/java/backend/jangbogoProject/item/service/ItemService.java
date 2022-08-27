@@ -36,15 +36,4 @@ public class ItemService {
     {
         return itemRepository.findAllByLowestPriceInGu(marketGuCode);
     }
-
-    public List<Market> findAllByMarketsInGu(int marketGuCode)
-    {
-        List<Market> marketList = new ArrayList<>();
-        List<Item> itemList = itemRepository.findAllByMarketsInGu(marketGuCode);
-        for (int i = 0; i < itemList.size(); i++) {
-            Market market = new Market(itemList.get(i).getMarketGuCode(), itemList.get(i).getMarketSerialNum(), itemList.get(i).getMarketName());
-            marketList.add(market);
-        }
-        return marketList;
-    }
 }

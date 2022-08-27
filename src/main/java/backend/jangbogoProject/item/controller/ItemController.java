@@ -47,16 +47,6 @@ public class ItemController {
         return listJson;
     }
 
-    @GetMapping("/marketsInGu")
-    public String getMarketsInGu(@RequestParam int guCode)
-    {
-        List<Market> marketList = itemService.findAllByMarketsInGu(guCode);
-
-        Gson gson = new Gson();
-        String listJson = gson.toJson(marketList, List.class).toString();
-        return listJson;
-    }
-
     // http://localhost:8080/category/fruit
     @GetMapping("/category/{type}")
     public ModelAndView category(@PathVariable String type)

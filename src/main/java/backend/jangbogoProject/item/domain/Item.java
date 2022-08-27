@@ -12,7 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 public class Item {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //MySQL의 AUTO_INCREMENT를 사용
     @Column(name="P_SEQ")
     private int serialNum; // 일련번호
     @Column(name="M_SEQ")
