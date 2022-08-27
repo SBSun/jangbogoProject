@@ -1,12 +1,3 @@
-/* 추천 품목 마진 넣기 */
-function margin() {
-  let item = document.querySelectorAll('.item');
-
-  for (let i = 1; i < item.length; i++) {
-    item[i].style.marginLeft = '20px';
-  }
-}
-
 let banner = {
   rollId: null,
   interval: 2000,
@@ -60,5 +51,3 @@ let banner = {
 document.addEventListener('DOMContentLoaded', function () {
   banner.rollInit(4000); // 배너 롤링
 });
-
-margin();
