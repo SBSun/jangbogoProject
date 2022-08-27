@@ -32,16 +32,15 @@
 }
 
 #market-name {
-  font-size: 14px;
+  font-size: 14.5px;
   color: var(--orange-color);
 }
 
 dl dt {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 dl dd {
-  font-size: 16px;
   color: var(--gray-color);
 }
 
