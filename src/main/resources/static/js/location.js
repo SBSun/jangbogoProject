@@ -193,6 +193,7 @@ function onLoadMarket() {
         const div = document.createElement('div');
         div.className = 'market';
         const a = document.createElement('a');
+        a.href = '../review/market';
         const img = document.createElement('img');
         img.src = `../File/market/${marketImg}.png`;
         const name = document.createElement('div');
