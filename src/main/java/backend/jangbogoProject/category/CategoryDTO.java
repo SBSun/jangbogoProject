@@ -11,12 +11,12 @@ import java.util.stream.Collectors;
 @Setter
 @NoArgsConstructor
 public class CategoryDTO {
-    private Long categoryId;
+    private int categoryId;
     private String branch;
     private String code;
     private String name;
     private String parentCategoryName;
-    private Integer level;
+    private int level;
     private Map<String, CategoryDTO> children;
 
     public CategoryDTO (Category entity) {

@@ -14,7 +14,7 @@ import java.util.Optional;
 public class CategoryService {
     private final CategoryRepository categoryRepository;
 
-    public Long saveCategory (CategoryDTO categoryDTO) {
+    public int saveCategory (CategoryDTO categoryDTO) {
         Category category = categoryDTO.toEntity();
 //대분류 등록
         if (categoryDTO.getParentCategoryName() == null) {
@@ -67,14 +67,14 @@ public class CategoryService {
         return data;
     }
 
-    public Category findCategory(Long categoryId){
+    public Category findCategory(int categoryId){
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new IllegalArgumentException("CategoryId에 해당하는 카테고리 없음"));
 
         return category;
     }
 
-    public void deleteCategory(Long categoryId){
+    public void deleteCategory(int categoryId){
         Category category = findCategory(categoryId);
 
         // 하위 카테고리가 없을 경우
