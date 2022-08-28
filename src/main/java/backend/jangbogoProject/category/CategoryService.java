@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -35,8 +37,10 @@ public class CategoryService {
             }
             category.setParentCategory(rootCategory);
             category.setLevel(1);
-            //중, 소분류 등록
-        } else {
+
+        }
+        //중, 소분류 등록
+        else {
             String parentCategoryName = categoryDTO.getParentCategoryName();
             Category parentCategory = categoryRepository.findByBranchAndName(categoryDTO.getBranch(), parentCategoryName)
                     .orElseThrow(() -> new IllegalArgumentException("부모 카테고리 없음 예외"));
@@ -47,5 +51,18 @@ public class CategoryService {
 
         //category.setLive(true);
         return categoryRepository.save(category).getId();
+    }
+
+    // 대분류를 return 하여 하위 모든 카테고리를 가져오도록
+    public Map<String, CategoryDTO> getCategoryByBranch(String branch){
+        Category category = categoryRepository.findByBranchAndName(branch, "ROOT")
+                .orElseThrow(() -> new IllegalArgumentException("찾는 대분류가 없습니다."));
+
+        CategoryDTO categoryDTO = new CategoryDTO(category);
+
+        Map<String, CategoryDTO> data = new HashMap<>();
+        data.put(categoryDTO.getName(), categoryDTO);
+
+        return data;
     }
 }
