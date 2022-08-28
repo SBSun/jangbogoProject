@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -64,5 +65,31 @@ public class CategoryService {
         data.put(categoryDTO.getName(), categoryDTO);
 
         return data;
+    }
+
+    public Category findCategory(Long categoryId){
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new IllegalArgumentException("CategoryId에 해당하는 카테고리 없음"));
+
+        return category;
+    }
+
+    public void deleteCategory(Long categoryId){
+        Category category = findCategory(categoryId);
+
+        // 하위 카테고리가 없을 경우
+        if(category.getSubCategory().size() == 0){
+            Category parentCategory = findCategory(category.getParentCategory().getId());
+            if(!parentCategory.getName().equals("ROOT")){
+                parentCategory.getSubCategory().remove(category);
+            }
+            categoryRepository.deleteById(category.getId());
+        }else{ // 하위 카테고리가 있을 경우
+            Category parentCategory = findCategory(category.getParentCategory().getId());
+            if(!parentCategory.getName().equals("ROOT")){
+                parentCategory.getSubCategory().remove(category);
+            }
+            category.setName("Deleted Category");
+        }
     }
 }
