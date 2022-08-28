@@ -28,7 +28,6 @@ public class CategoryService {
                     .orElseGet( () ->
                             Category.builder()
                                     .name("ROOT")
-                                    .code("ROOT")
                                     .branch(categoryDTO.getBranch())
                                     .level(0)
                                     .build()

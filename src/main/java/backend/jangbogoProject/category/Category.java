@@ -18,7 +18,6 @@ public class Category {
     @Column (name ="category_id")
     private int id;
     private String branch;
-    private String code;
     private String name;
     private int level;
 
@@ -30,10 +29,9 @@ public class Category {
     private List<Category> subCategory = new ArrayList<>();
 
     @Builder
-    public Category(int id, String branch, String code, String name, int level, List<Category> subCategory) {
+    public Category(int id, String branch, String name, int level, List<Category> subCategory) {
         this.id = id;
         this.branch = branch;
-        this.code = code;
         this.name = name;
         this.level = level;
         this.subCategory = subCategory;
