@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -16,7 +17,7 @@ public class CategoryDTO {
     private String name;
     private String parentCategoryName;
     private int level;
-    private Map<String, CategoryDTO> children;
+    private List<CategoryDTO> children;
 
     public CategoryDTO (Category entity) {
 
@@ -25,7 +26,6 @@ public class CategoryDTO {
         this.name = entity.getName();
         this.level = entity.getLevel();
         if(entity.getParentCategory() == null) {
-
             this.parentCategoryName = "대분류";
 
         } else {
@@ -36,7 +36,7 @@ public class CategoryDTO {
 
         // entity.getParentCategory이 null 일 경우
         this.children = entity.getSubCategory() == null ? null :
-                entity.getSubCategory().stream().collect(Collectors.toMap(Category::getName, CategoryDTO::new));
+                entity.getSubCategory().stream().map(CategoryDTO::new).collect(Collectors.toList());
     }
 
     public Category toEntity () {

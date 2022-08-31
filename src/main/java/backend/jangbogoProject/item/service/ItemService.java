@@ -1,5 +1,7 @@
 package backend.jangbogoProject.item.service;
 
+import backend.jangbogoProject.category.Category;
+import backend.jangbogoProject.category.CategoryRepository;
 import backend.jangbogoProject.item.domain.Item;
 import backend.jangbogoProject.item.domain.Market;
 import backend.jangbogoProject.item.repository.ItemRepository;
@@ -16,6 +18,7 @@ import java.util.List;
 public class ItemService {
 
     private final ItemRepository itemRepository;
+    private final CategoryRepository categoryRepository;
 
     public List<Item> findAllByItemSerialNum(int itemSerialNum)
     {
@@ -36,4 +39,10 @@ public class ItemService {
     {
         return itemRepository.findAllByLowestPriceInGu(marketGuCode);
     }
+
+    /*
+    public List<Item> findAllByCategory(int categoryId)
+    {
+        Category category =
+    }*/
 }

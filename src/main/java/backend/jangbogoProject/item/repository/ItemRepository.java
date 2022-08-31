@@ -20,6 +20,4 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 
     @Query(value = "SELECT DISTINCT * FROM Item i1, ( SELECT MIN(A_PRICE) A_PRICE, P_SEQ FROM Item i2 WHERE M_GU_CODE = ?1 GROUP BY A_SEQ) i2 WHERE i1.P_SEQ = i2.P_SEQ", nativeQuery = true)
     public List<Item> findAllByLowestPriceInGu(int marketGuCode);
-
-
 }

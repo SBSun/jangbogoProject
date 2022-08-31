@@ -45,6 +45,16 @@ public class CategoryServiceTest {
     }
 
     @Test
+    public void 카테고리_하위카테고리_반환_테스트(){
+        int categoryId = categoryRepository.findIdByBranchAndName("축산물", "ROOT");
+        Category category = findCategory(categoryId);
+        CategoryDTO categoryDTO = new CategoryDTO(category);
+        Gson gson = new Gson();
+        String json = gson.toJson(categoryDTO.getChildren(), List.class).toString();
+        System.out.println(json);
+    }
+
+    @Test
     public void 카테고리_저장_테스트 () {
         //given
         CategoryDTO categoryDTO = createCategoryDTO("TestBranch", "TestName");

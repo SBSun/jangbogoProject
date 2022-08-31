@@ -1,5 +1,8 @@
 package backend.jangbogoProject.item.controller;
 
+import backend.jangbogoProject.category.Category;
+import backend.jangbogoProject.category.CategoryDTO;
+import backend.jangbogoProject.category.CategoryService;
 import backend.jangbogoProject.item.domain.Item;
 import backend.jangbogoProject.item.domain.Market;
 import backend.jangbogoProject.item.service.ItemService;
@@ -17,6 +20,8 @@ import java.util.List;
 public class ItemController {
     @Autowired
     private ItemService itemService;
+    @Autowired
+    private CategoryService categoryService;
 
     @GetMapping("/member/search")
     public ModelAndView searchPage(){
@@ -49,9 +54,21 @@ public class ItemController {
 
     // http://localhost:8080/category/fruit
     @GetMapping("/category/{type}")
-    public ModelAndView category(@PathVariable String type)
+    public ModelAndView categoryForm(@PathVariable String type)
     {
         ModelAndView mav = new ModelAndView("category/" + type);
         return mav;
+    }
+
+    @GetMapping("/category")
+    public String getCategoryItems(@RequestParam int categoryId)
+    {
+        Category category = categoryService.findCategory(categoryId);
+        List<Category> subCategoryList = category.getSubCategory();
+        Gson gson = new Gson();
+        String json = gson.toJson(category.getSubCategory(), List.class).toString();
+        System.out.println(json);
+
+        return json;
     }
 }
