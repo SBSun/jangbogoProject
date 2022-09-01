@@ -58,38 +58,50 @@ function onLoadItem() {
     .then(res => res.json())
     .then(res => {
       for (let i = 0; i < res.length; i++) {
+        console.log(res[i].itemSerialNum);
         switch (res[i].itemSerialNum) {
           case 305:
+          case 50:
+          case 28:
             itemImg = 'apple';
             break;
           case 58:
+          case 131:
             itemImg = 'beef';
             break;
           case 26:
           case 307:
+          case 125:
             itemImg = 'cabbage';
             break;
           case 18:
+          case 138:
           case 275:
           case 283:
             itemImg = 'chicken';
             break;
           case 311:
+          case 22:
             itemImg = 'cucumber';
             break;
           case 171:
           case 320:
+          case 17:
             itemImg = 'eggs';
             break;
           case 266:
           case 267:
           case 268:
+          case 269:
             itemImg = 'godeung';
             break;
           case 136:
           case 144:
           case 259:
           case 260:
+          case 303:
+          case 313:
+          case 314:
             itemImg = 'jogi';
             break;
           case 23:
@@ -99,12 +111,17 @@ function onLoadItem() {
           case 152:
           case 264:
           case 265:
+          case 302:
             itemImg = 'myeong';
             break;
+          case 24:
           case 309:
+          case 272:
             itemImg = 'onion';
             break;
           case 306:
+          case 27:
+          case 276:
             itemImg = 'pear';
             break;
           case 52:
@@ -113,18 +130,23 @@ function onLoadItem() {
             itemImg = 'pork';
             break;
           case 119:
+          case 312:
+          case 277:
             itemImg = 'pumpkin';
             break;
           case 25:
           case 133:
           case 274:
           case 308:
+          case 282:
             itemImg = 'radish';
             break;
           case 254:
           case 256:
             itemImg = 'squid';
             break;
+          default:
+            itemImg = 'none';
         }
 
         const div = document.createElement('div');
