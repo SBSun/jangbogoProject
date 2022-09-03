@@ -1,10 +1,8 @@
 package backend.jangbogoProject.item.controller;
 
 import backend.jangbogoProject.category.Category;
-import backend.jangbogoProject.category.CategoryDTO;
 import backend.jangbogoProject.category.CategoryService;
 import backend.jangbogoProject.item.domain.Item;
-import backend.jangbogoProject.item.domain.Market;
 import backend.jangbogoProject.item.service.ItemService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +63,15 @@ public class ItemController {
     {
         Category category = categoryService.findCategory(categoryId);
         List<Category> subCategoryList = category.getSubCategory();
+
+        if(subCategoryList.size() > 0){
+            for (int i = 0; i < subCategoryList.size(); i++) {
+                
+            }
+        }else{
+
+        }
+
         Gson gson = new Gson();
         String json = gson.toJson(category.getSubCategory(), List.class).toString();
         System.out.println(json);

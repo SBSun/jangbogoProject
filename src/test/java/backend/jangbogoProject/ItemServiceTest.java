@@ -1,13 +1,12 @@
 package backend.jangbogoProject;
 
 import backend.jangbogoProject.item.domain.Item;
-import backend.jangbogoProject.item.domain.Market;
+import backend.jangbogoProject.market.Market;
 import backend.jangbogoProject.item.service.ItemService;
-import backend.jangbogoProject.item.service.MarketService;
+import backend.jangbogoProject.market.MarketService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.yaml.snakeyaml.error.Mark;
 
 import java.util.List;
 

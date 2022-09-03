@@ -1,4 +1,4 @@
-package backend.jangbogoProject.item.domain;
+package backend.jangbogoProject.market;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

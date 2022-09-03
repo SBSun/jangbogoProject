@@ -1,8 +1,5 @@
-package backend.jangbogoProject.item.controller;
+package backend.jangbogoProject.market;
 
-import backend.jangbogoProject.item.domain.Market;
-import backend.jangbogoProject.item.service.ItemService;
-import backend.jangbogoProject.item.service.MarketService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

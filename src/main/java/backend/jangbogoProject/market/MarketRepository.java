@@ -1,7 +1,5 @@
-package backend.jangbogoProject.item.repository;
+package backend.jangbogoProject.market;
 
-import backend.jangbogoProject.item.domain.Item;
-import backend.jangbogoProject.item.domain.Market;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
