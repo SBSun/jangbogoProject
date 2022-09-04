@@ -51,10 +51,10 @@ public class ItemController {
     }
 
     // http://localhost:8080/category/fruit
-    @GetMapping("/category/{type}")
-    public ModelAndView categoryForm(@PathVariable String type)
+    @GetMapping("/category")
+    public ModelAndView categoryForm()
     {
-        ModelAndView mav = new ModelAndView("category/" + type);
+        ModelAndView mav = new ModelAndView("member/category");
         return mav;
     }
 
