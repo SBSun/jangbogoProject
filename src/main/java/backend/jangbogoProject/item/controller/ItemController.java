@@ -58,24 +58,14 @@ public class ItemController {
         return mav;
     }
 
-    @GetMapping("/category")
-    public String getCategoryItems(@RequestParam int categoryId)
+    @GetMapping("/categoryInGu")
+    public String getCategoryItems(@RequestParam int guCode, @RequestParam String branch)
     {
-        Category category = categoryService.findCategory(categoryId);
-        List<Category> subCategoryList = category.getSubCategory();
-
-        if(subCategoryList.size() > 0){
-            for (int i = 0; i < subCategoryList.size(); i++) {
-                
-            }
-        }else{
-
-        }
+        List<Item> items = itemService.findAllByCategoryInGu(guCode, branch);
 
         Gson gson = new Gson();
-        String json = gson.toJson(category.getSubCategory(), List.class).toString();
-        System.out.println(json);
-
-        return json;
+        String listJson = gson.toJson(items, List.class).toString();
+        System.out.println(listJson);
+        return listJson;
     }
 }
