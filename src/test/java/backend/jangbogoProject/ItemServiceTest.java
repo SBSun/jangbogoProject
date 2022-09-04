@@ -36,4 +36,14 @@ public class ItemServiceTest {
             System.out.println(marketList.get(i).getGuCode() + ", " + marketList.get(i).getMarketName());
         }
     }
+
+    @Test
+    void FindAllByCategoryInGu()
+    {
+        List<Item> items = itemService.findAllByCategoryInGu(740000, "해산물");
+
+        for (int i = 0; i < items.size(); i++) {
+            System.out.println(items.get(i).getItemName() + ", " + items.get(i).getItemPrice());
+        }
+    }
 }
