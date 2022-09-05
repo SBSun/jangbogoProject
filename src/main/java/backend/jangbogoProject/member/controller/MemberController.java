@@ -131,11 +131,12 @@ public class MemberController {
         return mav;
     }
 
-    @PutMapping("/member/editInfo")
-    public Map<String, Object> updateMember(@RequestBody Member member){
-        Map<String, Object> response = new HashMap<>();
+    @PutMapping("/member/updatePassword")
+    public Map<String, Object> updatePassword(@RequestBody MemberDto memberDto){
 
-        return response;
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("res", memberService.updatePassword(memberDto.toEntity()));
+        return resultMap;
     }
 
     // http://localhost:8080/member/favorite

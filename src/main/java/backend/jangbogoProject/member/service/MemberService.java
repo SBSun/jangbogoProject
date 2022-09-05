@@ -47,29 +47,40 @@ public class MemberService implements UserDetailsService {
     }
     
     @Transactional
-    public int update(Member member){
+    public String updatePassword(Member member){
         Optional<Member> findMember = memberRepository.findByEmail(member.getEmail());
 
-        if(findMember.isPresent())
+        if(!findMember.isPresent())
         {
-            return 0;
+            return "존재하지 않는 이메일입니다.";
         }
 
         Member saveMember = findMember.get();
         if(StringUtils.isNotBlank(member.getPassword()))
         {
-            saveMember.setPassword(member.getPassword());
-        }
-        if(StringUtils.isNotBlank(member.getAddress()))
-        {
-            saveMember.setPassword(member.getPassword());
-        }
-        if(StringUtils.isNotBlank(member.getPassword()))
-        {
-            saveMember.setPassword(member.getPassword());
+            saveMember.setPassword(passwordEncoder.encode(member.getPassword()));
         }
 
-        return 1;
+        return "비밀번호 수정 성공";
+    }
+
+    @Transactional
+    public String updateOtherInfo(Member member){
+        Optional<Member> findMember = memberRepository.findByEmail(member.getEmail());
+
+        if(findMember.isPresent())
+        {
+            return "존재하지 않는 이메일입니다.";
+        }
+
+        Member saveMember = findMember.get();
+
+        if(StringUtils.isNotBlank(member.getAddress()))
+        {
+            saveMember.setAddress(member.getAddress());
+        }
+
+        return "비밀번호 수정 성공";
     }
 
     public Optional<Member> findEmail(String memberEmail){
