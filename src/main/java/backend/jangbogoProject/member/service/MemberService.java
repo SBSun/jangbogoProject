@@ -75,16 +75,31 @@ public class MemberService implements UserDetailsService {
 
         Member saveMember = findMember.get();
 
+        if(StringUtils.isNotBlank(member.getName()))
+        {
+            saveMember.setName(member.getName());
+        }
         if(StringUtils.isNotBlank(member.getAddress()))
         {
             saveMember.setAddress(member.getAddress());
         }
+        if(StringUtils.isNotBlank(member.getTel()))
+        {
+            saveMember.setTel(member.getTel());
+        }
 
-        return "비밀번호 수정 성공";
+        return "인적사항 수정 성공";
     }
 
     public Optional<Member> findEmail(String memberEmail){
-        return memberRepository.findByEmail(memberEmail);
+        Optional<Member> member = memberRepository.findByEmail(memberEmail);
+
+        if(member.isPresent()) {
+            return member;
+        }else{
+            System.out.println("존재하지 않는 이메일입니다.");
+            return null;
+        }
     }
 
     public int isCheckEmail(String memberEmail){

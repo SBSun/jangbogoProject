@@ -139,6 +139,14 @@ public class MemberController {
         return resultMap;
     }
 
+    @PutMapping("/member/updateOtherInfo")
+    public Map<String, Object> updateOtherInfo(@RequestBody MemberDto memberDto){
+
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("res", memberService.updateOtherInfo(memberDto.toEntity()));
+        return resultMap;
+    }
+
     // http://localhost:8080/member/favorite
     @GetMapping("/member/favorite")
     public ModelAndView favorite() {
