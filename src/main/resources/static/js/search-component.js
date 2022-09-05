@@ -1,7 +1,7 @@
 const searchForm = document.querySelector('.navbar__searchbar form');
 const searchContent = document.querySelector('#navbar__search_input');
 
-function onSearch(event) {
+function moveSearch(event) {
   event.preventDefault();
   if (sessionStorage.getItem('searchContent')) {
     sessionStorage.removeItem('searchContent', searchContent.value);
@@ -128,4 +128,4 @@ function searchInit() {
     });
 }
 
-searchForm.addEventListener('submit', onSearch);
+searchForm.addEventListener('submit', moveSearch);
