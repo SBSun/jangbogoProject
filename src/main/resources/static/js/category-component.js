@@ -1,23 +1,24 @@
-const searchForm = document.querySelector('.navbar__searchbar form');
-const searchContent = document.querySelector('#navbar__search_input');
+const category = Array.from(document.querySelectorAll('.category-btn'));
 
-function moveSearch(event) {
-  event.preventDefault();
-  if (sessionStorage.getItem('searchContent')) {
-    sessionStorage.removeItem('searchContent', searchContent.value);
-    sessionStorage.setItem('searchContent', searchContent.value);
+function moveCategory(e) {
+  e.preventDefault();
+  const id = parseInt(e.target.id);
+  console.log(id, e.target);
+  if (sessionStorage.getItem('category')) {
+    sessionStorage.removeItem('category');
+    sessionStorage.setItem('category', category[id].dataset.value);
   } else {
-    sessionStorage.setItem('searchContent', searchContent.value);
+    sessionStorage.setItem('category', category[id].dataset.value);
   }
-  location.replace('/member/search');
+  location.replace('/category');
 }
-function searchInit() {
-  const content = sessionStorage.getItem('searchContent');
-  const title = document.querySelector('.search__title');
-  const list = document.querySelector('.search_itemlist');
-  let itemImg = 'img url';
-  title.innerText = `검색 결과 "${content}"`;
-  fetch(`/member/searchContent?content=${content}`)
+function categoryInit() {
+  const content = sessionStorage.getItem('category');
+  const guCode = sessionStorage.getItem('guCode');
+  const title = document.querySelector('.cate_title');
+  title.innerText = content;
+  const list = document.querySelector('.cate_itemlist');
+  fetch(`categoryInGu?guCode=${guCode}&branch=${content}`)
     .then(res => res.json())
     .then(res => {
       for (let i = 0; i < res.length; i++) {
@@ -129,4 +130,6 @@ function searchInit() {
     });
 }
 
-searchForm.addEventListener('submit', moveSearch);
+category.forEach(cate => {
+  cate.addEventListener('click', moveCategory);
+});
