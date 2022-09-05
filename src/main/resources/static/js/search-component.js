@@ -14,8 +14,8 @@ function moveSearch(event) {
 function searchInit() {
   const content = sessionStorage.getItem('searchContent');
   const title = document.querySelector('.search__title');
-  let itemImg = 'img url';
   const list = document.querySelector('.search_itemlist');
+  let itemImg = 'img url';
   title.innerText = `검색 결과 "${content}"`;
   fetch(`/member/searchContent?content=${content}`)
     .then(res => res.json())
@@ -89,6 +89,8 @@ function searchInit() {
           case 256:
             itemImg = 'squid';
             break;
+          default:
+            itemImg = 'none';
         }
 
         const div = document.createElement('div');

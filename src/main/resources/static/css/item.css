@@ -1,10 +1,8 @@
-/* nav 로그인 */
 .navbar__sign {
   font-size: 24px;
   z-index: 1;
 }
 
-/* 정렬 */
 .line__top {
   margin: 0.5rem 0 1rem 0;
   margin-top: 55px;
@@ -13,12 +11,7 @@
   align-items: center;
 }
 
-.cate_title {
-  font-size: 1.5rem;
-  font-weight: 550;
-}
-
-.dropdown_menu .dropdown_subMenu {
+.dropdown_subMenu {
   display: none;
   position: absolute;
   right: 3%;
@@ -34,14 +27,19 @@
   padding: 1rem 1rem 1rem 1.5rem;
 }
 
-.cate_itemlist .item {
+.cate_title {
+  font-size: 1.5rem;
+  font-weight: 550;
+}
+
+.item {
   width: 40%;
   margin: 0 0 1rem 1rem;
   display: inline-block;
   text-align: center;
 }
 
-.cate_itemlist .item img {
+.item img {
   margin-bottom: 1rem;
   width: 60%;
   height: 60%;
@@ -65,12 +63,12 @@
 }
 
 .item .marketName {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--orange-color);
 }
 
 .item dl dt {
-  font-size: 1.15rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--black-color);
 }
