@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" href="/css/public.css" />
-    <link rel="stylesheet" href="/css/search.css" />
+    <link rel="stylesheet" href="/css/item.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap"
       rel="stylesheet"
@@ -18,6 +18,7 @@
     <script defer src="/js/move-component.js"></script>
     <script defer src="/js/search-component.js"></script>
     <script defer src="/js/favorite-component.js"></script>
+    <script defer src="/js/category-component.js"></script>
     <script
       src="https://kit.fontawesome.com/bb430ea525.js"
       crossorigin="anonymous"
@@ -43,25 +44,25 @@
             <!-- 메뉴 카테고리 -->
             <div class="category">
               <div class="category__meet">
-                <a href="../category/meat">
+                <a href="#" id="0" class="category-btn" data-value="축산물">
                   <span>축산물</span>
                   <i class="fa-solid fa-angle-right"></i>
                 </a>
               </div>
               <div class="category__seafood">
-                <a href="../category/seafood">
+                <a href="#" id="1" class="category-btn" data-value="해산물">
                   <span>해산물</span>
                   <i class="fa-solid fa-angle-right"></i>
                 </a>
               </div>
               <div class="category__fruit">
-                <a href="../category/fruit">
+                <a href="#" id="2" class="category-btn" data-value="과일">
                   <span>과일</span>
                   <i class="fa-solid fa-angle-right"></i>
                 </a>
               </div>
               <div class="category__vegetable">
-                <a href="../category/vegeta">
+                <a href="#" id="3" class="category-btn" data-value="채소">
                   <span>채소</span>
                   <i class="fa-solid fa-angle-right"></i>
                 </a>
@@ -127,27 +128,22 @@
 
       <!-- 정렬 -->
       <div class="line__top">
-        <div class="sort_area">
-          <div class="dropdown">
-            <ul class="dropdown_menu">
-              <li data-option="standard_sort">
-                <a href="#" id="sortBtn">정렬 기준</a>
-                <ul class="dropdown_subMenu">
-                  <li>
-                    <a href="#" id="sort_low" data-option="lowPrice"
-                      >낮은 가격순</a
-                    >
-                  </li>
-                  <li>
-                    <a href="#" id="sort_high" data-option="highPrice"
-                      >높은 가격순</a
-                    >
-                  </li>
-                </ul>
+        <p></p>
+        <ul class="dropdown_menu">
+          <li data-option="standard_sort">
+            <a href="#" id="sortBtn">정렬 기준</a>
+            <ul class="dropdown_subMenu">
+              <li>
+                <a href="#" id="sort_low" data-option="lowPrice">낮은 가격순</a>
+              </li>
+              <li>
+                <a href="#" id="sort_high" data-option="highPrice"
+                  >높은 가격순</a
+                >
               </li>
             </ul>
-          </div>
-        </div>
+          </li>
+        </ul>
       </div>
 
       <div class="search_itemlist">
