@@ -68,7 +68,7 @@ public class MemberService implements UserDetailsService {
     public String updateOtherInfo(Member member){
         Optional<Member> findMember = memberRepository.findByEmail(member.getEmail());
 
-        if(findMember.isPresent())
+        if(!findMember.isPresent())
         {
             return "존재하지 않는 이메일입니다.";
         }
