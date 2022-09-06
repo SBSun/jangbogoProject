@@ -20,7 +20,7 @@
       crossorigin="anonymous"
     ></script>
   </head>
-  <body>
+  <body onload="onLoadUserInfo()">
     <nav class="navbar">
       <!-- 로고 -->
       <a href="/" class="navbar__logo">JANGBOGO</a>
@@ -33,7 +33,7 @@
           <div class="" id="login-1">
             <div id="email">
               <label>이메일</label>
-              <span>name@example.com</span>
+              <span id="email-span"></span>
               <button id="email-btn" type="button">변경</button>
             </div>
           </div>
@@ -51,13 +51,15 @@
             <button id="edit-password" type="button">비밀번호 수정</button>
             <div class="hidden">
               <form id="password-form">
-                <label for="modify-password">비밀번호</label>
+                <label for="modify-password">새로운 비밀번호</label>
                 <input type="password" id="modify-password" />
                 <label for="modify-password-check">비밀번호 확인</label>
                 <input type="password" id="modify-password-check" />
                 <div>
                   <button id="password-cancle" type="button">변경 취소</button>
-                  <button type="button">비밀번호 변경</button>
+                  <button id="change-password" type="button">
+                    비밀번호 변경
+                  </button>
                 </div>
               </form>
             </div>
@@ -68,15 +70,15 @@
           <form>
             <div>
               <label for="">성명</label>
-              <input type="text" id="modify-name" value="아무개" />
+              <input type="text" id="modify-name" />
             </div>
             <div>
               <label for="">연락처</label>
-              <input type="tel" id="modify-tel" value="01012341234" />
+              <input type="tel" id="modify-tel" />
             </div>
             <div>
               <label for="">주소</label>
-              <input type="text" id="modify-address" value="서울시 중랑구" />
+              <input type="text" id="modify-address" />
             </div>
             <button id="save-info" type="button">저장하기</button>
           </form>
