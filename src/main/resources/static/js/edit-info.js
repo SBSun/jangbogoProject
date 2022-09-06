@@ -36,7 +36,7 @@ function onChangePass() {
       .then(res => res.json())
       .then(res => {
         alert('비밀번호가 변경되었습니다.');
-        location.reload();
+        location.replace('/member/mypage');
       });
   } else {
     alert('비밀번호가 다릅니다. 다시 입력해주세요.');
@@ -60,7 +60,7 @@ function onChangeUserInfo() {
     .then(res => res.json())
     .then(res => {
       alert('사용자 정보가 변경되었습니다.');
-      location.reload();
+      location.replace('/member/mypage');
     });
 }
 
