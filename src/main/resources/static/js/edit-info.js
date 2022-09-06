@@ -23,7 +23,7 @@ function onLoadUserInfo() {
 }
 function onChangePass() {
   if (modifyPass.value === modifyPassCheck.value) {
-    fetch('/member/changePassword', {
+    fetch('/member/updatePassword', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ function onChangePass() {
   }
 }
 function onChangeUserInfo() {
-  fetch('/member/', {
+  fetch('/member/updateOtherInfo', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
