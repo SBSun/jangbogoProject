@@ -31,6 +31,7 @@ function onLoginBtnClick(event) {
       .then(res => {
         if (res.token) {
           sessionStorage.setItem('token', res.token);
+          sessionStorage.setItem('email', userEmail);
           alert('로그인되었습니다.');
           location.replace('/');
         } else {
