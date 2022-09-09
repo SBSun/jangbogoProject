@@ -94,18 +94,6 @@ h2 {
   border: 1px solid #c1c1c1;
 }
 
-/* 알림 여부 */
-.register__form_alert .alert_explain {
-  margin-bottom: 8px;
-  font-size: 13px;
-}
-
-.alert_service_email,
-.alert_service_tel {
-  font-size: 13px;
-  margin-right: 10px;
-}
-
 /* 확인, 취소 */
 #register__form_submit {
   margin-bottom: 8px;

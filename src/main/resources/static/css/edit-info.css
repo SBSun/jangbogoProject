@@ -30,8 +30,7 @@ h4 {
 }
 
 .login-info,
-.user-info,
-.alert-service {
+.user-info {
   padding: 1rem 0 0 0;
 }
 
@@ -102,15 +101,6 @@ h4 {
 
 .user-info form div {
   display: grid;
-}
-
-.alert-service {
-  margin: 0 0 3rem 0;
-}
-
-.alert-service div,
-.alert-service p {
-  padding: 1rem 0 0 0;
 }
 
 #remove-user {
