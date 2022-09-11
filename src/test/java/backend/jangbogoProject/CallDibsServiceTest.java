@@ -20,13 +20,13 @@ public class CallDibsServiceTest {
     void 찜등록(){
         CallDibsDTO callDibsDTO = new CallDibsDTO();
         callDibsDTO.setEmail("byung0216@naver.com");
-        callDibsDTO.setSerialNum(1778848);
+        callDibsDTO.setSerialNum(177848);
 
-        CallDibs saveCallDibs = callDibsDTO.toEntity();
-
-        int saveId = callDibsService.save(saveCallDibs).getId();
-
-        CallDibs findCallDibs = callDibsService.findById(saveId);
-        System.out.println(findCallDibs.getEmail());
+        CallDibs saveCallDibs = callDibsService.save(callDibsDTO.toEntity());
+        if(saveCallDibs == null){
+            System.out.println("이미 찜 목록에 등록되어 있는 품목");
+        }else{
+            System.out.println("찜 등록 성공");
+        }
     }
 }

@@ -13,8 +13,11 @@ public class CallDibsService {
     private final CallDibsRepository callDibsRepository;
 
     public CallDibs save(CallDibs callDibs){
-        callDibsRepository.save(callDibs);
+        if(callDibsRepository.existsByEmailAndSerialNum(callDibs.getEmail(), callDibs.getSerialNum())){
+            return null;
+        }
 
+        callDibsRepository.save(callDibs);
         return callDibs;
     }
 

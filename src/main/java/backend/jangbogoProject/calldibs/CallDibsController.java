@@ -14,11 +14,14 @@ public class CallDibsController {
 
     @PostMapping("/createCallDibs")
     public String createCallDibs(@RequestBody CallDibsDTO callDibsDTO){
-        callDibsService.save(callDibsDTO.toEntity());
-
+        CallDibs saveCallDibs = callDibsService.save(callDibsDTO.toEntity());
         JsonObject data = new JsonObject();
-        data.addProperty("res", "찜 등록");
 
+        if(saveCallDibs == null){
+            data.addProperty("res", "이미 찜 목록에 등록되어 있는 품목");
+        }else{
+            data.addProperty("res", "찜 등록 성공");
+        }
         return data.toString();
     }
 }
