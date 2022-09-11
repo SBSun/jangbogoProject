@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CallDibsController {
     private final CallDibsService callDibsService;
 
-    @PostMapping("/callDibs")
+    @PostMapping("/createCallDibs")
     public String createCallDibs(@RequestBody CallDibsDTO callDibsDTO){
         callDibsService.save(callDibsDTO.toEntity());
 
