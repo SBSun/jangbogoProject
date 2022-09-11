@@ -29,4 +29,18 @@ public class CallDibsServiceTest {
             System.out.println("찜 등록 성공");
         }
     }
+
+    @Test
+    void 찜삭제(){
+        CallDibsDTO callDibsDTO = new CallDibsDTO();
+        callDibsDTO.setEmail("byung0216@naver.com");
+        callDibsDTO.setSerialNum(177848);
+
+        CallDibs deleteCallDibs = callDibsService.delete(callDibsDTO.toEntity());
+        if(deleteCallDibs == null){
+            System.out.println("찜 목록에 존재하지 않는 품목입니다.");
+        }else{
+            System.out.println("찜 삭제 성공");
+        }
+    }
 }

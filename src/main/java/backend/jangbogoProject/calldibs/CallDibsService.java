@@ -21,7 +21,21 @@ public class CallDibsService {
         return callDibs;
     }
 
+    public CallDibs delete(CallDibs callDibs){
+        CallDibs deleteCallDibs = callDibsRepository.findByEmailAndSerialNum(callDibs.getEmail(), callDibs.getSerialNum())
+                .orElseThrow(() -> new IllegalArgumentException("찜 목록에 존재하지 않은 품목입니다."));
+        callDibsRepository.deleteById(deleteCallDibs.getId());
+        return callDibs;
+    }
+
     public CallDibs findById(int id){
         return callDibsRepository.findById(id).get();
+    }
+
+    public CallDibs findByEmailAndSerialNum(String email, int serialNum){
+        CallDibs callDibs = callDibsRepository.findByEmailAndSerialNum(email, serialNum)
+                .orElseThrow(() -> new IllegalArgumentException("찜 목록에 존재하지 않은 품목입니다."));
+
+        return callDibs;
     }
 }
