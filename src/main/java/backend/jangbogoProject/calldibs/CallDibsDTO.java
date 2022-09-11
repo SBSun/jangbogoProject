@@ -16,7 +16,6 @@ public class CallDibsDTO {
     public CallDibs toEntity(){
         CallDibs build = CallDibs.builder()
                 .id(id)
-                .email(email)
                 .serialNum(serialNum)
                 .build();
 

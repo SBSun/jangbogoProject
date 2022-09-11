@@ -1,5 +1,6 @@
 package backend.jangbogoProject.member.domain;
 
+import backend.jangbogoProject.calldibs.CallDibs;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -41,8 +42,11 @@ public class Member implements UserDetails {
     )
     private List<Role> roles = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<CallDibs> callDibsList = new ArrayList<>();
+
     @Builder
-    public Member(Long id, String email, String password, String name, String address, String tel, Boolean enabled) {
+    public Member(Long id, String email, String password, String name, String address, String tel, Boolean enabled, List<CallDibs> callDibsList) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -50,6 +54,7 @@ public class Member implements UserDetails {
         this.address = address;
         this.tel = tel;
         this.enabled = enabled;
+        this.callDibsList = callDibsList;
     }
 
 

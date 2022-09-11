@@ -1,5 +1,6 @@
 package backend.jangbogoProject.calldibs;
 
+import backend.jangbogoProject.member.domain.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,15 +17,15 @@ public class CallDibs {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="calldibs_id")
     private int id;
-    @Column(nullable = false)
-    private String email;
+    @ManyToOne
+    @JoinColumn(name = "email")
+    private Member member;
     @Column(name="P_SEQ")
     private int serialNum; // 일련번호
 
     @Builder
-    public CallDibs(int id, String email, int serialNum) {
+    public CallDibs(int id, int serialNum) {
         this.id = id;
-        this.email = email;
         this.serialNum = serialNum;
     }
 }
