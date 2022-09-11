@@ -117,17 +117,17 @@ public class MemberController {
         return mav;
     }
 */
-    @GetMapping("/member/mypage")
+    @GetMapping("/mypage")
     public ModelAndView mypageForm() {
 
-        ModelAndView mav = new ModelAndView("member/mypage");
+        ModelAndView mav = new ModelAndView("mypage/mypage");
         return mav;
     }
 
-    @GetMapping("/member/editInfo")
+    @GetMapping("/mypage/editInfo")
     public ModelAndView editInfo(){
 
-        ModelAndView mav = new ModelAndView("member/edit-info");
+        ModelAndView mav = new ModelAndView("mypage/edit-info");
         return mav;
     }
 
@@ -145,14 +145,6 @@ public class MemberController {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("res", memberService.updateOtherInfo(memberDto.toEntity()));
         return resultMap;
-    }
-
-    // http://localhost:8080/member/favorite
-    @GetMapping("/member/favorite")
-    public ModelAndView favorite() {
-
-        ModelAndView mav = new ModelAndView("member/favorite");
-        return mav;
     }
 
     /*
