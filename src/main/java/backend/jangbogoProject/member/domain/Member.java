@@ -42,11 +42,8 @@ public class Member implements UserDetails {
     )
     private List<Role> roles = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<CallDibs> callDibsList = new ArrayList<>();
-
     @Builder
-    public Member(Long id, String email, String password, String name, String address, String tel, Boolean enabled, List<CallDibs> callDibsList) {
+    public Member(Long id, String email, String password, String name, String address, String tel, Boolean enabled) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -54,7 +51,6 @@ public class Member implements UserDetails {
         this.address = address;
         this.tel = tel;
         this.enabled = enabled;
-        this.callDibsList = callDibsList;
     }
 
 

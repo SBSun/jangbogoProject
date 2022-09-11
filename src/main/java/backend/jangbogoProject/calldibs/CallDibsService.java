@@ -12,7 +12,13 @@ import javax.transaction.Transactional;
 public class CallDibsService {
     private final CallDibsRepository callDibsRepository;
 
-    public void save(CallDibs callDibs){
+    public CallDibs save(CallDibs callDibs){
         callDibsRepository.save(callDibs);
+
+        return callDibs;
+    }
+
+    public CallDibs findById(int id){
+        return callDibsRepository.findById(id).get();
     }
 }
