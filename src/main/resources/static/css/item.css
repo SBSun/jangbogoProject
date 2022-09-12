@@ -5,7 +5,6 @@
 
 .line__top {
   margin: 0.5rem 0 1rem 0;
-  margin-top: 55px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -25,6 +24,12 @@
 
 .main-board {
   padding: 1rem 1rem 1rem 1.5rem;
+}
+
+.search__title {
+  margin: 51px 0 0 0;
+  text-align: center;
+  font-size: 24px;
 }
 
 .cate_title {

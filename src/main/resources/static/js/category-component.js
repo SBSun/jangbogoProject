@@ -18,7 +18,7 @@ function categoryInit() {
   const title = document.querySelector('.cate_title');
   title.innerText = content;
   const list = document.querySelector('.cate_itemlist');
-  fetch(`categoryInGu?guCode=${guCode}&branch=${content}`)
+  fetch(`/findItems/categoryInGu?guCode=${guCode}&branch=${content}`)
     .then(res => res.json())
     .then(res => {
       for (let i = 0; i < res.length; i++) {
