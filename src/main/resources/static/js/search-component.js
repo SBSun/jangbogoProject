@@ -16,7 +16,7 @@ function searchInit() {
   const title = document.querySelector('.search__title');
   const list = document.querySelector('.search_itemlist');
   let itemImg = 'img url';
-  title.innerText = `검색 결과 "${content}"`;
+  title.innerText = `검색 결과 "${content}`;
   fetch(`/member/searchContent?content=${content}`)
     .then(res => res.json())
     .then(res => {
