@@ -22,4 +22,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
     @Query(value = "select item.* from(select * from item where M_GU_CODE = ?1) item inner join item_info ON item.A_SEQ = item_info.A_SEQ inner join category on item_info.category_id = category.category_id \n" +
             "where category.branch = ?2", nativeQuery = true)
     public List<Item> findAllByCategoryInGu(int marketGuCode, String branch);
+
+    @Query(value = "SELECT item.* FROM item, (SELECT * FROM calldibs WHERE email = ?1) calldibs WHERE item.P_SEQ = calldibs.P_SEQ", nativeQuery = true)
+    public List<Item> findAllByCallDibs(String email);
 }

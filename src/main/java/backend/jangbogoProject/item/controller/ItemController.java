@@ -38,7 +38,7 @@ public class ItemController {
         return listJson;
     }
 
-    @GetMapping("/lowestPriceInGu")
+    @GetMapping("/findItems/lowestPriceInGu")
     public String getLowestPriceInGu(@RequestParam int guCode)
     {
         System.out.println("최저가 검색할 구 : " + guCode);
@@ -58,10 +58,21 @@ public class ItemController {
         return mav;
     }
 
-    @GetMapping("/categoryInGu")
+    @GetMapping("/findItems/categoryInGu")
     public String getCategoryItems(@RequestParam int guCode, @RequestParam String branch)
     {
         List<Item> items = itemService.findAllByCategoryInGu(guCode, branch);
+
+        Gson gson = new Gson();
+        String listJson = gson.toJson(items, List.class).toString();
+        System.out.println(listJson);
+        return listJson;
+    }
+
+    @GetMapping("/findItems/callDibs")
+    public String getCallDibsItems(@RequestParam String email)
+    {
+        List<Item> items = itemService.findAllByCallDibs(email);
 
         Gson gson = new Gson();
         String listJson = gson.toJson(items, List.class).toString();

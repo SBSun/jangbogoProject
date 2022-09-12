@@ -40,4 +40,8 @@ public class ItemService {
     public List<Item> findAllByCategoryInGu(int marketGuCode, String branch){
         return itemRepository.findAllByCategoryInGu(marketGuCode, branch);
     }
+
+    public List<Item> findAllByCallDibs(String email){
+        return itemRepository.findAllByCallDibs(email);
+    }
 }

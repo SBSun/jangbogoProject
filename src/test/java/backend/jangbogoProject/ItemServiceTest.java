@@ -46,4 +46,14 @@ public class ItemServiceTest {
             System.out.println(items.get(i).getItemName() + ", " + items.get(i).getItemPrice());
         }
     }
+
+    @Test
+    void 찜목록_품목반환()
+    {
+        List<Item> items = itemService.findAllByCallDibs("byung0216@naver.com");
+
+        for (int i = 0; i < items.size(); i++) {
+            System.out.println(items.get(i).getSerialNum() + ", " + items.get(i).getItemName());
+        }
+    }
 }
