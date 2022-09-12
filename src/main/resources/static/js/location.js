@@ -52,7 +52,7 @@ function onLoadItem() {
   const list = document.querySelector('.itemList');
   const guCode = sessionStorage.getItem('guCode');
   let itemImg = 'item';
-  fetch(`/lowestPriceInGu?guCode=${guCode}`, {
+  fetch(`/findItems/lowestPriceInGu?guCode=${guCode}`, {
     method: 'GET',
   })
     .then(res => res.json())

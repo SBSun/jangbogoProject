@@ -4,7 +4,7 @@ function InitStatus() {
   if (sessionStorage.getItem('token') !== null) {
     icon.className = 'fa-solid fa-user';
     signTag.appendChild(icon);
-    signTag.href = '../member/mypage';
+    signTag.href = '../mypage';
   } else {
     icon.className = 'fa-solid fa-arrow-right-to-bracket';
     signTag.appendChild(icon);
@@ -13,7 +13,7 @@ function InitStatus() {
 }
 function moveMypage() {
   if (sessionStorage.getItem('token') !== null) {
-    location.replace('../member/mypage');
+    location.replace('../mypage');
   } else {
     alert('로그인을 먼저해주세요');
     location.replace('../member/login');
@@ -21,7 +21,7 @@ function moveMypage() {
 }
 function moveFavorite() {
   if (sessionStorage.getItem('token') !== null) {
-    location.replace('../member/favorite');
+    location.replace('../mypage/calldibs');
   } else {
     alert('로그인을 먼저해주세요');
     location.replace('../member/login');
