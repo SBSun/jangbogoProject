@@ -1,5 +1,6 @@
 package backend.jangbogoProject.member.controller;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import backend.jangbogoProject.member.domain.Member;
 import backend.jangbogoProject.member.dto.MemberDto;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -21,6 +23,7 @@ public class MemberController {
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
     }
+
 
     // http://localhost:8080/member/login
     @GetMapping("/member/login")
@@ -94,29 +97,17 @@ public class MemberController {
 
         return resultMap;
     }
-/*
-    // http://localhost:8080/member/mypage
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/member/mypage")
-    public ModelAndView mypageForm(Principal principal, Model model) {
-        Optional<Member> member = memberService.findEmail(principal.getName());
-        model.addAttribute("member", member);
 
-        ModelAndView mav = new ModelAndView("member/mypage");
-        return mav;
+    @GetMapping("/getLoginMemberName")
+    public String getLoginMemberName(@RequestParam String email){
+        Optional<Member> member = memberService.findEmail(email);
+
+        Gson gson = new Gson();
+        String json = gson.toJson(member.get().getName()).toString();
+
+        return json;
     }
 
-    // http://localhost:8080/member/editInfo
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/member/editInfo")
-    public ModelAndView editInfo(Principal principal, Model model){
-        Optional<Member> member = memberService.findEmail(principal.getName());
-        model.addAttribute("member", member);
-
-        ModelAndView mav = new ModelAndView("member/edit-info");
-        return mav;
-    }
-*/
     @GetMapping("/mypage")
     public ModelAndView mypageForm() {
 
@@ -148,12 +139,26 @@ public class MemberController {
     }
 
     /*
-    // http://localhost:8080/category/fruit
-    @GetMapping("/category")
-    public List<Item> category(@RequestParam String type)
-    {
+    // http://localhost:8080/member/mypage
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/member/mypage")
+    public ModelAndView mypageForm(Principal principal, Model model) {
+        Optional<Member> member = memberService.findEmail(principal.getName());
+        model.addAttribute("member", member);
 
-        ModelAndView mav = new ModelAndView("category/" + type);
+        ModelAndView mav = new ModelAndView("member/mypage");
         return mav;
-    }*/
+    }
+
+    // http://localhost:8080/member/editInfo
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/member/editInfo")
+    public ModelAndView editInfo(Principal principal, Model model){
+        Optional<Member> member = memberService.findEmail(principal.getName());
+        model.addAttribute("member", member);
+
+        ModelAndView mav = new ModelAndView("member/edit-info");
+        return mav;
+    }
+*/
 }
