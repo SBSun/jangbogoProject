@@ -20,7 +20,7 @@
       crossorigin="anonymous"
     ></script>
   </head>
-  <body>
+  <body onload="onInitInfo()">
     <nav class="navbar">
       <!-- 로고 -->
       <a href="/" class="navbar__logo">JANGBOGO</a>
@@ -28,7 +28,7 @@
 
     <main class="main-board">
       <section class="greeting">
-        <h3 id="user-name">아무개님</h3>
+        <h3 id="user-name"></h3>
         <p>환영합니다.</p>
       </section>
       <section class="my-activity">
