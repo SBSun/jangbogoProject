@@ -126,6 +126,7 @@ function searchInit() {
         priceArea.appendChild(itemPrice);
         div.appendChild(favorite);
       }
+      favoriteComponent();
     });
 }
 

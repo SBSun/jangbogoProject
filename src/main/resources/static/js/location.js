@@ -169,6 +169,7 @@ function onLoadItem() {
         itemPrice.innerText = `${res[i].itemPrice}원`;
         const favorite = document.createElement('button');
         favorite.className = 'itemBtn';
+        favorite.id = i;
         favorite.innerText = '찜 목록에 추가';
 
         list.appendChild(div);
@@ -183,6 +184,7 @@ function onLoadItem() {
         div.appendChild(favorite);
         margin();
       }
+      favoriteComponent();
     });
 }
 function onLoadMarket() {

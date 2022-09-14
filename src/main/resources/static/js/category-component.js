@@ -127,6 +127,7 @@ function categoryInit() {
         priceArea.appendChild(itemPrice);
         div.appendChild(favorite);
       }
+      favoriteComponent();
     });
 }
 
