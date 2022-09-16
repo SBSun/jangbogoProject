@@ -4,7 +4,7 @@
 }
 
 .line__top {
-  margin: 0.5rem 0 1rem 0;
+  margin: 51px 0 1rem 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -27,7 +27,7 @@
 }
 
 .search__title {
-  margin: 51px 0 0 0;
+  margin: 0;
   text-align: center;
   font-size: 24px;
 }
