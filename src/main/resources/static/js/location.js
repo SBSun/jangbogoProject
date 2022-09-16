@@ -51,6 +51,7 @@ function setLocation() {
 function onLoadItem() {
   const list = document.querySelector('.itemList');
   const guCode = sessionStorage.getItem('guCode');
+  let serialCode = [{}];
   let itemImg = 'item';
   fetch(`/findItems/lowestPriceInGu?guCode=${guCode}`, {
     method: 'GET',
@@ -183,6 +184,11 @@ function onLoadItem() {
         priceArea.appendChild(itemPrice);
         div.appendChild(favorite);
         margin();
+        serialCode[i] = { id: i, serial: res[i].serialNum };
+      }
+      if (sessionStorage.getItem('serial')) {
+        sessionStorage.removeItem('serial');
+        sessionStorage.setItem('serial', JSON.stringify(serialCode));
       }
       favoriteComponent();
     });

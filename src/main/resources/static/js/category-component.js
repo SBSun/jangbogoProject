@@ -18,6 +18,7 @@ function categoryInit() {
   const title = document.querySelector('.cate_title');
   title.innerText = content;
   const list = document.querySelector('.cate_itemlist');
+  let serialCode = [{}];
   fetch(`/findItems/categoryInGu?guCode=${guCode}&branch=${content}`)
     .then(res => res.json())
     .then(res => {
@@ -114,6 +115,7 @@ function categoryInit() {
         itemPrice.innerText = `${res[i].itemPrice}원`;
         const favorite = document.createElement('button');
         favorite.className = 'itemBtn';
+        favorite.id = i;
         favorite.innerText = '찜 목록에 추가';
 
         list.appendChild(div);
@@ -126,6 +128,11 @@ function categoryInit() {
         info.appendChild(priceArea);
         priceArea.appendChild(itemPrice);
         div.appendChild(favorite);
+        serialCode[i] = { id: i, serial: res[i].serialNum };
+      }
+      if (sessionStorage.getItem('serial')) {
+        sessionStorage.removeItem('serial');
+        sessionStorage.setItem('serial', JSON.stringify(serialCode));
       }
       favoriteComponent();
     });

@@ -1,26 +1,69 @@
 function favoriteComponent() {
   const itemBtns = Array.from(document.querySelectorAll('.itemBtn'));
+  const userMail = sessionStorage.getItem('email');
+  const serialCode = JSON.parse(sessionStorage.getItem('serial'));
 
   const ACTIVE_KEY = 'active';
 
-  itemBtns.forEach(itemBtn =>
-    itemBtn.addEventListener('click', function () {
-      if (sessionStorage.getItem('token') !== null) {
-        if (itemBtn.innerText === '찜 목록에 추가') {
-          itemBtn.classList.toggle(ACTIVE_KEY);
-          itemBtn.innerText = '찜 목록에서 제거';
-          alert('찜 목록에 추가되었습니다.');
-        } else {
-          itemBtn.classList.toggle(ACTIVE_KEY);
-          itemBtn.innerText = '찜 목록에 추가';
-          alert('찜 목록에서 제거되었습니다.');
-        }
-      } else {
-        alert('로그인을 먼저 해주세요.');
-        location.replace('../member/login');
+  function createCallDibs(e) {
+    if (sessionStorage.getItem('token') !== null) {
+      const id = parseInt(e.target.id);
+      if (id === serialCode[id].id) {
+        const serialNum = serialCode[id].serial;
+        fetch('/createCallDibs', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: userMail,
+            serialNum: serialNum,
+          }),
+        })
+          .then(res => {
+            res.json();
+            e.target.classList.add(ACTIVE_KEY);
+            e.target.innerText = '찜 목록에서 제거';
+          })
+          .then(res => console.log(res));
       }
-    })
-  );
+    } else {
+      alert('로그인을 먼저 해주세요.');
+      location.replace('../member/login');
+    }
+  }
+  function deleteCallDibs(e) {
+    if (sessionStorage.getItem('token') !== null) {
+      const id = parseInt(e.target.id);
+      if (id === serialCode[id].id) {
+        const serialNum = serialCode[id].serial;
+        fetch('/deleteCallDibs', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: userMail,
+            serialNum: serialNum,
+          }),
+        })
+          .then(res => {
+            res.json();
+            e.target.classList.remove(ACTIVE_KEY);
+            e.target.innerText = '찜 목록에 추가';
+          })
+          .then(res => console.log(res));
+      }
+    }
+  }
+  function favState() {
+    itemBtns.forEach(itemBtn => {
+      if (itemBtn.innerText === '찜 목록에 추가') {
+        itemBtn.addEventListener('click', createCallDibs);
+      } else {
+        itemBtn.addEventListener('click', deleteCallDibs);
+      }
+    });
+  }
+  setInterval(favState, 1000);
 }
-
-favoriteComponent();
