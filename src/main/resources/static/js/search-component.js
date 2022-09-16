@@ -129,10 +129,7 @@ function searchInit() {
         div.appendChild(favorite);
         serialCode[i] = { id: i, serial: res[i].serialNum };
       }
-      if (sessionStorage.getItem('serial')) {
-        sessionStorage.removeItem('serial');
-        sessionStorage.setItem('serial', JSON.stringify(serialCode));
-      }
+      sessionStorage.setItem('serial', JSON.stringify(serialCode));
       favoriteComponent();
     });
 }
