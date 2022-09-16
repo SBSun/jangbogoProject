@@ -56,14 +56,7 @@ function favoriteComponent() {
       }
     }
   }
-  function favState() {
-    itemBtns.forEach(itemBtn => {
-      if (itemBtn.innerText === '찜 목록에 추가') {
-        itemBtn.addEventListener('click', createCallDibs);
-      } else {
-        itemBtn.addEventListener('click', deleteCallDibs);
-      }
-    });
-  }
-  setInterval(favState, 1000);
+  itemBtns.forEach(itemBtn => {
+    itemBtn.addEventListener('click', createCallDibs);
+  });
 }
