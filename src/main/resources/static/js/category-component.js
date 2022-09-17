@@ -116,6 +116,7 @@ function categoryInit() {
         const favorite = document.createElement('button');
         favorite.className = 'itemBtn';
         favorite.id = i;
+        favorite.value = res[i].serialNum;
         favorite.innerText = '찜 목록에 추가';
 
         list.appendChild(div);
@@ -131,7 +132,10 @@ function categoryInit() {
         serialCode[i] = { id: i, serial: res[i].serialNum };
       }
       sessionStorage.setItem('serial', JSON.stringify(serialCode));
-      favoriteComponent();
+      const itemBtns = Array.from(document.querySelectorAll('.itemBtn'));
+      itemBtns.forEach(itemBtn => {
+        itemBtn.addEventListener('click', createCallDibs);
+      });
     });
 }
 
