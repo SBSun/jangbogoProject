@@ -130,7 +130,7 @@ function categoryInit() {
         div.appendChild(favorite);
         serialCode[i] = { id: i, serial: res[i].serialNum };
       }
-      sessionStora;
+      sessionStorage.setItem('serial', JSON.stringify(serialCode));
       favoriteComponent();
     });
 }
