@@ -39,8 +39,8 @@ public class ReviewController {
     }
 
     @PostMapping("/writeReview")
-    public String writeReview(@RequestBody ReviewDTO reviewDTO, @RequestBody String email){
-        reviewDTO.setMember_id(memberService.findEmail(email).get().getId().intValue());
+    public String writeReview(@RequestBody ReviewDTO reviewDTO){
+        reviewDTO.setMember_id(memberService.findEmail(reviewDTO.getEmail()).get().getId().intValue());
 
         Review saveReview = reviewService.save(reviewDTO.toEntity());
         JsonObject data = new JsonObject();

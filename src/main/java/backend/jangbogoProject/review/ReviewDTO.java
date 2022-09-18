@@ -11,6 +11,7 @@ import lombok.Setter;
 public class ReviewDTO {
     private int review_id;
     private int member_id;
+    private String email;
     private int marketSerialNum; // 일련번호
     private String contents;
     private boolean like_unlike;
@@ -28,9 +29,10 @@ public class ReviewDTO {
     }
 
     @Builder
-    public ReviewDTO(int review_id, int member_id, int marketSerialNum, String contents, boolean like_unlike) {
+    public ReviewDTO(int review_id, int member_id, String email, int marketSerialNum, String contents, boolean like_unlike) {
         this.review_id = review_id;
         this.member_id = member_id;
+        this.email = email;
         this.marketSerialNum = marketSerialNum;
         this.contents = contents;
         this.like_unlike = like_unlike;
