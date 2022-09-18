@@ -12,6 +12,15 @@ import java.util.Optional;
 public class ReviewService {
     private final ReviewRepository reviewRepository;
 
+    public Review save(Review review){
+        if(reviewRepository.existsById(review.getReview_id())){
+            return null;
+        }
+
+        reviewRepository.save(review);
+        return review;
+    }
+
     public Optional<Review> findById(int id){
         return reviewRepository.findById(id);
     }
