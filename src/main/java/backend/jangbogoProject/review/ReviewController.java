@@ -1,15 +1,14 @@
 package backend.jangbogoProject.review;
 
-
-import backend.jangbogoProject.calldibs.CallDibs;
 import backend.jangbogoProject.member.service.MemberService;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -51,5 +50,27 @@ public class ReviewController {
             data.addProperty("res", "리뷰 작성 성공");
         }
         return data.toString();
+    }
+
+    @GetMapping("/getReviewListByMemberId")
+    public String getReviewListByMemberId(@RequestParam String email){
+        List<Review> reviewList = reviewService.findAllById(memberService.findEmail(email).get().getId().intValue());
+        List<ReviewResponseDTO> responseDTOList = new ArrayList<>();
+
+        for(Review review : reviewList){
+            ReviewResponseDTO reviewResponseDTO = new ReviewResponseDTO(
+                    review.getReview_id(),
+                    memberService.findById(Long.valueOf(review.getMember_id())).get().getName(),
+                    review.getContents(),
+                    review.isLike_unlike()
+            );
+
+            responseDTOList.add(reviewResponseDTO);
+        }
+        Gson gson = new Gson();
+        String listJson = gson.toJson(responseDTOList, List.class).toString();
+        System.out.println(listJson);
+
+        return listJson;
     }
 }

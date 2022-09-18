@@ -1,13 +1,15 @@
 package backend.jangbogoProject;
 
+import backend.jangbogoProject.item.domain.Item;
 import backend.jangbogoProject.member.service.MemberService;
-import backend.jangbogoProject.review.Review;
-import backend.jangbogoProject.review.ReviewDTO;
-import backend.jangbogoProject.review.ReviewRepository;
-import backend.jangbogoProject.review.ReviewService;
+import backend.jangbogoProject.review.*;
+import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootTest
 public class ReviewServiceTest {
@@ -31,6 +33,21 @@ public class ReviewServiceTest {
 
     @Test
     void 리뷰정보반환(){
-        Review review = reviewService.findById(4).get();
+        List<Review> reviewList = reviewService.findAllById(4);
+        List<ReviewResponseDTO> responseDTOList = new ArrayList<>();
+
+        for(Review review : reviewList){
+            ReviewResponseDTO reviewResponseDTO = new ReviewResponseDTO(
+                    review.getReview_id(),
+                    memberService.findById(Long.valueOf(review.getMember_id())).get().getName(),
+                    review.getContents(),
+                    review.isLike_unlike()
+            );
+
+            responseDTOList.add(reviewResponseDTO);
+        }
+        Gson gson = new Gson();
+        String listJson = gson.toJson(responseDTOList, List.class).toString();
+        System.out.println(listJson);
     }
 }

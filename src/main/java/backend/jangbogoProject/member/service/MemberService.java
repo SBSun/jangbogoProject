@@ -102,6 +102,17 @@ public class MemberService implements UserDetailsService {
         }
     }
 
+    public Optional<Member> findById(Long id){
+        Optional<Member> member = memberRepository.findById(id);
+
+        if(member.isPresent()) {
+            return member;
+        }else{
+            System.out.println("존재하지 않는 이메일입니다.");
+            return null;
+        }
+    }
+
     public int isCheckEmail(String memberEmail){
         Optional<Member> customMemberDetails = findEmail(memberEmail);
 

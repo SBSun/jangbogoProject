@@ -24,6 +24,14 @@ public class MemoryMemberRepository implements MemberRepository{
     }
 
     @Override
+    public Optional<Member> findById(Long id) {
+        System.out.println("findByEmail : " + id);
+        return store.values().stream()
+                .filter(member -> member.getEmail().equals(id))
+                .findAny();
+    }
+
+    @Override
     public List<Member> findAll() {
         return new ArrayList<>(store.values());
     }

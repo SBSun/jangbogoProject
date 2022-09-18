@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Transactional
@@ -23,5 +24,9 @@ public class ReviewService {
 
     public Optional<Review> findById(int id){
         return reviewRepository.findById(id);
+    }
+
+    public List<Review> findAllById(int id){
+        return reviewRepository.findAllByMemberId(id);
     }
 }
