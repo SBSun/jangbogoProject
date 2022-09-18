@@ -9,6 +9,7 @@
 
     <link rel="stylesheet" href="/css/public.css" />
     <link rel="stylesheet" href="/css/favorite.css" />
+    <link rel="stylesheet" href="/css/item.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap"
       rel="stylesheet"
@@ -16,12 +17,13 @@
 
     <script defer src="/js/go-back.js"></script>
     <script defer src="/js/scroll-up.js"></script>
+    <script defer src="/js/favorite-component.js"></script>
     <script
       src="https://kit.fontawesome.com/bb430ea525.js"
       crossorigin="anonymous"
     ></script>
   </head>
-  <body>
+  <body onload="readCallDibs()">
     <nav class="navbar">
       <button id="navbar-cancle"><i class="fa-solid fa-arrow-left"></i></button>
       <span class="navbar__logo">찜 목록</span>
@@ -31,36 +33,7 @@
       <div class="hidden" id="scroll-up">
         <i class="fa-solid fa-arrow-up"></i>
       </div>
-      <ul class="item-list">
-        <li>
-          <img src="../File/items/pork.png" />
-          <div id="item-info">
-            <span id="market-name">동원시장</span>
-            <dl>
-              <dt>돼지고기(생삼겹살)</dt>
-              <dd>100g</dd>
-            </dl>
-            <div id="item-price">
-              <span>2,100원</span>
-            </div>
-          </div>
-          <button type="button" id="item-remove">찜 목록에서 제거</button>
-        </li>
-        <li>
-          <img src="../File/items/radish.png" />
-          <div id="item-info">
-            <span id="market-name">동원시장</span>
-            <dl>
-              <dt>무(세척무 중)</dt>
-              <dd>1개</dd>
-            </dl>
-            <div id="item-price">
-              <span>2,100원</span>
-            </div>
-          </div>
-          <button type="button" id="item-remove">찜 목록에서 제거</button>
-        </li>
-      </ul>
+      <ul class="item-list"></ul>
     </main>
   </body>
 </html>

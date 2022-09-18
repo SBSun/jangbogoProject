@@ -60,7 +60,7 @@ function onChangeUserInfo() {
     .then(res => res.json())
     .then(res => {
       alert('사용자 정보가 변경되었습니다.');
-      location.replace('/member/mypage');
+      location.replace('/mypage');
     });
 }
 

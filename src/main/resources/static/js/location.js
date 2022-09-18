@@ -51,6 +51,7 @@ function setLocation() {
 function onLoadItem() {
   const list = document.querySelector('.itemList');
   const guCode = sessionStorage.getItem('guCode');
+  let serialCode = [{}];
   let itemImg = 'item';
   fetch(`/findItems/lowestPriceInGu?guCode=${guCode}`, {
     method: 'GET',
@@ -169,6 +170,8 @@ function onLoadItem() {
         itemPrice.innerText = `${res[i].itemPrice}원`;
         const favorite = document.createElement('button');
         favorite.className = 'itemBtn';
+        favorite.id = i;
+        favorite.value = res[i].serialNum;
         favorite.innerText = '찜 목록에 추가';
 
         list.appendChild(div);
@@ -182,7 +185,13 @@ function onLoadItem() {
         priceArea.appendChild(itemPrice);
         div.appendChild(favorite);
         margin();
+        serialCode[i] = { id: i, serial: res[i].serialNum };
       }
+      sessionStorage.setItem('serial', JSON.stringify(serialCode));
+      const itemBtns = Array.from(document.querySelectorAll('.itemBtn'));
+      itemBtns.forEach(itemBtn => {
+        itemBtn.addEventListener('click', createCallDibs);
+      });
     });
 }
 function onLoadMarket() {
