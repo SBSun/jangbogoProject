@@ -55,20 +55,20 @@ public class ReviewController {
     @GetMapping("/getReviewListByMemberId")
     public String getReviewListByMemberId(@RequestParam String email){
         List<Review> reviewList = reviewService.findAllById(memberService.findEmail(email).get().getId().intValue());
-        List<ReviewResponseDTO> responseDTOList = new ArrayList<>();
 
-        for(Review review : reviewList){
-            ReviewResponseDTO reviewResponseDTO = new ReviewResponseDTO(
-                    review.getReview_id(),
-                    memberService.findById(Long.valueOf(review.getMember_id())).get().getName(),
-                    review.getContents(),
-                    review.isLike_unlike()
-            );
-
-            responseDTOList.add(reviewResponseDTO);
-        }
         Gson gson = new Gson();
-        String listJson = gson.toJson(responseDTOList, List.class).toString();
+        String listJson = gson.toJson(reviewService.switchToResponseDTO(reviewList), List.class).toString();
+        System.out.println(listJson);
+
+        return listJson;
+    }
+
+    @GetMapping("/getReviewListByMarket")
+    public String getReviewListByMarket(@RequestParam int marketSerialNum){
+        List<Review> reviewList = reviewService.findAllByMarketSerialNum(marketSerialNum);
+
+        Gson gson = new Gson();
+        String listJson = gson.toJson(reviewService.switchToResponseDTO(reviewList), List.class).toString();
         System.out.println(listJson);
 
         return listJson;

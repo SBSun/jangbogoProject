@@ -32,22 +32,20 @@ public class ReviewServiceTest {
     }
 
     @Test
-    void 리뷰정보반환(){
+    void 리뷰정보반환_멤버아이디(){
         List<Review> reviewList = reviewService.findAllById(4);
-        List<ReviewResponseDTO> responseDTOList = new ArrayList<>();
 
-        for(Review review : reviewList){
-            ReviewResponseDTO reviewResponseDTO = new ReviewResponseDTO(
-                    review.getReview_id(),
-                    memberService.findById(Long.valueOf(review.getMember_id())).get().getName(),
-                    review.getContents(),
-                    review.isLike_unlike()
-            );
-
-            responseDTOList.add(reviewResponseDTO);
-        }
         Gson gson = new Gson();
-        String listJson = gson.toJson(responseDTOList, List.class).toString();
+        String listJson = gson.toJson(reviewService.switchToResponseDTO(reviewList), List.class).toString();
+        System.out.println(listJson);
+    }
+
+    @Test
+    void 리뷰정보반환_마켓번호(){
+        List<Review> reviewList = reviewService.findAllByMarketSerialNum(26);
+
+        Gson gson = new Gson();
+        String listJson = gson.toJson(reviewService.switchToResponseDTO(reviewList), List.class).toString();
         System.out.println(listJson);
     }
 }
