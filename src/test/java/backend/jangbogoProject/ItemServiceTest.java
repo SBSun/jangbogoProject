@@ -1,9 +1,9 @@
 package backend.jangbogoProject;
 
-import backend.jangbogoProject.item.domain.Item;
-import backend.jangbogoProject.market.Market;
-import backend.jangbogoProject.item.service.ItemService;
-import backend.jangbogoProject.market.MarketService;
+import backend.jangbogoProject.domain.Item;
+import backend.jangbogoProject.domain.Market;
+import backend.jangbogoProject.service.ItemService;
+import backend.jangbogoProject.service.MarketService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

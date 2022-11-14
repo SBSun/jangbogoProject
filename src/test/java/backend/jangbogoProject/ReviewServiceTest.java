@@ -1,14 +1,15 @@
 package backend.jangbogoProject;
 
-import backend.jangbogoProject.item.domain.Item;
-import backend.jangbogoProject.member.service.MemberService;
-import backend.jangbogoProject.review.*;
+import backend.jangbogoProject.domain.Review;
+import backend.jangbogoProject.dto.ReviewDTO;
+import backend.jangbogoProject.repository.ReviewRepository;
+import backend.jangbogoProject.service.MemberService;
+import backend.jangbogoProject.service.ReviewService;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest

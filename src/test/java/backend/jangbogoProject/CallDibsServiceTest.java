@@ -1,10 +1,9 @@
 package backend.jangbogoProject;
 
-import backend.jangbogoProject.calldibs.CallDibs;
-import backend.jangbogoProject.calldibs.CallDibsDTO;
-import backend.jangbogoProject.calldibs.CallDibsRepository;
-import backend.jangbogoProject.calldibs.CallDibsService;
-import backend.jangbogoProject.member.domain.Member;
+import backend.jangbogoProject.domain.CallDibs;
+import backend.jangbogoProject.dto.CallDibsDTO;
+import backend.jangbogoProject.repository.CallDibsRepository;
+import backend.jangbogoProject.service.CallDibsService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

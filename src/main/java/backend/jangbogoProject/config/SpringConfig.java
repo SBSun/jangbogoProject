@@ -1,7 +1,7 @@
 package backend.jangbogoProject.config;
 
-import backend.jangbogoProject.member.service.MemberService;
-import backend.jangbogoProject.member.repository.MemberRepository;
+import backend.jangbogoProject.service.MemberService;
+import backend.jangbogoProject.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,11 +1,10 @@
 package backend.jangbogoProject;
 
-import backend.jangbogoProject.category.Category;
-import backend.jangbogoProject.category.CategoryDTO;
-import backend.jangbogoProject.category.CategoryRepository;
-import backend.jangbogoProject.category.CategoryService;
+import backend.jangbogoProject.domain.Category;
+import backend.jangbogoProject.dto.CategoryDTO;
+import backend.jangbogoProject.repository.CategoryRepository;
+import backend.jangbogoProject.service.CategoryService;
 import com.google.gson.Gson;
-import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
