@@ -1,4 +1,3 @@
-// 메뉴 옵션
 function menuOn() {
   let searchBtn = document.getElementById('navbar__searchbtn');
   let background = document.getElementsByClassName('main-board')[0];

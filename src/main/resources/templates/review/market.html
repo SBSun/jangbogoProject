@@ -17,6 +17,7 @@
     <script defer src="/js/search-component.js"></script>
     <script defer src="/js/move-component.js"></script>
     <script defer src="/js/category-component.js"></script>
+    <script defer src="/js/review-component.js"></script>
     <script
       src="https://kit.fontawesome.com/bb430ea525.js"
       crossorigin="anonymous"
@@ -125,22 +126,24 @@
       </div>
 
       <section class="market-board">
-        <img src="/File/market/emart.png" />
+        <img src="/files/market/none.png" class="market-img" />
         <div class="market-info">
-          <span>이마트 미아점</span>
-          <span><i class="fa-solid fa-thumbs-up"></i> 63%</span>
+          <span class="market-name"></span>
+          <span class="market-like"></span>
         </div>
         <a id="write-review" href="javascript:moveWriteReview()">리뷰 작성</a>
       </section>
 
       <section class="review-list">
-        <div class="review">
+        <!-- 
+          <div class="review">
           <span class="review-like"><i class="fa-solid fa-thumbs-up"></i></span>
           <div class="review-info">
             <span>아무개</span>
             <p>역시 프랜차이즈 대형마트라 그런지 시설도 크고 좋네요!</p>
           </div>
         </div>
+        -->
       </section>
     </main>
   </body>

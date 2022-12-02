@@ -152,7 +152,7 @@ function onLoadItem() {
         const div = document.createElement('div');
         div.className = 'item';
         const img = document.createElement('img');
-        img.src = `../File/items/${itemImg}.png`;
+        img.src = `../files/items/${itemImg}.png`;
         const info = document.createElement('div');
         info.className = 'itemInfo';
         const marketName = document.createElement('span');
@@ -198,6 +198,7 @@ function onLoadMarket() {
   const list = document.querySelector('.marketList');
   const guCode = sessionStorage.getItem('guCode');
   let marketImg = 'tradition';
+  let marketCode = [{}];
   fetch(`/marketsInGu?guCode=${guCode}`)
     .then(res => res.json())
     .then(res => {
@@ -222,12 +223,17 @@ function onLoadMarket() {
 
         const div = document.createElement('div');
         div.className = 'market';
+        div.dataset.value = res[i].marketSerialNum;
         const a = document.createElement('a');
-        a.href = '../review/market';
+        a.href = '#';
+        a.className = 'marketLink';
+        a.dataset.value = res[i].marketSerialNum;
         const img = document.createElement('img');
-        img.src = `../File/market/${marketImg}.png`;
+        img.src = `../files/market/${marketImg}.png`;
+        img.dataset.value = res[i].marketSerialNum;
         const name = document.createElement('div');
         name.className = 'marketName';
+        name.dataset.value = res[i].marketSerialNum;
         name.innerText = res[i].marketName;
 
         list.appendChild(div);
@@ -235,7 +241,17 @@ function onLoadMarket() {
         a.appendChild(img);
         a.appendChild(name);
       }
+      const marketLinks = Array.from(document.querySelectorAll('.marketLink'));
+      marketLinks.forEach(market => {
+        market.addEventListener('click', clickMarket);
+      });
     });
+}
+function clickMarket(e) {
+  e.preventDefault();
+  console.log(e.target.dataset.value);
+  sessionStorage.setItem('marketSerial', e.target.dataset.value);
+  location.replace('../review/market');
 }
 
 locationBtn.addEventListener('click', onLocationFilter);
