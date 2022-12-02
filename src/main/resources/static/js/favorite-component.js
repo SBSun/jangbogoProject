@@ -131,7 +131,7 @@ function readCallDibs() {
           const div = document.createElement('div');
           div.className = 'item';
           const img = document.createElement('img');
-          img.src = `../File/items/${itemImg}.png`;
+          img.src = `../files/items/${itemImg}.png`;
           const info = document.createElement('div');
           info.className = 'itemInfo';
           const marketName = document.createElement('span');

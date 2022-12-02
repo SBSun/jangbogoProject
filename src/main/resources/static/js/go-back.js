@@ -1,5 +1,3 @@
-'use strict';
-
 const backBtn = document.querySelector('#navbar-cancle');
 
 function goBackPage() {
