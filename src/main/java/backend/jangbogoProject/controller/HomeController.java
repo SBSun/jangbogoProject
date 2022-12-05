@@ -1,9 +1,11 @@
 package backend.jangbogoProject.controller;
 
 import backend.jangbogoProject.dto.ItemInfo;
+import backend.jangbogoProject.repository.ItemInfoRepository;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,8 +16,9 @@ import java.net.URL;
 
 @RestController
 public class HomeController {
+    @Autowired
+    private ItemInfoRepository itemInfoRepository;
 
-    // http://localhost:8080
     @GetMapping("/")
     @ResponseBody
     public ModelAndView home()
@@ -41,7 +44,7 @@ public class HomeController {
                 JSONObject tmp = (JSONObject)infoArr.get(i);
                 ItemInfo infoObj = new ItemInfo(i+(long)1, (double)tmp.get("M_SEQ"),(double)tmp.get("A_SEQ"),(String)tmp.get("A_UNIT"),
                         (String)tmp.get("A_PRICE"), (String)tmp.get("M_GU_CODE"),(String)tmp.get("P_DATE"));
-                System.out.println(infoObj);
+                itemInfoRepository.save(infoObj);
             }
 
         }catch(Exception e) {
