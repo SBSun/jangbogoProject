@@ -152,7 +152,7 @@ function onLoadItem() {
         const div = document.createElement('div');
         div.className = 'item';
         const img = document.createElement('img');
-        img.src = `../files/items/${itemImg}.png`;
+        img.src = `../assets/items/${itemImg}.png`;
         const info = document.createElement('div');
         info.className = 'itemInfo';
         const marketName = document.createElement('span');
@@ -229,7 +229,7 @@ function onLoadMarket() {
         a.className = 'marketLink';
         a.dataset.value = res[i].marketSerialNum;
         const img = document.createElement('img');
-        img.src = `../files/market/${marketImg}.png`;
+        img.src = `../assets/market/${marketImg}.png`;
         img.dataset.value = res[i].marketSerialNum;
         const name = document.createElement('div');
         name.className = 'marketName';
