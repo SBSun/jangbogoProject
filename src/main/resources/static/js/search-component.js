@@ -96,7 +96,7 @@ function searchInit() {
         const div = document.createElement('div');
         div.className = 'item';
         const img = document.createElement('img');
-        img.src = `../files/items/${itemImg}.png`;
+        img.src = `../assets/items/${itemImg}.png`;
         const info = document.createElement('div');
         info.className = 'itemInfo';
         const marketName = document.createElement('span');
