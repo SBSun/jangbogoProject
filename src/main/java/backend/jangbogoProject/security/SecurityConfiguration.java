@@ -3,6 +3,7 @@ package backend.jangbogoProject.security;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -12,6 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity
+@Configuration
 @AllArgsConstructor
 public class SecurityConfiguration {
     private final UserDetailsService userDetailsService;
@@ -25,15 +27,15 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         /* @formatter:off */
-        http
+        http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/home", "/signUp").permitAll() // 설정한 리소스의 접근을 인증절차 없이 허용
+                .antMatchers("/").permitAll() // 설정한 리소스의 접근을 인증절차 없이 허용
                 .anyRequest().authenticated() // 그 외 모든 리소스를 의미하며 인증 필요
                 .and()
                 .formLogin()
-                .permitAll()
-                .loginPage("/login") // 기본 로그인 페이지
-                .and()
+                .loginPage("/") // 기본 로그인 페이지
+                .defaultSuccessUrl("/index")
+            .and()
                 .logout()
                 .permitAll()
                 // .logoutUrl("/logout") // 로그아웃 URL (기본 값 : /logout)

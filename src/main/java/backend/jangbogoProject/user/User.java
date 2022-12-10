@@ -26,22 +26,22 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String address;
     @Column(nullable = false)
-    private String role;
+    private String authority;
 
     @Builder
-    public User(String id, String password, String name, String address, String role) {
+    public User(String id, String password, String name, String address, String authority) {
         this.id = id;
         this.password = password;
         this.name = name;
         this.address = address;
-        this.role = role;
+        this.authority = authority;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
 
-        for(String role : role.split(",")){
+        for(String role : authority.split(",")){
             authorities.add(new SimpleGrantedAuthority(role));
         }
         return authorities;

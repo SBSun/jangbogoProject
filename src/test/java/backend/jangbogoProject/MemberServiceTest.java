@@ -1,8 +1,6 @@
 package backend.jangbogoProject;
 
 import backend.jangbogoProject.domain.Member;
-import backend.jangbogoProject.repository.MemberRepository;
-import backend.jangbogoProject.service.MemberService;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

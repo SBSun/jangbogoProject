@@ -3,7 +3,6 @@ package backend.jangbogoProject;
 import backend.jangbogoProject.domain.Review;
 import backend.jangbogoProject.dto.ReviewDTO;
 import backend.jangbogoProject.repository.ReviewRepository;
-import backend.jangbogoProject.service.MemberService;
 import backend.jangbogoProject.service.ReviewService;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;

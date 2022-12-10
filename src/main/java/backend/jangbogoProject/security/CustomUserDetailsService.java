@@ -29,7 +29,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                     .password(user.getPassword())
                     .name(user.getName())
                     .address(user.getAddress())
-                    .role("User").build();
+                    .authority("User").build();
             return authUser;
         } else {
             throw new UsernameNotFoundException("can not find User : " + id);
