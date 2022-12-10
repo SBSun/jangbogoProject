@@ -10,8 +10,7 @@ public class UserDto {
     @AllArgsConstructor
     @Builder
     public static class Info {
-        private Long id;
-        private String email;
+        private String id;
         private String password;
         private String name;
         private String address;
@@ -20,7 +19,7 @@ public class UserDto {
     @Getter
     @Setter
     public static class Request {
-        private String email;
+        private String id;
     }
 
     @Getter
