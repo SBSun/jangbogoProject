@@ -20,6 +20,7 @@ public class SecurityConfiguration {
     private final UserDetailsService userDetailsService;
     /* 로그인 실패 핸들러 의존성 주입 */
     private final AuthenticationFailureHandler customFailureHandler;
+
     @Bean
     public static BCryptPasswordEncoder bCryptPasswordEncoder() {
         //  AuthenticationManagerBuilder에  패스워드 암호화를 위해 Spring Security에서 제공하는 BCryptPasswordEncoder를 추가
@@ -33,12 +34,12 @@ public class SecurityConfiguration {
                 .authorizeRequests()
                 .antMatchers("/", "/signUp").permitAll() // 설정한 리소스의 접근을 인증절차 없이 허용
                 .and()
-                .formLogin()
+            .formLogin()
                 .loginPage("/") // 기본 로그인 페이지
                 .failureHandler(customFailureHandler)
                 .usernameParameter("id")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/index")
+                .defaultSuccessUrl("/")
             .and()
                 .logout()
                 .permitAll()

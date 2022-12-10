@@ -13,8 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 @AllArgsConstructor
 public class UserService implements UserDetailsService {
@@ -29,7 +27,7 @@ public class UserService implements UserDetailsService {
         if(user != null){
             throw new IllegalStateException("이미 존재하는 회원입니다.");
         }
-        System.out.println("회원가입");
+
         // 비밀번호 암호화
         String encodedPassword = passwordEncoder.encode(newUser.getPassword());
         newUser.setPassword(encodedPassword);
@@ -42,7 +40,8 @@ public class UserService implements UserDetailsService {
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String id) {
         User user = userRepository.findByUserId(id);
-        System.out.println(user.getId() + ", " + user.getPassword());
+        System.out.println(user.getUsername() + ", " + passwordEncoder.matches("q",user.getPassword()));
+
         if (user != null) {
             // USER 라는 역할을 넣어준다.
             User authUser = User.builder()
