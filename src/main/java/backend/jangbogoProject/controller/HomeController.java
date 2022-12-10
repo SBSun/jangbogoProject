@@ -2,6 +2,8 @@ package backend.jangbogoProject.controller;
 
 import backend.jangbogoProject.commodity.Commodity;
 import backend.jangbogoProject.commodity.CommodityRepository;
+import backend.jangbogoProject.user.UserDto;
+import backend.jangbogoProject.user.UserService;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -17,9 +19,10 @@ import java.net.URL;
 public class HomeController {
     @Autowired
     private CommodityRepository commodityRepository;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/")
-    @ResponseBody
     public ModelAndView home()
     {
         ModelAndView mav = new ModelAndView("home");
@@ -27,6 +30,20 @@ public class HomeController {
         return mav;
     }
 
+    @GetMapping("/signUp")
+    public ModelAndView signUp()
+    {
+        ModelAndView mav = new ModelAndView("signUp");
+
+        return mav;
+    }
+
+    @PostMapping("/join")
+    public String create(UserDto.Info userInfo)
+    {
+        userService.save(userInfo.toEntity());
+        return "/";
+    }
     /*
     @PostMapping("/")
     public String load_save(Model model){

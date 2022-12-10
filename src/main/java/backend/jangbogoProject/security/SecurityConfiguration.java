@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity
@@ -17,7 +18,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @AllArgsConstructor
 public class SecurityConfiguration {
     private final UserDetailsService userDetailsService;
-
+    /* 로그인 실패 핸들러 의존성 주입 */
+    private final AuthenticationFailureHandler customFailureHandler;
     @Bean
     public static BCryptPasswordEncoder bCryptPasswordEncoder() {
         //  AuthenticationManagerBuilder에  패스워드 암호화를 위해 Spring Security에서 제공하는 BCryptPasswordEncoder를 추가
@@ -29,11 +31,13 @@ public class SecurityConfiguration {
         /* @formatter:off */
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/").permitAll() // 설정한 리소스의 접근을 인증절차 없이 허용
-                .anyRequest().authenticated() // 그 외 모든 리소스를 의미하며 인증 필요
+                .antMatchers("/", "/signUp").permitAll() // 설정한 리소스의 접근을 인증절차 없이 허용
                 .and()
                 .formLogin()
                 .loginPage("/") // 기본 로그인 페이지
+                .failureHandler(customFailureHandler)
+                .usernameParameter("id")
+                .passwordParameter("password")
                 .defaultSuccessUrl("/index")
             .and()
                 .logout()

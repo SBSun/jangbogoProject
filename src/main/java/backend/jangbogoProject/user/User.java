@@ -2,6 +2,7 @@ package backend.jangbogoProject.user;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,9 +15,9 @@ import java.util.Collection;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private String id;
     @Column(nullable = false)
@@ -25,7 +26,6 @@ public class User implements UserDetails {
     private String name;
     @Column(nullable = false)
     private String address;
-    @Column(nullable = false)
     private String authority;
 
     @Builder

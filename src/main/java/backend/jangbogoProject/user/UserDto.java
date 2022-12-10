@@ -14,6 +14,16 @@ public class UserDto {
         private String password;
         private String name;
         private String address;
+
+        public User toEntity() {
+            User build = User.builder()
+                    .id(id)
+                    .password(password)
+                    .name(name)
+                    .address(address)
+                    .build();
+            return build;
+        }
     }
 
     @Getter
