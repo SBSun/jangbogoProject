@@ -39,10 +39,21 @@ public class HomeController {
     }
 
     @PostMapping("/join")
-    public String create(UserDto.Info userInfo)
+    public ModelAndView create(UserDto.Info userInfo)
     {
         userService.save(userInfo.toEntity());
-        return "/";
+
+        ModelAndView mav = new ModelAndView("home");
+
+        return mav;
+    }
+
+    @GetMapping("/loginSuccess")
+    public ModelAndView loginSuccess()
+    {
+        ModelAndView mav = new ModelAndView("loginSuccess");
+
+        return mav;
     }
     /*
     @PostMapping("/")

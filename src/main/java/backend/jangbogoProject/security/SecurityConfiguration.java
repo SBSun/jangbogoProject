@@ -33,19 +33,19 @@ public class SecurityConfiguration {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/signUp").permitAll() // 설정한 리소스의 접근을 인증절차 없이 허용
+                .antMatchers("/loginSuccess").hasRole("USER")
                 .and()
             .formLogin()
                 .loginPage("/") // 기본 로그인 페이지
                 .failureHandler(customFailureHandler)
                 .usernameParameter("id")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/loginSuccess")
             .and()
                 .logout()
                 .permitAll()
-                // .logoutUrl("/logout") // 로그아웃 URL (기본 값 : /logout)
-                // .logoutSuccessUrl("/login?logout") // 로그아웃 성공 URL (기본 값 : "/login?logout")
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // 주소창에 요청해도 포스트로 인식하여 로그아웃
+                .logoutSuccessUrl("/") // 로그아웃 성공 URL (기본 값 : "/login?logout")
+                //.logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // 주소창에 요청해도 포스트로 인식하여 로그아웃
                 .deleteCookies("JSESSIONID") // 로그아웃 시 JSESSIONID 제거
                 .invalidateHttpSession(true) // 로그아웃 시 세션 종료
                 .clearAuthentication(true); // 로그아웃 시 권한 제거

@@ -40,10 +40,7 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-
-        for(String role : authority.split(",")){
-            authorities.add(new SimpleGrantedAuthority(role));
-        }
+        authorities.add(new SimpleGrantedAuthority(authority));
         return authorities;
     }
 

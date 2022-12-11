@@ -31,7 +31,7 @@ public class UserService implements UserDetailsService {
         // 비밀번호 암호화
         String encodedPassword = passwordEncoder.encode(newUser.getPassword());
         newUser.setPassword(encodedPassword);
-        newUser.setAuthority("User");
+        newUser.setAuthority("ROLE_USER");
         userRepository.save(newUser);
         return newUser;
     }
@@ -49,7 +49,7 @@ public class UserService implements UserDetailsService {
                     .password(user.getPassword())
                     .name(user.getName())
                     .address(user.getAddress())
-                    .authority("User").build();
+                    .authority(user.getAuthority()).build();
             return authUser;
         } else {
             throw new UsernameNotFoundException("can not find User : " + id);
