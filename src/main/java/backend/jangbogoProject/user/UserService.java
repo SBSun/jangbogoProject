@@ -20,7 +20,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     //회원가입
-    public User save(User newUser)
+    public User save(User newUser, Authority authority)
     {
         User user = userRepository.findByUserId(newUser.getId());
 
@@ -31,7 +31,7 @@ public class UserService implements UserDetailsService {
         // 비밀번호 암호화
         String encodedPassword = passwordEncoder.encode(newUser.getPassword());
         newUser.setPassword(encodedPassword);
-        newUser.setAuthority("ROLE_USER");
+        newUser.setAuthority(authority.getValue());
         userRepository.save(newUser);
         return newUser;
     }
@@ -40,7 +40,6 @@ public class UserService implements UserDetailsService {
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String id) {
         User user = userRepository.findByUserId(id);
-        System.out.println(user.getUsername() + ", " + passwordEncoder.matches("q",user.getPassword()));
 
         if (user != null) {
             // USER 라는 역할을 넣어준다.

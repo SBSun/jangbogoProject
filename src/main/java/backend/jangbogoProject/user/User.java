@@ -26,6 +26,7 @@ public class User implements UserDetails {
     private String name;
     @Column(nullable = false)
     private String address;
+    @Column(nullable = false)
     private String authority;
 
     @Builder
@@ -40,7 +41,9 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(authority));
+        for(String authority : authority.split(",")){
+            authorities.add(new SimpleGrantedAuthority(authority));
+        }
         return authorities;
     }
 

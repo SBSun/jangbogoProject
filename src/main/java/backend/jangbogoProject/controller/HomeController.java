@@ -2,6 +2,7 @@ package backend.jangbogoProject.controller;
 
 import backend.jangbogoProject.commodity.Commodity;
 import backend.jangbogoProject.commodity.CommodityRepository;
+import backend.jangbogoProject.user.Authority;
 import backend.jangbogoProject.user.UserDto;
 import backend.jangbogoProject.user.UserService;
 import org.json.simple.JSONArray;
@@ -38,23 +39,42 @@ public class HomeController {
         return mav;
     }
 
-    @PostMapping("/join")
+    @PostMapping("/create")
     public ModelAndView create(UserDto.Info userInfo)
     {
-        userService.save(userInfo.toEntity());
+        userService.save(userInfo.toEntity(), Authority.USER);
 
         ModelAndView mav = new ModelAndView("home");
 
         return mav;
     }
 
-    @GetMapping("/loginSuccess")
-    public ModelAndView loginSuccess()
+    @GetMapping("/signUpAdmin")
+    public ModelAndView signUpAdmin()
     {
-        ModelAndView mav = new ModelAndView("loginSuccess");
+        ModelAndView mav = new ModelAndView("signUpAdmin");
 
         return mav;
     }
+
+    @PostMapping("/createAdmin")
+    public ModelAndView createAdmin(UserDto.Info userInfo)
+    {
+        userService.save(userInfo.toEntity(), Authority.ADMIN);
+
+        ModelAndView mav = new ModelAndView("home");
+
+        return mav;
+    }
+
+    @GetMapping("/admin")
+    public ModelAndView admin()
+    {
+        ModelAndView mav = new ModelAndView("admin");
+
+        return mav;
+    }
+
     /*
     @PostMapping("/")
     public String load_save(Model model){

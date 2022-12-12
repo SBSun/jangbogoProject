@@ -33,14 +33,15 @@ public class SecurityConfiguration {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/signUp").permitAll() // 설정한 리소스의 접근을 인증절차 없이 허용
-                .antMatchers("/loginSuccess").hasRole("USER")
+                .antMatchers("/admin", "/signUpAdmin").hasRole("ADMIN")
+                .antMatchers("/signUpAdmin").hasRole("USER")
                 .and()
             .formLogin()
                 .loginPage("/") // 기본 로그인 페이지
                 .failureHandler(customFailureHandler)
                 .usernameParameter("id")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/loginSuccess")
+                .defaultSuccessUrl("/")
             .and()
                 .logout()
                 .permitAll()
