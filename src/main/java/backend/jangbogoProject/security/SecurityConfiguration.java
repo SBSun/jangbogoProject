@@ -33,7 +33,7 @@ public class SecurityConfiguration {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/signUp").permitAll() // 설정한 리소스의 접근을 인증절차 없이 허용
-                .antMatchers("/admin", "/signUpAdmin").hasRole("ADMIN")
+                .antMatchers("/admin", "/signUpAdmin", "/data_load_save").hasRole("ADMIN")
                 .antMatchers("/signUpAdmin").hasRole("USER")
                 .and()
             .formLogin()

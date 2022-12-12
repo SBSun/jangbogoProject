@@ -75,9 +75,9 @@ public class HomeController {
         return mav;
     }
 
-    /*
-    @PostMapping("/")
-    public String load_save(Model model){
+
+    @PostMapping("/data_load_save")
+    public ModelAndView data_load_save(){
          String result = "";
 
         try {
@@ -104,6 +104,8 @@ public class HomeController {
         }catch(Exception e) {
             e.printStackTrace();
         }
-        return "/";
-    }*/
+
+        ModelAndView mav = new ModelAndView("admin");
+        return mav;
+    }
 }
