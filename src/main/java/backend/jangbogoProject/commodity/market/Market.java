@@ -1,4 +1,4 @@
-package backend.jangbogoProject.commodity.gu;
+package backend.jangbogoProject.commodity.market;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -11,16 +11,19 @@ import javax.persistence.Id;
 @Entity
 @NoArgsConstructor
 @Getter
-public class Gu {
+public class Market {
     @Id
-    @Column(name = "gu_id")
+    @Column(name = "market_id")
     private int id;
     @Column(nullable = false)
     private String name;
+    @Column(name = "gu_id", nullable = false)
+    private int gu_id;
 
     @Builder
-    public Gu(int id, String name) {
+    public Market(int id, String name, int gu_id) {
         this.id = id;
         this.name = name;
+        this.gu_id = gu_id;
     }
 }

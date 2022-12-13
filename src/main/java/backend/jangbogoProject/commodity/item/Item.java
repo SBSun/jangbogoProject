@@ -12,12 +12,12 @@ import javax.persistence.*;
 public class Item {
     @Id
     @Column(name = "item_id")
-    private Integer id;
+    private int id;
     @Column(nullable = false)
     private String name;
 
     @Builder
-    public Item(Integer id, String name) {
+    public Item(int id, String name) {
         this.id = id;
         this.name = name;
     }

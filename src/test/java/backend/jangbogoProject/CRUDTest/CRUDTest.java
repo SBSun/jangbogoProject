@@ -4,6 +4,8 @@ import backend.jangbogoProject.commodity.gu.Gu;
 import backend.jangbogoProject.commodity.gu.GuRepository;
 import backend.jangbogoProject.commodity.item.Item;
 import backend.jangbogoProject.commodity.item.ItemRepository;
+import backend.jangbogoProject.commodity.market.Market;
+import backend.jangbogoProject.commodity.market.MarketService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ public class CRUDTest {
     private ItemRepository itemRepository;
     @Autowired
     private GuRepository guRepository;
+
+    @Autowired
+    private MarketService marketService;
 
     @Test
     public void saveItem(){
@@ -36,5 +41,21 @@ public class CRUDTest {
                 .build();
 
         guRepository.save(gu);
+    }
+
+    @Test
+    public void saveMarket(){
+        Market market = Market.builder()
+                .id(1)
+                .name("창동 하나로마트")
+                .gu_id(10)
+                .build();
+
+        Gu gu = Gu.builder()
+                .id(10)
+                .name("도봉구")
+                .build();
+
+        marketService.save(market, gu);
     }
 }
