@@ -1,4 +1,4 @@
-package backend.jangbogoProject.item;
+package backend.jangbogoProject.commodity.item;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
