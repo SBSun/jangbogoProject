@@ -1,4 +1,4 @@
-package backend.jangbogoProject.controller;
+package backend.jangbogoProject;
 
 import backend.jangbogoProject.commodity.Commodity;
 import backend.jangbogoProject.commodity.CommodityRepository;
@@ -96,8 +96,16 @@ public class HomeController {
 
             for(int i=0;i<infoArr.size();i++){
                 JSONObject tmp = (JSONObject)infoArr.get(i);
-                Commodity commodity = new Commodity(i+(long)1, (double)tmp.get("M_SEQ"),(double)tmp.get("A_SEQ"),(String)tmp.get("A_UNIT"),
-                        (String)tmp.get("A_PRICE"), (String)tmp.get("P_DATE"));
+
+                Commodity commodity = Commodity.builder()
+                        .id(i + (long)1)
+                        .m_SEQ((int)tmp.get("M_SEQ"))
+                        .a_SEQ((int)tmp.get("A_SEQ"))
+                        .a_UNIT((String)tmp.get("A_UNIT"))
+                        .a_PRICE((String)tmp.get("A_PRICE"))
+                        .p_DATE((String)tmp.get("P_DATE"))
+                        .build();
+
                 commodityRepository.save(commodity);
             }
 

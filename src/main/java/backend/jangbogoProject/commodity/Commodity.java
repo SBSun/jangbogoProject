@@ -1,15 +1,11 @@
 package backend.jangbogoProject.commodity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 public class Commodity {
     @Id
@@ -26,4 +22,14 @@ public class Commodity {
     private String A_PRICE;
     @Column(nullable = false)
     private String P_DATE;
+
+    @Builder
+    public Commodity(Long id, double m_SEQ, double a_SEQ, String a_UNIT, String a_PRICE, String p_DATE) {
+        this.id = id;
+        M_SEQ = m_SEQ;
+        A_SEQ = a_SEQ;
+        A_UNIT = a_UNIT;
+        A_PRICE = a_PRICE;
+        P_DATE = p_DATE;
+    }
 }
