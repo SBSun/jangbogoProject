@@ -78,40 +78,9 @@ public class HomeController {
 
     @PostMapping("/data_load_save")
     public ModelAndView data_load_save(){
-         String result = "";
 
-        try {
-            URL url = new URL("http://openapi.seoul.go.kr:8088/736c497a7462797539316141576a42/json/ListNecessariesPricesService/1/1000/");
-            BufferedReader bf;
-            bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
-            result = bf.readLine();
 
-            JSONParser jsonParser = new JSONParser();
-            JSONObject jsonObject = (JSONObject)jsonParser.parse(result);
-            JSONObject ListNecessariesPricesService = (JSONObject)jsonObject.get("ListNecessariesPricesService");
-            Long totalCount=(Long)ListNecessariesPricesService.get("list_total_count");
 
-            JSONObject commodityResult = (JSONObject)ListNecessariesPricesService.get("RESULT");
-            JSONArray infoArr = (JSONArray) ListNecessariesPricesService.get("row");
-
-            for(int i=0;i<infoArr.size();i++){
-                JSONObject tmp = (JSONObject)infoArr.get(i);
-
-                Commodity commodity = Commodity.builder()
-                        .id(i + (long)1)
-                        .m_SEQ((int)tmp.get("M_SEQ"))
-                        .a_SEQ((int)tmp.get("A_SEQ"))
-                        .a_UNIT((String)tmp.get("A_UNIT"))
-                        .a_PRICE((String)tmp.get("A_PRICE"))
-                        .p_DATE((String)tmp.get("P_DATE"))
-                        .build();
-
-                commodityRepository.save(commodity);
-            }
-
-        }catch(Exception e) {
-            e.printStackTrace();
-        }
 
         ModelAndView mav = new ModelAndView("admin");
         return mav;

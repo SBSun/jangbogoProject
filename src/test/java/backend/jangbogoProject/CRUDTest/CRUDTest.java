@@ -1,5 +1,6 @@
 package backend.jangbogoProject.CRUDTest;
 
+import backend.jangbogoProject.commodity.CommodityService;
 import backend.jangbogoProject.commodity.gu.Gu;
 import backend.jangbogoProject.commodity.gu.GuRepository;
 import backend.jangbogoProject.commodity.item.Item;
@@ -22,6 +23,8 @@ public class CRUDTest {
 
     @Autowired
     private MarketService marketService;
+    @Autowired
+    private CommodityService commodityService;
 
     @Test
     public void saveItem(){
@@ -51,11 +54,11 @@ public class CRUDTest {
                 .gu_id(10)
                 .build();
 
-        Gu gu = Gu.builder()
-                .id(10)
-                .name("도봉구")
-                .build();
+        marketService.save(market, "도봉구");
+    }
 
-        marketService.save(market, gu);
+    @Test
+    public void load_save(){
+        commodityService.load_save();
     }
 }

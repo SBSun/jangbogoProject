@@ -14,11 +14,18 @@ public class MarketService {
     @Autowired
     private GuRepository guRepository;
 
-    public void save(Market _market, Gu _gu){
-        Optional<Gu> gu = guRepository.findById(_gu.getId());
+    public boolean existsById(int id){
+        return marketRepository.existsById(id);
+    }
 
-        if(!gu.isPresent())
-            guRepository.save(_gu);
+    public void save(Market _market, String guName){
+        if(!guRepository.existsById(_market.getGu_id())){
+            Gu gu = Gu.builder()
+                    .id(_market.getGu_id())
+                    .name(guName)
+                    .build();
+            guRepository.save(gu);
+        }
 
         marketRepository.save(_market);
     }
