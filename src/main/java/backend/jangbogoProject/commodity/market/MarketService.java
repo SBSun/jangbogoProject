@@ -14,6 +14,10 @@ public class MarketService {
     @Autowired
     private GuRepository guRepository;
 
+    public Market findById(int id){
+        return marketRepository.findById(id).get();
+    }
+
     public boolean existsById(int id){
         return marketRepository.existsById(id);
     }

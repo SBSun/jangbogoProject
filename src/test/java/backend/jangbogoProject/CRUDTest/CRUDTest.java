@@ -1,5 +1,6 @@
 package backend.jangbogoProject.CRUDTest;
 
+import backend.jangbogoProject.commodity.CommodityDto;
 import backend.jangbogoProject.commodity.CommodityService;
 import backend.jangbogoProject.commodity.gu.Gu;
 import backend.jangbogoProject.commodity.gu.GuRepository;
@@ -60,5 +61,12 @@ public class CRUDTest {
     @Test
     public void load_save(){
         commodityService.load_save();
+    }
+
+    @Test
+    public void findCommodity(){
+        CommodityDto.Response response = commodityService.findById(5);
+
+        System.out.println(response);
     }
 }

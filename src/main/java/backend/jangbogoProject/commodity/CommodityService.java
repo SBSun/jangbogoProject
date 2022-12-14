@@ -1,5 +1,6 @@
 package backend.jangbogoProject.commodity;
 
+import backend.jangbogoProject.commodity.gu.GuRepository;
 import backend.jangbogoProject.commodity.item.Item;
 import backend.jangbogoProject.commodity.item.ItemRepository;
 import backend.jangbogoProject.commodity.market.Market;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Optional;
 
 @Service
 public class CommodityService {
@@ -22,6 +24,30 @@ public class CommodityService {
     private ItemRepository itemRepository;
     @Autowired
     private MarketService marketService;
+    @Autowired
+    private GuRepository guRepository;
+
+    public CommodityDto.Response findById(int id){
+        Commodity commodity = commodityRepository.findById(id).get();
+
+        String itemName = itemRepository.getName(commodity.getA_SEQ());
+
+        Market market = marketService.findById(commodity.getM_SEQ());
+        String marketName = market.getName();
+        String guName = guRepository.getName(market.getGu_id());
+
+        CommodityDto.Response response = CommodityDto.Response.builder()
+                .M_NAME(marketName)
+                .A_NAME(itemName)
+                .A_PRICE(commodity.getA_PRICE())
+                .A_UNIT(commodity.getA_UNIT())
+                .M_GU_NAME(guName)
+                .returnCode(200)
+                .returnMessage("success")
+                .build();
+
+        return response;
+    }
 
     public void load_save(){
         String result = "";
@@ -44,8 +70,10 @@ public class CommodityService {
 
                 Double m_seq = (Double)tmp.get("M_SEQ");
                 Double a_seq = (Double)tmp.get("A_SEQ");
+
+
                 Commodity commodity = Commodity.builder()
-                        .id(i + (long)1)
+                        .id(i + 1)
                         .m_SEQ(m_seq.intValue())
                         .a_SEQ(a_seq.intValue())
                         .a_UNIT((String)tmp.get("A_UNIT"))

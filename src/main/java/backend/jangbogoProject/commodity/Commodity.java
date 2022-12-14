@@ -11,7 +11,7 @@ public class Commodity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "commodity_id")
-    private Long id;
+    private int id;
     @Column(nullable = false, name = "market_id")
     private int M_SEQ;
     @Column(nullable = false, name = "item_id")
@@ -24,7 +24,7 @@ public class Commodity {
     private String P_DATE;
 
     @Builder
-    public Commodity(Long id, int m_SEQ, int a_SEQ, String a_UNIT, String a_PRICE, String p_DATE) {
+    public Commodity(int id, int m_SEQ, int a_SEQ, String a_UNIT, String a_PRICE, String p_DATE) {
         this.id = id;
         M_SEQ = m_SEQ;
         A_SEQ = a_SEQ;
