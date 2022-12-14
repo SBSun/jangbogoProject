@@ -38,6 +38,12 @@ public class User implements UserDetails {
         this.authority = authority;
     }
 
+    public void update(String password, String name, String address){
+        this.password = password;
+        this.name = name;
+        this.address = address;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();

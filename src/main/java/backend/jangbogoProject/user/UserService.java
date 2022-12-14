@@ -39,11 +39,8 @@ public class UserService implements UserDetailsService {
 
     public UserDto.Response findById(String id){
         User user = userRepository.findByUserId(id);
-
         UserDto.Response response;
-
-        if(user != null)
-        {
+        if(user != null){
             UserDto.Info info = UserDto.Info.builder()
                     .id(id)
                     .password(user.getPassword())
@@ -52,14 +49,25 @@ public class UserService implements UserDetailsService {
                     .build();
 
             response = new UserDto.Response(info, 200, "success");
-
         }
         else
-        {
             response = new UserDto.Response(null, 400, "Bad Request");
-        }
 
         return  response;
+    }
+
+    @Transactional
+    // 트랜잭션 안에서 데이터베이스의 데이터를 가져오면 이 데이터는 영속성 컨텍스트가 유지된 상태가 된다.
+    //이 상태에서 해당 데이터의 값을 변경하면 트랜잭션이 끝나는 시점에 변경된 데이터를 데이터베이스에 반영해준다.
+    public void updateInfo(UserDto.Info info){
+        User user = userRepository.findByUserId(info.getId());
+
+        if(user == null)
+            new IllegalArgumentException("해당 회원은 존재하지 않습니다.");
+
+        String encPassword = passwordEncoder.encode(info.getPassword());
+
+        user.update(encPassword, info.getName(), info.getAddress());
     }
 
     @Override

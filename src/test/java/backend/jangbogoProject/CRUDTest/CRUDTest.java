@@ -80,4 +80,23 @@ public class CRUDTest {
 
         System.out.println(response);
     }
+
+    @Test
+    public void updateUserInfo(){
+        UserDto.Info updateInfo = UserDto.Info.builder()
+                .id("SBS")
+                .password("SBS")
+                .name("Sun")
+                .address("도봉구 창4동")
+                .build();
+
+        userService.updateInfo(updateInfo);
+
+        UserDto.Response response = userService.findById("SBS");
+
+        if(response == null)
+            new IllegalArgumentException("해당 회원은 존재하지 않습니다.");
+
+        System.out.println(response);
+    }
 }
