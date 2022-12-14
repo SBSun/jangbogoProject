@@ -1,14 +1,12 @@
 package backend.jangbogoProject.user;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 public class UserDto {
     @Getter
     @AllArgsConstructor
     @Builder
+    @ToString
     public static class Info {
         private String id;
         private String password;
@@ -34,6 +32,7 @@ public class UserDto {
 
     @Getter
     @AllArgsConstructor
+    @ToString
     public static class Response {
         private Info info;
         private int returnCode;

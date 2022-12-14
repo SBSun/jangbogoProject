@@ -19,6 +19,7 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     //회원가입
     public User save(User newUser, Authority authority)
     {
@@ -34,6 +35,31 @@ public class UserService implements UserDetailsService {
         newUser.setAuthority(authority.getValue());
         userRepository.save(newUser);
         return newUser;
+    }
+
+    public UserDto.Response findById(String id){
+        User user = userRepository.findByUserId(id);
+
+        UserDto.Response response;
+
+        if(user != null)
+        {
+            UserDto.Info info = UserDto.Info.builder()
+                    .id(id)
+                    .password(user.getPassword())
+                    .name(user.getName())
+                    .address(user.getAddress())
+                    .build();
+
+            response = new UserDto.Response(info, 200, "success");
+
+        }
+        else
+        {
+            response = new UserDto.Response(null, 400, "Bad Request");
+        }
+
+        return  response;
     }
 
     @Override

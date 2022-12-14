@@ -8,6 +8,8 @@ import backend.jangbogoProject.commodity.item.Item;
 import backend.jangbogoProject.commodity.item.ItemRepository;
 import backend.jangbogoProject.commodity.market.Market;
 import backend.jangbogoProject.commodity.market.MarketService;
+import backend.jangbogoProject.user.UserDto;
+import backend.jangbogoProject.user.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,8 @@ public class CRUDTest {
     private MarketService marketService;
     @Autowired
     private CommodityService commodityService;
+    @Autowired
+    private UserService userService;
 
     @Test
     public void saveItem(){
@@ -66,6 +70,13 @@ public class CRUDTest {
     @Test
     public void findCommodity(){
         CommodityDto.Response response = commodityService.findById(5);
+
+        System.out.println(response);
+    }
+
+    @Test
+    public void findUser(){
+        UserDto.Response response = userService.findById("byung0216@naver.com");
 
         System.out.println(response);
     }
