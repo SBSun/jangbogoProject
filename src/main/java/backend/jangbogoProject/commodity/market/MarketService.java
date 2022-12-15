@@ -2,6 +2,7 @@ package backend.jangbogoProject.commodity.market;
 
 import backend.jangbogoProject.commodity.gu.Gu;
 import backend.jangbogoProject.commodity.gu.GuRepository;
+import backend.jangbogoProject.commodity.gu.GuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,25 +13,39 @@ public class MarketService {
     @Autowired
     private MarketRepository marketRepository;
     @Autowired
-    private GuRepository guRepository;
+    private GuService guService;
+
+    public void save(Market _market, String guName){
+        if(!guService.existsById(_market.getGu_id())){
+            Gu gu = Gu.builder()
+                    .id(_market.getGu_id())
+                    .name(guName)
+                    .build();
+            guService.save(gu);
+        }
+
+        marketRepository.save(_market);
+    }
 
     public Market findById(int id){
-        return marketRepository.findById(id).get();
+        Market market = marketRepository.findById(id).get();
+
+        if(market == null)
+            new IllegalArgumentException("해당 객체는 존재하지 않습니다.");
+
+        return market;
     }
 
     public boolean existsById(int id){
         return marketRepository.existsById(id);
     }
 
-    public void save(Market _market, String guName){
-        if(!guRepository.existsById(_market.getGu_id())){
-            Gu gu = Gu.builder()
-                    .id(_market.getGu_id())
-                    .name(guName)
-                    .build();
-            guRepository.save(gu);
-        }
+    public String getMarketName(int id){
+        String marketName = marketRepository.getMarketName(id);
 
-        marketRepository.save(_market);
+        if(marketName.isEmpty())
+            new IllegalArgumentException("해당 객체는 존재하지 않습니다.");
+
+        return marketName;
     }
 }

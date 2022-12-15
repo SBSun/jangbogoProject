@@ -4,8 +4,10 @@ import backend.jangbogoProject.commodity.CommodityDto;
 import backend.jangbogoProject.commodity.CommodityService;
 import backend.jangbogoProject.commodity.gu.Gu;
 import backend.jangbogoProject.commodity.gu.GuRepository;
+import backend.jangbogoProject.commodity.gu.GuService;
 import backend.jangbogoProject.commodity.item.Item;
 import backend.jangbogoProject.commodity.item.ItemRepository;
+import backend.jangbogoProject.commodity.item.ItemService;
 import backend.jangbogoProject.commodity.market.Market;
 import backend.jangbogoProject.commodity.market.MarketService;
 import backend.jangbogoProject.user.UserDto;
@@ -19,15 +21,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class CRUDTest {
-    @Autowired
-    private ItemRepository itemRepository;
-    @Autowired
-    private GuRepository guRepository;
 
     @Autowired
     private MarketService marketService;
     @Autowired
     private CommodityService commodityService;
+    @Autowired
+    private ItemService itemService;
+    @Autowired
+    private GuService guService;
     @Autowired
     private UserService userService;
 
@@ -38,7 +40,7 @@ public class CRUDTest {
                 .name("사과")
                 .build();
 
-        itemRepository.save(item);
+        itemService.save(item);
     }
 
     @Test
@@ -48,7 +50,7 @@ public class CRUDTest {
                 .name("도봉구")
                 .build();
 
-        guRepository.save(gu);
+        guService.save(gu);
     }
 
     @Test

@@ -1,8 +1,10 @@
 package backend.jangbogoProject.commodity;
 
 import backend.jangbogoProject.commodity.gu.GuRepository;
+import backend.jangbogoProject.commodity.gu.GuService;
 import backend.jangbogoProject.commodity.item.Item;
 import backend.jangbogoProject.commodity.item.ItemRepository;
+import backend.jangbogoProject.commodity.item.ItemService;
 import backend.jangbogoProject.commodity.market.Market;
 import backend.jangbogoProject.commodity.market.MarketService;
 import org.json.simple.JSONArray;
@@ -21,20 +23,20 @@ public class CommodityService {
     @Autowired
     private CommodityRepository commodityRepository;
     @Autowired
-    private ItemRepository itemRepository;
+    private ItemService itemService;
     @Autowired
     private MarketService marketService;
     @Autowired
-    private GuRepository guRepository;
+    private GuService guService;
 
     public CommodityDto.Response findById(int id){
         Commodity commodity = commodityRepository.findById(id).get();
 
-        String itemName = itemRepository.getName(commodity.getA_SEQ());
+        String itemName = itemService.getItemName(commodity.getA_SEQ());
 
         Market market = marketService.findById(commodity.getM_SEQ());
         String marketName = market.getName();
-        String guName = guRepository.getName(market.getGu_id());
+        String guName = guService.getGuName(market.getGu_id());
 
         CommodityDto.Response response = CommodityDto.Response.builder()
                 .M_NAME(marketName)
@@ -81,13 +83,13 @@ public class CommodityService {
                         .p_DATE((String)tmp.get("P_DATE"))
                         .build();
 
-                if(!itemRepository.existsById(commodity.getA_SEQ())){
+                if(!itemService.existsById(commodity.getA_SEQ())){
                     Item item = Item.builder()
                             .id(commodity.getA_SEQ())
                             .name((String)tmp.get("A_NAME"))
                             .build();
 
-                    itemRepository.save(item);
+                    itemService.save(item);
                 }
 
                 String gu_code = (String)tmp.get("M_GU_CODE");

@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ItemRepository extends JpaRepository<Item, Integer> {
     @Query(value = "SELECT name FROM item WHERE item_id = ?1", nativeQuery = true)
-    public String getName(int id);
+    public String getItemName(int id);
 }
