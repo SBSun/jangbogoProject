@@ -32,7 +32,7 @@ public class CRUDTest {
     private GuService guService;
     @Autowired
     private UserService userService;
-
+/*
     @Test
     public void saveItem(){
         Item item = Item.builder()
@@ -100,5 +100,5 @@ public class CRUDTest {
             new IllegalArgumentException("해당 회원은 존재하지 않습니다.");
 
         System.out.println(response);
-    }
+    }*/
 }
