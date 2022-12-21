@@ -2,6 +2,7 @@ package backend.jangbogoProject;
 
 import backend.jangbogoProject.commodity.Commodity;
 import backend.jangbogoProject.commodity.CommodityRepository;
+import backend.jangbogoProject.commodity.CommodityService;
 import backend.jangbogoProject.user.Authority;
 import backend.jangbogoProject.user.UserDto;
 import backend.jangbogoProject.user.UserService;
@@ -19,7 +20,7 @@ import java.net.URL;
 @RestController
 public class HomeController {
     @Autowired
-    private CommodityRepository commodityRepository;
+    private CommodityService commodityService;
     @Autowired
     private UserService userService;
 
@@ -78,9 +79,7 @@ public class HomeController {
 
     @PostMapping("/data_load_save")
     public ModelAndView data_load_save(){
-
-
-
+        commodityService.load_save();
 
         ModelAndView mav = new ModelAndView("admin");
         return mav;
