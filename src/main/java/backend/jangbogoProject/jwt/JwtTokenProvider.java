@@ -25,8 +25,6 @@ import java.util.stream.Collectors;
 public class JwtTokenProvider {
     private final Logger LOGGER = LoggerFactory.getLogger(JwtTokenProvider.class);
 
-    private static final String AUTHORITIES_KEY = "NeighborAPI";
-
     private final String secret;                     // 사용할 알고리즘에 따라 길이를 맞추어 base64로 인코딩 된 임의 값
     private final long accessTokenValidityInSeconds; // Access Token의 유효기간
     private Key key;
@@ -34,7 +32,7 @@ public class JwtTokenProvider {
     public JwtTokenProvider(@Value("${jwt.secret}") String secret,
                          @Value("${jwt.access-token-validity-in-seconds}") long accessTokenValidityInSeconds){
         this.secret = secret;
-        this.accessTokenValidityInSeconds = accessTokenValidityInSeconds;
+        this.accessTokenValidityInSeconds = accessTokenValidityInSeconds * 1000l;
 
         // secret 값을 Base64 Decode해서 key 변수에 할당
         byte[] keyBytes = Decoders.BASE64.decode(secret);
@@ -51,7 +49,7 @@ public class JwtTokenProvider {
         long now = (new Date()).getTime();
         // Access Token 생성
         Date accessTokenExpiresIn = new Date(now + accessTokenValidityInSeconds);
-
+        System.out.println(new Date(now) + ", " + accessTokenExpiresIn);
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())     // 토큰 제목
                 .claim("auth", authorities)         // 비공개 클레임

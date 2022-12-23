@@ -26,6 +26,13 @@ public class UserDto {
 
     @Getter
     @Setter
+    public static class LoginRequest{
+        private String id;
+        private String password;
+    }
+
+    @Getter
+    @Setter
     public static class Request {
         private String id;
     }

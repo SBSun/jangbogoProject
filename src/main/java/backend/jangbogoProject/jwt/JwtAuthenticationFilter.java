@@ -18,6 +18,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends GenericFilterBean {
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
+    public static final String AUTHORIZATION_HEADER = "Authorization";
 
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -28,6 +29,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         String token = resolveToken(httpServletRequest);
         String requestURI = httpServletRequest.getRequestURI();
 
+        System.out.println(token + ", " + jwtTokenProvider.validateToken(token));
         // 2. validateToken 으로 토큰 유효성 검사
         if(StringUtils.hasText(token) && jwtTokenProvider.validateToken(token)){
             // 토큰이 유효할 경우 토큰에서 Authentication 객체를 가지고 와서 SecurityContext 에 저장
@@ -42,7 +44,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
     // Request Header 에서 토큰 정보 추출
     private String resolveToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
+        String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7); // "Bearer " 이후의 ACCESS_TOKEN 문자열 반환
         }

@@ -43,7 +43,7 @@ public class SecurityConfiguration {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/signUp").permitAll() // 설정한 리소스의 접근을 인증절차 없이 허용
+                .antMatchers("/", "/login", "/signUpUser").permitAll() // 설정한 리소스의 접근을 인증절차 없이 허용
                 .antMatchers("/admin", "/signUpAdmin", "/data_load_save").hasRole("ADMIN")
                 .antMatchers("/signUpAdmin").hasRole("USER")
                 .and()

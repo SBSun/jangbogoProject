@@ -1,5 +1,6 @@
 package backend.jangbogoProject.user;
 
+import backend.jangbogoProject.jwt.JwtAuthenticationFilter;
 import backend.jangbogoProject.jwt.JwtTokenProvider;
 import backend.jangbogoProject.jwt.TokenDto;
 import backend.jangbogoProject.user.User;
@@ -7,11 +8,13 @@ import backend.jangbogoProject.user.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -57,9 +60,10 @@ public class UserService implements UserDetailsService {
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
-        TokenDto tokenInfo = jwtTokenProvider.createToken(authentication);
+        TokenDto tokenDto = jwtTokenProvider.createToken(authentication);
 
-        return tokenInfo;
+        System.out.println(tokenDto.getAccessToken());
+        return tokenDto;
     }
 
     public UserDto.Response findById(String id){
