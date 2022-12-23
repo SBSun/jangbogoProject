@@ -7,6 +7,7 @@ import backend.jangbogoProject.commodity.item.ItemRepository;
 import backend.jangbogoProject.commodity.item.ItemService;
 import backend.jangbogoProject.commodity.market.Market;
 import backend.jangbogoProject.commodity.market.MarketService;
+import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -19,15 +20,13 @@ import java.net.URL;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CommodityService {
-    @Autowired
-    private CommodityRepository commodityRepository;
-    @Autowired
-    private ItemService itemService;
-    @Autowired
-    private MarketService marketService;
-    @Autowired
-    private GuService guService;
+
+    private final CommodityRepository commodityRepository;
+    private final ItemService itemService;
+    private final MarketService marketService;
+    private final GuService guService;
 
     public CommodityDto.Response findById(int id){
         Commodity commodity = commodityRepository.findById(id).get();

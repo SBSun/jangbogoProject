@@ -2,6 +2,7 @@ package backend.jangbogoProject.user;
 
 import backend.jangbogoProject.commodity.CommodityService;
 import backend.jangbogoProject.jwt.TokenDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
+@RequiredArgsConstructor
 public class UserController {
-    @Autowired
+
     private CommodityService commodityService;
-    @Autowired
     private UserService userService;
 
     @PostMapping("/login")

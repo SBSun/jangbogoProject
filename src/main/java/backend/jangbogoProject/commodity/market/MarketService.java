@@ -3,17 +3,17 @@ package backend.jangbogoProject.commodity.market;
 import backend.jangbogoProject.commodity.gu.Gu;
 import backend.jangbogoProject.commodity.gu.GuRepository;
 import backend.jangbogoProject.commodity.gu.GuService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class MarketService {
-    @Autowired
-    private MarketRepository marketRepository;
-    @Autowired
-    private GuService guService;
+    private final MarketRepository marketRepository;
+    private final GuService guService;
 
     public void save(Market _market, String guName){
         if(!guService.existsById(_market.getGu_id())){

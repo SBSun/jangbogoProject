@@ -1,13 +1,14 @@
 package backend.jangbogoProject.commodity.gu;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class GuService {
 
-    @Autowired
-    private GuRepository guRepository;
+    private final GuRepository guRepository;
 
     public void save(Gu gu){
         guRepository.save(gu);
