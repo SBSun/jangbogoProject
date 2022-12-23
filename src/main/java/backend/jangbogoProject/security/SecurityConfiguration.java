@@ -23,10 +23,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @AllArgsConstructor
 public class SecurityConfiguration {
     private final UserDetailsService userDetailsService;
-    // 로그인 성공 핸들러 의존성 주입
-    private final CustomAuthSuccessHandler customSuccessHandler;
-    // 로그인 실패 핸들러 의존성 주입
-    private final CustomAuthFailureHandler customFailureHandler;
 
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -52,23 +48,7 @@ public class SecurityConfiguration {
                 .antMatchers("/signUpAdmin").hasRole("USER")
                 .and()
                 //  JWT 인증을 위하여 직접 구현한 필터를 UsernamePasswordAuthenticationFilter 전에 실행하겠다는 설정이다.
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
-            .formLogin()
-                .loginPage("/") // 기본 로그인 페이지
-                .defaultSuccessUrl("/")
-                .failureHandler(customFailureHandler)
-                .usernameParameter("id")
-                .passwordParameter("password")
-                .successHandler(customSuccessHandler)
-            .and()
-                .logout()
-                .permitAll()
-                 // 로그아웃 성공 URL (기본 값 : "/login?logout")
-                //.logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // 주소창에 요청해도 포스트로 인식하여 로그아웃
-                .deleteCookies("JSESSIONID") // 로그아웃 시 JSESSIONID 제거
-                .invalidateHttpSession(true) // 로그아웃 시 세션 종료
-                .clearAuthentication(true); // 로그아웃 시 권한 제거
-
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
         return http.build();
         /* @formatter:on */
     }
