@@ -11,9 +11,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.NoSuchElementException;
 
 
 @Service
@@ -24,6 +28,38 @@ public class UserService{
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
+
+    public UserDto.Info findById(String id){
+
+        if(userRepository.existsById(id)){
+            User user = userRepository.findById(id).get();
+
+            UserDto.Info info = UserDto.Info.builder()
+                    .id(user.getId())
+                    .password(user.getPassword())
+                    .name(user.getName())
+                    .address(user.getAddress())
+                    .build();
+
+            return info;
+        }
+
+        return UserDto.Info.builder().build();
+    }
+
+    @Transactional
+    // 트랜잭션 안에서 데이터베이스의 데이터를 가져오면 이 데이터는 영속성 컨텍스트가 유지된 상태가 된다.
+    //이 상태에서 해당 데이터의 값을 변경하면 트랜잭션이 끝나는 시점에 변경된 데이터를 데이터베이스에 반영해준다.
+    public void updateInfo(UserDto.Info info){
+        User user = userRepository.findByUserId(info.getId());
+
+        if(user == null)
+            new IllegalArgumentException("해당 회원은 존재하지 않습니다.");
+
+        String encPassword = passwordEncoder.encode(info.getPassword());
+
+        user.update(encPassword, info.getName(), info.getAddress());
+    }
 
     //회원가입
     public BasicResponse signUp(UserDto.SignUpRequest signUpDto, Authority authority)
@@ -75,35 +111,39 @@ public class UserService{
                 jwtTokenProvider.createRefreshToken(authentication), JwtTokenProvider.REFRESH_TOKEN_EXPIRE_TIME));
     }
 
-    public UserDto.Info findById(String id){
+    private String resolveToken(String token) {
+        return token.substring(7);
+    }
 
-        if(userRepository.existsById(id)){
-            User user = userRepository.findById(id).get();
+    public TokenDto reissue(String refreshToken) {
+        refreshToken = resolveToken(refreshToken);
+        String username = getCurrentUsername();
+        RefreshToken redisRefreshToken = refreshTokenRepository.findById(username).orElseThrow(NoSuchElementException::new);
 
-            UserDto.Info info = UserDto.Info.builder()
-                    .id(user.getId())
-                    .password(user.getPassword())
-                    .name(user.getName())
-                    .address(user.getAddress())
-                    .build();
-
-            return info;
+        if (refreshToken.equals(redisRefreshToken.getRefreshToken())) {
+            return reissueRefreshToken(refreshToken, username);
         }
-
-        return UserDto.Info.builder().build();
+        throw new IllegalArgumentException("토큰이 일치하지 않습니다.");
     }
 
-    @Transactional
-    // 트랜잭션 안에서 데이터베이스의 데이터를 가져오면 이 데이터는 영속성 컨텍스트가 유지된 상태가 된다.
-    //이 상태에서 해당 데이터의 값을 변경하면 트랜잭션이 끝나는 시점에 변경된 데이터를 데이터베이스에 반영해준다.
-    public void updateInfo(UserDto.Info info){
-        User user = userRepository.findByUserId(info.getId());
-
-        if(user == null)
-            new IllegalArgumentException("해당 회원은 존재하지 않습니다.");
-
-        String encPassword = passwordEncoder.encode(info.getPassword());
-
-        user.update(encPassword, info.getName(), info.getAddress());
+    private String getCurrentUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails principal = (UserDetails) authentication.getPrincipal();
+        return principal.getUsername();
     }
+
+    private TokenDto reissueRefreshToken(String refreshToken, String username) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (lessThanReissueExpirationTimesLeft(refreshToken)) {
+            String accessToken = jwtTokenProvider.createAccessToken(authentication);
+            return TokenDto.of(accessToken, saveRefreshToken(authentication).getRefreshToken());
+        }
+        return TokenDto.of(jwtTokenProvider.createAccessToken(authentication), refreshToken);
+    }
+
+    private boolean lessThanReissueExpirationTimesLeft(String refreshToken) {
+        return jwtTokenProvider.getRemainMilliSeconds(refreshToken) < jwtTokenProvider.REISSUE_EXPIRATION_TIME;
+    }
+
 }

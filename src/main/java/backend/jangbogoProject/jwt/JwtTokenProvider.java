@@ -31,8 +31,9 @@ public class JwtTokenProvider {
     private final String secret;                     // 사용할 알고리즘에 따라 길이를 맞추어 base64로 인코딩 된 임의 값
     public static final String BEARER_TYPE = "Bearer ";
     private static final String AUTHORITIES_KEY = "auth";
-    public static final long ACCESS_TOKEN_EXPIRE_TIME = 30 * 60 * 1000L;              // 30분
-    public static final long REFRESH_TOKEN_EXPIRE_TIME = 7 * 24 * 60 * 60 * 1000L;    // 7일
+    public static final long ACCESS_TOKEN_EXPIRE_TIME = 30 * 60 * 1000L;              // 30분 엑세스 토큰 만료 시간
+    public static final long REFRESH_TOKEN_EXPIRE_TIME = 7 * 24 * 60 * 60 * 1000L;    // 7일  리프레시 토큰 만료 시간
+    public static final long REISSUE_EXPIRATION_TIME = 3 * 24 * 60 * 60 * 1000L;      // 3일  재발행 만료 시간
     private Key key;
 
     public JwtTokenProvider(@Value("${jwt.secret}") String secret){
