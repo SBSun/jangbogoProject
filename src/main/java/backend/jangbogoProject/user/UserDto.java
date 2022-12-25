@@ -1,5 +1,6 @@
 package backend.jangbogoProject.user;
 
+import backend.jangbogoProject.dto.BasicResponse;
 import lombok.*;
 
 public class UserDto {
@@ -46,12 +47,20 @@ public class UserDto {
         private String id;
     }
 
+    @Builder
     @Getter
-    @AllArgsConstructor
-    @ToString
     public static class Response {
         private Info info;
-        private int returnCode;
-        private String returnMessage;
+        private BasicResponse basicResponse;
+    }
+
+    @Builder
+    @Getter
+    public static class TokenInfo {
+        private String grantType;
+        private String accessToken;
+        private String refreshToken;
+        private Long refreshTokenExpirationTime;
+        private BasicResponse basicResponse;
     }
 }

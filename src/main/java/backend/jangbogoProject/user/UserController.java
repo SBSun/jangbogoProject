@@ -1,7 +1,6 @@
 package backend.jangbogoProject.user;
 
 import backend.jangbogoProject.commodity.CommodityService;
-import backend.jangbogoProject.jwt.TokenDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,16 +13,13 @@ import org.springframework.web.servlet.ModelAndView;
 @RequiredArgsConstructor
 public class UserController {
 
-    private CommodityService commodityService;
-    private UserService userService;
+    private final CommodityService commodityService;
+    private final UserService userService;
 
     @PostMapping("/login")
-    public TokenDto login(UserDto.LoginRequest userLoginRequestDto) {
-        String memberId = userLoginRequestDto.getId();
-        String password = userLoginRequestDto.getPassword();
-
-        TokenDto tokenDto = userService.login(memberId, password);
-        return tokenDto;
+    public UserDto.TokenInfo login(UserDto.LoginRequest loginInfo) {
+        UserDto.TokenInfo tokenInfo = userService.login(loginInfo);
+        return tokenInfo;
     }
 
     @GetMapping("/signUpUser")
@@ -35,9 +31,10 @@ public class UserController {
     }
 
     @PostMapping("/signUpUser")
-    public ModelAndView signUpUser(UserDto.Info userInfo)
+    public ModelAndView signUpUser(UserDto.SignUpRequest signUpInfo)
     {
-        userService.save(userInfo.toEntity(), Authority.USER);
+        System.out.println("signUpUser : " + signUpInfo.getId());
+        userService.signUp(signUpInfo, Authority.USER);
 
         ModelAndView mav = new ModelAndView("home");
 
@@ -53,9 +50,9 @@ public class UserController {
     }
 
     @PostMapping("/signUpAdmin")
-    public ModelAndView signUpAdmin(UserDto.Info userInfo)
+    public ModelAndView signUpAdmin(UserDto.SignUpRequest signUpInfo)
     {
-        userService.save(userInfo.toEntity(), Authority.ADMIN);
+        userService.signUp(signUpInfo, Authority.ADMIN);
 
         ModelAndView mav = new ModelAndView("home");
 
