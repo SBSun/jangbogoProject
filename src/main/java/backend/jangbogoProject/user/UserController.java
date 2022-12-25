@@ -1,6 +1,7 @@
 package backend.jangbogoProject.user;
 
 import backend.jangbogoProject.commodity.CommodityService;
+import backend.jangbogoProject.jwt.TokenDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,9 +18,9 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/login")
-    public UserDto.TokenInfo login(UserDto.LoginRequest loginInfo) {
-        UserDto.TokenInfo tokenInfo = userService.login(loginInfo);
-        return tokenInfo;
+    public TokenDto login(UserDto.LoginRequest loginInfo) {
+        TokenDto tokenDto = userService.login(loginInfo);
+        return tokenDto;
     }
 
     @GetMapping("/signUpUser")

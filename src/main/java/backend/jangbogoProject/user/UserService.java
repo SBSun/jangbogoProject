@@ -2,6 +2,9 @@ package backend.jangbogoProject.user;
 
 import backend.jangbogoProject.dto.BasicResponse;
 import backend.jangbogoProject.jwt.JwtTokenProvider;
+import backend.jangbogoProject.jwt.RefreshToken;
+import backend.jangbogoProject.jwt.RefreshTokenRepository;
+import backend.jangbogoProject.jwt.TokenDto;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -12,10 +15,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 @Service
 @RequiredArgsConstructor
 public class UserService{
     private final UserRepository userRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
@@ -49,7 +54,7 @@ public class UserService{
     }
 
     @Transactional
-    public UserDto.TokenInfo login(UserDto.LoginRequest loginInfo){
+    public TokenDto login(UserDto.LoginRequest loginInfo){
         // 1. Login ID/PW 를 기반으로 Authentication 객체 생성
         // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginInfo.getId(), loginInfo.getPassword());
@@ -59,9 +64,15 @@ public class UserService{
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
-        UserDto.TokenInfo tokenInfo = jwtTokenProvider.createToken(authentication);
+        String accessToken = jwtTokenProvider.createAccessToken(authentication);
+        RefreshToken refreshToken = saveRefreshToken(authentication);
 
-        return tokenInfo;
+        return TokenDto.of(accessToken, refreshToken.getRefreshToken());
+    }
+
+    private RefreshToken saveRefreshToken(Authentication authentication) {
+        return refreshTokenRepository.save(RefreshToken.createRefreshToken(authentication.getName(),
+                jwtTokenProvider.createRefreshToken(authentication), JwtTokenProvider.REFRESH_TOKEN_EXPIRE_TIME));
     }
 
     public UserDto.Info findById(String id){

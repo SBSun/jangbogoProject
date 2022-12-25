@@ -29,10 +29,10 @@ public class JwtTokenProvider {
     private final Logger LOGGER = LoggerFactory.getLogger(JwtTokenProvider.class);
 
     private final String secret;                     // 사용할 알고리즘에 따라 길이를 맞추어 base64로 인코딩 된 임의 값
-    private static final String BEARER_TYPE = "Bearer";
+    public static final String BEARER_TYPE = "Bearer ";
     private static final String AUTHORITIES_KEY = "auth";
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 30 * 60 * 1000L;              // 30분
-    private static final long REFRESH_TOKEN_EXPIRE_TIME = 7 * 24 * 60 * 60 * 1000L;    // 7일
+    public static final long ACCESS_TOKEN_EXPIRE_TIME = 30 * 60 * 1000L;              // 30분
+    public static final long REFRESH_TOKEN_EXPIRE_TIME = 7 * 24 * 60 * 60 * 1000L;    // 7일
     private Key key;
 
     public JwtTokenProvider(@Value("${jwt.secret}") String secret){
@@ -41,40 +41,44 @@ public class JwtTokenProvider {
         byte[] keyBytes = Decoders.BASE64.decode(secret);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
+    // 토큰 추출 메서드. payload를 가져온다.
+    public Claims extractAllClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
+    // 해당 토큰이 만료되었는지
+    public Boolean isTokenExpired(String token) {
+        Date expiration = extractAllClaims(token).getExpiration();
+        return expiration.before(new Date());
+    }
+
+    public String createAccessToken(Authentication authentication){
+        return createToken(authentication, ACCESS_TOKEN_EXPIRE_TIME);
+    }
+
+    public String createRefreshToken(Authentication authentication){
+        return createToken(authentication, REFRESH_TOKEN_EXPIRE_TIME);
+    }
 
     // 유저 정보를 가지고 AccessToken, RefreshToken 을 생성하는 메서드
-    public UserDto.TokenInfo createToken(Authentication authentication) {
+    public String createToken(Authentication authentication, long expireTime) {
         // 권한 가져오기
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
         long now = (new Date()).getTime();
-        // Access Token 생성
-        Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
-        String accessToken = Jwts.builder()
+
+        return Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
-                .setExpiration(accessTokenExpiresIn)
+                .setIssuedAt(new Date(now))
+                .setExpiration(new Date(now + expireTime))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
-
-        // Refresh Token 생성
-        String refreshToken = Jwts.builder()
-                .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
-                .signWith(key, SignatureAlgorithm.HS256)
-                .compact();
-
-        return UserDto.TokenInfo.builder()
-                .grantType(BEARER_TYPE)
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .refreshTokenExpirationTime(REFRESH_TOKEN_EXPIRE_TIME)
-                .basicResponse(BasicResponse.builder()
-                        .state(HttpStatus.OK.value())
-                        .message("로그인에 성공했습니다.")
-                        .build())
-                .build();
     }
 
     // JWT 토큰을 복호화하여 토큰에 들어있는 정보를 꺼내는 메서드
@@ -82,13 +86,13 @@ public class JwtTokenProvider {
         // 토큰 복호화
         Claims claims = parseClaims(accessToken);
 
-        if (claims.get("auth") == null) {
+        if (claims.get(AUTHORITIES_KEY) == null) {
             throw new RuntimeException("권한 정보가 없는 토큰입니다.");
         }
 
         // 클레임에서 권한 정보 가져오기
         Collection<? extends GrantedAuthority> authorities =
-                Arrays.stream(claims.get("auth").toString().split(","))
+                Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
@@ -120,5 +124,11 @@ public class JwtTokenProvider {
         } catch (ExpiredJwtException e) {
             return e.getClaims();
         }
+    }
+    // 해당 토큰의 남은 시간
+    public long getRemainMilliSeconds(String token) {
+        Date expiration = extractAllClaims(token).getExpiration();
+        Date now = new Date();
+        return expiration.getTime() - now.getTime();
     }
 }
