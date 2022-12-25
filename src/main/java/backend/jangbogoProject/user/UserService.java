@@ -1,51 +1,48 @@
 package backend.jangbogoProject.user;
 
-import backend.jangbogoProject.jwt.JwtAuthenticationFilter;
+import backend.jangbogoProject.dto.Response;
 import backend.jangbogoProject.jwt.JwtTokenProvider;
 import backend.jangbogoProject.jwt.TokenDto;
-import backend.jangbogoProject.user.User;
-import backend.jangbogoProject.user.UserRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
+
 @Service
 @RequiredArgsConstructor
-public class UserService implements UserDetailsService {
+public class UserService{
     private final UserRepository userRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
-
+    private final Response response;
     private final PasswordEncoder passwordEncoder;
 
     //회원가입
-    public User save(User newUser, Authority authority)
+    public ResponseEntity<?> signUp(UserDto.SignUpRequest signUpDto, Authority authority)
     {
-        User user = userRepository.findByUserId(newUser.getId());
-
-        if(user != null){
-            throw new IllegalStateException("이미 존재하는 회원입니다.");
+        if(userRepository.existsById(signUpDto.getId())){
+            return response.fail("이미 회원가입된 이메일입니다.", HttpStatus.BAD_REQUEST);
         }
 
-        // 비밀번호 암호화
-        String encodedPassword = passwordEncoder.encode(newUser.getPassword());
-        newUser.setPassword(encodedPassword);
-        newUser.setAuthority(authority.getValue());
-        userRepository.save(newUser);
-        return newUser;
+        User user = User.builder()
+                .id(signUpDto.getId())
+                .password(passwordEncoder.encode(signUpDto.getPassword()))
+                .name(signUpDto.getName())
+                .address(signUpDto.getAddress())
+                .authority(authority.getValue())
+                .build();
+
+        userRepository.save(user);
+        ResponseEntity.ok()
+        return response.success("회원가입에 성공했습니다.");
     }
 
     @Transactional
@@ -96,24 +93,5 @@ public class UserService implements UserDetailsService {
         String encPassword = passwordEncoder.encode(info.getPassword());
 
         user.update(encPassword, info.getName(), info.getAddress());
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String id) {
-        User user = userRepository.findByUserId(id);
-
-        if (user != null) {
-            // USER 라는 역할을 넣어준다.
-            User authUser = User.builder()
-                    .id(user.getId())
-                    .password(user.getPassword())
-                    .name(user.getName())
-                    .address(user.getAddress())
-                    .authority(user.getAuthority()).build();
-            return authUser;
-        } else {
-            throw new UsernameNotFoundException("can not find User : " + id);
-        }
     }
 }
