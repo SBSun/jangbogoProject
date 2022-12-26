@@ -1,11 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import Home from './routes/Home';
 
 const App = () => {
-  return (
-    <div>
-      <h2>Hello</h2>
-    </div>
-  );
+  return <Home />;
 };
 
 export default App;
