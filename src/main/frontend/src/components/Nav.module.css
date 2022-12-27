@@ -1,0 +1,15 @@
+@import url('../reset.css');
+
+nav > ul {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+li {
+  padding: 1rem;
+}
+
+#loginBtn {
+  color: white;
+  background-color: var(--blue-color);
+}
