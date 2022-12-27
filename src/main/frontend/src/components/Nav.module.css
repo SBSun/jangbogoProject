@@ -8,3 +8,8 @@ nav > ul {
 li {
   padding: 1rem;
 }
+
+#loginBtn {
+  color: white;
+  background-color: var(--blue-color);
+}

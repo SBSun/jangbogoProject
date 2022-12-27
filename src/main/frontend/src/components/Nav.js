@@ -5,10 +5,17 @@ const Nav = () => {
   return (
     <nav>
       <ul>
-        <li>Icon</li>
-        <li>Logo</li>
-        <li>Log in</li>
-        <li>Search</li>
+        <li>Icon & Logo</li>
+        <li>
+          <a href='#' id='loginBtn'>
+            Log in
+          </a>
+        </li>
+        <li>
+          <a href='#'>
+            <i className='fa-solid fa-magnifying-glass'></i>
+          </a>
+        </li>
       </ul>
     </nav>
   );
