@@ -2,39 +2,35 @@ package backend.jangbogoProject.user;
 
 import backend.jangbogoProject.dto.BasicResponse;
 import backend.jangbogoProject.jwt.JwtTokenProvider;
-import backend.jangbogoProject.jwt.RefreshToken;
-import backend.jangbogoProject.jwt.RefreshTokenRepository;
-import backend.jangbogoProject.jwt.TokenDto;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.NoSuchElementException;
+import java.util.concurrent.TimeUnit;
 
 
 @Service
 @RequiredArgsConstructor
 public class UserService{
     private final UserRepository userRepository;
-    private final RefreshTokenRepository refreshTokenRepository;
+    private final RedisTemplate redisTemplate;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
 
-    public UserDto.Info findById(String id){
+    public UserResponseDto.Info getUserInfo(String id){
 
         if(userRepository.existsById(id)){
             User user = userRepository.findById(id).get();
 
-            UserDto.Info info = UserDto.Info.builder()
+            UserResponseDto.Info info = UserResponseDto.Info.builder()
                     .id(user.getId())
                     .password(user.getPassword())
                     .name(user.getName())
@@ -44,13 +40,13 @@ public class UserService{
             return info;
         }
 
-        return UserDto.Info.builder().build();
+        return UserResponseDto.Info.builder().build();
     }
 
     @Transactional
     // 트랜잭션 안에서 데이터베이스의 데이터를 가져오면 이 데이터는 영속성 컨텍스트가 유지된 상태가 된다.
     //이 상태에서 해당 데이터의 값을 변경하면 트랜잭션이 끝나는 시점에 변경된 데이터를 데이터베이스에 반영해준다.
-    public void updateInfo(UserDto.Info info){
+    public void updateUserInfo(UserResponseDto.Info info){
         User user = userRepository.findByUserId(info.getId());
 
         if(user == null)
@@ -62,9 +58,9 @@ public class UserService{
     }
 
     //회원가입
-    public BasicResponse signUp(UserDto.SignUpRequest signUpDto, Authority authority)
+    public BasicResponse signUp(UserRequestDto.SignUp signUp, Authority authority)
     {
-        if(userRepository.existsById(signUpDto.getId())){
+        if(userRepository.existsById(signUp.getId())){
             BasicResponse basicResponse = BasicResponse.builder()
                     .state(HttpStatus.BAD_REQUEST.value())
                     .message("이미 회원가입된 이메일입니다.")
@@ -73,10 +69,10 @@ public class UserService{
         }
 
         User user = User.builder()
-                .id(signUpDto.getId())
-                .password(passwordEncoder.encode(signUpDto.getPassword()))
-                .name(signUpDto.getName())
-                .address(signUpDto.getAddress())
+                .id(signUp.getId())
+                .password(passwordEncoder.encode(signUp.getPassword()))
+                .name(signUp.getName())
+                .address(signUp.getAddress())
                 .authority(authority.getValue())
                 .build();
 
@@ -89,61 +85,49 @@ public class UserService{
         return basicResponse;
     }
 
-    @Transactional
-    public TokenDto login(UserDto.LoginRequest loginInfo){
+    public UserResponseDto.TokenInfo login(UserRequestDto.Login login){
         // 1. Login ID/PW 를 기반으로 Authentication 객체 생성
         // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginInfo.getId(), loginInfo.getPassword());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(login.getId(), login.getPassword());
 
         // 2. 실제 검증 (사용자 비밀번호 체크)이 이루어지는 부분
         // authenticate 매서드가 실행될 때 CustomUserDetailsService 에서 만든 loadUserByUsername 메서드가 실행
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
-        String accessToken = jwtTokenProvider.createAccessToken(authentication);
-        RefreshToken refreshToken = saveRefreshToken(authentication);
+        UserResponseDto.TokenInfo tokenInfo = jwtTokenProvider.createToken(authentication);
 
-        return TokenDto.of(accessToken, refreshToken.getRefreshToken());
+        // 4. RefreshToken Redis 저장 (expirationTime 설정을 통해 자동 삭제 처리)
+        redisTemplate.opsForValue()
+                .set("refreshToken:" + authentication.getName(), tokenInfo.getRefreshToken(), tokenInfo.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);
+
+        return tokenInfo;
     }
 
-    private RefreshToken saveRefreshToken(Authentication authentication) {
-        return refreshTokenRepository.save(RefreshToken.createRefreshToken(authentication.getName(),
-                jwtTokenProvider.createRefreshToken(authentication), JwtTokenProvider.REFRESH_TOKEN_EXPIRE_TIME));
-    }
-
-    private String resolveToken(String token) {
-        return token.substring(7);
-    }
-
-    public TokenDto reissue(String refreshToken) {
-        refreshToken = resolveToken(refreshToken);
-        String username = getCurrentUsername();
-        RefreshToken redisRefreshToken = refreshTokenRepository.findById(username).orElseThrow(NoSuchElementException::new);
-
-        if (refreshToken.equals(redisRefreshToken.getRefreshToken())) {
-            return reissueRefreshToken(refreshToken, username);
+    public UserResponseDto.TokenInfo reissue(UserRequestDto.Reissue reissue) {
+        // 1. Refresh Token 검증
+        if (!jwtTokenProvider.validateToken(reissue.getRefreshToken())) {
+            BasicResponse basicResponse = new BasicResponse(HttpStatus.BAD_REQUEST.value(), "Refresh Token 정보가 유효하지 않습니다.");
+            return new UserResponseDto.TokenInfo(basicResponse);
         }
-        throw new IllegalArgumentException("토큰이 일치하지 않습니다.");
-    }
 
-    private String getCurrentUsername() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails principal = (UserDetails) authentication.getPrincipal();
-        return principal.getUsername();
-    }
+        // 2. Access Token 에서 User email 를 가져옵니다.
+        Authentication authentication = jwtTokenProvider.getAuthentication(reissue.getAccessToken());
 
-    private TokenDto reissueRefreshToken(String refreshToken, String username) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (lessThanReissueExpirationTimesLeft(refreshToken)) {
-            String accessToken = jwtTokenProvider.createAccessToken(authentication);
-            return TokenDto.of(accessToken, saveRefreshToken(authentication).getRefreshToken());
+        // 3. Redis 에서 User email 을 기반으로 저장된 Refresh Token 값을 가져옵니다.
+        String refreshToken = (String)redisTemplate.opsForValue().get("refreshToken:" + authentication.getName());
+        if(!refreshToken.equals(reissue.getRefreshToken())) {
+            BasicResponse basicResponse = new BasicResponse(HttpStatus.BAD_REQUEST.value(), "Refresh Token 정보가 일치하지 않습니다.");
+            return new UserResponseDto.TokenInfo(basicResponse);
         }
-        return TokenDto.of(jwtTokenProvider.createAccessToken(authentication), refreshToken);
-    }
 
-    private boolean lessThanReissueExpirationTimesLeft(String refreshToken) {
-        return jwtTokenProvider.getRemainMilliSeconds(refreshToken) < jwtTokenProvider.REISSUE_EXPIRATION_TIME;
-    }
+        // 4. 새로운 토큰 생성
+        UserResponseDto.TokenInfo tokenInfo = jwtTokenProvider.createToken(authentication);
 
+        // 5. RefreshToken Redis 업데이트
+        redisTemplate.opsForValue()
+                .set("refreshToken:" + authentication.getName(), tokenInfo.getRefreshToken(), tokenInfo.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);
+
+        return tokenInfo;
+    }
 }

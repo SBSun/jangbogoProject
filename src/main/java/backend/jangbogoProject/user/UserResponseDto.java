@@ -3,7 +3,7 @@ package backend.jangbogoProject.user;
 import backend.jangbogoProject.dto.BasicResponse;
 import lombok.*;
 
-public class UserDto {
+public class UserResponseDto {
     @Getter
     @AllArgsConstructor
     @Builder
@@ -25,32 +25,25 @@ public class UserDto {
         }
     }
 
-    @Getter
-    @Setter
-    public static class SignUpRequest{
-        private String id;
-        private String password;
-        private String name;
-        private String address;
-    }
-
-    @Getter
-    @Setter
-    public static class LoginRequest{
-        private String id;
-        private String password;
-    }
-
-    @Getter
-    @Setter
-    public static class Request {
-        private String id;
-    }
-
     @Builder
     @Getter
     public static class Response {
         private Info info;
         private BasicResponse basicResponse;
+    }
+
+    @Builder
+    @Getter
+    @AllArgsConstructor
+    public static class TokenInfo {
+        private String grantType;
+        private String accessToken;
+        private String refreshToken;
+        private Long refreshTokenExpirationTime;
+        private BasicResponse basicResponse;
+
+        public TokenInfo(BasicResponse basicResponse){
+            this.basicResponse = basicResponse;
+        }
     }
 }

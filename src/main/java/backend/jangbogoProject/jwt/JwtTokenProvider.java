@@ -1,7 +1,6 @@
 package backend.jangbogoProject.jwt;
 
-import backend.jangbogoProject.dto.BasicResponse;
-import backend.jangbogoProject.user.UserDto;
+import backend.jangbogoProject.user.UserResponseDto;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -9,12 +8,10 @@ import org.springframework.beans.factory.annotation.Value;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -33,7 +30,7 @@ public class JwtTokenProvider {
     private static final String AUTHORITIES_KEY = "auth";
     public static final long ACCESS_TOKEN_EXPIRE_TIME = 30 * 60 * 1000L;              // 30분 엑세스 토큰 만료 시간
     public static final long REFRESH_TOKEN_EXPIRE_TIME = 7 * 24 * 60 * 60 * 1000L;    // 7일  리프레시 토큰 만료 시간
-    public static final long REISSUE_EXPIRATION_TIME = 3 * 24 * 60 * 60 * 1000L;      // 3일  재발행 만료 시간
+
     private Key key;
 
     public JwtTokenProvider(@Value("${jwt.secret}") String secret){
@@ -56,16 +53,8 @@ public class JwtTokenProvider {
         return expiration.before(new Date());
     }
 
-    public String createAccessToken(Authentication authentication){
-        return createToken(authentication, ACCESS_TOKEN_EXPIRE_TIME);
-    }
-
-    public String createRefreshToken(Authentication authentication){
-        return createToken(authentication, REFRESH_TOKEN_EXPIRE_TIME);
-    }
-
-    // 유저 정보를 가지고 AccessToken, RefreshToken 을 생성하는 메서드
-    public String createToken(Authentication authentication, long expireTime) {
+    // 유저 정보를 가지고 Token 생성
+    public UserResponseDto.TokenInfo createToken(Authentication authentication) {
         // 권한 가져오기
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -73,13 +62,25 @@ public class JwtTokenProvider {
 
         long now = (new Date()).getTime();
 
-        return Jwts.builder()
+        String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
-                .setIssuedAt(new Date(now))
-                .setExpiration(new Date(now + expireTime))
+                .setExpiration(new Date(now + ACCESS_TOKEN_EXPIRE_TIME))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
+
+        // Refresh Token 생성
+        String refreshToken = Jwts.builder()
+                .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+
+        return UserResponseDto.TokenInfo.builder()
+                .grantType(BEARER_TYPE)
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .refreshTokenExpirationTime(REFRESH_TOKEN_EXPIRE_TIME)
+                .build();
     }
 
     // JWT 토큰을 복호화하여 토큰에 들어있는 정보를 꺼내는 메서드
@@ -98,7 +99,7 @@ public class JwtTokenProvider {
                         .collect(Collectors.toList());
 
         // UserDetails 객체를 만들어서 Authentication 리턴
-        UserDetails principal = new User(claims.getSubject(), "", authorities);
+        UserDetails principal = new org.springframework.security.core.userdetails.User(claims.getSubject(), "", authorities);
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 
@@ -126,10 +127,12 @@ public class JwtTokenProvider {
             return e.getClaims();
         }
     }
-    // 해당 토큰의 남은 시간
-    public long getRemainMilliSeconds(String token) {
-        Date expiration = extractAllClaims(token).getExpiration();
-        Date now = new Date();
-        return expiration.getTime() - now.getTime();
+
+    public Long getExpiration(String accessToken) {
+        // accessToken 남은 유효시간
+        Date expiration = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody().getExpiration();
+        // 현재 시간
+        Long now = new Date().getTime();
+        return (expiration.getTime() - now);
     }
 }

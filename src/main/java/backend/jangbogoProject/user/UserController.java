@@ -1,9 +1,7 @@
 package backend.jangbogoProject.user;
 
 import backend.jangbogoProject.commodity.CommodityService;
-import backend.jangbogoProject.jwt.TokenDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,9 +16,15 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/login")
-    public TokenDto login(UserDto.LoginRequest loginInfo) {
-        TokenDto tokenDto = userService.login(loginInfo);
-        return tokenDto;
+    public UserResponseDto.TokenInfo login(UserRequestDto.Login login) {
+        UserResponseDto.TokenInfo tokenInfo = userService.login(login);
+        return tokenInfo;
+    }
+
+    @PostMapping("/reissue")
+    public UserResponseDto.TokenInfo reissue(@RequestBody UserRequestDto.Reissue reissue){
+        UserResponseDto.TokenInfo tokenInfo = userService.reissue(reissue);
+        return tokenInfo;
     }
 
     @GetMapping("/signUpUser")
@@ -32,10 +36,10 @@ public class UserController {
     }
 
     @PostMapping("/signUpUser")
-    public ModelAndView signUpUser(UserDto.SignUpRequest signUpInfo)
+    public ModelAndView signUpUser(UserRequestDto.SignUp signUp)
     {
-        System.out.println("signUpUser : " + signUpInfo.getId());
-        userService.signUp(signUpInfo, Authority.USER);
+        System.out.println("signUpUser : " + signUp.getId());
+        userService.signUp(signUp, Authority.USER);
 
         ModelAndView mav = new ModelAndView("home");
 
@@ -51,9 +55,9 @@ public class UserController {
     }
 
     @PostMapping("/signUpAdmin")
-    public ModelAndView signUpAdmin(UserDto.SignUpRequest signUpInfo)
+    public ModelAndView signUpAdmin(UserRequestDto.SignUp signUp)
     {
-        userService.signUp(signUpInfo, Authority.ADMIN);
+        userService.signUp(signUp, Authority.ADMIN);
 
         ModelAndView mav = new ModelAndView("home");
 

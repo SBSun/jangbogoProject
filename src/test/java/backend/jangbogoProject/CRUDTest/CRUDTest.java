@@ -1,18 +1,10 @@
 package backend.jangbogoProject.CRUDTest;
 
-import backend.jangbogoProject.commodity.CommodityDto;
 import backend.jangbogoProject.commodity.CommodityService;
-import backend.jangbogoProject.commodity.gu.Gu;
-import backend.jangbogoProject.commodity.gu.GuRepository;
 import backend.jangbogoProject.commodity.gu.GuService;
-import backend.jangbogoProject.commodity.item.Item;
-import backend.jangbogoProject.commodity.item.ItemRepository;
 import backend.jangbogoProject.commodity.item.ItemService;
-import backend.jangbogoProject.commodity.market.Market;
 import backend.jangbogoProject.commodity.market.MarketService;
-import backend.jangbogoProject.user.UserDto;
 import backend.jangbogoProject.user.UserService;
-import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -45,7 +45,7 @@ public class SecurityConfiguration {
                 .authorizeRequests()
                 .antMatchers("/", "/login", "/signUpUser").permitAll() // 설정한 리소스의 접근을 인증절차 없이 허용
                 .antMatchers("/admin", "/signUpAdmin", "/data_load_save").hasRole("ADMIN")
-                .antMatchers("/signUpAdmin").hasRole("USER")
+                .antMatchers("/signUpAdmin", "/reissue").hasRole("USER")
                 .and()
                 //  JWT 인증을 위하여 직접 구현한 필터를 UsernamePasswordAuthenticationFilter 전에 실행하겠다는 설정이다.
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
