@@ -4,8 +4,12 @@
 */
 
 :root {
-  --blue-color: #03a9f4;
-  --yellow-color: #fdd835;
+  --red-color: #d63031;
+  --blue-color: #0984e3;
+  --yellow-color: #fdcb6e;
+  --green-color: #00b894;
+  --black-color: #2d3436;
+  --gray-color: #b2bec3;
 }
 
 html,
