@@ -3,6 +3,11 @@
    License: none (public domain)
 */
 
+:root {
+  --blue-color: #03a9f4;
+  --yellow-color: #fdd835;
+}
+
 html,
 body,
 div,
