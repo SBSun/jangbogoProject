@@ -1,12 +1,8 @@
 import React from 'react';
-import styles from './Home.module.css';
+import Nav from '../components/Nav';
 
 const Home = () => {
-  return (
-    <div>
-      <h1>This is Home</h1>
-    </div>
-  );
+  return <Nav />;
 };
 
 export default Home;

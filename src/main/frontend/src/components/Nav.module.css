@@ -1,0 +1,10 @@
+@import url('../reset.css');
+
+nav > ul {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+li {
+  padding: 1rem;
+}
