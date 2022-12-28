@@ -1,15 +1,14 @@
 package backend.jangbogoProject.user;
 
 import backend.jangbogoProject.commodity.CommodityService;
+import backend.jangbogoProject.dto.BasicResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/user")
 public class UserController {
 
     private final CommodityService commodityService;
@@ -25,6 +24,11 @@ public class UserController {
     public UserResponseDto.TokenInfo reissue(@RequestBody UserRequestDto.Reissue reissue){
         UserResponseDto.TokenInfo tokenInfo = userService.reissue(reissue);
         return tokenInfo;
+    }
+
+    @PostMapping("/logout")
+    public BasicResponse logout(@RequestBody UserRequestDto.Logout logout) {
+        return userService.logout(logout);
     }
 
     @GetMapping("/signUpUser")

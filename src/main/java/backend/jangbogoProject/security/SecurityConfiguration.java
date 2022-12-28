@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,8 +24,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @AllArgsConstructor
 public class SecurityConfiguration {
     private final UserDetailsService userDetailsService;
-
     private final JwtTokenProvider jwtTokenProvider;
+    private final RedisTemplate redisTemplate;
 
     @Bean
     public static BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -43,12 +44,12 @@ public class SecurityConfiguration {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/login", "/signUpUser").permitAll() // 설정한 리소스의 접근을 인증절차 없이 허용
-                .antMatchers("/admin", "/signUpAdmin", "/data_load_save").hasRole("ADMIN")
-                .antMatchers("/signUpAdmin", "/reissue").hasRole("USER")
+                .antMatchers("/", "/user/login", "/user/signUpUser").permitAll() // 설정한 리소스의 접근을 인증절차 없이 허용
+                .antMatchers("/user/admin", "/user/data_load_save").hasRole("ADMIN")
+                .antMatchers("/user/signUpAdmin", "/user/reissue", "/user/logout").hasRole("USER")
                 .and()
                 //  JWT 인증을 위하여 직접 구현한 필터를 UsernamePasswordAuthenticationFilter 전에 실행하겠다는 설정이다.
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, redisTemplate), UsernamePasswordAuthenticationFilter.class);
         return http.build();
         /* @formatter:on */
     }
