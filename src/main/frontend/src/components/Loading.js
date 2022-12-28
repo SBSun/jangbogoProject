@@ -4,7 +4,9 @@ import logo from '../assets/Logo.svg';
 
 const Loading = () => {
   return (
-    <img src={logo} width={160} height={160} className={styles.loading_logo} />
+    <div className={styles.loading_container}>
+      <img src={logo} width={160} height={160} />
+    </div>
   );
 };
 
