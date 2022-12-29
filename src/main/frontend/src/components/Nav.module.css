@@ -1,15 +1,22 @@
 @import url('../reset.css');
 
-nav > ul {
+ul {
   display: flex;
-  justify-content: space-evenly;
+  align-items: center;
 }
 
 li {
-  padding: 1rem;
+  padding: 0.5rem;
 }
 
-#loginBtn {
-  color: white;
-  background-color: var(--blue-color);
+.nav_search {
+  color: var(--black);
+}
+
+.nav_login {
+  padding: 0.5rem;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  color: var(--black);
+  background-color: var(--light-gray);
 }
