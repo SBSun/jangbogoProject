@@ -1,8 +1,12 @@
 package backend.jangbogoProject.commodity;
 
-import lombok.*;
+import backend.jangbogoProject.dto.BasicResponse;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.ToString;
 
-public class CommodityDto {
+public class CommodityRequestDto {
 /*
     @Getter
     @AllArgsConstructor
@@ -50,7 +54,6 @@ public class CommodityDto {
         private String A_UNIT;
         private String A_PRICE;
         private String M_GU_NAME;
-        private int returnCode;
-        private String returnMessage;
+        private BasicResponse response;
     }
 }

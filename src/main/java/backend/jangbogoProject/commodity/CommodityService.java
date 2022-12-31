@@ -1,23 +1,24 @@
 package backend.jangbogoProject.commodity;
 
-import backend.jangbogoProject.commodity.gu.GuRepository;
 import backend.jangbogoProject.commodity.gu.GuService;
 import backend.jangbogoProject.commodity.item.Item;
-import backend.jangbogoProject.commodity.item.ItemRepository;
 import backend.jangbogoProject.commodity.item.ItemService;
 import backend.jangbogoProject.commodity.market.Market;
 import backend.jangbogoProject.commodity.market.MarketService;
+import backend.jangbogoProject.dto.BasicResponse;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.Optional;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,26 +29,14 @@ public class CommodityService {
     private final MarketService marketService;
     private final GuService guService;
 
-    public CommodityDto.Response findById(int id){
-        Commodity commodity = commodityRepository.findById(id).get();
+    public CommodityResponseDto.CommodityInfoList getCommodityListFromGu(int gu_id){
+        List<CommodityInfoProjection> list = commodityRepository.getCommodityListFromGu(gu_id);
 
-        String itemName = itemService.getItemName(commodity.getA_SEQ());
+        BasicResponse basicResponse = new BasicResponse(HttpStatus.OK.value(), "상품 리스트 반환 성공");
+        CommodityResponseDto.CommodityInfoList commodityInfoList =
+                new CommodityResponseDto.CommodityInfoList(list, basicResponse);
 
-        Market market = marketService.findById(commodity.getM_SEQ());
-        String marketName = market.getName();
-        String guName = guService.getGuName(market.getGu_id());
-
-        CommodityDto.Response response = CommodityDto.Response.builder()
-                .M_NAME(marketName)
-                .A_NAME(itemName)
-                .A_PRICE(commodity.getA_PRICE())
-                .A_UNIT(commodity.getA_UNIT())
-                .M_GU_NAME(guName)
-                .returnCode(200)
-                .returnMessage("success")
-                .build();
-
-        return response;
+        return commodityInfoList;
     }
 
     public void load_save(){
