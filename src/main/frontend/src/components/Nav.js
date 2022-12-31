@@ -7,17 +7,20 @@ const Nav = () => {
     <nav>
       <ul>
         <li>
-          <a href='#' id='loginBtn'>
-            Log in
-          </a>
+          <img
+            src={logo}
+            width={100}
+            height={38}
+            className={styles.nav_logo}
+          ></img>
         </li>
         <li>
-          <a href='#'>
+          <a href='#' className={styles.nav_search}>
             <i className='fa-solid fa-magnifying-glass'></i>
           </a>
         </li>
         <li>
-          <a href='#' className='nav_loginBtn'>
+          <a href='#' className={styles.nav_login}>
             Log in
           </a>
         </li>
