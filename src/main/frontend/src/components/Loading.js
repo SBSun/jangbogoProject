@@ -1,12 +1,19 @@
 import React from 'react';
-import styles from './Loading.module.css';
+import styled from 'styled-components';
 import logo from '../assets/Logo.svg';
+
+const LoadingStyle = styled.div`
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const Loading = () => {
   return (
-    <div className={styles.loading_container}>
+    <LoadingStyle>
       <img src={logo} width={160} height={160} />
-    </div>
+    </LoadingStyle>
   );
 };
 
