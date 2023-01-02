@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import logo from '../assets/Logo.svg';
 
-const LoadingStyled = styled.div`
+const LoadingStyle = styled.div`
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -11,9 +11,9 @@ const LoadingStyled = styled.div`
 
 const Loading = () => {
   return (
-    <LoadingStyled>
+    <LoadingStyle>
       <img src={logo} width={160} height={160} />
-    </LoadingStyled>
+    </LoadingStyle>
   );
 };
 

@@ -1,30 +1,42 @@
 import React from 'react';
-import styles from './Nav.module.css';
+import styled from 'styled-components';
 import logo from '../assets/Logo.svg';
+
+const NavUlStyle = styled.ul`
+  display: flex;
+  align-items: center;
+`;
+const NavLiStyle = styled.li`
+  padding: 0.5rem;
+`;
+const NavSearchStyle = styled.a`
+  color: var(--black);
+`;
+
+const NavLoginStyle = styled.a`
+  padding: 0.5rem;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  color: var(--black);
+  background-color: var(--light-gray);
+`;
 
 const Nav = () => {
   return (
     <nav>
-      <ul>
-        <li>
-          <img
-            src={logo}
-            width={100}
-            height={38}
-            className={styles.nav_logo}
-          ></img>
-        </li>
-        <li>
-          <a href='#' className={styles.nav_search}>
+      <NavUlStyle>
+        <NavLiStyle>
+          <img src={logo} width={100} height={38}></img>
+        </NavLiStyle>
+        <NavLiStyle>
+          <NavSearchStyle>
             <i className='fa-solid fa-magnifying-glass'></i>
-          </a>
-        </li>
-        <li>
-          <a href='#' className={styles.nav_login}>
-            Log in
-          </a>
-        </li>
-      </ul>
+          </NavSearchStyle>
+        </NavLiStyle>
+        <NavLiStyle>
+          <NavLoginStyle>Log in</NavLoginStyle>
+        </NavLiStyle>
+      </NavUlStyle>
     </nav>
   );
 };

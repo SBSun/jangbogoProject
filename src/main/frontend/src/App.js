@@ -1,10 +1,16 @@
 import { useState } from 'react';
-import Home from './routes/Home';
+import GlobalStyle from './GlobalStyle';
 import Loading from './components/Loading';
+import Home from './routes/Home';
 
 const App = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  return isLoading ? <Loading /> : <Home />;
+  const [isLoading, setIsLoading] = useState(false);
+  return (
+    <>
+      <GlobalStyle />
+      {isLoading ? <Loading /> : <Home />}
+    </>
+  );
 };
 
 export default App;
