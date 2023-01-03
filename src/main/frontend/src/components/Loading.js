@@ -12,7 +12,7 @@ const LoadingStyle = styled.div`
 const Loading = () => {
   return (
     <LoadingStyle>
-      <img src={logo} width={160} height={160} />
+      <img src={logo} width={200} height={200} />
     </LoadingStyle>
   );
 };
