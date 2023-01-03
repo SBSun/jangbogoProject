@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import GlobalStyle from './GlobalStyle';
 import Loading from './components/Loading';
 import Home from './routes/Home';
-import Search from './components/Search';
+import Search from './routes/Search';
 import Login from './routes/Login';
 
 const App = () => {
