@@ -1,19 +1,30 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import logo from '../assets/Logo.svg';
+import logo from '../assets/Logo_eng.svg';
 
-const NavUlStyle = styled.ul`
+const NavContainerStyle = styled.nav`
   display: flex;
   align-items: center;
 `;
-const NavLiStyle = styled.li`
+const NavLogoStyle = styled.div`
+  flex: none;
   padding: 0.5rem;
 `;
-const NavSearchStyle = styled.a`
+const NavItemsStyle = styled.div`
+  flex: none;
+  margin-left: auto;
+  margin-right: 0.5rem;
+  padding: 0.5rem;
+`;
+const NavSearchStyle = styled.span`
+  font-size: 1.25rem;
+  padding: 0.5rem;
   color: var(--black);
 `;
-
-const NavLoginStyle = styled.a`
+const NavLoginStyle = styled.span`
+  margin-left: 0.5rem;
+  font-size: 1.25rem;
   padding: 0.5rem;
   font-weight: bold;
   border-radius: 0.5rem;
@@ -23,21 +34,23 @@ const NavLoginStyle = styled.a`
 
 const Nav = () => {
   return (
-    <nav>
-      <NavUlStyle>
-        <NavLiStyle>
-          <img src={logo} width={100} height={38}></img>
-        </NavLiStyle>
-        <NavLiStyle>
-          <NavSearchStyle>
+    <NavContainerStyle>
+      <NavLogoStyle>
+        <Link to={'/'}>
+          <img src={logo} width={100} height={60}></img>
+        </Link>
+      </NavLogoStyle>
+      <NavItemsStyle>
+        <NavSearchStyle>
+          <Link to={'/search'}>
             <i className='fa-solid fa-magnifying-glass'></i>
-          </NavSearchStyle>
-        </NavLiStyle>
-        <NavLiStyle>
-          <NavLoginStyle>Log in</NavLoginStyle>
-        </NavLiStyle>
-      </NavUlStyle>
-    </nav>
+          </Link>
+        </NavSearchStyle>
+        <NavLoginStyle>
+          <Link to={'/login'}>Log in</Link>
+        </NavLoginStyle>
+      </NavItemsStyle>
+    </NavContainerStyle>
   );
 };
 
