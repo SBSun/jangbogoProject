@@ -9,10 +9,15 @@ const LoadingStyle = styled.div`
   align-items: center;
 `;
 
+const LogoStyle = styled.img`
+  width: 200px;
+  height: 200px;
+`;
+
 const Loading = () => {
   return (
     <LoadingStyle>
-      <img src={logo} width={200} height={200} />
+      <LogoStyle src={logo} />
     </LoadingStyle>
   );
 };

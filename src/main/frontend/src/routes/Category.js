@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-const Category = id => {
+const Category = () => {
   return <div>Category</div>;
 };
 
