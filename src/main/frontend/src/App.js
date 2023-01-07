@@ -10,7 +10,6 @@ import Search from './routes/Search';
 import Mypage from './routes/MyPage';
 import SignIn from './routes/SignIn';
 import SignUp from './routes/SignUp';
-import Items from './routes/Items';
 import Market from './routes/Market';
 import Review from './routes/Review';
 
@@ -42,7 +41,6 @@ const App = () => {
           <Route path='/mypage' element={<Mypage />} />
           <Route path='/signin' element={<SignIn />} />
           <Route path='/signup' element={<SignUp />} />
-          <Route path='/items' element={<Items />} />
           <Route path='/market' element={<Market />} />
           <Route path='/review' element={<Review />} />
         </Routes>
