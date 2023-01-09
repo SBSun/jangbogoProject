@@ -12,7 +12,10 @@ const GlobalStyle = createGlobalStyle`
       --gray: #b2bec3;
       --light-gray: #dfe6e9;
     }
-    
+
+    body {
+      height: 100vh;
+    }
     a {
       color: var(--black);
       text-decoration: none;

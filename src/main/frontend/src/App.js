@@ -14,23 +14,10 @@ import Market from './routes/Market';
 import Review from './routes/Review';
 
 const App = () => {
-  const ScreenSize = styled.div`
-    display: none;
-    width: 100vw;
-    font-size: 40px;
-    vertical-align: middle;
-    text-align: center;
-    background-color: var(--black);
-    color: white;
-    @media screen and (min-width: 600px) {
-      display: block;
-    }
-  `;
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <BrowserRouter>
       <GlobalStyle />
-      <ScreenSize>모바일 해상도만 지원 중입니다.</ScreenSize>
       {isLoading ? (
         <Loading />
       ) : (
