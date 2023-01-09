@@ -3,10 +3,13 @@ import styled from 'styled-components';
 import logo from '../assets/Logo_eng.svg';
 
 const Container = styled.header`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100vw;
   height: 2.5rem;
   padding: 0.5rem 1rem;
   background-color: var(--green);
