@@ -18,10 +18,6 @@ const GlobalStyle = createGlobalStyle`
     }
     a {
       color: var(--black);
-      text-decoration: none;
-    }
-    ul, li {
-      list-style: none;
     }
 `;
 
