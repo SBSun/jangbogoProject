@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
 const Container = styled.footer`
   position: fixed;
   bottom: 0;
@@ -12,36 +13,39 @@ const Container = styled.footer`
   height: 2.5rem;
   padding: 0.5rem 1rem;
   border-top: solid 1px var(--gray);
+  background-color: white;
 `;
 const Menu = styled.span`
   font-size: 2rem;
-  color: var(--black);
+  > a {
+    color: var(--black);
+  }
 `;
 
 const Navigation = () => {
   return (
     <>
       <Container>
-        <Link to={'/'}>
-          <Menu>
+        <Menu>
+          <Link to={'/'}>
             <i className='fa-solid fa-house'></i>
-          </Menu>
-        </Link>
-        <Link to={'/category'}>
-          <Menu>
+          </Link>
+        </Menu>
+        <Menu>
+          <Link to={'/category'}>
             <i className='fa-solid fa-bars'></i>
-          </Menu>
-        </Link>
-        <Link to={'/search'}>
-          <Menu>
+          </Link>
+        </Menu>
+        <Menu>
+          <Link to={'/search'}>
             <i className='fa-solid fa-search'></i>
-          </Menu>
-        </Link>
-        <Link to={'/mypage'}>
-          <Menu>
+          </Link>
+        </Menu>
+        <Menu>
+          <Link to={'/mypage'}>
             <i className='fa-solid fa-user'></i>
-          </Menu>
-        </Link>
+          </Link>
+        </Menu>
       </Container>
     </>
   );
