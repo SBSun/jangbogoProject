@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../components/Header';
 import Navigation from '../components/Navigation';
 
-const Category = () => {
+const MyPage = () => {
   return (
     <>
       <Header />
@@ -11,4 +11,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default MyPage;

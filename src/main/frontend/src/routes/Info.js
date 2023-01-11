@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Location = () => {
+const Info = () => {
   return <div></div>;
 };
 
-export default Location;
+export default Info;

@@ -7,12 +7,18 @@ const LoadingStyle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: var(--green);
+`;
+
+const LogoStyle = styled.img`
+  width: 100vw;
+  height: 15vh;
 `;
 
 const Loading = () => {
   return (
     <LoadingStyle>
-      <img src={logo} width={200} height={200} />
+      <LogoStyle src={logo} />
     </LoadingStyle>
   );
 };

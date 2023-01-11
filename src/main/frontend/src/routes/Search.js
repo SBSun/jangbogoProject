@@ -1,7 +1,14 @@
 import React from 'react';
+import Header from '../components/Header';
+import Navigation from '../components/Navigation';
 
 const Search = () => {
-  return <h2>Search</h2>;
+  return (
+    <>
+      <Header />
+      <Navigation />
+    </>
+  );
 };
 
 export default Search;
