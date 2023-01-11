@@ -61,7 +61,6 @@ const Contact = styled.div`
 `;
 
 const Home = () => {
-  const [isLoading, setIsLoading] = useState(true);
   const [items, setItem] = useState([]);
   const getItemList = async () => {
     const json = await (
@@ -69,7 +68,6 @@ const Home = () => {
     ).json();
 
     setItem(json.infoList);
-    setIsLoading(false);
     console.log(json);
   };
   useEffect(() => {
@@ -89,27 +87,21 @@ const Home = () => {
 
   return (
     <>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <>
-          <Header />
-          <Container>
-            <img src={Banner} alt='banner' className='banner' />
-            <h2 className='list_title'>품목 별 최저가</h2>
-            <ItemList>{itemList}</ItemList>
-            <h2 className='list_title'>이 지역의 매장</h2>
-            <MarketList></MarketList>
-            <Contact>
-              <div>
-                <p>사이드 프로젝트 장보고 식자재 조회</p>
-                버그 문의 : <b className='content'>hc9064@gmail.com</b>
-              </div>
-            </Contact>
-          </Container>
-          <Navigation />
-        </>
-      )}
+      <Header />
+      <Container>
+        <img src={Banner} alt='banner' className='banner' />
+        <h2 className='list_title'>품목 별 최저가</h2>
+        <ItemList>{itemList}</ItemList>
+        <h2 className='list_title'>이 지역의 매장</h2>
+        <MarketList></MarketList>
+        <Contact>
+          <div>
+            <p>사이드 프로젝트 장보고 식자재 조회</p>
+            버그 문의 : <b className='content'>hc9064@gmail.com</b>
+          </div>
+        </Contact>
+      </Container>
+      <Navigation />
     </>
   );
 };
