@@ -1,7 +1,8 @@
 package backend.jangbogoProject.commodity;
 
 public interface CommodityInfoProjection {
-    int getId();
+    int getCommodityId();
+    int getItemId();
     String getMarketName();
     String getItemName();
     String getUnit();
