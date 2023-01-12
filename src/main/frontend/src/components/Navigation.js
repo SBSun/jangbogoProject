@@ -16,7 +16,7 @@ const Container = styled.footer`
   background-color: white;
 `;
 const Menu = styled.span`
-  font-size: 2rem;
+  font-size: 1.5rem;
   > a {
     color: var(--black);
   }

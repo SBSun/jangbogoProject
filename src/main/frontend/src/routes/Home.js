@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import Navigation from '../components/Navigation';
 import Banner from '../assets/banner.PNG';
 
-const Container = styled.div`
+const Container = styled.main`
   margin: 56px 0;
 
   > .banner {
@@ -14,14 +14,14 @@ const Container = styled.div`
     border: 1px solid var(--light-gray);
   }
   > .list_title {
+    margin: 1rem 0 0 0;
     padding: 1rem;
     font-size: 1.25rem;
-    font-weight: 600;
+    font-weight: 500;
   }
 `;
 const ItemList = styled.ul`
   display: flex;
-  margin: 1rem;
   overflow-x: scroll;
   > li {
     padding: 1rem;
@@ -35,10 +35,12 @@ const ItemList = styled.ul`
     font-size: 14px;
   }
   > li > dl > .item_name {
+    margin: 0.25rem 0 0 0;
     font-weight: 600;
     font-size: 16px;
   }
   > li > dl > .item_price {
+    margin: 0.5rem 0 0 0;
     color: var(--yellow);
     font-size: 16px;
   }
@@ -90,14 +92,14 @@ const Home = () => {
       <Header />
       <Container>
         <img src={Banner} alt='banner' className='banner' />
-        <h2 className='list_title'>품목 별 최저가</h2>
+        <h2 className='list_title'>품목 별로 최저가를 보여드려요.</h2>
         <ItemList>{itemList}</ItemList>
-        <h2 className='list_title'>이 지역의 매장</h2>
+        <h2 className='list_title'>이 지역의 있는 매장들을 보여드려요.</h2>
         <MarketList></MarketList>
         <Contact>
           <div>
-            <p>사이드 프로젝트 장보고 식자재 조회</p>
-            버그 문의 : <b className='content'>hc9064@gmail.com</b>
+            <p>장보고 - 서울시 식자재 조회</p>
+            문의 : <b className='content'>hc9064@gmail.com</b>
           </div>
         </Contact>
       </Container>
