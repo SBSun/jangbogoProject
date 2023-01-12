@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import Loading from '../components/Loading';
 import Header from '../components/Header';
 import Navigation from '../components/Navigation';
 import Banner from '../assets/banner.PNG';
-import Loading from './Loading';
 
-const Container = styled.div`
+const Container = styled.main`
   margin: 56px 0;
 
   > .banner {
@@ -14,34 +14,39 @@ const Container = styled.div`
     border: 1px solid var(--light-gray);
   }
   > .list_title {
+    margin: 1rem 0 0 0;
     padding: 1rem;
     font-size: 1.25rem;
-    font-weight: 600;
+    font-weight: 500;
   }
 `;
 const ItemList = styled.ul`
   display: flex;
-  justify-content: space-around;
-  margin: 1rem;
   overflow-x: scroll;
-
   > li {
     padding: 1rem;
-    border: 1px solid var(--light-gray);
   }
   > li > img {
-    width: 3rem;
-    height: 5rem;
+    width: 130px;
+    height: 160px;
   }
-  > li > dl > dt {
+  > li > dl > .market_name {
+    color: var(--red);
+    font-size: 14px;
+  }
+  > li > dl > .item_name {
+    margin: 0.25rem 0 0 0;
     font-weight: 600;
+    font-size: 16px;
   }
-  > li > dl > dd {
+  > li > dl > .item_price {
+    margin: 0.5rem 0 0 0;
     color: var(--yellow);
+    font-size: 16px;
   }
 `;
 const MarketList = styled(ItemList)``;
-const Detail = styled.div`
+const Contact = styled.div`
   background-color: var(--light-gray);
   padding: 1rem;
   > div {
@@ -58,99 +63,47 @@ const Detail = styled.div`
 `;
 
 const Home = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [items, setItem] = useState([]);
+  const getItemList = async () => {
+    const json = await (
+      await fetch('/commodity/getCommodityListFromGu?gu_id=110000')
+    ).json();
+
+    setItem(json.infoList);
+    console.log(json);
+  };
   useEffect(() => {
-    setTimeout(() => {
-      console.log('Fetch is Complete!');
-      setIsLoading(false);
-    }, 1000);
+    getItemList();
   }, []);
 
-  const items = [
-    {
-      id: 1,
-      name: 'item1',
-      price: 1000,
-    },
-    {
-      id: 2,
-      name: 'item2',
-      price: 1000,
-    },
-    {
-      id: 3,
-      name: 'item3',
-      price: 1000,
-    },
-    {
-      id: 4,
-      name: 'item4',
-      price: 1000,
-    },
-    {
-      id: 5,
-      name: 'item5',
-      price: 1000,
-    },
-    {
-      id: 6,
-      name: 'item6',
-      price: 1000,
-    },
-    {
-      id: 7,
-      name: 'item7',
-      price: 1000,
-    },
-    {
-      id: 8,
-      name: 'item8',
-      price: 1000,
-    },
-    {
-      id: 9,
-      name: 'item9',
-      price: 1000,
-    },
-    {
-      id: 10,
-      name: 'item10',
-      price: 1000,
-    },
-  ];
-  const itemList = items.map(item => (
-    <li key={item.id}>
+  const itemList = items.map((item, index) => (
+    <li key={index}>
       <img src={Banner} alt='itemImage' />
       <dl>
-        <dt>{item.name}</dt>
-        <dd>{item.price}</dd>
+        <dd className='market_name'>{item.marketName}</dd>
+        <dt className='item_name'>{item.itemName}</dt>
+        <dd className='item_price'>{item.price}원</dd>
       </dl>
     </li>
   ));
 
   return (
     <>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <>
-          <Header />
-          <Container>
-            <img src={Banner} alt='banner' className='banner' />
-            <h2 className='list_title'>품목 별 최저가</h2>
-            <ItemList>{itemList}</ItemList>
-            <h2 className='list_title'>이 지역의 매장</h2>
-            <MarketList>{itemList}</MarketList>
-            <Detail>
-              <div>
-                <p>사이드 프로젝트 장보고 식자재 조회</p>
-                버그 문의 : <b className='content'>hc9064@gmail.com</b>
-              </div>
-            </Detail>
-          </Container>
-          <Navigation />
-        </>
-      )}
+      <Header />
+      <Container>
+        <img src={Banner} alt='banner' className='banner' />
+        <h2 className='list_title'>품목 별로 최저가를 보여드려요.</h2>
+        <ItemList>{itemList}</ItemList>
+        <h2 className='list_title'>이 지역의 있는 매장들을 보여드려요.</h2>
+        <MarketList></MarketList>
+        <Contact>
+          <div>
+            <p>장보고 - 서울시 식자재 조회</p>
+            문의 : <b className='content'>hc9064@gmail.com</b>
+          </div>
+        </Contact>
+      </Container>
+      <Navigation />
     </>
   );
 };

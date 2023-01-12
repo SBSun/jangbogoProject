@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '../assets/Logo_eng.svg';
 
@@ -19,8 +20,10 @@ const LogoStyle = styled.img`
   height: 3rem;
 `;
 const Location = styled.span`
-  color: white;
-  font-size: 2rem;
+  > * {
+    color: white;
+    font-size: 2rem;
+  }
 `;
 
 const Header = () => {
@@ -29,7 +32,9 @@ const Header = () => {
       <Container>
         <LogoStyle src={logo} />
         <Location>
-          <i className='fa-solid fa-location-dot'></i>
+          <Link to={'/gps'}>
+            <i className='fa-solid fa-location-dot'></i>
+          </Link>
         </Location>
       </Container>
     </>
