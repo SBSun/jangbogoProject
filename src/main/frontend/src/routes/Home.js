@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Loading from '../components/Loading';
 import Header from '../components/Header';
 import Navigation from '../components/Navigation';
 import Banner from '../assets/banner.PNG';
@@ -20,9 +19,28 @@ const Container = styled.main`
     font-weight: 500;
   }
 `;
+const Location = styled.div`
+  > .location_bar {
+    border-bottom: 1px solid var(--light-gray);
+    padding: 1rem;
+    font-size: 1.25rem;
+    text-align: center;
+    color: var(--black);
+  }
+  > .location_bar > * {
+    margin: 0 0 0 0.5rem;
+  }
+  > .location_bar > *:first-child {
+    margin: 0;
+  }
+`;
+const LocationDetail = styled.div`
+  display: none;
+`;
 const ItemList = styled.ul`
   display: flex;
   overflow-x: scroll;
+
   > li {
     padding: 1rem;
   }
@@ -45,10 +63,10 @@ const ItemList = styled.ul`
     font-size: 16px;
   }
 `;
-const MarketList = styled(ItemList)``;
 const Contact = styled.div`
   background-color: var(--light-gray);
   padding: 1rem;
+
   > div {
     color: var(--gray);
     font-size: 12px;
@@ -64,6 +82,7 @@ const Contact = styled.div`
 
 const Home = () => {
   const [items, setItem] = useState([]);
+  const [locationPosition, setLocation] = useState('종로');
   const getItemList = async () => {
     const json = await (
       await fetch('/commodity/getCommodityListFromGu?gu_id=110000')
@@ -92,10 +111,21 @@ const Home = () => {
       <Header />
       <Container>
         <img src={Banner} alt='banner' className='banner' />
+        <Location>
+          <div className='location_bar'>
+            <i className='fa-solid fa-location-dot'></i>
+            <span>서울시 {locationPosition}구</span>
+            <i className='fa-solid fa-angle-right'></i>
+          </div>
+          <LocationDetail>
+            <h2>지역 선택</h2>
+            <ul></ul>
+          </LocationDetail>
+        </Location>
         <h2 className='list_title'>품목 별로 최저가를 보여드려요.</h2>
         <ItemList>{itemList}</ItemList>
         <h2 className='list_title'>이 지역의 있는 매장들을 보여드려요.</h2>
-        <MarketList></MarketList>
+        <ItemList></ItemList>
         <Contact>
           <div>
             <p>장보고 - 서울시 식자재 조회</p>
