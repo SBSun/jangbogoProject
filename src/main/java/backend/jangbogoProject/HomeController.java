@@ -4,6 +4,7 @@ import backend.jangbogoProject.commodity.CommodityService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -12,14 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class HomeController {
 
     private final CommodityService commodityService;
-
-    @GetMapping("/")
-    public ModelAndView homeForm()
-    {
-        ModelAndView mav = new ModelAndView("index");
-
-        return mav;
-    }
 
     @PostMapping("/data_load_save")
     public ModelAndView data_load_save(){
