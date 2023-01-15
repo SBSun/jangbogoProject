@@ -4,7 +4,7 @@ import GlobalStyle from './GlobalStyle';
 import Home from './routes/Home';
 import Category from './routes/Category';
 import Search from './routes/Search';
-import Mypage from './routes/MyPage';
+import MyPage from './routes/MyPage';
 import LogIn from './routes/LogIn';
 import SignUp from './routes/SignUp';
 import Market from './routes/Market';
@@ -20,7 +20,7 @@ const App = () => {
         <Route path='/' element={<Home />} />
         <Route path='/category' element={<Category />} />
         <Route path='/search' element={<Search />} />
-        <Route path='/mypage' element={<Mypage />} />
+        <Route path='/mypage' element={<MyPage />} />
         <Route path='/mypage/info' element={<Info />} />
         <Route path='/member/login' element={<LogIn />} />
         <Route path='/member/signup' element={<SignUp />} />
