@@ -108,7 +108,7 @@ const Home = () => {
 
   return (
     <>
-      <Header />
+      <Header modify={0} title={''} />
       <Container>
         <img src={Banner} alt='banner' className='banner' />
         <Location>

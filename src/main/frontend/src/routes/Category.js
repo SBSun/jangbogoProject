@@ -22,7 +22,7 @@ const Category = () => {
   };
   return (
     <>
-      <Header />
+      <Header modify={1} title={'카테고리'} />
       <Container>
         <MenuList>
           <li className='category_menu' onClick={handleClick}>

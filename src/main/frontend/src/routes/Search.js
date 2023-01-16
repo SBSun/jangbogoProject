@@ -66,7 +66,7 @@ const Search = () => {
 
   return (
     <>
-      <Header />
+      <Header modify={1} title={'검색'} />
       <Container>
         <input
           type={'text'}
