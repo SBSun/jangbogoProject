@@ -10,7 +10,6 @@ import SignUp from './routes/SignUp';
 import Market from './routes/Market';
 import Review from './routes/Review';
 import Info from './routes/Info';
-import GPS from './components/Location';
 
 const App = () => {
   return (
@@ -26,7 +25,6 @@ const App = () => {
         <Route path='/member/signup' element={<SignUp />} />
         <Route path='/market' element={<Market />} />
         <Route path='/market/review' element={<Review />} />
-        <Route path='/gps' element={<GPS />} />
       </Routes>
     </BrowserRouter>
   );
