@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -22,7 +22,11 @@ const Menu = styled.span`
   }
 `;
 
-const Navigation = () => {
+const Navigation = prop => {
+  const [isLogin, setIsLogin] = useState(false);
+  useEffect(() => {
+    setIsLogin(prop.isLogin);
+  }, [prop]);
   return (
     <>
       <Container>
@@ -42,9 +46,15 @@ const Navigation = () => {
           </Link>
         </Menu>
         <Menu>
-          <Link to={'/mypage'}>
-            <i className='fa-solid fa-user'></i>
-          </Link>
+          {isLogin ? (
+            <Link to={'/mypage'}>
+              <i className='fa-solid fa-user'></i>
+            </Link>
+          ) : (
+            <Link to={'/member/login'}>
+              <i className='fa-solid fa-user'></i>
+            </Link>
+          )}
         </Menu>
       </Container>
     </>

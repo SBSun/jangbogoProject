@@ -31,7 +31,7 @@ const Header = prop => {
   const [modify, setModify] = useState(0);
   useEffect(() => {
     setModify(prop.modify);
-  }, []);
+  }, [prop]);
   const HandleModify = () => {
     switch (modify) {
       case 1:
