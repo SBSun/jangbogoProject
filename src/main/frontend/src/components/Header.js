@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { MdClear } from 'react-icons/md';
 import logo from '../assets/Logo_eng.svg';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.header`
   position: fixed;
@@ -29,9 +31,12 @@ const LogoStyle = styled.img`
 
 const Header = prop => {
   const [modify, setModify] = useState(0);
+  const navigate = useNavigate();
+
   useEffect(() => {
     setModify(prop.modify);
   }, [prop]);
+
   const HandleModify = () => {
     switch (modify) {
       case 1:
@@ -44,7 +49,7 @@ const Header = prop => {
       case 2:
         return (
           <WhiteContainer>
-            <i className='fa-solid fa-x'></i>
+            <MdClear onClick={() => navigate(-1)} />
             <span>{prop.title}</span>
             <span></span>
           </WhiteContainer>
