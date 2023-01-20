@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header';
 import Navigation from '../components/Navigation';
@@ -7,10 +7,12 @@ import Login from './LogIn';
 const Container = styled.main`
   margin: 56px 0 0 0;
 `;
-const UserInfo = styled.section``;
 
 const MyPage = () => {
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState('');
+  useEffect(() => {
+    setLogin(false);
+  }, [login]);
 
   return (
     <>
