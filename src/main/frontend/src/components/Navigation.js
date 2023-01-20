@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { MdHome, MdSearch, MdMenu, MdPerson } from 'react-icons/md';
 
 const Container = styled.footer`
   position: fixed;
@@ -32,27 +33,27 @@ const Navigation = prop => {
       <Container>
         <Menu>
           <Link to={'/'}>
-            <i className='fa-solid fa-house'></i>
+            <MdHome />
           </Link>
         </Menu>
         <Menu>
           <Link to={'/category'}>
-            <i className='fa-solid fa-bars'></i>
+            <MdMenu />
           </Link>
         </Menu>
         <Menu>
           <Link to={'/search'}>
-            <i className='fa-solid fa-search'></i>
+            <MdSearch />
           </Link>
         </Menu>
         <Menu>
           {isLogin ? (
             <Link to={'/mypage'}>
-              <i className='fa-solid fa-user'></i>
+              <MdPerson />
             </Link>
           ) : (
             <Link to={'/member/login'}>
-              <i className='fa-solid fa-user'></i>
+              <MdPerson />
             </Link>
           )}
         </Menu>
