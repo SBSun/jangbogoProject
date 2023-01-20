@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useCallback, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from '../components/Header';
 import Button from '../components/Button';
@@ -15,41 +15,69 @@ const LoginForm = styled.form`
   > input {
     height: 2.5rem;
     border: 1px solid var(--light-gray);
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
     &:nth-child(1) {
       border-radius: 10px 10px 0 0;
     }
     &:nth-child(2) {
       border-radius: 0 0 10px 10px;
+      border-top: none;
       margin: 0 0 1rem 0;
     }
   }
-  > a {
-    height: 2.5rem;
-    text-align: center;
-    text-decoration: none;
-    color: var(--green);
-    font-size: 1.25rem;
-    font-weight: 600;
-    border: 1px solid var(--green);
-    border-radius: 5px;
+  > button:nth-child(4) {
+    margin-top: 0;
   }
 `;
 
 const Login = () => {
-  const [input, setInput] = useState({ email: '', password: '' });
-  const onSubmit = e => {
-    e.preventDefault();
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const onEmailChange = e => {
+    setEmail(e.target.value);
+    console.log(email);
   };
+  const onPassChange = e => {
+    setPassword(e.target.value);
+    console.log(password);
+  };
+  const onSubmit = useCallback(
+    e => {
+      e.preventDefault();
+      console.log(email, password);
+      setEmail('');
+      setPassword('');
+    },
+    [email, password]
+  );
+
   return (
     <>
       <Header modify={2} title={'로그인'} />
-      <Container onSubmit={onSubmit}>
-        <LoginForm>
-          <input type={'text'} placeholder={'이메일을 입력해주세요.'} />
-          <input type={'text'} placeholder={'비밀번호를 입력해주세요.'} />
-          <Button>로그인</Button>
-          <Link to={'/member/signup'}>회원가입</Link>
+      <Container>
+        <LoginForm onSubmit={onSubmit}>
+          <input
+            type={'text'}
+            placeholder={'이메일을 입력해주세요.'}
+            value={email}
+            onChange={onEmailChange}
+          />
+          <input
+            type={'password'}
+            placeholder={'비밀번호를 입력해주세요.'}
+            value={password}
+            onChange={onPassChange}
+          />
+          <Button type={'submit'}>로그인</Button>
+          <Button
+            type={'button'}
+            inverted={true}
+            onClick={() => navigate('/member/signup')}
+          >
+            회원가입
+          </Button>
         </LoginForm>
       </Container>
     </>
