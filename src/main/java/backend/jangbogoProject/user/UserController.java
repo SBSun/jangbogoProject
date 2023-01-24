@@ -15,7 +15,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/login")
-    public UserResponseDto.TokenInfo login(UserRequestDto.Login login) {
+    public UserResponseDto.TokenInfo login(@RequestBody UserRequestDto.Login login) {
         UserResponseDto.TokenInfo tokenInfo = userService.login(login);
         return tokenInfo;
     }
