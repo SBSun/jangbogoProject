@@ -37,16 +37,28 @@ const Login = () => {
 
   const onEmailChange = e => {
     setEmail(e.target.value);
-    console.log(email);
   };
   const onPassChange = e => {
     setPassword(e.target.value);
-    console.log(password);
   };
   const onSubmit = useCallback(
     e => {
       e.preventDefault();
-      console.log(email, password);
+      const getLogin = async () => {
+        const json = await (
+          await fetch(`/user/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              id: email,
+              password: password,
+            }),
+          })
+        ).json();
+        console.log(json);
+      };
+
+      getLogin();
       setEmail('');
       setPassword('');
     },
