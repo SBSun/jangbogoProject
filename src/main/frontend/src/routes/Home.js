@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { MdLocationOn, MdOutlineNavigateNext } from 'react-icons/md';
 import Header from '../components/Header';
 import Navigation from '../components/Navigation';
 import Banner from '../assets/banner.PNG';
@@ -82,7 +83,7 @@ const Contact = styled.div`
 
 const Home = () => {
   const [items, setItem] = useState([]);
-  const [locationPosition, setLocation] = useState('종로');
+  const [locationPosition, setLocation] = useState('');
   const getItemList = async () => {
     const json = await (
       await fetch('/commodity/getCommodityListFromGu?gu_id=110000')
@@ -91,9 +92,11 @@ const Home = () => {
     setItem(json.infoList);
     console.log(json);
   };
+
   useEffect(() => {
     getItemList();
-  }, []);
+    setLocation('종로');
+  }, [locationPosition]);
 
   const itemList = items.map((item, index) => (
     <li key={index}>
@@ -108,14 +111,14 @@ const Home = () => {
 
   return (
     <>
-      <Header />
+      <Header modify={0} title={''} />
       <Container>
         <img src={Banner} alt='banner' className='banner' />
         <Location>
           <div className='location_bar'>
-            <i className='fa-solid fa-location-dot'></i>
+            <MdLocationOn />
             <span>서울시 {locationPosition}구</span>
-            <i className='fa-solid fa-angle-right'></i>
+            <MdOutlineNavigateNext />
           </div>
           <LocationDetail>
             <h2>지역 선택</h2>

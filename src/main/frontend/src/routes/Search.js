@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header';
 import Navigation from '../components/Navigation';
@@ -44,29 +44,32 @@ const Search = () => {
     if (e.key !== 'Enter') return;
     console.log(e.target, e.target.value);
   };
-  const [keywords, setKeywords] = useState([
-    {
-      name: '돼지고기',
-    },
-    {
-      name: '사과',
-    },
-    {
-      name: '고등어',
-    },
-    {
-      name: '이마트',
-    },
-  ]);
+  const [keywords, setKeywords] = useState([{}]);
   const recommandList = keywords.map((keyword, index) => (
     <li key={index}>
       <span>{keyword.name}</span>
     </li>
   ));
+  useEffect(() => {
+    setKeywords([
+      {
+        name: '돼지고기',
+      },
+      {
+        name: '사과',
+      },
+      {
+        name: '고등어',
+      },
+      {
+        name: '이마트',
+      },
+    ]);
+  }, []);
 
   return (
     <>
-      <Header />
+      <Header modify={1} title={'검색'} />
       <Container>
         <input
           type={'text'}

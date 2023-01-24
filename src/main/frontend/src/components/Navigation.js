@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { MdHome, MdSearch, MdMenu, MdPerson } from 'react-icons/md';
 
 const Container = styled.footer`
   position: fixed;
@@ -22,29 +23,39 @@ const Menu = styled.span`
   }
 `;
 
-const Navigation = () => {
+const Navigation = prop => {
+  const [isLogin, setIsLogin] = useState(false);
+  useEffect(() => {
+    setIsLogin(prop.isLogin);
+  }, [prop]);
   return (
     <>
       <Container>
         <Menu>
           <Link to={'/'}>
-            <i className='fa-solid fa-house'></i>
+            <MdHome />
           </Link>
         </Menu>
         <Menu>
           <Link to={'/category'}>
-            <i className='fa-solid fa-bars'></i>
+            <MdMenu />
           </Link>
         </Menu>
         <Menu>
           <Link to={'/search'}>
-            <i className='fa-solid fa-search'></i>
+            <MdSearch />
           </Link>
         </Menu>
         <Menu>
-          <Link to={'/mypage'}>
-            <i className='fa-solid fa-user'></i>
-          </Link>
+          {isLogin ? (
+            <Link to={'/mypage'}>
+              <MdPerson />
+            </Link>
+          ) : (
+            <Link to={'/member/login'}>
+              <MdPerson />
+            </Link>
+          )}
         </Menu>
       </Container>
     </>
