@@ -1,5 +1,6 @@
 package backend.jangbogoProject.CRUDTest;
 
+import backend.jangbogoProject.commodity.CommodityInfoProjection;
 import backend.jangbogoProject.commodity.CommodityResponseDto;
 import backend.jangbogoProject.commodity.CommodityService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ public class CommodityServiceTest {
 
     @Test
     public void getCommodityListFromGu(){
-        CommodityResponseDto.CommodityInfoList list = commodityService.getCommodityListFromGu(110000);
+        List<CommodityInfoProjection> list = commodityService.getCommodityListFromGu(110000);
 
         System.out.println(list);
     }

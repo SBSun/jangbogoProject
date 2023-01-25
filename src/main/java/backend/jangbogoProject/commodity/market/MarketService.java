@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -47,5 +48,11 @@ public class MarketService {
             new IllegalArgumentException("해당 객체는 존재하지 않습니다.");
 
         return marketName;
+    }
+
+    public List<MarketInfoProjection> findMarketsByName(String name){
+        List<MarketInfoProjection> marketInfoList = marketRepository.findMarketsByName(name);
+
+        return marketInfoList;
     }
 }

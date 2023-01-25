@@ -29,14 +29,21 @@ public class CommodityService {
     private final MarketService marketService;
     private final GuService guService;
 
-    public CommodityResponseDto.CommodityInfoList getCommodityListFromGu(int gu_id){
-        List<CommodityInfoProjection> list = commodityRepository.getCommodityListFromGu(gu_id);
+    public List<CommodityInfoProjection> getCommodityListFromGu(int gu_id){
+        List<CommodityInfoProjection> list = commodityRepository.findCommodityListInGu(gu_id);
 
+        /*
         BasicResponse basicResponse = new BasicResponse(HttpStatus.OK.value(), "상품 리스트 반환 성공");
         CommodityResponseDto.CommodityInfoList commodityInfoList =
-                new CommodityResponseDto.CommodityInfoList(list, basicResponse);
+                new CommodityResponseDto.CommodityInfoList(list, basicResponse);*/
 
-        return commodityInfoList;
+        return list;
+    }
+
+    public List<CommodityInfoProjection> getCommodityListFromGu(int gu_id, String find){
+        List<CommodityInfoProjection> list = commodityRepository.findCommodityListInGu(gu_id, find);
+
+        return list;
     }
 
     public void load_save(){
