@@ -44,9 +44,9 @@ public class SecurityConfiguration {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/user/login", "/user/signUpUser", "/commodity/getCommodityListFromGu", "/search").permitAll() // 설정한 리소스의 접근을 인증절차 없이 허용
                 .antMatchers("/user/admin", "/user/data_load_save").hasRole("ADMIN")
                 .antMatchers("/user/signUpAdmin", "/user/reissue", "/user/logout").hasRole("USER")
+                .anyRequest().permitAll()
                 .and()
                 //  JWT 인증을 위하여 직접 구현한 필터를 UsernamePasswordAuthenticationFilter 전에 실행하겠다는 설정이다.
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, redisTemplate), UsernamePasswordAuthenticationFilter.class);

@@ -13,8 +13,8 @@ import java.util.List;
 public class CommodityController {
     private final CommodityService commodityService;
 
-    @GetMapping("/getCommodityListFromGu")
-    private List<CommodityInfoProjection> getCommodityListFromGu(int gu_id){
-        return commodityService.getCommodityListFromGu(gu_id);
+    @GetMapping("/findCommodityListInGu")
+    private List<CommodityInfoProjection> findCommodityListInGu(int gu_id){
+        return commodityService.findCommodityListInGu(gu_id);
     }
 }

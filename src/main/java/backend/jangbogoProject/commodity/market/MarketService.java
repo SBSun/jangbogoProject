@@ -50,6 +50,12 @@ public class MarketService {
         return marketName;
     }
 
+    public List<MarketInfoProjection> findMarketsInGu(int gu_id){
+        List<MarketInfoProjection> marketInfoList = marketRepository.findMarketsInGu(gu_id);
+
+        return marketInfoList;
+    }
+
     public List<MarketInfoProjection> findMarketsByName(String name){
         List<MarketInfoProjection> marketInfoList = marketRepository.findMarketsByName(name);
 

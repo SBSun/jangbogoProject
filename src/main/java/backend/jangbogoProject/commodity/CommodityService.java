@@ -29,7 +29,7 @@ public class CommodityService {
     private final MarketService marketService;
     private final GuService guService;
 
-    public List<CommodityInfoProjection> getCommodityListFromGu(int gu_id){
+    public List<CommodityInfoProjection> findCommodityListInGu(int gu_id){
         List<CommodityInfoProjection> list = commodityRepository.findCommodityListInGu(gu_id);
 
         /*
@@ -40,7 +40,7 @@ public class CommodityService {
         return list;
     }
 
-    public List<CommodityInfoProjection> getCommodityListFromGu(int gu_id, String find){
+    public List<CommodityInfoProjection> findCommodityListInGu(int gu_id, String find){
         List<CommodityInfoProjection> list = commodityRepository.findCommodityListInGu(gu_id, find);
 
         return list;

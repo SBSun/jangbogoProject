@@ -10,6 +10,9 @@ public interface MarketRepository extends JpaRepository<Market, Integer> {
     @Query(value = "SELECT name FROM item WHERE market_id = ?1", nativeQuery = true)
     String getMarketName(int id);
 
+    @Query(value = "SELECT market_id AS marketId, name, gu_id AS guId FROM market WHERE gu_id = ?1", nativeQuery = true)
+    List<MarketInfoProjection> findMarketsInGu(int gu_id);
+
     @Query(value = "SELECT market_id AS marketId, name, gu_id AS guId FROM market WHERE name LIKE %?1%", nativeQuery = true)
     List<MarketInfoProjection> findMarketsByName(String name);
 }
