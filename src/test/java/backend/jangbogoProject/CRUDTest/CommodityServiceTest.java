@@ -21,7 +21,7 @@ public class CommodityServiceTest {
 
     @Test
     public void getCommodityListFromGu(){
-        List<CommodityInfoProjection> list = commodityService.getCommodityListFromGu(110000);
+        List<CommodityInfoProjection> list = commodityService.findCommodityListInGu(110000);
 
         System.out.println(list);
     }

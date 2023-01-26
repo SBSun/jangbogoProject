@@ -86,10 +86,10 @@ const Home = () => {
   const [locationPosition, setLocation] = useState('');
   const getItemList = async () => {
     const json = await (
-      await fetch('/commodity/getCommodityListFromGu?gu_id=110000')
+      await fetch(`/commodity/findCommodityListInGu?gu_id=110000`)
     ).json();
 
-    setItem(json.infoList);
+    setItem(json);
     console.log(json);
   };
 
