@@ -36,6 +36,21 @@ const Recommand = styled.section`
   }
 `;
 
+const recommandKeyword = [
+  {
+    name: '돼지고기',
+  },
+  {
+    name: '사과',
+  },
+  {
+    name: '고등어',
+  },
+  {
+    name: '이마트',
+  },
+];
+
 const Search = () => {
   const handleChange = e => {
     console.log(e.target.value);
@@ -51,20 +66,7 @@ const Search = () => {
     </li>
   ));
   useEffect(() => {
-    setKeywords([
-      {
-        name: '돼지고기',
-      },
-      {
-        name: '사과',
-      },
-      {
-        name: '고등어',
-      },
-      {
-        name: '이마트',
-      },
-    ]);
+    setKeywords(recommandKeyword);
   }, []);
 
   return (

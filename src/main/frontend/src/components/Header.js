@@ -49,7 +49,7 @@ const Header = prop => {
       case 2:
         return (
           <WhiteContainer>
-            <MdClear onClick={() => navigate(-1)} />
+            <MdClear onClick={() => navigate(-1, true)} />
             <span>{prop.title}</span>
             <span></span>
           </WhiteContainer>

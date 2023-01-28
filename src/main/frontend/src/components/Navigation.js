@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { MdHome, MdSearch, MdMenu, MdPerson } from 'react-icons/md';
 
@@ -16,11 +16,9 @@ const Container = styled.footer`
   border-top: solid 1px var(--gray);
   background-color: white;
 `;
-const Menu = styled.span`
+const Menu = styled(NavLink)`
   font-size: 1.5rem;
-  > a {
-    color: var(--black);
-  }
+  color: var(--black);
 `;
 
 const Navigation = prop => {
@@ -31,31 +29,17 @@ const Navigation = prop => {
   return (
     <>
       <Container>
-        <Menu>
-          <Link to={'/'}>
-            <MdHome />
-          </Link>
+        <Menu to={'/'}>
+          <MdHome />
         </Menu>
-        <Menu>
-          <Link to={'/category'}>
-            <MdMenu />
-          </Link>
+        <Menu to={'/category'}>
+          <MdMenu />
         </Menu>
-        <Menu>
-          <Link to={'/search'}>
-            <MdSearch />
-          </Link>
+        <Menu to={'/search'}>
+          <MdSearch />
         </Menu>
-        <Menu>
-          {isLogin ? (
-            <Link to={'/mypage'}>
-              <MdPerson />
-            </Link>
-          ) : (
-            <Link to={'/member/login'}>
-              <MdPerson />
-            </Link>
-          )}
+        <Menu to={isLogin ? '/mypage' : '/member/login'}>
+          {isLogin ? <MdPerson /> : <MdPerson />}
         </Menu>
       </Container>
     </>
