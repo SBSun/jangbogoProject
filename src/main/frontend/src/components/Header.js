@@ -62,21 +62,20 @@ const LogoBlock = styled(DefaultBlock)`
   }
 `;
 
-const Header = ({ modify, title }) => {
+const Header = ({ modify, title, handleLocateVisible }) => {
   const navigate = useNavigate();
 
   const HandleModify = () => {
     switch (modify) {
-      case 1:
+      case 'LOGO_BLOCK':
         return (
-          <DefaultBlock>
-            <span></span>
-            <h2>{title}</h2>
-            <MdPlace onClick={() => navigate('/location')} />
-          </DefaultBlock>
+          <LogoBlock>
+            <img src={logo} alt='logo' />
+            <MdPlace onClick={handleLocateVisible} />
+          </LogoBlock>
         );
 
-      case 2:
+      case 'WHITE_BLOCK':
         return (
           <WhiteBlock>
             <MdClear onClick={() => navigate(-1, true)} />
@@ -87,10 +86,11 @@ const Header = ({ modify, title }) => {
 
       default:
         return (
-          <LogoBlock>
-            <img src={logo} alt='logo' />
-            <MdPlace onClick={() => navigate('/location')} />
-          </LogoBlock>
+          <DefaultBlock>
+            <span></span>
+            <h2>{title}</h2>
+            <MdPlace onClick={handleLocateVisible} />
+          </DefaultBlock>
         );
     }
   };

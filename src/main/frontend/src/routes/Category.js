@@ -3,45 +3,60 @@ import styled from 'styled-components';
 import { MdOutlineNavigateNext } from 'react-icons/md';
 import Header from '../components/Header';
 import Navigation from '../components/Navigation';
+import Location from '../components/Location';
 
-const Container = styled.main`
+const categories = [
+  {
+    name: 'meat',
+    text: '정육 ・ 계란',
+  },
+  {
+    name: 'seafood',
+    text: '수산 ・ 해산물',
+  },
+  {
+    name: 'vegetable',
+    text: '채소',
+  },
+  {
+    name: 'fruit',
+    text: '과일',
+  },
+];
+const CategoryBlock = styled.main`
   margin: 56px 0 0 0;
-`;
-const CategoryItem = styled.li`
-  display: flex;
-  justify-content: space-between;
-  font-size: 1.25rem;
-  padding: 1.25rem;
-  border-bottom: 1px solid var(--gray);
+
+  > ul > li {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.25rem;
+    padding: 1.25rem;
+    border-bottom: 1px solid var(--gray);
+  }
 `;
 
-const Category = ({ location, isLogin }) => {
+const Category = ({ location, isLogin, isVisible, handleLocateVisible }) => {
   const handleClick = e => {
-    console.log(e);
+    console.log(e.target);
   };
   return (
     <>
-      <Header modify={1} title={'카테고리'} />
-      <Container>
+      <Header
+        modify={'DEFAULT_BLOCK'}
+        title={'카테고리'}
+        handleLocateVisible={handleLocateVisible}
+      />
+      <Location isVisible={isVisible} />
+      <CategoryBlock>
         <ul>
-          <CategoryItem onClick={handleClick}>
-            <span>정육 ・ 계란</span>
-            <MdOutlineNavigateNext />
-          </CategoryItem>
-          <CategoryItem onClick={handleClick}>
-            <span>수산 ・ 해산물</span>
-            <MdOutlineNavigateNext />
-          </CategoryItem>
-          <CategoryItem onClick={handleClick}>
-            <span>채소</span>
-            <MdOutlineNavigateNext />
-          </CategoryItem>
-          <CategoryItem onClick={handleClick}>
-            <span>과일</span>
-            <MdOutlineNavigateNext />
-          </CategoryItem>
+          {categories.map(c => (
+            <li key={c.name} onClick={handleClick}>
+              <span>{c.text}</span>
+              <MdOutlineNavigateNext />
+            </li>
+          ))}
         </ul>
-      </Container>
+      </CategoryBlock>
       <Navigation isLogin={isLogin} />
     </>
   );

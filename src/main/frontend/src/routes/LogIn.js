@@ -45,7 +45,7 @@ const Login = () => {
     e => {
       e.preventDefault();
       const getLogin = async () => {
-        const json = await (
+        const post = await (
           await fetch(`/user/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -55,9 +55,8 @@ const Login = () => {
             }),
           })
         ).json();
-        console.log(json);
+        console.log(post);
       };
-
       getLogin();
       setEmail('');
       setPassword('');
@@ -67,7 +66,7 @@ const Login = () => {
 
   return (
     <>
-      <Header modify={2} title={'로그인'} />
+      <Header modify={'WHITE_BLOCK'} title={'로그인'} />
       <LoginContainer>
         <LoginForm onSubmit={onSubmit}>
           <input
