@@ -39,7 +39,7 @@ const Contact = styled.div`
   }
 `;
 
-const Home = ({ location, isLogin, isVisible, handleLocateVisible }) => {
+const Home = ({ isLogin, isVisible, handleLocateVisible }) => {
   return (
     <>
       <Header
@@ -51,9 +51,9 @@ const Home = ({ location, isLogin, isVisible, handleLocateVisible }) => {
       <HomeContainer>
         <img src={Banner} alt='banner' className='banner' />
         <h2 className='list_title'>품목 별로 최저가를 보여드려요.</h2>
-        <CommodityList location={location} />
+        <CommodityList />
         <h2 className='list_title'>이 지역의 있는 매장들을 보여드려요.</h2>
-        <MarketList location={location} />
+        <MarketList />
         <Contact>
           <div>
             <p>장보고 - 서울시 식자재 조회</p>

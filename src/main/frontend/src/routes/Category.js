@@ -35,7 +35,7 @@ const CategoryBlock = styled.main`
   }
 `;
 
-const Category = ({ location, isLogin, isVisible, handleLocateVisible }) => {
+const Category = ({ isLogin, isVisible, handleLocateVisible }) => {
   const handleClick = e => {
     console.log(e.target);
   };

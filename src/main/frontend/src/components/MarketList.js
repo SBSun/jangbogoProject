@@ -20,12 +20,12 @@ const MarketListBlock = styled.ul`
   }
 `;
 
-const MarketList = ({ location }) => {
+const MarketList = () => {
   const [markets, setMarkets] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const getMarketList = async () => {
     const json = await (
-      await fetch(`/market/findMarketsInGu?gu_id=${location.id}`)
+      await fetch(`/market/findMarketsInGu?gu_id=110000`)
     ).json();
     setMarkets(json.marketList);
     console.log(json);

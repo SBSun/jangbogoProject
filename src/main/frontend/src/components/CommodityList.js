@@ -28,12 +28,12 @@ const CommodityListBlock = styled.ul`
   }
 `;
 
-const CommodityList = ({ location }) => {
+const CommodityList = () => {
   const [commoditys, setCommoditys] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const getCommodityList = async () => {
     const json = await (
-      await fetch(`/commodity/findCommodityListInGu?gu_id=${location.id}`)
+      await fetch(`/commodity/findCommodityListInGu?gu_id=110000`)
     ).json();
     setCommoditys(json);
     console.log(json);

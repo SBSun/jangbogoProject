@@ -8,7 +8,7 @@ const Container = styled.main`
   margin: 56px 0 0 0;
 `;
 
-const MyPage = ({ location, isLogin, isVisible, handleLocateVisible }) => {
+const MyPage = ({ isLogin, isVisible, handleLocateVisible }) => {
   return (
     <>
       <Header

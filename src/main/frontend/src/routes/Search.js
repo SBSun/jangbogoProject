@@ -52,7 +52,7 @@ const RecommandBlock = styled.section`
   }
 `;
 
-const Search = ({ location, isLogin, isVisible, handleLocateVisible }) => {
+const Search = ({ isLogin, isVisible, handleLocateVisible }) => {
   const handleChange = e => {
     console.log(e.target.value);
   };
