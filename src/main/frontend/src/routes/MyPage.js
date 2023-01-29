@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header';
-import Location from '../components/Location';
+import SelectLocation from '../components/SelectLocation';
 import Navigation from '../components/Navigation';
 
 const Container = styled.main`
@@ -16,7 +16,7 @@ const MyPage = ({ isLogin, isVisible, handleLocateVisible }) => {
         title={'내 정보'}
         handleLocateVisible={handleLocateVisible}
       />
-      <Location isVisible={isVisible} />
+      <SelectLocation isVisible={isVisible} />
       <Container>
         <div>내 정보</div>
       </Container>

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { MdOutlineNavigateNext } from 'react-icons/md';
 import Header from '../components/Header';
 import Navigation from '../components/Navigation';
-import Location from '../components/Location';
+import SelectLocation from '../components/SelectLocation';
 
 const categories = [
   {
@@ -46,7 +46,7 @@ const Category = ({ isLogin, isVisible, handleLocateVisible }) => {
         title={'카테고리'}
         handleLocateVisible={handleLocateVisible}
       />
-      <Location isVisible={isVisible} />
+      <SelectLocation isVisible={isVisible} />
       <CategoryBlock>
         <ul>
           {categories.map(c => (

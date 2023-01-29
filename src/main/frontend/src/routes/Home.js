@@ -5,7 +5,7 @@ import Navigation from '../components/Navigation';
 import Banner from '../assets/banner.PNG';
 import CommodityList from '../components/CommodityList';
 import MarketList from '../components/MarketList';
-import Location from '../components/Location';
+import SelectLocation from '../components/SelectLocation';
 
 const HomeContainer = styled.main`
   margin: 56px 0;
@@ -47,7 +47,7 @@ const Home = ({ isLogin, isVisible, handleLocateVisible }) => {
         title={''}
         handleLocateVisible={handleLocateVisible}
       />
-      <Location isVisible={isVisible} />
+      <SelectLocation isVisible={isVisible} />
       <HomeContainer>
         <img src={Banner} alt='banner' className='banner' />
         <h2 className='list_title'>품목 별로 최저가를 보여드려요.</h2>

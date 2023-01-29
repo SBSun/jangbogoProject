@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header';
-import Location from '../components/Location';
+import SelectLocation from '../components/SelectLocation';
 import Navigation from '../components/Navigation';
 
 const recommandKeyword = [
@@ -77,7 +77,7 @@ const Search = ({ isLogin, isVisible, handleLocateVisible }) => {
         title={'검색'}
         handleLocateVisible={handleLocateVisible}
       />
-      <Location isVisible={isVisible} />
+      <SelectLocation isVisible={isVisible} />
       <SearchBlock>
         <input
           type={'text'}
