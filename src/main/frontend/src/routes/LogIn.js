@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Header from '../components/Header';
 import Button from '../components/Button';
 
-const Container = styled.main`
+const LoginContainer = styled.main`
   margin: 56px 0 0 0;
 `;
 const LoginForm = styled.form`
@@ -68,7 +68,7 @@ const Login = () => {
   return (
     <>
       <Header modify={2} title={'로그인'} />
-      <Container>
+      <LoginContainer>
         <LoginForm onSubmit={onSubmit}>
           <input
             type={'text'}
@@ -91,7 +91,7 @@ const Login = () => {
             회원가입
           </Button>
         </LoginForm>
-      </Container>
+      </LoginContainer>
     </>
   );
 };

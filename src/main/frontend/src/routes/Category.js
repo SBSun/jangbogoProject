@@ -15,7 +15,7 @@ const CategoryItem = styled.li`
   border-bottom: 1px solid var(--gray);
 `;
 
-const Category = () => {
+const Category = ({ location, isLogin }) => {
   const handleClick = e => {
     console.log(e);
   };
@@ -42,7 +42,7 @@ const Category = () => {
           </CategoryItem>
         </ul>
       </Container>
-      <Navigation />
+      <Navigation isLogin={isLogin} />
     </>
   );
 };
