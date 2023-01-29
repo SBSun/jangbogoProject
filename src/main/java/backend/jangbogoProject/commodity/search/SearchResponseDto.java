@@ -5,6 +5,7 @@ import backend.jangbogoProject.commodity.market.MarketInfoProjection;
 import backend.jangbogoProject.dto.BasicResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.List;
 

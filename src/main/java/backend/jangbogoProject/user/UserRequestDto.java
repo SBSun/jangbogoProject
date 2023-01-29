@@ -1,13 +1,13 @@
 package backend.jangbogoProject.user;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 public class UserRequestDto {
 
     @Getter
     @Setter
+    @Builder
     public static class SignUp {
         private String id;
         private String password;
@@ -17,6 +17,8 @@ public class UserRequestDto {
 
     @Getter
     @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class Login {
         private String id;
         private String password;

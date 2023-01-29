@@ -4,8 +4,7 @@ import backend.jangbogoProject.commodity.market.MarketInfoProjection;
 import backend.jangbogoProject.commodity.market.MarketService;
 import backend.jangbogoProject.commodity.search.SearchResponseDto;
 import backend.jangbogoProject.commodity.search.SearchService;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -13,7 +12,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 
 @SpringBootTest
-@RunWith(SpringRunner.class)
 public class SearchServiceTest {
 
     @Autowired
@@ -23,9 +21,9 @@ public class SearchServiceTest {
 
     @Test
     public void search(){
-        SearchResponseDto.SearchDataList searchDataList = searchService.search(110000, "고");
+        SearchResponseDto.SearchDataList searchDataList = searchService.search(110000, "고등어");
 
-        System.out.println(searchDataList);
+        System.out.println(searchDataList.toString());
     }
 
     @Test

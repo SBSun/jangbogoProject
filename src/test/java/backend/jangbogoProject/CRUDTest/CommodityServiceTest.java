@@ -4,16 +4,14 @@ import backend.jangbogoProject.commodity.CommodityInfoProjection;
 import backend.jangbogoProject.commodity.CommodityResponseDto;
 import backend.jangbogoProject.commodity.CommodityService;
 import lombok.RequiredArgsConstructor;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
 @SpringBootTest
-@RunWith(SpringRunner.class)
+//@Run(SpringRunner.class)
 public class CommodityServiceTest {
 
     @Autowired
@@ -21,8 +19,8 @@ public class CommodityServiceTest {
 
     @Test
     public void getCommodityListFromGu(){
-        List<CommodityInfoProjection> list = commodityService.getCommodityListFromGu(110000);
+        List<CommodityInfoProjection> list = commodityService.findCommodityListInGu(110000);
 
-        System.out.println(list);
+        System.out.println(list.toString());
     }
 }
