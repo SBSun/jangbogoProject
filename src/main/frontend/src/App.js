@@ -7,6 +7,7 @@ import Search from './routes/Search';
 import MyPage from './routes/MyPage';
 import LogIn from './routes/LogIn';
 import SignUp from './routes/SignUp';
+import Location from './components/Location';
 
 const App = () => {
   const [isLogin, setIslogin] = useState(false);
@@ -37,6 +38,7 @@ const App = () => {
         />
         <Route path='/member/login' element={<LogIn />} />
         <Route path='/member/signup' element={<SignUp />} />
+        <Route path='/location' element={<Location />} />
       </Routes>
     </>
   );
