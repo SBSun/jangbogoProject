@@ -1,9 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header';
+import Location from '../components/Location';
 import Navigation from '../components/Navigation';
 
-const Container = styled.main`
+const recommandKeyword = [
+  {
+    name: '돼지고기',
+  },
+  {
+    name: '사과',
+  },
+  {
+    name: '고등어',
+  },
+  {
+    name: '이마트',
+  },
+];
+
+const SearchBlock = styled.main`
   margin: 56px 0 0 0;
   padding: 1rem;
   text-align: center;
@@ -16,7 +32,7 @@ const Container = styled.main`
     background-color: var(--light-gray);
   }
 `;
-const Recommand = styled.section`
+const RecommandBlock = styled.section`
   > h2 {
     padding: 2rem 1rem 1rem 1rem;
     text-align: left;
@@ -36,28 +52,13 @@ const Recommand = styled.section`
   }
 `;
 
-const recommandKeyword = [
-  {
-    name: '돼지고기',
-  },
-  {
-    name: '사과',
-  },
-  {
-    name: '고등어',
-  },
-  {
-    name: '이마트',
-  },
-];
-
-const Search = () => {
+const Search = ({ location, isLogin, isVisible, handleLocateVisible }) => {
   const handleChange = e => {
     console.log(e.target.value);
   };
   const handleKeyDown = e => {
     if (e.key !== 'Enter') return;
-    console.log(e.target, e.target.value);
+    console.log(e.target.value);
   };
   const [keywords, setKeywords] = useState([{}]);
   const recommandList = keywords.map((keyword, index) => (
@@ -71,19 +72,24 @@ const Search = () => {
 
   return (
     <>
-      <Header modify={1} title={'검색'} />
-      <Container>
+      <Header
+        modify={'DEFAULT_BLOCK'}
+        title={'검색'}
+        handleLocateVisible={handleLocateVisible}
+      />
+      <Location isVisible={isVisible} />
+      <SearchBlock>
         <input
           type={'text'}
           placeholder={'검색어를 입력해주세요.'}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
         />
-        <Recommand>
+        <RecommandBlock>
           <h2>추천 검색어</h2>
           <ul>{recommandList}</ul>
-        </Recommand>
-      </Container>
+        </RecommandBlock>
+      </SearchBlock>
       <Navigation />
     </>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { MdHome, MdSearch, MdMenu, MdPerson } from 'react-icons/md';
@@ -17,29 +17,41 @@ const Container = styled.footer`
   background-color: white;
 `;
 const Menu = styled(NavLink)`
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   color: var(--black);
+
+  &.active {
+    color: var(--green);
+  }
 `;
 
-const Navigation = prop => {
-  const [isLogin, setIsLogin] = useState(false);
-  useEffect(() => {
-    setIsLogin(prop.isLogin);
-  }, [prop]);
+const Navigation = ({ isLogin }) => {
   return (
     <>
       <Container>
-        <Menu to={'/'}>
+        <Menu
+          to={'/'}
+          className={({ isActive }) => (isActive ? 'active' : undefined)}
+        >
           <MdHome />
         </Menu>
-        <Menu to={'/category'}>
+        <Menu
+          to={'/category'}
+          className={({ isActive }) => (isActive ? 'active' : undefined)}
+        >
           <MdMenu />
         </Menu>
-        <Menu to={'/search'}>
+        <Menu
+          to={'/search'}
+          className={({ isActive }) => (isActive ? 'active' : undefined)}
+        >
           <MdSearch />
         </Menu>
-        <Menu to={isLogin ? '/mypage' : '/member/login'}>
-          {isLogin ? <MdPerson /> : <MdPerson />}
+        <Menu
+          to={isLogin ? '/mypage' : '/member/login'}
+          className={({ isActive }) => (isActive ? 'active' : undefined)}
+        >
+          <MdPerson />
         </Menu>
       </Container>
     </>
