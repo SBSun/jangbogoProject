@@ -21,14 +21,10 @@ const ButtonBlock = styled.button`
     `}
 `;
 
-const Button = props => {
+const Button = ({ type, inverted, onClick, children }) => {
   return (
-    <ButtonBlock
-      type={props.type}
-      inverted={props.inverted}
-      onClick={props.onClick}
-    >
-      {props.children}
+    <ButtonBlock type={type} inverted={inverted} onClick={onClick}>
+      {children}
     </ButtonBlock>
   );
 };
