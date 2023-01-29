@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Header from '../components/Header';
 import Button from '../components/Button';
 
-const Container = styled.main`
+const LoginContainer = styled.main`
   margin: 56px 0 0 0;
 `;
 const LoginForm = styled.form`
@@ -45,7 +45,7 @@ const Login = () => {
     e => {
       e.preventDefault();
       const getLogin = async () => {
-        const json = await (
+        const post = await (
           await fetch(`/user/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -55,9 +55,8 @@ const Login = () => {
             }),
           })
         ).json();
-        console.log(json);
+        console.log(post);
       };
-
       getLogin();
       setEmail('');
       setPassword('');
@@ -67,8 +66,8 @@ const Login = () => {
 
   return (
     <>
-      <Header modify={2} title={'로그인'} />
-      <Container>
+      <Header modify={'WHITE_BLOCK'} title={'로그인'} />
+      <LoginContainer>
         <LoginForm onSubmit={onSubmit}>
           <input
             type={'text'}
@@ -91,7 +90,7 @@ const Login = () => {
             회원가입
           </Button>
         </LoginForm>
-      </Container>
+      </LoginContainer>
     </>
   );
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-const StyledButton = styled.button`
+const ButtonBlock = styled.button`
   outline: none;
   border: none;
   background: var(--green);
@@ -21,15 +21,11 @@ const StyledButton = styled.button`
     `}
 `;
 
-const Button = props => {
+const Button = ({ type, inverted, onClick, children }) => {
   return (
-    <StyledButton
-      type={props.type}
-      inverted={props.inverted}
-      onClick={props.onClick}
-    >
-      {props.children}
-    </StyledButton>
+    <ButtonBlock type={type} inverted={inverted} onClick={onClick}>
+      {children}
+    </ButtonBlock>
   );
 };
 

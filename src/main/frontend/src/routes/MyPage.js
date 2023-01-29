@@ -1,38 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header';
+import Location from '../components/Location';
 import Navigation from '../components/Navigation';
-import Login from './LogIn';
 
 const Container = styled.main`
   margin: 56px 0 0 0;
 `;
 
-const MyPage = () => {
-  const [login, setLogin] = useState('');
-  useEffect(() => {
-    setLogin(false);
-  }, [login]);
-
+const MyPage = ({ isLogin, isVisible, handleLocateVisible }) => {
   return (
     <>
-      {login ? (
-        <>
-          <Header />
-          <Container>
-            <div>내 정보</div>
-          </Container>
-          <Navigation />
-        </>
-      ) : (
-        <>
-          <Header modify={2} title={'로그인'} />
-          <Container>
-            <Login />
-          </Container>
-          <Navigation />
-        </>
-      )}
+      <Header
+        modify={'DEFAULT_BLOCK'}
+        title={'내 정보'}
+        handleLocateVisible={handleLocateVisible}
+      />
+      <Location isVisible={isVisible} />
+      <Container>
+        <div>내 정보</div>
+      </Container>
+      <Navigation isLogin={isLogin} />
     </>
   );
 };

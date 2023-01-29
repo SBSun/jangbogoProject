@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { MdHome, MdSearch, MdMenu, MdPerson } from 'react-icons/md';
 
@@ -16,46 +16,42 @@ const Container = styled.footer`
   border-top: solid 1px var(--gray);
   background-color: white;
 `;
-const Menu = styled.span`
-  font-size: 1.5rem;
-  > a {
-    color: var(--black);
+const Menu = styled(NavLink)`
+  font-size: 1.75rem;
+  color: var(--black);
+
+  &.active {
+    color: var(--green);
   }
 `;
 
-const Navigation = prop => {
-  const [isLogin, setIsLogin] = useState(false);
-  useEffect(() => {
-    setIsLogin(prop.isLogin);
-  }, [prop]);
+const Navigation = ({ isLogin }) => {
   return (
     <>
       <Container>
-        <Menu>
-          <Link to={'/'}>
-            <MdHome />
-          </Link>
+        <Menu
+          to={'/'}
+          className={({ isActive }) => (isActive ? 'active' : undefined)}
+        >
+          <MdHome />
         </Menu>
-        <Menu>
-          <Link to={'/category'}>
-            <MdMenu />
-          </Link>
+        <Menu
+          to={'/category'}
+          className={({ isActive }) => (isActive ? 'active' : undefined)}
+        >
+          <MdMenu />
         </Menu>
-        <Menu>
-          <Link to={'/search'}>
-            <MdSearch />
-          </Link>
+        <Menu
+          to={'/search'}
+          className={({ isActive }) => (isActive ? 'active' : undefined)}
+        >
+          <MdSearch />
         </Menu>
-        <Menu>
-          {isLogin ? (
-            <Link to={'/mypage'}>
-              <MdPerson />
-            </Link>
-          ) : (
-            <Link to={'/member/login'}>
-              <MdPerson />
-            </Link>
-          )}
+        <Menu
+          to={isLogin ? '/mypage' : '/member/login'}
+          className={({ isActive }) => (isActive ? 'active' : undefined)}
+        >
+          <MdPerson />
         </Menu>
       </Container>
     </>

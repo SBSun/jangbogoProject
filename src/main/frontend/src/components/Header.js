@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { MdClear } from 'react-icons/md';
+import { MdClear, MdPlace } from 'react-icons/md';
 import logo from '../assets/Logo_eng.svg';
 import { useNavigate } from 'react-router-dom';
 
-const Container = styled.header`
+const DefaultBlock = styled.header`
   position: fixed;
   top: 0;
   left: 0;
@@ -18,48 +18,79 @@ const Container = styled.header`
   font-weight: 600;
   background-color: var(--green);
   color: white;
+
+  > span {
+    flex: 1;
+  }
+  > h2 {
+    flex: 8;
+    text-align: center;
+  }
+  > svg {
+    flex: 1;
+    font-size: 2rem;
+    cursor: pointer;
+  }
 `;
-const WhiteContainer = styled(Container)`
-  justify-content: space-between;
+const WhiteBlock = styled(DefaultBlock)`
+  justify-content: left;
   background-color: white;
   color: var(--black);
+
+  > svg {
+    flex: 1;
+  }
+  > h2 {
+    text-align: center;
+    flex: 8;
+  }
+  > span {
+    flex: 1;
+  }
 `;
-const LogoStyle = styled.img`
-  width: 6rem;
-  height: 3rem;
+const LogoBlock = styled(DefaultBlock)`
+  justify-content: space-between;
+
+  > img {
+    width: 6rem;
+    height: 3rem;
+  }
+  > svg {
+    flex: none;
+    font-size: 2rem;
+    cursor: pointer;
+  }
 `;
 
-const Header = prop => {
-  const [modify, setModify] = useState(0);
+const Header = ({ modify, title, handleLocateVisible }) => {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    setModify(prop.modify);
-  }, [prop]);
 
   const HandleModify = () => {
     switch (modify) {
-      case 1:
+      case 'LOGO_BLOCK':
         return (
-          <Container>
-            <h2>{prop.title}</h2>
-          </Container>
+          <LogoBlock>
+            <img src={logo} alt='logo' />
+            <MdPlace onClick={handleLocateVisible} />
+          </LogoBlock>
         );
 
-      case 2:
+      case 'WHITE_BLOCK':
         return (
-          <WhiteContainer>
-            <MdClear onClick={() => navigate(-1)} />
-            <span>{prop.title}</span>
+          <WhiteBlock>
+            <MdClear onClick={() => navigate(-1, true)} />
+            <h2>{title}</h2>
             <span></span>
-          </WhiteContainer>
+          </WhiteBlock>
         );
 
       default:
         return (
-          <Container>
-            <LogoStyle src={logo} />
-          </Container>
+          <DefaultBlock>
+            <span></span>
+            <h2>{title}</h2>
+            <MdPlace onClick={handleLocateVisible} />
+          </DefaultBlock>
         );
     }
   };

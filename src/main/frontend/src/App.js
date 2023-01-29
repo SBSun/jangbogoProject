@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import GlobalStyle from './GlobalStyle';
 import Home from './routes/Home';
 import Category from './routes/Category';
@@ -7,26 +7,73 @@ import Search from './routes/Search';
 import MyPage from './routes/MyPage';
 import LogIn from './routes/LogIn';
 import SignUp from './routes/SignUp';
-import Market from './routes/Market';
-import Review from './routes/Review';
-import Info from './routes/Info';
 
 const App = () => {
+  const [isLogin, setIslogin] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  useEffect(() => {
+    setIslogin(false);
+  }, []);
+
+  const handleLocateVisible = () => {
+    setIsVisible(!isVisible);
+  };
   return (
-    <BrowserRouter>
+    <>
       <GlobalStyle />
       <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/category' element={<Category />} />
-        <Route path='/search' element={<Search />} />
-        <Route path='/mypage' element={<MyPage />} />
-        <Route path='/mypage/info' element={<Info />} />
+        <Route
+          path='/'
+          element={
+            <Home
+              isLogin={isLogin}
+              isVisible={isVisible}
+              handleLocateVisible={handleLocateVisible}
+            />
+          }
+        />
+        <Route
+          path='/category'
+          element={
+            <Category
+              isLogin={isLogin}
+              isVisible={isVisible}
+              handleLocateVisible={handleLocateVisible}
+            />
+          }
+        />
+        <Route
+          path='/search'
+          element={
+            <Search
+              isLogin={isLogin}
+              isVisible={isVisible}
+              handleLocateVisible={handleLocateVisible}
+            />
+          }
+        />
+        <Route
+          path='/mypage'
+          element={
+            <MyPage
+              isLogin={isLogin}
+              isVisible={isVisible}
+              handleLocateVisible={handleLocateVisible}
+            />
+          }
+        />
         <Route path='/member/login' element={<LogIn />} />
-        <Route path='/member/signup' element={<SignUp />} />
-        <Route path='/market' element={<Market />} />
-        <Route path='/market/review' element={<Review />} />
+        <Route
+          path='/member/signup'
+          element={
+            <SignUp
+              isVisible={isVisible}
+              handleLocateVisible={handleLocateVisible}
+            />
+          }
+        />
       </Routes>
-    </BrowserRouter>
+    </>
   );
 };
 
