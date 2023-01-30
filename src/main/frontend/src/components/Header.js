@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { MdClear, MdPlace } from 'react-icons/md';
 import logo from '../assets/Logo_eng.svg';
 import { useNavigate } from 'react-router-dom';
+import LocationContext from '../contexts/location';
 
 const DefaultBlock = styled.header`
   position: fixed;
@@ -62,16 +63,20 @@ const LogoBlock = styled(DefaultBlock)`
   }
 `;
 
-const Header = ({ modify, title, handleLocateVisible }) => {
+const Header = ({ modify, title }) => {
   const navigate = useNavigate();
+  const { state, actions } = useContext(LocationContext);
 
+  const onLocationClick = () => {
+    actions.setIsVisible(!state.isVisible);
+  };
   const HandleModify = () => {
     switch (modify) {
       case 'LOGO_BLOCK':
         return (
           <LogoBlock>
             <img src={logo} alt='logo' />
-            <MdPlace onClick={handleLocateVisible} />
+            <MdPlace onClick={onLocationClick} />
           </LogoBlock>
         );
 
@@ -89,7 +94,7 @@ const Header = ({ modify, title, handleLocateVisible }) => {
           <DefaultBlock>
             <span></span>
             <h2>{title}</h2>
-            <MdPlace onClick={handleLocateVisible} />
+            <MdPlace onClick={onLocationClick} />
           </DefaultBlock>
         );
     }

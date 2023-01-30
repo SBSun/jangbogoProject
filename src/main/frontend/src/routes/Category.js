@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { MdOutlineNavigateNext } from 'react-icons/md';
 import Header from '../components/Header';
 import Navigation from '../components/Navigation';
-import Location from '../components/Location';
+import SelectLocation from '../components/SelectLocation';
 
 const categories = [
   {
@@ -35,22 +35,18 @@ const CategoryBlock = styled.main`
   }
 `;
 
-const Category = ({ isLogin, isVisible, handleLocateVisible }) => {
-  const handleClick = e => {
+const Category = ({ isLogin }) => {
+  const onCategoryClick = e => {
     console.log(e.target);
   };
   return (
     <>
-      <Header
-        modify={'DEFAULT_BLOCK'}
-        title={'카테고리'}
-        handleLocateVisible={handleLocateVisible}
-      />
-      <Location isVisible={isVisible} />
+      <Header modify={'DEFAULT_BLOCK'} title={'카테고리'} />
+      <SelectLocation />
       <CategoryBlock>
         <ul>
           {categories.map(c => (
-            <li key={c.name} onClick={handleClick}>
+            <li key={c.name} onClick={onCategoryClick}>
               <span>{c.text}</span>
               <MdOutlineNavigateNext />
             </li>
