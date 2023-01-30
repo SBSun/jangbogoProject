@@ -1,10 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { MdOutlineNavigateNext } from 'react-icons/md';
 import Header from '../components/Header';
 import Navigation from '../components/Navigation';
 import SelectLocation from '../components/SelectLocation';
-import LocationContext from '../contexts/location';
 
 const categories = [
   {
@@ -37,14 +36,13 @@ const CategoryBlock = styled.main`
 `;
 
 const Category = ({ isLogin }) => {
-  const { state } = useContext(LocationContext);
   const onCategoryClick = e => {
     console.log(e.target);
   };
   return (
     <>
       <Header modify={'DEFAULT_BLOCK'} title={'카테고리'} />
-      <SelectLocation isVisible={state.isVisible} />
+      <SelectLocation />
       <CategoryBlock>
         <ul>
           {categories.map(c => (

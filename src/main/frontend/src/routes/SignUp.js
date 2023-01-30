@@ -3,16 +3,11 @@ import Header from '../components/Header';
 import SelectLocation from '../components/SelectLocation';
 import Navigation from '../components/Navigation';
 
-const SignUp = ({ isVisible, handleLocateVisible }) => {
+const SignUp = () => {
   return (
     <>
-      <Header
-        modify={'DEFAULT_BLOCK'}
-        title={'회원가입'}
-        handleLocateVisible={handleLocateVisible}
-      />
-      <SelectLocation isVisible={isVisible} />
-      <div>Sign Up</div>
+      <Header modify={'DEFAULT_BLOCK'} title={'회원가입'} />
+      <SelectLocation />
       <Navigation />
     </>
   );

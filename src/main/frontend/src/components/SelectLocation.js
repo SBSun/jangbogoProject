@@ -20,29 +20,32 @@ const LocationBlock = styled.div`
       display: block;
     `}
 `;
+const LocationList = styled.ul``;
 
 const Location = () => {
-  const { state, actions } = useContext(LocationContext);
+  const { state } = useContext(LocationContext);
   const [locationList, setLocationList] = useState([]);
+
   useEffect(() => {
     const fetchData = () => getLocationList();
     fetchData();
   }, []);
+
   const getLocationList = async () => {
     const response = await (await fetch(`/gu/findAllGuInfo`)).json();
-    setLocationList(response);
-    console.log(response);
+    setLocationList(response.guInfoList);
+    console.log(response.guInfoList);
   };
-  const locationListItem = locationList.map((item, index) => (
-    <li key={index}>{item}</li>
+  const locationListItem = locationList.map(item => (
+    <li key={item.gu_Id}>{item.name}</li>
   ));
 
-  if (state.location.id === null) {
-    actions.setIsVisible(true);
-  }
+  // if (state.location.id === null) {
+  //   actions.setIsVisible(true);
+  // }
   return (
     <LocationBlock isVisible={state.isVisible}>
-      {locationListItem}
+      <LocationList>{locationListItem}</LocationList>
     </LocationBlock>
   );
 };

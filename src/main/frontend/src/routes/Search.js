@@ -52,7 +52,7 @@ const RecommandBlock = styled.section`
   }
 `;
 
-const Search = ({ isLogin, isVisible, handleLocateVisible }) => {
+const Search = () => {
   const handleChange = e => {
     console.log(e.target.value);
   };
@@ -72,12 +72,8 @@ const Search = ({ isLogin, isVisible, handleLocateVisible }) => {
 
   return (
     <>
-      <Header
-        modify={'DEFAULT_BLOCK'}
-        title={'검색'}
-        handleLocateVisible={handleLocateVisible}
-      />
-      <SelectLocation isVisible={isVisible} />
+      <Header modify={'DEFAULT_BLOCK'} title={'검색'} />
+      <SelectLocation />
       <SearchBlock>
         <input
           type={'text'}

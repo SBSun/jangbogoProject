@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { MdHome, MdSearch, MdMenu, MdPerson } from 'react-icons/md';
+import UserContext from '../contexts/user';
 
 const Container = styled.footer`
   position: fixed;
@@ -25,7 +26,8 @@ const Menu = styled(NavLink)`
   }
 `;
 
-const Navigation = ({ isLogin }) => {
+const Navigation = () => {
+  const { state } = useContext(UserContext);
   return (
     <>
       <Container>
@@ -48,7 +50,7 @@ const Navigation = ({ isLogin }) => {
           <MdSearch />
         </Menu>
         <Menu
-          to={isLogin ? '/mypage' : '/member/login'}
+          to={state.isLogin ? '/mypage' : '/member/login'}
           className={({ isActive }) => (isActive ? 'active' : undefined)}
         >
           <MdPerson />

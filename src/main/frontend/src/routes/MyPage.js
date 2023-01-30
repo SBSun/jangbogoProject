@@ -8,19 +8,15 @@ const Container = styled.main`
   margin: 56px 0 0 0;
 `;
 
-const MyPage = ({ isLogin, isVisible, handleLocateVisible }) => {
+const MyPage = () => {
   return (
     <>
-      <Header
-        modify={'DEFAULT_BLOCK'}
-        title={'내 정보'}
-        handleLocateVisible={handleLocateVisible}
-      />
-      <SelectLocation isVisible={isVisible} />
+      <Header modify={'DEFAULT_BLOCK'} title={'내 정보'} />
+      <SelectLocation />
       <Container>
         <div>내 정보</div>
       </Container>
-      <Navigation isLogin={isLogin} />
+      <Navigation />
     </>
   );
 };
