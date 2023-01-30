@@ -23,12 +23,18 @@ const MarketListBlock = styled.ul`
 const MarketList = () => {
   const [markets, setMarkets] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
   const getMarketList = async () => {
-    const json = await (
-      await fetch(`/market/findMarketsInGu?gu_id=110000`)
-    ).json();
-    setMarkets(json.marketList);
-    console.log(json);
+    const response = await fetch(`/market/findMarketsInGu?gu_id=110000`);
+
+    if (!response.ok) {
+      const message = `데이터를 불러오지 못했습니다. : ${response.status}`;
+      throw new Error(message);
+    }
+
+    const data = await response.json();
+    console.log(data);
+    setMarkets(data.marketList);
   };
 
   useEffect(() => {
