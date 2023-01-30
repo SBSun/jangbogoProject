@@ -3,32 +3,39 @@ package backend.jangbogoProject.user;
 import backend.jangbogoProject.dto.BasicResponse;
 import lombok.*;
 
+import java.util.List;
+
 public class UserResponseDto {
+
     @Getter
-    @AllArgsConstructor
     @Builder
-    @ToString
-    public static class Info {
-        private String id;
+    public static class Info{
+        private String user_id;
         private String password;
         private String name;
         private String address;
 
-        public User toEntity() {
-            User build = User.builder()
-                    .id(id)
-                    .password(password)
-                    .name(name)
-                    .address(address)
+        public static Info of(User user){
+            return Info.builder()
+                    .user_id(user.getId())
+                    .password(user.getPassword())
+                    .name(user.getName())
+                    .address(user.getAddress())
                     .build();
-            return build;
         }
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public static class InfoList{
+        private List<UserInfo> infoList;
+        private BasicResponse basicResponse;
     }
 
     @Builder
     @Getter
     public static class Response {
-        private Info info;
+        private UserInfo info;
         private BasicResponse basicResponse;
     }
 

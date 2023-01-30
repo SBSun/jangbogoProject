@@ -1,4 +1,4 @@
-package backend.jangbogoProject.CRUDTest;
+package backend.jangbogoProject.serviceTest;
 
 import backend.jangbogoProject.commodity.CommodityInfoProjection;
 import backend.jangbogoProject.commodity.CommodityResponseDto;

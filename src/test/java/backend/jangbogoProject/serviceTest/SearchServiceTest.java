@@ -1,4 +1,4 @@
-package backend.jangbogoProject.CRUDTest;
+package backend.jangbogoProject.serviceTest;
 
 import backend.jangbogoProject.commodity.market.MarketInfoProjection;
 import backend.jangbogoProject.commodity.market.MarketService;

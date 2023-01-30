@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
@@ -27,29 +28,55 @@ public class UserService{
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
 
-    public UserResponseDto.Info getUserInfo(String id){
-
-        if(userRepository.existsById(id)){
-            User user = userRepository.findById(id).get();
-
-            UserResponseDto.Info info = UserResponseDto.Info.builder()
-                    .id(user.getId())
-                    .password(user.getPassword())
-                    .name(user.getName())
-                    .address(user.getAddress())
-                    .build();
-
-            return info;
+    //회원가입
+    public UserResponseDto.Info signUp(UserRequestDto.SignUp signUp)
+    {
+        if(userRepository.existsById(signUp.getId())){
+            return null;
         }
 
-        return UserResponseDto.Info.builder().build();
+        User user = User.builder()
+                .id(signUp.getId())
+                .password(passwordEncoder.encode(signUp.getPassword()))
+                .name(signUp.getName())
+                .address(signUp.getAddress())
+                .authority(Authority.USER.getValue())
+                .build();
+
+        return UserResponseDto.Info.of(userRepository.save(user));
+    }
+
+    public UserInfo getUserInfo(String id){
+
+        UserInfo info = userRepository.findByUserId(id);
+
+        return info;
+    }
+
+    public UserResponseDto.InfoList findALlUser(){
+        List<UserInfo> infoList = userRepository.findAllUser();
+
+        int state;
+        String message;
+
+        if(infoList.isEmpty()){
+            state = 404;
+            message = "데이터가 존재하지 않습니다.";
+        }else{
+            state = 200;
+            message = "데이터 반환 성공";
+        }
+
+        BasicResponse basicResponse = new BasicResponse(state, message);
+
+        return new UserResponseDto.InfoList(infoList, basicResponse);
     }
 
     @Transactional
     // 트랜잭션 안에서 데이터베이스의 데이터를 가져오면 이 데이터는 영속성 컨텍스트가 유지된 상태가 된다.
     //이 상태에서 해당 데이터의 값을 변경하면 트랜잭션이 끝나는 시점에 변경된 데이터를 데이터베이스에 반영해준다.
-    public void updateUserInfo(UserResponseDto.Info info){
-        User user = userRepository.findByUserId(info.getId());
+    public void updateUserInfo(UserInfo info){
+        User user = userRepository.findById(info.getUser_Id()).get();
 
         if(user == null)
             new IllegalArgumentException("해당 회원은 존재하지 않습니다.");
@@ -59,33 +86,7 @@ public class UserService{
         user.update(encPassword, info.getName(), info.getAddress());
     }
 
-    //회원가입
-    public BasicResponse signUp(UserRequestDto.SignUp signUp, Authority authority)
-    {
-        if(userRepository.existsById(signUp.getId())){
-            BasicResponse basicResponse = BasicResponse.builder()
-                    .state(HttpStatus.BAD_REQUEST.value())
-                    .message("이미 회원가입된 이메일입니다.")
-                    .build();
-            return basicResponse;
-        }
 
-        User user = User.builder()
-                .id(signUp.getId())
-                .password(passwordEncoder.encode(signUp.getPassword()))
-                .name(signUp.getName())
-                .address(signUp.getAddress())
-                .authority(authority.getValue())
-                .build();
-
-        userRepository.save(user);
-
-        BasicResponse basicResponse = BasicResponse.builder()
-                .state(HttpStatus.OK.value())
-                .message("회원가입이 완료되었습니다.")
-                .build();
-        return basicResponse;
-    }
 
     public UserResponseDto.TokenInfo login(UserRequestDto.Login login){
         // 1. Login ID/PW 를 기반으로 Authentication 객체 생성

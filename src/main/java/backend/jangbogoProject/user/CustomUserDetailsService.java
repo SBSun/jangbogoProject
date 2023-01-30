@@ -16,7 +16,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String id) {
-        User user = userRepository.findByUserId(id);
+        User user = userRepository.findById(id).get();
 
         if (user != null) {
             // USER 라는 역할을 넣어준다.

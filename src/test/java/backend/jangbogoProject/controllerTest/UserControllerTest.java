@@ -1,57 +1,84 @@
 package backend.jangbogoProject.controllerTest;
 
-import backend.jangbogoProject.commodity.CommodityService;
-import backend.jangbogoProject.user.User;
 import backend.jangbogoProject.user.UserController;
 import backend.jangbogoProject.user.UserRequestDto;
+import backend.jangbogoProject.user.UserResponseDto;
 import backend.jangbogoProject.user.UserService;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.mockito.BDDMockito.given;
 
-@WebMvcTest(UserController.class)
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@ExtendWith(MockitoExtension.class)
 public class UserControllerTest {
-    @Autowired
-    private MockMvc mvc;
+    @InjectMocks
+    private UserController userController;
 
-    @MockBean
+    @Mock
     private UserService userService;
-    @MockBean
-    private CommodityService commodityService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    private MockMvc mockMvc;
 
+    @BeforeEach
+    public void init(){
+        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
+    }
+
+    @DisplayName("회원 가입 성공")
     @Test
-    @WithMockUser(roles = "USER")
-    void User_SignUp_Test() throws Exception{
+    void signUpSuccess() throws Exception {
+        // given
+        UserRequestDto.SignUp request = signUpRequest();
 
-        UserRequestDto.SignUp signUp = UserRequestDto.SignUp.builder()
-                .id("Test Id")
-                .password("1234")
-                .address("Test Address")
-                .name("Test Name")
-                .build();
+        doReturn(userResponse()).when(userService)
+                .signUp(any(UserRequestDto.SignUp.class));
 
-        String content = objectMapper.writeValueAsString(signUp);
-
-        mvc.perform(
+        // when
+        ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders.post("/user/signUpUser")
-                        .content(content)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON)
-                        .with(SecurityMockMvcRequestPostProcessors.csrf()))
-                .andDo(MockMvcResultHandlers.print());
+                        .content(new Gson().toJson(request))
+        );
+
+        // then
+        MvcResult mvcResult = resultActions.andExpect(status().isOk()).andReturn();
+
+        UserResponseDto.Info response = new Gson().fromJson(mvcResult.getResponse().getContentAsString(), UserResponseDto.Info.class);
+        assertThat(response.getUser_id()).isEqualTo("test@test.test");
+    }
+
+    private UserRequestDto.SignUp signUpRequest(){
+        return UserRequestDto.SignUp.builder()
+                .id("test@test.test")
+                .password("test Password")
+                .name("test Name")
+                .address("test Address")
+                .build();
+    }
+
+    private UserResponseDto.Info userResponse(){
+        return UserResponseDto.Info.builder()
+                .user_id("test@test.test")
+                .password("test Password")
+                .name("test Name")
+                .address("test Address")
+                .build();
     }
 }
