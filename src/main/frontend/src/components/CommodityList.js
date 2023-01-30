@@ -31,12 +31,20 @@ const CommodityListBlock = styled.ul`
 const CommodityList = () => {
   const [commoditys, setCommoditys] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
   const getCommodityList = async () => {
-    const json = await (
-      await fetch(`/commodity/findCommodityListInGu?gu_id=110000`)
-    ).json();
-    setCommoditys(json);
-    console.log(json);
+    const response = await fetch(
+      `/commodity/findCommodityListInGu?gu_id=110000`
+    );
+
+    if (!response.ok) {
+      const message = `데이터를 불러오지 못했습니다. : ${response.status}`;
+      throw new Error(message);
+    }
+
+    const data = await response.json();
+    console.log(data);
+    setCommoditys(data);
   };
 
   useEffect(() => {

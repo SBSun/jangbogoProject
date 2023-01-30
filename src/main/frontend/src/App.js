@@ -39,7 +39,9 @@ const App = () => {
           path='/search'
           element={
             <LocationProvider>
-              <Search />
+              <UserProvider>
+                <Search />
+              </UserProvider>
             </LocationProvider>
           }
         />
@@ -47,7 +49,9 @@ const App = () => {
           path='/mypage'
           element={
             <LocationProvider>
-              <MyPage />
+              <UserProvider>
+                <MyPage />
+              </UserProvider>
             </LocationProvider>
           }
         />
@@ -55,7 +59,9 @@ const App = () => {
           path='/member/login'
           element={
             <LocationProvider>
-              <LogIn />
+              <UserProvider>
+                <LogIn />
+              </UserProvider>
             </LocationProvider>
           }
         />
@@ -63,7 +69,9 @@ const App = () => {
           path='/member/signup'
           element={
             <LocationProvider>
-              <SignUp />
+              <UserProvider>
+                <SignUp />
+              </UserProvider>
             </LocationProvider>
           }
         />
