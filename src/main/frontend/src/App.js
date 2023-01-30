@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import GlobalStyle from './GlobalStyle';
 import Home from './routes/Home';
@@ -7,17 +7,10 @@ import Search from './routes/Search';
 import MyPage from './routes/MyPage';
 import LogIn from './routes/LogIn';
 import SignUp from './routes/SignUp';
+import { LocationProvider } from './contexts/location';
+import { UserProvider } from './contexts/user';
 
 const App = () => {
-  const [isLogin, setIslogin] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  useEffect(() => {
-    setIslogin(false);
-  }, []);
-
-  const handleLocateVisible = () => {
-    setIsVisible(!isVisible);
-  };
   return (
     <>
       <GlobalStyle />
@@ -25,51 +18,53 @@ const App = () => {
         <Route
           path='/'
           element={
-            <Home
-              isLogin={isLogin}
-              isVisible={isVisible}
-              handleLocateVisible={handleLocateVisible}
-            />
+            <LocationProvider>
+              <UserProvider>
+                <Home />
+              </UserProvider>
+            </LocationProvider>
           }
         />
         <Route
           path='/category'
           element={
-            <Category
-              isLogin={isLogin}
-              isVisible={isVisible}
-              handleLocateVisible={handleLocateVisible}
-            />
+            <LocationProvider>
+              <UserProvider>
+                <Category />
+              </UserProvider>
+            </LocationProvider>
           }
         />
         <Route
           path='/search'
           element={
-            <Search
-              isLogin={isLogin}
-              isVisible={isVisible}
-              handleLocateVisible={handleLocateVisible}
-            />
+            <LocationProvider>
+              <Search />
+            </LocationProvider>
           }
         />
         <Route
           path='/mypage'
           element={
-            <MyPage
-              isLogin={isLogin}
-              isVisible={isVisible}
-              handleLocateVisible={handleLocateVisible}
-            />
+            <LocationProvider>
+              <MyPage />
+            </LocationProvider>
           }
         />
-        <Route path='/member/login' element={<LogIn />} />
+        <Route
+          path='/member/login'
+          element={
+            <LocationProvider>
+              <LogIn />
+            </LocationProvider>
+          }
+        />
         <Route
           path='/member/signup'
           element={
-            <SignUp
-              isVisible={isVisible}
-              handleLocateVisible={handleLocateVisible}
-            />
+            <LocationProvider>
+              <SignUp />
+            </LocationProvider>
           }
         />
       </Routes>

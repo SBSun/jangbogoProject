@@ -4,8 +4,8 @@ const LocationContext = createContext({
   state: {
     isVisible: false,
     location: {
-      id: 110000,
-      name: '종로',
+      id: null,
+      name: null,
     },
   },
   actions: {
@@ -17,7 +17,24 @@ const LocationContext = createContext({
 const LocationProvider = ({ children }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [location, setLocation] = useState({
-    id: 110000,
-    name: '종로',
+    id: null,
+    name: null,
   });
+
+  const value = {
+    state: { isVisible, location },
+    actions: { setIsVisible, setLocation },
+  };
+
+  return (
+    <LocationContext.Provider value={value}>
+      {children}
+    </LocationContext.Provider>
+  );
 };
+
+const { Consumer: LocationConsumer } = LocationContext;
+
+export { LocationProvider, LocationConsumer };
+
+export default LocationContext;
