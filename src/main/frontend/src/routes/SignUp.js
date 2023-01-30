@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
-import Location from '../components/Location';
+import SelectLocation from '../components/SelectLocation';
 import Navigation from '../components/Navigation';
 
 const SignUp = ({ isVisible, handleLocateVisible }) => {
@@ -11,7 +11,7 @@ const SignUp = ({ isVisible, handleLocateVisible }) => {
         title={'회원가입'}
         handleLocateVisible={handleLocateVisible}
       />
-      <Location isVisible={isVisible} />
+      <SelectLocation isVisible={isVisible} />
       <div>Sign Up</div>
       <Navigation />
     </>

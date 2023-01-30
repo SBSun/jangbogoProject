@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header';
 import Navigation from '../components/Navigation';
 import Banner from '../assets/banner.PNG';
 import CommodityList from '../components/CommodityList';
 import MarketList from '../components/MarketList';
-import Location from '../components/Location';
+import SelectLocation from '../components/SelectLocation';
+import LocationContext from '../contexts/location';
+import UserContext from '../contexts/user';
 
 const HomeContainer = styled.main`
   margin: 56px 0;
@@ -39,15 +41,14 @@ const Contact = styled.div`
   }
 `;
 
-const Home = ({ isLogin, isVisible, handleLocateVisible }) => {
+const Home = () => {
+  const { state } = useContext(LocationContext);
+  const { isLogin } = useContext(UserContext);
+
   return (
     <>
-      <Header
-        modify={'LOGO_BLOCK'}
-        title={''}
-        handleLocateVisible={handleLocateVisible}
-      />
-      <Location isVisible={isVisible} />
+      <Header modify={'LOGO_BLOCK'} title={''} />
+      <SelectLocation isVisible={state.isVisible} location={state.location} />
       <HomeContainer>
         <img src={Banner} alt='banner' className='banner' />
         <h2 className='list_title'>품목 별로 최저가를 보여드려요.</h2>
