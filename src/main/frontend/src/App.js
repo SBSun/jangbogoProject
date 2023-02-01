@@ -1,12 +1,12 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import GlobalStyle from './GlobalStyle';
-import Home from './routes/Home';
-import Category from './routes/Category';
-import Search from './routes/Search';
-import MyPage from './routes/MyPage';
-import LogIn from './routes/LogIn';
-import SignUp from './routes/SignUp';
+import Home from './pages/Home';
+import Category from './pages/Category';
+import Search from './pages/Search';
+import MyPage from './pages/MyPage';
+import LogIn from './pages/LogIn';
+import SignUp from './pages/SignUp';
 import { LocationProvider } from './contexts/location';
 import { UserProvider } from './contexts/user';
 
@@ -39,7 +39,9 @@ const App = () => {
           path='/search'
           element={
             <LocationProvider>
-              <Search />
+              <UserProvider>
+                <Search />
+              </UserProvider>
             </LocationProvider>
           }
         />
@@ -47,7 +49,9 @@ const App = () => {
           path='/mypage'
           element={
             <LocationProvider>
-              <MyPage />
+              <UserProvider>
+                <MyPage />
+              </UserProvider>
             </LocationProvider>
           }
         />
@@ -55,7 +59,9 @@ const App = () => {
           path='/member/login'
           element={
             <LocationProvider>
-              <LogIn />
+              <UserProvider>
+                <LogIn />
+              </UserProvider>
             </LocationProvider>
           }
         />
@@ -63,7 +69,9 @@ const App = () => {
           path='/member/signup'
           element={
             <LocationProvider>
-              <SignUp />
+              <UserProvider>
+                <SignUp />
+              </UserProvider>
             </LocationProvider>
           }
         />
