@@ -13,10 +13,10 @@ const HomeContainer = styled.main`
   > .banner {
     width: 100vw;
     height: 40vh;
-    border: 1px solid var(--light-gray);
+    border-bottom: 1px solid var(--light-gray);
   }
   > .list_title {
-    margin: 1rem 0 0 0;
+    /* margin: 1rem 0 0 0; */
     padding: 1rem;
     font-size: 1.25rem;
     font-weight: 500;

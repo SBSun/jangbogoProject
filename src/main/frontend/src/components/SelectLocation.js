@@ -5,14 +5,12 @@ import LocationContext from '../contexts/location';
 const LocationBlock = styled.div`
   display: none;
   position: fixed;
-  bottom: 0;
+  top: 0;
   left: 0;
-  right: 0;
-  height: 60vh;
-  background: white;
-  border-top: 1px solid var(--light-gray);
-  text-align: center;
-  z-index: 3;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 1000;
 
   ${props =>
     props.isVisible &&
@@ -20,10 +18,51 @@ const LocationBlock = styled.div`
       display: block;
     `}
 `;
-const LocationList = styled.ul``;
+const LocationWrap = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+`;
+const LocationPopUp = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60vh;
+  background: white;
+  text-align: center;
+  overflow-y: scroll;
+  border-radius: 15px 15px 0 0;
+  z-index: 1000;
+
+  > .location-title {
+    border-radius: inherit;
+    position: fixed;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 800;
+    padding: 1rem;
+    color: white;
+    background: var(--green);
+  }
+`;
+const LocationList = styled.ul`
+  margin: 53px 0 0 0;
+  padding: 1rem;
+
+  > li {
+    padding: 1rem;
+    width: 30%;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+  }
+`;
 
 const Location = () => {
-  const { state } = useContext(LocationContext);
+  const { state, actions } = useContext(LocationContext);
   const [locationList, setLocationList] = useState([]);
 
   useEffect(() => {
@@ -37,15 +76,34 @@ const Location = () => {
     console.log(response.guInfoList);
   };
   const locationListItem = locationList.map(item => (
-    <li key={item.gu_Id}>{item.name}</li>
+    <li
+      key={item.gu_Id}
+      onClick={() => {
+        actions.setLocation({
+          id: item.gu_Id,
+          name: item.name,
+        });
+        console.log(
+          `Set Location : [id : ${state.location.id}] [name : ${state.location.name}]`
+        );
+        actions.setIsVisible(false);
+      }}
+    >
+      {item.name}
+    </li>
   ));
 
-  // if (state.location.id === null) {
-  //   actions.setIsVisible(true);
-  // }
+  if (state.location.id === null) {
+    actions.setIsVisible(true);
+  }
   return (
     <LocationBlock isVisible={state.isVisible}>
-      <LocationList>{locationListItem}</LocationList>
+      <LocationWrap>
+        <LocationPopUp>
+          <h2 className='location-title'>지역을 선택해주세요.</h2>
+          <LocationList>{locationListItem}</LocationList>
+        </LocationPopUp>
+      </LocationWrap>
     </LocationBlock>
   );
 };
