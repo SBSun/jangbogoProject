@@ -1,9 +1,8 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from '../components/Header';
 import Button from '../components/Button';
-import UserContext from '../contexts/user';
 
 const LoginBlock = styled.main`
   margin: 56px 0 0 0;
@@ -33,7 +32,6 @@ const LoginForm = styled.form`
 
 const Login = () => {
   const navigate = useNavigate();
-  const { actions } = useContext(UserContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -65,13 +63,8 @@ const Login = () => {
 
         const post = await response.json();
         console.log(post);
-        actions.setIsLogin(true);
-        actions.setToken({
-          accessToken: post.accessToken,
-          refreshToken: post.refreshToken,
-        });
         alert('로그인되었습니다.');
-        navigate('/', true);
+        // navigate('/', true);
       };
 
       getLogin();

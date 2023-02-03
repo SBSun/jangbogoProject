@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header';
-import SelectLocation from '../components/SelectLocation';
 import Navigation from '../components/Navigation';
 
 const Container = styled.main`
@@ -12,7 +11,6 @@ const MyPage = () => {
   return (
     <>
       <Header modify={'DEFAULT_BLOCK'} title={'내 정보'} />
-      <SelectLocation />
       <Container>
         <div>내 정보</div>
       </Container>
