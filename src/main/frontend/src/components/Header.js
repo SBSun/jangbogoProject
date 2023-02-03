@@ -1,9 +1,13 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { MdClear, MdPlace } from 'react-icons/md';
+import {
+  MdClear,
+  MdPlace,
+  MdKeyboardArrowLeft,
+  MdOutlinePlace,
+} from 'react-icons/md';
 import logo from '../assets/Logo_eng.svg';
 import { useNavigate } from 'react-router-dom';
-import LocationContext from '../contexts/location';
 
 const DefaultBlock = styled.header`
   position: fixed;
@@ -65,10 +69,9 @@ const LogoBlock = styled(DefaultBlock)`
 
 const Header = ({ modify, title }) => {
   const navigate = useNavigate();
-  const { state, actions } = useContext(LocationContext);
 
   const onLocationClick = () => {
-    actions.setIsVisible(!state.isVisible);
+    console.log('Loca Click');
   };
   const HandleModify = () => {
     switch (modify) {
@@ -86,6 +89,15 @@ const Header = ({ modify, title }) => {
             <MdClear onClick={() => navigate(-1, true)} />
             <h2>{title}</h2>
             <span></span>
+          </WhiteBlock>
+        );
+
+      case 'WHITE_BLOCK_LOCATION':
+        return (
+          <WhiteBlock>
+            <MdKeyboardArrowLeft onClick={() => navigate(-1, true)} />
+            <h2>{title}</h2>
+            <MdOutlinePlace onClick={onLocationClick} />
           </WhiteBlock>
         );
 
