@@ -4,10 +4,8 @@ import styled from 'styled-components';
 import Header from '../components/Header';
 import Button from '../components/Button';
 
-const LoginBlock = styled.main`
-  margin: 56px 0 0 0;
-`;
 const LoginForm = styled.form`
+  margin: 56px 0 0 0;
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -26,7 +24,7 @@ const LoginForm = styled.form`
     }
   }
   > button:nth-child(4) {
-    margin-top: 0;
+    margin-top: 10px;
   }
 `;
 
@@ -78,30 +76,28 @@ const Login = () => {
   return (
     <>
       <Header modify={'WHITE_BLOCK'} title={'로그인'} />
-      <LoginBlock>
-        <LoginForm onSubmit={onSubmit}>
-          <input
-            type={'text'}
-            placeholder={'이메일을 입력해주세요.'}
-            value={email}
-            onChange={onEmailChange}
-          />
-          <input
-            type={'password'}
-            placeholder={'비밀번호를 입력해주세요.'}
-            value={password}
-            onChange={onPassChange}
-          />
-          <Button type={'submit'}>로그인</Button>
-          <Button
-            type={'button'}
-            inverted={true}
-            onClick={() => navigate('/member/signup')}
-          >
-            회원가입
-          </Button>
-        </LoginForm>
-      </LoginBlock>
+      <LoginForm onSubmit={onSubmit}>
+        <input
+          type={'text'}
+          placeholder={'이메일을 입력해주세요.'}
+          value={email}
+          onChange={onEmailChange}
+        />
+        <input
+          type={'password'}
+          placeholder={'비밀번호를 입력해주세요.'}
+          value={password}
+          onChange={onPassChange}
+        />
+        <Button type={'submit'}>로그인</Button>
+        <Button
+          type={'button'}
+          modify={'WHITE_BLOCK'}
+          onClick={() => navigate('/member/signup')}
+        >
+          회원가입
+        </Button>
+      </LoginForm>
     </>
   );
 };
