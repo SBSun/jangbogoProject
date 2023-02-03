@@ -7,74 +7,18 @@ import Search from './pages/Search';
 import MyPage from './pages/MyPage';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
-import { LocationProvider } from './contexts/location';
-import { UserProvider } from './contexts/user';
 
 const App = () => {
   return (
     <>
       <GlobalStyle />
       <Routes>
-        <Route
-          path='/'
-          element={
-            <LocationProvider>
-              <UserProvider>
-                <Home />
-              </UserProvider>
-            </LocationProvider>
-          }
-        />
-        <Route
-          path='/category'
-          element={
-            <LocationProvider>
-              <UserProvider>
-                <Category />
-              </UserProvider>
-            </LocationProvider>
-          }
-        />
-        <Route
-          path='/search'
-          element={
-            <LocationProvider>
-              <UserProvider>
-                <Search />
-              </UserProvider>
-            </LocationProvider>
-          }
-        />
-        <Route
-          path='/mypage'
-          element={
-            <LocationProvider>
-              <UserProvider>
-                <MyPage />
-              </UserProvider>
-            </LocationProvider>
-          }
-        />
-        <Route
-          path='/member/login'
-          element={
-            <LocationProvider>
-              <UserProvider>
-                <LogIn />
-              </UserProvider>
-            </LocationProvider>
-          }
-        />
-        <Route
-          path='/member/signup'
-          element={
-            <LocationProvider>
-              <UserProvider>
-                <SignUp />
-              </UserProvider>
-            </LocationProvider>
-          }
-        />
+        <Route path='/' element={<Home />} />
+        <Route path='/category' element={<Category />} />
+        <Route path='/search' element={<Search />} />
+        <Route path='/mypage:userId' element={<MyPage />} />
+        <Route path='/member/login' element={<LogIn />} />
+        <Route path='/member/signup' element={<SignUp />} />
       </Routes>
     </>
   );

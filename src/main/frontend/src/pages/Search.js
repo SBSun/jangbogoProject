@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header';
-import SelectLocation from '../components/SelectLocation';
 import Navigation from '../components/Navigation';
 
 const recommandKeyword = [
@@ -73,7 +72,6 @@ const Search = () => {
   return (
     <>
       <Header modify={'DEFAULT_BLOCK'} title={'검색'} />
-      <SelectLocation />
       <SearchBlock>
         <input
           type={'text'}

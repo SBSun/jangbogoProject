@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { MdOutlineNavigateNext } from 'react-icons/md';
 import Header from '../components/Header';
 import Navigation from '../components/Navigation';
-import SelectLocation from '../components/SelectLocation';
 
 const categories = [
   {
@@ -42,7 +41,6 @@ const Category = ({ isLogin }) => {
   return (
     <>
       <Header modify={'DEFAULT_BLOCK'} title={'카테고리'} />
-      <SelectLocation />
       <CategoryBlock>
         <ul>
           {categories.map(c => (
