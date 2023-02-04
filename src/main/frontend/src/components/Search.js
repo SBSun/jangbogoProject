@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Header from '../components/Header';
-import Navigation from '../components/Navigation';
+import Header from './common/Header';
+import Navigation from './common/Navigation';
 
 const recommandKeyword = [
   {

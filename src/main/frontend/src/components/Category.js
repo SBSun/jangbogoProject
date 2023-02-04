@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { MdOutlineNavigateNext } from 'react-icons/md';
-import Header from '../components/Header';
-import Navigation from '../components/Navigation';
+import Header from './common/Header';
+import Navigation from './common/Navigation';
 
 const categories = [
   {
