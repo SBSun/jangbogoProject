@@ -12,6 +12,10 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     public Long createCategory(CategoryRequestDTO categoryRequestDTO){
+        if(categoryRepository.existsByName(categoryRequestDTO.getName())){
+            throw new IllegalArgumentException("해당 카테고리는 이미 존재합니다.");
+        }
+
         Category category;
 
         // 상위 카테고리가 없다면 대분류로 등록
