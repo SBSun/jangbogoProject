@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Header from '../components/Header';
-import Button from '../components/Button';
+import Header from '../common/Header';
+import Button from '../common/Button';
 
 const LoginForm = styled.form`
   margin: 56px 0 0 0;

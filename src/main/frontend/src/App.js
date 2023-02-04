@@ -1,24 +1,24 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import GlobalStyle from './GlobalStyle';
-import Home from './pages/Home';
-import Category from './pages/Category';
-import Search from './pages/Search';
-import MyPage from './pages/MyPage';
-import LogIn from './pages/LogIn';
-import SignUp from './pages/SignUp';
+import SignUpPage from './pages/SignUpPage';
+import HomePage from './pages/HomePage';
+import CategoryPage from './pages/CategoryPage';
+import SearchPage from './pages/SearchPage';
+import MyPagePage from './pages/MyPagePage';
+import LoginPage from './pages/LoginPage';
 
 const App = () => {
   return (
     <>
       <GlobalStyle />
       <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/category' element={<Category />} />
-        <Route path='/search' element={<Search />} />
-        <Route path='/mypage:userId' element={<MyPage />} />
-        <Route path='/member/login' element={<LogIn />} />
-        <Route path='/member/signup' element={<SignUp />} />
+        <Route path='/' element={<HomePage />} />
+        <Route path='/category' element={<CategoryPage />} />
+        <Route path='/search' element={<SearchPage />} />
+        <Route path='/mypage:userId' element={<MyPagePage />} />
+        <Route path='/member/login' element={<LoginPage />} />
+        <Route path='/member/signup' element={<SignUpPage />} />
       </Routes>
     </>
   );
