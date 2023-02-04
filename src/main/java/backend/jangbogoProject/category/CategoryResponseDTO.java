@@ -12,19 +12,21 @@ import java.util.stream.Collectors;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryDTO {
+public class CategoryResponseDTO {
     private Long id;
     private String name;
+    private String parentName;
     private Long depth;
-    private List<CategoryDTO> children;
+    private List<CategoryResponseDTO> children;
 
-    public static CategoryDTO of(Category category){
-        return CategoryDTO.builder()
+    public static CategoryResponseDTO of(Category category){
+        return CategoryResponseDTO.builder()
                 .id(category.getId())
                 .name(category.getName())
+                .parentName(category.getParent().getName())
                 .depth(category.getDepth())
                 .children(category.getChildren() == null ? null :
-                        category.getChildren().stream().map(CategoryDTO::of).collect(Collectors.toList()))
+                        category.getChildren().stream().map(CategoryResponseDTO::of).collect(Collectors.toList()))
                 .build();
     }
 }
