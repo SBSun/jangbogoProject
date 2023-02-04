@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -25,12 +24,12 @@ public class Category {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_category_id")
-    private Category parentCategory;
+    @JoinColumn(name = "parent_id")
+    private Category parent;
 
     @Column(name = "depth")
     private Long depth;
 
-    @OneToMany(mappedBy = "parentCategory")
-    private List<Category> childrenCategory = new ArrayList<>();
+    @OneToMany(mappedBy = "parent")
+    private List<Category> children = new ArrayList<>();
 }
