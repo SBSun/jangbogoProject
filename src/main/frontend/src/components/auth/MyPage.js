@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import Header from '../components/Header';
-import Navigation from '../components/Navigation';
+import Header from '../common/Header';
+import Navigation from '../common/Navigation';
 
 const Container = styled.main`
   margin: 56px 0 0 0;

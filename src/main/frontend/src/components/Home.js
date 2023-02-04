@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import Header from '../components/Header';
-import Navigation from '../components/Navigation';
+import Header from './common/Header';
+import Navigation from './common/Navigation';
 import Banner from '../assets/banner.PNG';
-import CommodityList from '../components/CommodityList';
-import MarketList from '../components/MarketList';
+import CommodityList from './CommodityList';
+import MarketList from './MarketList';
 
 const HomeContainer = styled.main`
   margin: 56px 0;
