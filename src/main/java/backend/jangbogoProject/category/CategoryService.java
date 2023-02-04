@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CategoryService {
     private final CategoryRepository categoryRepository;
 
-    public Long saveCategory(CategoryRequestDTO categoryRequestDTO){
+    public Long createCategory(CategoryRequestDTO categoryRequestDTO){
         Category category;
 
         // 상위 카테고리가 없다면 대분류로 등록
@@ -49,5 +49,12 @@ public class CategoryService {
         }
 
         return categoryRepository.save(category).getId();
+    }
+
+    public CategoryResponseDTO findCategory(Long id){
+        Category category = categoryRepository.findById(id).get();
+        CategoryResponseDTO categoryResponseDTO = CategoryResponseDTO.of(category);
+
+        return categoryResponseDTO;
     }
 }

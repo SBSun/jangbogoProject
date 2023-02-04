@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class CategoryController {
     private final CategoryService categoryService;
 
-    @PostMapping("addCategory")
+    @PostMapping("createCategory")
     public Long addCategory(@RequestBody CategoryRequestDTO categoryRequestDTO){
-        return categoryService.saveCategory(categoryRequestDTO);
+        return categoryService.createCategory(categoryRequestDTO);
     }
 }
