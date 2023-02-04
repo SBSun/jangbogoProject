@@ -23,7 +23,7 @@ public class CategoryResponseDTO {
         return CategoryResponseDTO.builder()
                 .id(category.getId())
                 .name(category.getName())
-                .parentName(category.getParent().getName())
+                .parentName(category.getParent() == null ? null : category.getParent().getName())
                 .depth(category.getDepth())
                 .children(category.getChildren() == null ? null :
                         category.getChildren().stream().map(CategoryResponseDTO::of).collect(Collectors.toList()))

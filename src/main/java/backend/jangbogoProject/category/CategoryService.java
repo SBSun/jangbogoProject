@@ -51,8 +51,19 @@ public class CategoryService {
         return categoryRepository.save(category).getId();
     }
 
-    public CategoryResponseDTO findCategory(Long id){
-        Category category = categoryRepository.findById(id).get();
+    public CategoryResponseDTO getCategoryById(Long id){
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 카테고리는 존재하지 않습니다."));
+
+        CategoryResponseDTO categoryResponseDTO = CategoryResponseDTO.of(category);
+
+        return categoryResponseDTO;
+    }
+
+    public CategoryResponseDTO getCategoryByName(String name){
+        Category category = categoryRepository.findByName(name)
+                .orElseThrow(() -> new IllegalArgumentException("해당 카테고리는 존재하지 않습니다."));
+
         CategoryResponseDTO categoryResponseDTO = CategoryResponseDTO.of(category);
 
         return categoryResponseDTO;

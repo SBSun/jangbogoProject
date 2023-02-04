@@ -13,16 +13,11 @@ class CategoryServiceTest {
     @Autowired
     CategoryService categoryService;
 
-    // SavedID
+    // CreateId
     private CategoryRequestDTO categoryRequestDTO(String name, String parent) {
         CategoryRequestDTO categoryRequestDTO = new CategoryRequestDTO(name, parent);
         
         return categoryRequestDTO;
-    }
-
-    // Find Category
-    private CategoryResponseDTO findCategory(Long saveId){
-        return categoryService.findCategory(saveId);
     }
 
     @Test
@@ -32,9 +27,21 @@ class CategoryServiceTest {
         Long saveId = categoryService.createCategory(categoryRequestDTO);
 
         // when
-        CategoryResponseDTO categoryResponseDTO = findCategory(saveId);
+        CategoryResponseDTO categoryResponseDTO = categoryService.getCategoryById(saveId);
 
         // then
         assertThat(categoryResponseDTO.getName()).isEqualTo("TestName");
+    }
+
+    @Test
+    void 카테고리_반환_테스트(){
+        // given
+        String name = "ROOT";
+
+        // when
+        CategoryResponseDTO categoryResponseDTO = categoryService.getCategoryByName(name);
+
+        // then
+        assertThat(categoryResponseDTO.getName()).isEqualTo("ROOT");
     }
 }
