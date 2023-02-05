@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import Button from '../common/Button';
 import Header from '../common/Header';
@@ -12,8 +12,12 @@ const SignUpForm = styled.form`
 
   > .email-block {
     display: inherit;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: inherit;
+
+    > div {
+      display: inherit;
+      justify-content: space-between;
+    }
   }
   > .password-block,
   .user-block {
@@ -57,77 +61,49 @@ const ErrorMessage = styled.p`
     `};
 `;
 
-const SignUp = ({
-  email,
-  password,
-  passwordConfirm,
-  name,
-  address,
-  onSubmit,
-}) => {
-  const [isError, setIsError] = useState({
-    email: false,
-    password: false,
-  });
-
+const SignUp = () => {
   return (
     <>
       <Header modify={'WHITE_BLOCK_LOCATION'} title={'회원가입'} />
       <SignUpForm>
-        <SignUpLabel>이메일</SignUpLabel>
         <div className='email-block'>
-          <SignUpInput
-            placeholder='이메일을 입력해주세요.'
-            className='email'
-            value={email}
-          />
-          <SignUpButton
-            type={'button'}
-            modify={'WHITE_BLOCK'}
-            onClick={() =>
-              setIsError({
-                ...isError,
-                email: !isError.email,
-              })
-            }
-          >
-            중복 확인
-          </SignUpButton>
+          <SignUpLabel>이메일</SignUpLabel>
+          <div>
+            <SignUpInput
+              placeholder='이메일을 입력해주세요.'
+              className='email'
+            />
+            <SignUpButton type={'button'} modify={'WHITE_BLOCK'}>
+              중복 확인
+            </SignUpButton>
+          </div>
+          <ErrorMessage>사용 가능한 이메일입니다.</ErrorMessage>
         </div>
-        <ErrorMessage isError={isError.email}>
-          {isError.email ? '중복된 이메일입니다.' : '사용 가능한 이메일입니다.'}
-        </ErrorMessage>
+
         <div className='password-block'>
           <SignUpLabel>비밀번호</SignUpLabel>
           <SignUpInput
             type={'password'}
             placeholder='비밀번호를 입력해주세요.'
-            value={password}
           />
           <SignUpLabel>비밀번호 확인</SignUpLabel>
           <SignUpInput
             type={'password'}
             placeholder='비밀번호를 한 번 더 입력해주세요.'
-            value={passwordConfirm}
           />
-          <ErrorMessage isError={isError.password}>
-            {isError.password
-              ? '비밀번호가 다릅니다.'
-              : '사용 가능한 비밀번호입니다.'}
-          </ErrorMessage>
+          <ErrorMessage>사용 가능한 비밀번호입니다.</ErrorMessage>
         </div>
+
         <div className='user-block'>
           <SignUpLabel>이름</SignUpLabel>
-          <SignUpInput placeholder='이름' value={name} />
+          <SignUpInput placeholder='이름' />
           <SignUpLabel>주소</SignUpLabel>
           <div className='address-block'>
             <span>서울시</span>
-            <SignUpInput placeholder='OO구' value={address} />
+            <SignUpInput placeholder='OO구' />
           </div>
         </div>
-        <SignUpButton type={'submit'} onClick={onSubmit}>
-          가입하기
-        </SignUpButton>
+        <SignUpButton type={'submit'}>가입하기</SignUpButton>
       </SignUpForm>
       <Navigation />
     </>
