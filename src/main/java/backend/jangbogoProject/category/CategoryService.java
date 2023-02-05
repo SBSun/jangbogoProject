@@ -72,4 +72,11 @@ public class CategoryService {
 
         return categoryResponseDTO;
     }
+
+    public Long getCategoryIdByName(String name){
+        Category category = categoryRepository.findByName(name)
+                .orElseThrow(() -> new IllegalArgumentException("해당 카테고리는 존재하지 않습니다."));
+
+        return category.getId();
+    }
 }

@@ -1,6 +1,7 @@
 package backend.jangbogoProject.commodity;
 
 
+import backend.jangbogoProject.category.CategoryService;
 import backend.jangbogoProject.commodity.market.Market;
 import backend.jangbogoProject.commodity.market.MarketService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class CommodityService {
 
     private final CommodityRepository commodityRepository;
     private final MarketService marketService;
+    private final CategoryService categoryService;
 
     public List<CommodityInfoProjection> findCommodityListInGu(int gu_id){
         List<CommodityInfoProjection> list = commodityRepository.findCommodityListInGu(gu_id);
@@ -75,12 +77,24 @@ public class CommodityService {
                     JSONObject tmp = (JSONObject)infoArr.get(i);
 
                     Double m_seq = (Double)tmp.get("M_SEQ");
+                    String a_name = (String)tmp.get("A_NAME");
 
+                    if(a_name.contains("("))
+                        a_name = a_name.substring(0, a_name.indexOf("("));
+
+                    if(a_name.contains("조기"))
+                        a_name = "조기";
+                    if(a_name.contains("호박"))
+                        a_name = "애호박";
+
+                    System.out.println(a_name);
                     Commodity commodity = Commodity.builder()
                             .id(start + i)
                             .m_SEQ(m_seq.intValue())
+                            .category_id(categoryService.getCategoryIdByName(a_name).intValue())
                             .a_UNIT((String)tmp.get("A_UNIT"))
                             .a_PRICE((String)tmp.get("A_PRICE"))
+                            .add_COL((String)tmp.get("ADD_COL"))
                             .p_DATE((String)tmp.get("P_DATE"))
                             .build();
 
