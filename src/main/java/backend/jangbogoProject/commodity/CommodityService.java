@@ -26,8 +26,8 @@ public class CommodityService {
     private final MarketService marketService;
     private final CategoryService categoryService;
 
-    public List<CommodityInfoProjection> findCommodityListInGu(int gu_id){
-        List<CommodityInfoProjection> list = commodityRepository.findCommodityListInGu(gu_id);
+    public List<CommodityInfoProjection> findCommoditiesInGu(int gu_id){
+        List<CommodityInfoProjection> list = commodityRepository.findCommoditiesInGu(gu_id);
 
         /*
         BasicResponse basicResponse = new BasicResponse(HttpStatus.OK.value(), "상품 리스트 반환 성공");
@@ -37,8 +37,8 @@ public class CommodityService {
         return list;
     }
 
-    public List<CommodityInfoProjection> findCommodityListInGu(int gu_id, String find){
-        List<CommodityInfoProjection> list = commodityRepository.findCommodityListInGu(gu_id, find);
+    public List<CommodityInfoProjection> findSearchInGu(int gu_id, String find){
+        List<CommodityInfoProjection> list = commodityRepository.findSearchInGu(gu_id, find);
 
         return list;
     }

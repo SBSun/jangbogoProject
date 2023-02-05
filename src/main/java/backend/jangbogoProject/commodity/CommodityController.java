@@ -14,9 +14,9 @@ import java.util.List;
 public class CommodityController {
     private final CommodityService commodityService;
 
-    @GetMapping("/findCommodityListInGu")
-    private List<CommodityInfoProjection> findCommodityListInGu(int gu_id){
-        return commodityService.findCommodityListInGu(gu_id);
+    @GetMapping("/findCommoditiesInGu")
+    private List<CommodityInfoProjection> findCommoditiesInGu(int gu_id){
+        return commodityService.findCommoditiesInGu(gu_id);
     }
 
     @PostMapping("/load_save")

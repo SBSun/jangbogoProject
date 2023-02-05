@@ -17,7 +17,7 @@ public class SearchService {
     private final MarketService marketService;
 
     public SearchResponseDto.SearchDataList search(int gu_id, String find){
-        List<CommodityInfoProjection> commodityInfoList = commodityService.findCommodityListInGu(gu_id, find);
+        List<CommodityInfoProjection> commodityInfoList = commodityService.findSearchInGu(gu_id, find);
         List<MarketInfoProjection> marketInfoList = marketService.findMarketsByName(find);
 
         BasicResponse basicResponse;

@@ -13,16 +13,19 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
     @Query(value = "TRUNCATE TABLE commodity", nativeQuery = true)
     void truncateCommodity();
 
-    @Query(value = "SELECT c.commodity_id AS commodityId, i.item_id AS itemId, m.name AS marketName, i.name AS itemName, c.unit AS unit, c.price AS price, c.p_date AS date " +
-            "FROM commodity c " +
-            "INNER JOIN market m ON m.gu_id = ?1 AND c.market_id = m.market_id AND c.price > 0, item i " +
-            "WHERE c.item_id = i.item_id", nativeQuery = true)
-    List<CommodityInfoProjection> findCommodityListInGu(int gu_id);
+    @Query(value = "SELECT c1.commodity_id, m.name AS marketName, c2.name AS categoryName, " +
+            "c1.unit, c1.price, c1.remarks, c1.p_date " +
+            "FROM commodity c1 " +
+            "INNER JOIN market m ON m.gu_id = ?1 AND c1.market_id = m.market_id " +
+            "INNER JOIN category c2 ON c1.category_id = c2.category_id " +
+            "WHERE c1.price > 0 ", nativeQuery = true)
+    List<CommodityInfoProjection> findCommoditiesInGu(int gu_id);
 
-    @Query(value = "SELECT c.commodity_id AS commodityId, i.item_id AS itemId, m.name AS marketName, i.name AS itemName, c.unit AS unit, c.price AS price, c.p_date AS date " +
-            "FROM commodity c " +
-            "INNER JOIN market m ON m.gu_id = ?1 AND c.market_id = m.market_id AND c.price > 0 " +
-            "INNER JOIN item i ON i.name LIKE %?2% " +
-            "WHERE c.item_id = i.item_id", nativeQuery = true)
-    List<CommodityInfoProjection> findCommodityListInGu(int gu_id, String find);
+    @Query(value = "SELECT c1.commodity_id, m.name AS marketName, c2.name AS categoryName, " +
+            "c1.unit, c1.price, c1.remarks, c1.p_date " +
+            "FROM commodity c1 " +
+            "INNER JOIN market m ON m.gu_id = ?1 AND c1.market_id = m.market_id " +
+            "INNER JOIN category c2 ON c2.name LIKE %?2% " +
+            "WHERE c1.category_id = c2.category_id AND c1.price > 0", nativeQuery = true)
+    List<CommodityInfoProjection> findSearchInGu(int gu_id, String find);
 }
