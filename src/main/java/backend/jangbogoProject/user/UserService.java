@@ -162,6 +162,6 @@ public class UserService{
     }
 
     public boolean checkId(String id){
-        return userRepository.existsById(id);
+        return !userRepository.existsById(id);
     }
 }
