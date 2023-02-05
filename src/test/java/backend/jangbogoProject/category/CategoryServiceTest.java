@@ -42,6 +42,6 @@ class CategoryServiceTest {
         CategoryResponseDTO categoryResponseDTO = categoryService.getCategoryByName(name);
 
         // then
-        assertThat(categoryResponseDTO.getName()).isEqualTo("ROOT");
+        assertThat(categoryResponseDTO.getName()).isEqualTo(name);
     }
 }

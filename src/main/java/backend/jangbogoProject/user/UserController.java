@@ -1,11 +1,8 @@
 package backend.jangbogoProject.user;
 
-import backend.jangbogoProject.commodity.CommodityService;
 import backend.jangbogoProject.dto.BasicResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,6 +13,11 @@ public class UserController {
     @GetMapping("/users")
     public UserResponseDto.InfoList findAllUser(){
         return userService.findALlUser();
+    }
+
+    @GetMapping("/user/checkId")
+    public boolean checkId(String id){
+        return userService.checkId(id);
     }
 
     @PostMapping("/user/signUpUser")

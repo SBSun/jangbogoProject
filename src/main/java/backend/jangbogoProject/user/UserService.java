@@ -86,8 +86,6 @@ public class UserService{
         user.update(encPassword, info.getName(), info.getAddress());
     }
 
-
-
     public UserResponseDto.TokenInfo login(UserRequestDto.Login login){
         // 1. Login ID/PW 를 기반으로 Authentication 객체 생성
         // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
@@ -161,5 +159,9 @@ public class UserService{
                 .set(logout.getAccessToken(), "logout", expiration, TimeUnit.MILLISECONDS);
 
         return new BasicResponse(HttpStatus.OK.value(), "로그아웃 되었습니다.");
+    }
+
+    public boolean checkId(String id){
+        return userRepository.existsById(id);
     }
 }

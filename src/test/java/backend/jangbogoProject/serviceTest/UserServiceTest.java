@@ -8,13 +8,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.in;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -28,6 +25,24 @@ public class UserServiceTest {
 
     @Spy
     private PasswordEncoder passwordEncoder;
+
+    private UserRequestDto.SignUp signUpRequest(){
+        return UserRequestDto.SignUp.builder()
+                .id("test@test.test")
+                .password("test Password")
+                .name("test Name")
+                .address("test Address")
+                .build();
+    }
+
+    private UserResponseDto.Info userResponse(){
+        return UserResponseDto.Info.builder()
+                .user_id("test@test.test")
+                .password("test Password")
+                .name("test Name")
+                .address("test Address")
+                .build();
+    }
 
     @DisplayName("회원 가입")
     @Test
@@ -59,22 +74,29 @@ public class UserServiceTest {
         verify(passwordEncoder, times(1)).encode(any(String.class));
     }
 
+    @Test
+    void 아이디_중복확인(){
+        // given
+        UserRequestDto.SignUp signUp1 = signUpRequest();
+        UserRequestDto.SignUp signUp2 = signUpRequest();
 
-    private UserRequestDto.SignUp signUpRequest(){
-        return UserRequestDto.SignUp.builder()
-                .id("test@test.test")
-                .password("test Password")
-                .name("test Name")
-                .address("test Address")
-                .build();
-    }
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    private UserResponseDto.Info userResponse(){
-        return UserResponseDto.Info.builder()
-                .user_id("test@test.test")
-                .password("test Password")
-                .name("test Name")
-                .address("test Address")
+        User user = User.builder()
+                .id(signUp1.getId())
+                .password(encoder.encode(signUp1.getPassword()))
+                .name(signUp1.getName())
+                .address(signUp1.getAddress())
+                .authority(Authority.USER.getValue())
                 .build();
+
+        doReturn(user).when(userRepository)
+                .save(any(User.class));
+
+        // when
+        userService.signUp(signUp1);
+
+        // then
+        assertThat(userService.checkId(signUp2.getId())).isFalse();
     }
 }
