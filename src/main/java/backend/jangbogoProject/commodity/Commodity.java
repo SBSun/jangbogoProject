@@ -14,8 +14,6 @@ public class Commodity {
     private int id;
     @Column(nullable = false, name = "market_id")
     private int M_SEQ;
-    @Column(nullable = false, name = "item_id")
-    private int A_SEQ;
     @Column(nullable = false, name = "unit")
     private String A_UNIT;
     @Column(nullable = false, name = "price")
@@ -24,10 +22,9 @@ public class Commodity {
     private String P_DATE;
 
     @Builder
-    public Commodity(int id, int m_SEQ, int a_SEQ, String a_UNIT, String a_PRICE, String p_DATE) {
+    public Commodity(int id, int m_SEQ, String a_UNIT, String a_PRICE, String p_DATE) {
         this.id = id;
         M_SEQ = m_SEQ;
-        A_SEQ = a_SEQ;
         A_UNIT = a_UNIT;
         A_PRICE = a_PRICE;
         P_DATE = p_DATE;

@@ -1,11 +1,8 @@
 package backend.jangbogoProject.commodity;
 
-import backend.jangbogoProject.commodity.gu.GuService;
-import backend.jangbogoProject.commodity.item.Item;
-import backend.jangbogoProject.commodity.item.ItemService;
+
 import backend.jangbogoProject.commodity.market.Market;
 import backend.jangbogoProject.commodity.market.MarketService;
-import backend.jangbogoProject.dto.BasicResponse;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -25,7 +22,6 @@ import java.util.stream.Collectors;
 public class CommodityService {
 
     private final CommodityRepository commodityRepository;
-    private final ItemService itemService;
     private final MarketService marketService;
 
     public List<CommodityInfoProjection> findCommodityListInGu(int gu_id){
@@ -79,26 +75,14 @@ public class CommodityService {
                     JSONObject tmp = (JSONObject)infoArr.get(i);
 
                     Double m_seq = (Double)tmp.get("M_SEQ");
-                    Double a_seq = (Double)tmp.get("A_SEQ");
-
 
                     Commodity commodity = Commodity.builder()
                             .id(start + i)
                             .m_SEQ(m_seq.intValue())
-                            .a_SEQ(a_seq.intValue())
                             .a_UNIT((String)tmp.get("A_UNIT"))
                             .a_PRICE((String)tmp.get("A_PRICE"))
                             .p_DATE((String)tmp.get("P_DATE"))
                             .build();
-
-                    if(!itemService.existsById(commodity.getA_SEQ())){
-                        Item item = Item.builder()
-                                .id(commodity.getA_SEQ())
-                                .name((String)tmp.get("A_NAME"))
-                                .build();
-
-                        itemService.save(item);
-                    }
 
                     String gu_code = (String)tmp.get("M_GU_CODE");
                     if(!marketService.existsById(commodity.getM_SEQ())){
