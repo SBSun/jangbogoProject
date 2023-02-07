@@ -11,11 +11,16 @@ public class CategoryController {
 
     @PostMapping("/create")
     public Long createCategory(@RequestBody CategoryRequestDTO categoryRequestDTO){
-        return categoryService.createCategory(categoryRequestDTO);
+        return categoryService.create(categoryRequestDTO);
     }
 
-    @GetMapping("/getCategoryByName")
-    public CategoryResponseDTO getCategoryByName(String name){
-        return categoryService.getCategoryByName(name);
+    @GetMapping("/findByName")
+    public CategoryResponseDTO findByName(String name){
+        return categoryService.findByName(name);
+    }
+
+    @GetMapping("/findAll")
+    public CategoryResponseDTO findAll(){
+        return categoryService.findAll();
     }
 }

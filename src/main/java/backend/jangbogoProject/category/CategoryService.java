@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CategoryService {
     private final CategoryRepository categoryRepository;
 
-    public Long createCategory(CategoryRequestDTO categoryRequestDTO){
+    public Long create(CategoryRequestDTO categoryRequestDTO){
         if(categoryRepository.existsByName(categoryRequestDTO.getName())){
             throw new IllegalArgumentException("해당 카테고리는 이미 존재합니다.");
         }
@@ -55,7 +55,7 @@ public class CategoryService {
         return categoryRepository.save(category).getId();
     }
 
-    public CategoryResponseDTO getCategoryById(Long id){
+    public CategoryResponseDTO findById(Long id){
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리는 존재하지 않습니다."));
 
@@ -64,7 +64,7 @@ public class CategoryService {
         return categoryResponseDTO;
     }
 
-    public CategoryResponseDTO getCategoryByName(String name){
+    public CategoryResponseDTO findByName(String name){
         Category category = categoryRepository.findByName(name)
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리는 존재하지 않습니다."));
 
@@ -73,7 +73,16 @@ public class CategoryService {
         return categoryResponseDTO;
     }
 
-    public Long getCategoryIdByName(String name){
+    public CategoryResponseDTO findAll(){
+        Category category = categoryRepository.findById(1L)
+                .orElseThrow(() -> new IllegalArgumentException("해당 카테고리는 존재하지 않습니다."));
+
+        CategoryResponseDTO categoryResponseDTO = CategoryResponseDTO.of(category);
+
+        return categoryResponseDTO;
+    }
+
+    public Long findIdByName(String name){
         Category category = categoryRepository.findByName(name)
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리는 존재하지 않습니다."));
 

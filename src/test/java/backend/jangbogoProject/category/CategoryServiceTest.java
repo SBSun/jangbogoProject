@@ -24,10 +24,10 @@ class CategoryServiceTest {
     void 카테코리_생성_테스트() {
         // given
         CategoryRequestDTO categoryRequestDTO = categoryRequestDTO("TestName", null);
-        Long saveId = categoryService.createCategory(categoryRequestDTO);
+        Long saveId = categoryService.create(categoryRequestDTO);
 
         // when
-        CategoryResponseDTO categoryResponseDTO = categoryService.getCategoryById(saveId);
+        CategoryResponseDTO categoryResponseDTO = categoryService.findById(saveId);
 
         // then
         assertThat(categoryResponseDTO.getName()).isEqualTo("TestName");
@@ -39,7 +39,7 @@ class CategoryServiceTest {
         String name = "돼지고기";
 
         // when
-        CategoryResponseDTO categoryResponseDTO = categoryService.getCategoryByName(name);
+        CategoryResponseDTO categoryResponseDTO = categoryService.findByName(name);
 
         // then
         System.out.println(categoryResponseDTO);

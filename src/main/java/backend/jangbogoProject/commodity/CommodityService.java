@@ -40,7 +40,7 @@ public class CommodityService {
     }
 
     public List<CommodityInfoProjection> findCategoryInGu(int gu_id, String category_name){
-        CategoryResponseDTO category = categoryService.getCategoryByName(category_name);
+        CategoryResponseDTO category = categoryService.findByName(category_name);
 
         List<CommodityInfoProjection> list;
 
@@ -101,7 +101,7 @@ public class CommodityService {
                     Commodity commodity = Commodity.builder()
                             .id(start + i)
                             .m_SEQ(m_seq.intValue())
-                            .category_id(categoryService.getCategoryIdByName(a_name).intValue())
+                            .category_id(categoryService.findIdByName(a_name).intValue())
                             .a_UNIT((String)tmp.get("A_UNIT"))
                             .a_PRICE((String)tmp.get("A_PRICE"))
                             .add_COL((String)tmp.get("ADD_COL"))
