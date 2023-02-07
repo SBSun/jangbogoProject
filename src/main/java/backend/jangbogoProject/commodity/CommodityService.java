@@ -1,6 +1,7 @@
 package backend.jangbogoProject.commodity;
 
 
+import backend.jangbogoProject.category.CategoryResponseDTO;
 import backend.jangbogoProject.category.CategoryService;
 import backend.jangbogoProject.commodity.market.Market;
 import backend.jangbogoProject.commodity.market.MarketService;
@@ -29,16 +30,25 @@ public class CommodityService {
     public List<CommodityInfoProjection> findCommoditiesInGu(int gu_id){
         List<CommodityInfoProjection> list = commodityRepository.findCommoditiesInGu(gu_id);
 
-        /*
-        BasicResponse basicResponse = new BasicResponse(HttpStatus.OK.value(), "상품 리스트 반환 성공");
-        CommodityResponseDto.CommodityInfoList commodityInfoList =
-                new CommodityResponseDto.CommodityInfoList(list, basicResponse);*/
-
         return list;
     }
 
     public List<CommodityInfoProjection> findSearchInGu(int gu_id, String find){
         List<CommodityInfoProjection> list = commodityRepository.findSearchInGu(gu_id, find);
+
+        return list;
+    }
+
+    public List<CommodityInfoProjection> findCategoryInGu(int gu_id, String category_name){
+        CategoryResponseDTO category = categoryService.getCategoryByName(category_name);
+
+        List<CommodityInfoProjection> list;
+
+        if(category.getDepth() == 1){
+            list = commodityRepository.findParentCategoryInGu(gu_id, category.getId());
+        }else{
+            list = commodityRepository.findChildCategoryInGu(gu_id, category.getId());
+        }
 
         return list;
     }

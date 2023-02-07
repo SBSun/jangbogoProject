@@ -36,12 +36,13 @@ class CategoryServiceTest {
     @Test
     void 카테고리_반환_테스트(){
         // given
-        String name = "ROOT";
+        String name = "돼지고기";
 
         // when
         CategoryResponseDTO categoryResponseDTO = categoryService.getCategoryByName(name);
 
         // then
+        System.out.println(categoryResponseDTO);
         assertThat(categoryResponseDTO.getName()).isEqualTo(name);
     }
 }

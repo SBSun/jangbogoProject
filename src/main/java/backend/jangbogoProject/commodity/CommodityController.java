@@ -19,6 +19,11 @@ public class CommodityController {
         return commodityService.findCommoditiesInGu(gu_id);
     }
 
+    @GetMapping("/findCategoryInGu")
+    private List<CommodityInfoProjection> findCategoryInGu(int gu_id, String category_name){
+        return commodityService.findCategoryInGu(gu_id, category_name);
+    }
+
     @PostMapping("/load_save")
     public String load_save(){
         return commodityService.load_save();
