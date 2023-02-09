@@ -61,7 +61,20 @@ const ErrorMessage = styled.p`
     `};
 `;
 
-const SignUp = () => {
+const SignUp = ({
+  email,
+  password,
+  passwordConfirm,
+  name,
+  address,
+  handleEmail,
+  handlePassword,
+  handlePasswordConfirm,
+  handleName,
+  handleAddress,
+  onCheckEmail,
+  onSubmit,
+}) => {
   return (
     <>
       <Header modify={'WHITE_BLOCK_LOCATION'} title={'회원가입'} />
@@ -72,8 +85,14 @@ const SignUp = () => {
             <SignUpInput
               placeholder='이메일을 입력해주세요.'
               className='email'
+              value={email}
+              onChange={handleEmail}
             />
-            <SignUpButton type={'button'} modify={'WHITE_BLOCK'}>
+            <SignUpButton
+              type={'button'}
+              modify={'WHITE_BLOCK'}
+              onClick={onCheckEmail}
+            >
               중복 확인
             </SignUpButton>
           </div>
@@ -85,25 +104,35 @@ const SignUp = () => {
           <SignUpInput
             type={'password'}
             placeholder='비밀번호를 입력해주세요.'
+            value={password}
+            onChange={handlePassword}
           />
           <SignUpLabel>비밀번호 확인</SignUpLabel>
           <SignUpInput
             type={'password'}
             placeholder='비밀번호를 한 번 더 입력해주세요.'
+            value={passwordConfirm}
+            onChange={handlePasswordConfirm}
           />
           <ErrorMessage>사용 가능한 비밀번호입니다.</ErrorMessage>
         </div>
 
         <div className='user-block'>
           <SignUpLabel>이름</SignUpLabel>
-          <SignUpInput placeholder='이름' />
+          <SignUpInput placeholder='이름' value={name} onChange={handleName} />
           <SignUpLabel>주소</SignUpLabel>
           <div className='address-block'>
             <span>서울시</span>
-            <SignUpInput placeholder='OO구' />
+            <SignUpInput
+              placeholder='OO구'
+              value={address}
+              onChange={handleAddress}
+            />
           </div>
         </div>
-        <SignUpButton type={'submit'}>가입하기</SignUpButton>
+        <SignUpButton type={'submit'} onClick={onSubmit}>
+          가입하기
+        </SignUpButton>
       </SignUpForm>
       <Navigation />
     </>

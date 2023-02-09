@@ -17,13 +17,7 @@ const initialState = {
 const auth = handleActions(
   {
     [POST_REGISTER]: (state, action) => ({
-      register: {
-        email: state.email,
-        password: state.password,
-        paswordConfirm: state.passwordConfirm,
-        name: state.name,
-        address: state.address,
-      },
+      register: action.payload,
     }),
   },
   initialState
