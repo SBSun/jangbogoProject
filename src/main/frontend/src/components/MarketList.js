@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { getMarketList } from '../lib/api/list';
 
 const MarketListBlock = styled.ul`
   display: flex;
@@ -22,28 +23,15 @@ const MarketListBlock = styled.ul`
 
 const MarketList = () => {
   const [markets, setMarkets] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const getMarketList = async () => {
-    const response = await fetch(`/market/findMarketsInGu?gu_id=110000`);
-
-    if (!response.ok) {
-      const message = `데이터를 불러오지 못했습니다. : ${response.status}`;
-      throw new Error(message);
-    }
-
-    const data = await response.json();
-    console.log(data);
-    setMarkets(data.marketList);
-  };
 
   useEffect(() => {
+    const promise = getMarketList(110000);
     const fetchData = () => {
-      setIsLoading(true);
-      getMarketList();
+      promise.then(res => {
+        setMarkets(res.marketList);
+      });
     };
     fetchData();
-    setIsLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -55,11 +43,7 @@ const MarketList = () => {
   ));
   return (
     <>
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : (
-        <MarketListBlock>{marketListItem}</MarketListBlock>
-      )}
+      <MarketListBlock>{marketListItem}</MarketListBlock>
     </>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { getCommodityList } from '../lib/api/list';
 
 const CommodityListBlock = styled.ul`
   display: flex;
@@ -30,30 +31,13 @@ const CommodityListBlock = styled.ul`
 
 const CommodityList = () => {
   const [commoditys, setCommoditys] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const getCommodityList = async () => {
-    const response = await fetch(
-      `/commodity/findCommodityListInGu?gu_id=110000`
-    );
-
-    if (!response.ok) {
-      const message = `데이터를 불러오지 못했습니다. : ${response.status}`;
-      throw new Error(message);
-    }
-
-    const data = await response.json();
-    console.log(data);
-    setCommoditys(data);
-  };
 
   useEffect(() => {
+    const promise = getCommodityList(110000);
     const fetchData = () => {
-      setIsLoading(true);
-      getCommodityList();
+      promise.then(res => setCommoditys(res));
     };
     fetchData();
-    setIsLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -69,11 +53,7 @@ const CommodityList = () => {
   ));
   return (
     <>
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : (
-        <CommodityListBlock>{commodityListItem}</CommodityListBlock>
-      )}
+      <CommodityListBlock>{commodityListItem}</CommodityListBlock>
     </>
   );
 };
