@@ -2,10 +2,10 @@ import client from './client';
 
 export const signUp = async ({ email, password, name, address }) => {
   const res = await client.post(`/user/signUpUser`, {
-    email,
-    password,
-    name,
-    address,
+    email: email,
+    password: password,
+    name: name,
+    address: address,
   });
   return res;
 };

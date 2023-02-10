@@ -50,15 +50,18 @@ const SignUpButton = styled(Button)`
   height: 2.5rem;
 `;
 const ErrorMessage = styled.p`
+  visibility: hidden;
   font-size: 8px;
-  color: var(--green);
   padding: 0.5rem 0 0 0.5rem;
 
   ${({ isError }) =>
-    isError &&
-    css`
-      color: var(--red);
-    `};
+    isError
+      ? css`
+          color: var(--red);
+        `
+      : css`
+          color: var(--green);
+        `}
 `;
 
 const SignUp = ({
@@ -67,11 +70,7 @@ const SignUp = ({
   passwordConfirm,
   name,
   address,
-  handleEmail,
-  handlePassword,
-  handlePasswordConfirm,
-  handleName,
-  handleAddress,
+  handleInputs,
   onCheckEmail,
   onSubmit,
 }) => {
@@ -79,14 +78,14 @@ const SignUp = ({
     <>
       <Header modify={'WHITE_BLOCK_LOCATION'} title={'회원가입'} />
       <SignUpForm>
-        <div className='email-block'>
+        <section className='email-block'>
           <SignUpLabel>이메일</SignUpLabel>
           <div>
             <SignUpInput
+              name='email'
               placeholder='이메일을 입력해주세요.'
-              className='email'
               value={email}
-              onChange={handleEmail}
+              onChange={handleInputs}
             />
             <SignUpButton
               type={'button'}
@@ -97,39 +96,45 @@ const SignUp = ({
             </SignUpButton>
           </div>
           <ErrorMessage>사용 가능한 이메일입니다.</ErrorMessage>
-        </div>
-
-        <div className='password-block'>
+        </section>
+        <section className='password-block'>
           <SignUpLabel>비밀번호</SignUpLabel>
           <SignUpInput
             type={'password'}
+            name={'password'}
             placeholder='비밀번호를 입력해주세요.'
             value={password}
-            onChange={handlePassword}
+            onChange={handleInputs}
           />
           <SignUpLabel>비밀번호 확인</SignUpLabel>
           <SignUpInput
             type={'password'}
+            name={'passwordConfirm'}
             placeholder='비밀번호를 한 번 더 입력해주세요.'
             value={passwordConfirm}
-            onChange={handlePasswordConfirm}
+            onChange={handleInputs}
           />
           <ErrorMessage>사용 가능한 비밀번호입니다.</ErrorMessage>
-        </div>
-
-        <div className='user-block'>
+        </section>
+        <section className='user-block'>
           <SignUpLabel>이름</SignUpLabel>
-          <SignUpInput placeholder='이름' value={name} onChange={handleName} />
+          <SignUpInput
+            name={'name'}
+            placeholder='이름'
+            value={name}
+            onChange={handleInputs}
+          />
           <SignUpLabel>주소</SignUpLabel>
           <div className='address-block'>
             <span>서울시</span>
             <SignUpInput
+              name={'address'}
               placeholder='OO구'
               value={address}
-              onChange={handleAddress}
+              onChange={handleInputs}
             />
           </div>
-        </div>
+        </section>
         <SignUpButton type={'submit'} onClick={onSubmit}>
           가입하기
         </SignUpButton>
