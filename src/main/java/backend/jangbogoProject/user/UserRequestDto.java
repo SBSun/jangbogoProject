@@ -7,7 +7,7 @@ public class UserRequestDto {
 
     @Getter
     @Setter
-    @Builder
+    @NoArgsConstructor
     public static class SignUp {
         private String id;
         private String password;
@@ -17,7 +17,6 @@ public class UserRequestDto {
 
     @Getter
     @Setter
-    @AllArgsConstructor
     @NoArgsConstructor
     public static class Login {
         private String id;

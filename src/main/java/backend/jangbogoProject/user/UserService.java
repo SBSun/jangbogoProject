@@ -1,5 +1,6 @@
 package backend.jangbogoProject.user;
 
+import backend.jangbogoProject.category.Category;
 import backend.jangbogoProject.dto.BasicResponse;
 import backend.jangbogoProject.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,7 @@ public class UserService{
     public UserResponseDto.Info signUp(UserRequestDto.SignUp signUp)
     {
         if(userRepository.existsById(signUp.getId())){
-            return null;
+            throw new IllegalArgumentException("해당 아이디는 이미 가입되어 있는 아이디입니다.");
         }
 
         User user = User.builder()
