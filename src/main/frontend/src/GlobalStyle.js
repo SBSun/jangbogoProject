@@ -13,6 +13,10 @@ const GlobalStyle = createGlobalStyle`
       --gray: #b2bec3;
       --light-gray: #dfe6e9;
     }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+    }
 `;
 
 export default GlobalStyle;

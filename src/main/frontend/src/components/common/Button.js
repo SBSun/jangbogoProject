@@ -16,7 +16,7 @@ const WhiteBlock = styled(DefaultBlock)`
   color: var(--green);
   border: 1px solid var(--green);
 `;
-const Button = ({ type, modify, onClick, children }) => {
+const Button = ({ type, modify, children, onClick }) => {
   const HandleModify = () => {
     switch (modify) {
       case 'WHITE_BLOCK': {
