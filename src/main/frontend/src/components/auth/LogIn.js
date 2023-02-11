@@ -1,5 +1,4 @@
-import React, { useCallback, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import styled from 'styled-components';
 import Header from '../common/Header';
 import Button from '../common/Button';
@@ -28,73 +27,29 @@ const LoginForm = styled.form`
   }
 `;
 
-const Login = () => {
-  const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const onEmailChange = e => {
-    setEmail(e.target.value);
-  };
-  const onPassChange = e => {
-    setPassword(e.target.value);
-  };
-  const onSubmit = useCallback(
-    e => {
-      e.preventDefault();
-
-      const getLogin = async () => {
-        const response = await fetch(`/user/login`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            id: email,
-            password: password,
-          }),
-        });
-
-        if (!response.ok) {
-          const message = `다시 로그인해주세요.`;
-          alert(message);
-          throw new Error(message);
-        }
-
-        const post = await response.json();
-        console.log(post);
-        alert('로그인되었습니다.');
-        // navigate('/', true);
-      };
-
-      getLogin();
-      setEmail('');
-      setPassword('');
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [email, password]
-  );
-
+const Login = ({ id, password, handleInputs, onSubmit, moveSignUp }) => {
   return (
     <>
       <Header modify={'WHITE_BLOCK'} title={'로그인'} />
-      <LoginForm onSubmit={onSubmit}>
+      <LoginForm>
         <input
           type={'text'}
+          name={'id'}
           placeholder={'이메일을 입력해주세요.'}
-          value={email}
-          onChange={onEmailChange}
+          value={id}
+          onChange={handleInputs}
         />
         <input
           type={'password'}
+          name={'password'}
           placeholder={'비밀번호를 입력해주세요.'}
           value={password}
-          onChange={onPassChange}
+          onChange={handleInputs}
         />
-        <Button type={'submit'}>로그인</Button>
-        <Button
-          type={'button'}
-          modify={'WHITE_BLOCK'}
-          onClick={() => navigate('/member/signup')}
-        >
+        <Button type={'submit'} onClick={onSubmit}>
+          로그인
+        </Button>
+        <Button type={'button'} modify={'WHITE_BLOCK'} onClick={moveSignUp}>
           회원가입
         </Button>
       </LoginForm>
