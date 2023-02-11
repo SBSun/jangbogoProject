@@ -6,9 +6,8 @@ export const postRegister = createAction(POST_REGISTER);
 
 const initialState = {
   register: {
-    email: '',
+    id: '',
     password: '',
-    paswordConfirm: '',
     name: '',
     address: '',
   },

@@ -1,7 +1,8 @@
-import React, { useReducer } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useReducer, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import SignUp from '../../components/auth/SignUp';
-import { signUp } from '../../lib/api/auth';
+import { checkEmail, signUp } from '../../lib/api/auth';
 import { postRegister } from '../../modules/auth';
 
 function reducer(state, action) {
@@ -13,60 +14,87 @@ function reducer(state, action) {
 
 const SignUpContainer = () => {
   const [state, dispatch] = useReducer(reducer, {
-    email: '',
+    id: '',
     password: '',
     passwordConfirm: '',
     name: '',
     address: '',
   });
-  const { email, password, passwordConfirm, name, address } = state;
+  const { id, password, passwordConfirm, name, address } = state;
 
-  const { emailValue, passwordValue, nameValue, addressValue } = useSelector(
-    ({ auth }) => ({
-      emailValue: auth.register.email,
-      passwordValue: auth.register.password,
-      nameValue: auth.register.name,
-      addressValue: auth.register.address,
-    })
-  );
-  const dispatchRedux = useDispatch();
+  const [emailReg, emailRegConfirm] = useState(false);
+  const [isEmailCheck, setIsEmail] = useState(null);
+  const [passReg, passRegComfirm] = useState(false);
+  const [isPassConfirm, setIsConfirm] = useState(false);
+
+  const navigate = useNavigate();
+  const reduxDispatch = useDispatch();
 
   const handleInputs = e => {
+    const emailRegex = /[\w\-\.]+\@[\w\-\.]+/;
+    const passwordRegex = new RegExp('[A-Za-z0-9]{6,12}');
+
     dispatch(e.target);
+
+    if (emailRegex.test(id)) {
+      emailRegConfirm(true);
+    }
+    if (passwordRegex.test(password)) {
+      passRegComfirm(true);
+    }
+    if (password === passwordConfirm) {
+      setIsConfirm(true);
+    }
   };
   const onCheckEmail = () => {
-    console.log('Checking Email');
+    const promise = checkEmail({ id });
+    const fetchData = () => {
+      promise.then(res => setIsEmail(res));
+    };
+    fetchData();
   };
   const onSubmit = e => {
     e.preventDefault();
-    dispatchRedux(
+    reduxDispatch(
       postRegister({
-        email: email,
+        id: id,
         password: password,
-        passwordConfirm: passwordConfirm,
         name: name,
         address: address,
       })
     );
-    console.log(
-      `email : ${emailValue}, password : ${passwordValue}, name : ${nameValue}, address : ${addressValue}`
-    );
-    const promise = signUp(emailValue, passwordValue, nameValue, addressValue);
+
+    const promise = signUp({ id, password, name, address });
+    console.log(promise);
     const fetchData = () => {
-      promise.then(res => console.log(res));
+      promise
+        .then(res => {
+          console.log(res.data);
+          alert('가입되었습니다.');
+          navigate('/', true);
+        })
+        .catch(error => {
+          console.log(error);
+          alert('다시 시도해주세요.');
+          return;
+        });
     };
     fetchData();
   };
 
   return (
     <SignUp
-      email={email}
+      id={id}
       password={password}
       passwordConfirm={passwordConfirm}
       name={name}
       address={address}
       handleInputs={handleInputs}
+      emailReg={emailReg}
+      isEmailCheck={isEmailCheck}
       onCheckEmail={onCheckEmail}
+      passReg={passReg}
+      isPassConfirm={isPassConfirm}
       onSubmit={onSubmit}
     />
   );
