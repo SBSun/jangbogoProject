@@ -1,8 +1,8 @@
 import React from 'react';
-import MyPage from '../components/auth/MyPage';
+import MyPageContainer from '../containers/auth/MyPageContainer';
 
 const MyPagePage = () => {
-  return <MyPage />;
+  return <MyPageContainer />;
 };
 
 export default MyPagePage;

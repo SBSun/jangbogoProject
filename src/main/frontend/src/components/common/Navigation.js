@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { MdHome, MdSearch, MdMenu, MdPerson } from 'react-icons/md';
@@ -26,8 +26,9 @@ const Menu = styled(NavLink)`
 `;
 
 const Navigation = () => {
-  // eslint-disable-next-line no-unused-vars
-  const [isLogin, setIsLogin] = useState(false);
+  const user = localStorage.getItem('user');
+  const isLogin = JSON.parse(user);
+
   return (
     <>
       <Container>

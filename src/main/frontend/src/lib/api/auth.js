@@ -1,8 +1,13 @@
 import client from './client';
 
-export const signUp = async ({ email, password, name, address }) => {
+export const checkEmail = async ({ id }) => {
+  const res = await client.get(`/user/checkId?id=${id}`);
+  return res.data;
+};
+
+export const signUp = async ({ id, password, name, address }) => {
   const res = await client.post(`/user/signUpUser`, {
-    email: email,
+    id: id,
     password: password,
     name: name,
     address: address,
@@ -10,11 +15,8 @@ export const signUp = async ({ email, password, name, address }) => {
   return res;
 };
 
-export const checkEmail = async ({ email }) => {
-  const res = await client.get(`/user/checkId?id=${email}`);
-  console.log(res.data);
-  return res.data;
+export const login = async ({ id, password }) => {
+  const res = await client.post(`/user/login`, { id, password });
+  console.log(res);
+  return res;
 };
-
-export const login = ({ email, password }) =>
-  client.post(`/user/login`, { email, password });

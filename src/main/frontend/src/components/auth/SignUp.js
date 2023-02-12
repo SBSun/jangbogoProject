@@ -50,28 +50,30 @@ const SignUpButton = styled(Button)`
   height: 2.5rem;
 `;
 const ErrorMessage = styled.p`
-  visibility: hidden;
   font-size: 8px;
   padding: 0.5rem 0 0 0.5rem;
 
-  ${({ isError }) =>
-    isError
+  ${({ isCheck }) =>
+    isCheck
       ? css`
-          color: var(--red);
+          color: var(--green);
         `
       : css`
-          color: var(--green);
+          color: var(--red);
         `}
 `;
 
 const SignUp = ({
-  email,
+  id,
   password,
   passwordConfirm,
   name,
   address,
   handleInputs,
+  emailReg,
+  isEmailCheck,
   onCheckEmail,
+  passReg,
   onSubmit,
 }) => {
   return (
@@ -82,9 +84,9 @@ const SignUp = ({
           <SignUpLabel>이메일</SignUpLabel>
           <div>
             <SignUpInput
-              name='email'
-              placeholder='이메일을 입력해주세요.'
-              value={email}
+              name='id'
+              placeholder='name@example.com'
+              value={id}
               onChange={handleInputs}
             />
             <SignUpButton
@@ -95,17 +97,48 @@ const SignUp = ({
               중복 확인
             </SignUpButton>
           </div>
-          <ErrorMessage>사용 가능한 이메일입니다.</ErrorMessage>
+          <ErrorMessage
+            isCheck={
+              id !== ''
+                ? emailReg
+                  ? isEmailCheck !== null
+                    ? isEmailCheck
+                      ? true
+                      : false
+                    : false
+                  : false
+                : false
+            }
+          >
+            {id !== ''
+              ? emailReg
+                ? isEmailCheck === null
+                  ? ''
+                  : isEmailCheck
+                  ? '사용 가능한 이메일입니다.'
+                  : '중복된 이메일입니다.'
+                : '이메일 형식을 맞춰주세요.'
+              : '이메일을 입력해주세요.'}
+          </ErrorMessage>
         </section>
         <section className='password-block'>
           <SignUpLabel>비밀번호</SignUpLabel>
           <SignUpInput
             type={'password'}
             name={'password'}
-            placeholder='비밀번호를 입력해주세요.'
+            placeholder='영문 포함 6 ~ 12자 형식으로 입력해주세요.'
             value={password}
             onChange={handleInputs}
           />
+          <ErrorMessage
+            isCheck={password !== '' ? (passReg ? true : false) : false}
+          >
+            {password !== ''
+              ? passReg
+                ? '사용 가능한 비밀번호입니다.'
+                : '영문 포함 6 ~ 12자 형식으로 입력해주세요.'
+              : '비밀번호를 입력해주세요.'}
+          </ErrorMessage>
           <SignUpLabel>비밀번호 확인</SignUpLabel>
           <SignUpInput
             type={'password'}
@@ -114,7 +147,7 @@ const SignUp = ({
             value={passwordConfirm}
             onChange={handleInputs}
           />
-          <ErrorMessage>사용 가능한 비밀번호입니다.</ErrorMessage>
+          <ErrorMessage></ErrorMessage>
         </section>
         <section className='user-block'>
           <SignUpLabel>이름</SignUpLabel>
