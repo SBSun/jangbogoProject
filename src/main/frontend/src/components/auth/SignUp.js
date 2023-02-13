@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import Button from '../common/Button';
 import Header from '../common/Header';
 import Navigation from '../common/Navigation';
@@ -17,6 +17,7 @@ const SignUpForm = styled.form`
     > div {
       display: inherit;
       justify-content: space-between;
+      align-items: center;
     }
   }
   > .password-block,
@@ -49,19 +50,6 @@ const SignUpInput = styled.input`
 const SignUpButton = styled(Button)`
   height: 2.5rem;
 `;
-const ErrorMessage = styled.p`
-  font-size: 8px;
-  padding: 0.5rem 0 0 0.5rem;
-
-  ${({ isCheck }) =>
-    isCheck
-      ? css`
-          color: var(--green);
-        `
-      : css`
-          color: var(--red);
-        `}
-`;
 
 const SignUp = ({
   id,
@@ -70,10 +58,8 @@ const SignUp = ({
   name,
   address,
   handleInputs,
-  emailReg,
-  isEmailCheck,
+  validations,
   onCheckEmail,
-  passReg,
   onSubmit,
 }) => {
   return (
@@ -84,7 +70,7 @@ const SignUp = ({
           <SignUpLabel>이메일</SignUpLabel>
           <div>
             <SignUpInput
-              name='id'
+              name='EMAIL'
               placeholder='name@example.com'
               value={id}
               onChange={handleInputs}
@@ -97,62 +83,30 @@ const SignUp = ({
               중복 확인
             </SignUpButton>
           </div>
-          <ErrorMessage
-            isCheck={
-              id !== ''
-                ? emailReg
-                  ? isEmailCheck !== null
-                    ? isEmailCheck
-                      ? true
-                      : false
-                    : false
-                  : false
-                : false
-            }
-          >
-            {id !== ''
-              ? emailReg
-                ? isEmailCheck === null
-                  ? ''
-                  : isEmailCheck
-                  ? '사용 가능한 이메일입니다.'
-                  : '중복된 이메일입니다.'
-                : '이메일 형식을 맞춰주세요.'
-              : '이메일을 입력해주세요.'}
-          </ErrorMessage>
         </section>
         <section className='password-block'>
           <SignUpLabel>비밀번호</SignUpLabel>
           <SignUpInput
             type={'password'}
-            name={'password'}
+            name={'PASSWORD'}
             placeholder='영문 포함 6 ~ 12자 형식으로 입력해주세요.'
             value={password}
             onChange={handleInputs}
           />
-          <ErrorMessage
-            isCheck={password !== '' ? (passReg ? true : false) : false}
-          >
-            {password !== ''
-              ? passReg
-                ? '사용 가능한 비밀번호입니다.'
-                : '영문 포함 6 ~ 12자 형식으로 입력해주세요.'
-              : '비밀번호를 입력해주세요.'}
-          </ErrorMessage>
+
           <SignUpLabel>비밀번호 확인</SignUpLabel>
           <SignUpInput
             type={'password'}
-            name={'passwordConfirm'}
+            name={'PASSWORD_CONFIRM'}
             placeholder='비밀번호를 한 번 더 입력해주세요.'
             value={passwordConfirm}
             onChange={handleInputs}
           />
-          <ErrorMessage></ErrorMessage>
         </section>
         <section className='user-block'>
           <SignUpLabel>이름</SignUpLabel>
           <SignUpInput
-            name={'name'}
+            name={'NAME'}
             placeholder='이름'
             value={name}
             onChange={handleInputs}
@@ -161,14 +115,18 @@ const SignUp = ({
           <div className='address-block'>
             <span>서울시</span>
             <SignUpInput
-              name={'address'}
+              name={'ADDRESS'}
               placeholder='OO구'
               value={address}
               onChange={handleInputs}
             />
           </div>
         </section>
-        <SignUpButton type={'submit'} onClick={onSubmit}>
+        <SignUpButton
+          type={'submit'}
+          onClick={onSubmit}
+          disable={validations.duplicate.id}
+        >
           가입하기
         </SignUpButton>
       </SignUpForm>

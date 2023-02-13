@@ -24,9 +24,11 @@ const initialState = {
 const auth = handleActions(
   {
     [POST_REGISTER]: (state, action) => ({
+      ...state,
       register: action.payload,
     }),
     [POST_LOGIN]: (state, action) => ({
+      ...state,
       login: action.payload,
     }),
   },
