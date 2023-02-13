@@ -6,6 +6,7 @@ import backend.jangbogoProject.category.CategoryService;
 import backend.jangbogoProject.commodity.market.Market;
 import backend.jangbogoProject.commodity.market.MarketService;
 import backend.jangbogoProject.commodity.search.SearchRequestDTO;
+import backend.jangbogoProject.paging.Page;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -28,43 +29,56 @@ public class CommodityService {
     private final MarketService marketService;
     private final CategoryService categoryService;
 
-    public int getCommodityCntInGu(int gu_id){
-        return commodityRepository.getCommodityCntInGu(gu_id);
-    }
-
-    public List<CommodityInfoProjection> findCommoditiesInGu(int gu_id){
-        List<CommodityInfoProjection> list = commodityRepository.findCommoditiesInGu(gu_id);
-
-        return list;
-    }
-
-    public List<CommodityInfoProjection> findSearchInGu(int gu_id, SearchRequestDTO searchRequestDTO){
-        String keyword = searchRequestDTO.getKeyword();
-        int startIndex = (searchRequestDTO.getCurPage() - 1) * searchRequestDTO.getRecordSize();
+    public CommodityResponseDto.CommodityInfoList getCommodities(int gu_id, SearchRequestDTO searchRequestDTO){
+        int startIndex = searchRequestDTO.getOffset();
         int recordSize = searchRequestDTO.getRecordSize();
 
         List<CommodityInfoProjection> list
-                = commodityRepository.findSearchInGu(gu_id, keyword, startIndex, recordSize);
+                = commodityRepository.getCommodities(gu_id, startIndex, recordSize);
 
-        return list;
+        int totalDataCnt = commodityRepository.getCommodityCnt(gu_id);
+        Page page = new Page(searchRequestDTO, totalDataCnt);
+
+        return new CommodityResponseDto.CommodityInfoList(list, page.toResponse());
     }
 
-    public int getSearchCntInGu(int gu_id, String keyword){
-        return commodityRepository.getSearchCntInGu(gu_id, keyword);
+
+
+    public CommodityResponseDto.CommodityInfoList findByKeyword(int gu_id, SearchRequestDTO searchRequestDTO){
+        String keyword = searchRequestDTO.getKeyword();
+        int startIndex = searchRequestDTO.getOffset();
+        int recordSize = searchRequestDTO.getRecordSize();
+
+        List<CommodityInfoProjection> list
+                = commodityRepository.findByKeyword(gu_id, keyword, startIndex, recordSize);
+
+        int totalDataCnt = commodityRepository.findByKeywordCnt(gu_id, keyword);
+        Page page = new Page(searchRequestDTO, totalDataCnt);
+
+        return new CommodityResponseDto.CommodityInfoList(list, page.toResponse());
     }
 
-    public List<CommodityInfoProjection> findCategoryInGu(int gu_id, String category_name){
-        CategoryResponseDTO category = categoryService.findByName(category_name);
+    public CommodityResponseDto.CommodityInfoList findByCategory(int gu_id, SearchRequestDTO searchRequestDTO){
+        String keyword = searchRequestDTO.getKeyword();
+        int startIndex = searchRequestDTO.getOffset();
+        int recordSize = searchRequestDTO.getRecordSize();
+
+        CategoryResponseDTO category = categoryService.findByName(keyword);
 
         List<CommodityInfoProjection> list;
+        int totalDataCnt;
 
         if(category.getDepth() == 1){
-            list = commodityRepository.findParentCategoryInGu(gu_id, category.getId());
+            list = commodityRepository.findByParentCategory(gu_id, category.getId(), startIndex, recordSize);
+            totalDataCnt = commodityRepository.findByParentCategoryCnt(gu_id, category.getId());
         }else{
-            list = commodityRepository.findChildCategoryInGu(gu_id, category.getId());
+            list = commodityRepository.findByChildCategory(gu_id, category.getId(), startIndex, recordSize);
+            totalDataCnt = commodityRepository.findByChildCategoryCnt(gu_id, category.getId());
         }
 
-        return list;
+        Page page = new Page(searchRequestDTO, totalDataCnt);
+
+        return new CommodityResponseDto.CommodityInfoList(list, page.toResponse());
     }
 
     public void truncateCommodity(){

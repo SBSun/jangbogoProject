@@ -1,5 +1,6 @@
 package backend.jangbogoProject.commodity;
 
+import backend.jangbogoProject.category.CategoryResponseDTO;
 import backend.jangbogoProject.commodity.search.SearchRequestDTO;
 import backend.jangbogoProject.paging.Page;
 import lombok.RequiredArgsConstructor;
@@ -16,24 +17,19 @@ import java.util.List;
 public class CommodityController {
     private final CommodityService commodityService;
 
-    @GetMapping("/findCommoditiesInGu")
-    private List<CommodityInfoProjection> findCommoditiesInGu(int gu_id){
-        return commodityService.findCommoditiesInGu(gu_id);
+    @GetMapping("/getCommodities")
+    private CommodityResponseDto.CommodityInfoList getCommodities(int gu_id, SearchRequestDTO searchRequestDTO){
+        return commodityService.getCommodities(gu_id, searchRequestDTO);
     }
 
-    @GetMapping("/findCategoryInGu")
-    private List<CommodityInfoProjection> findCategoryInGu(int gu_id, String category_name){
-        return commodityService.findCategoryInGu(gu_id, category_name);
+    @GetMapping("/findByCategory")
+    private CommodityResponseDto.CommodityInfoList findByCategory(int gu_id, SearchRequestDTO searchRequestDTO){
+        return commodityService.findByCategory(gu_id, searchRequestDTO);
     }
 
-    @GetMapping("/findSearchInGu")
-    private CommodityResponseDto.CommodityInfoList findSearchInGu(int gu_id, SearchRequestDTO searchRequestDTO){
-        int totalDataCnt = commodityService.getSearchCntInGu(gu_id, searchRequestDTO.getKeyword());
-        System.out.println("totalDataCnt : " + totalDataCnt);
-        Page page = new Page(searchRequestDTO, totalDataCnt);
-        List<CommodityInfoProjection> list = commodityService.findSearchInGu(gu_id, searchRequestDTO);
-        System.out.println("keyword : " + searchRequestDTO.getKeyword() + ", curPage : " + searchRequestDTO.getCurPage());
-        return new CommodityResponseDto.CommodityInfoList(list, page.toResponse());
+    @GetMapping("/findByKeyword")
+    private CommodityResponseDto.CommodityInfoList findByKeyword(int gu_id, SearchRequestDTO searchRequestDTO){
+        return commodityService.findByKeyword(gu_id, searchRequestDTO);
     }
 
     @PostMapping("/load_save")
