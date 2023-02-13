@@ -36,7 +36,6 @@ const LoginContainer = () => {
           reduxDispatch(
             postLogin({
               id: id,
-              password: password,
               accessToken: res.data.accessToken,
               isLogin: true,
             })
@@ -45,8 +44,7 @@ const LoginContainer = () => {
             'user',
             JSON.stringify({
               id: id,
-              password: password,
-              accessToken: res.data.accessToken,
+              refreshToken: res.data.refreshToken,
             })
           );
           alert('로그인되었습니다.');
