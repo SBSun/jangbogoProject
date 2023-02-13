@@ -6,10 +6,41 @@ import { checkEmail, signUp } from '../../lib/api/auth';
 import { postRegister } from '../../modules/auth';
 
 function reducer(state, action) {
-  return {
-    ...state,
-    [action.name]: action.value,
-  };
+  switch (action.name) {
+    case 'EMAIL': {
+      return {
+        ...state,
+        id: action.value,
+      };
+    }
+    case 'PASSWORD': {
+      return {
+        ...state,
+        password: action.value,
+      };
+    }
+    case 'PASSWORD_CONFIRM': {
+      return {
+        ...state,
+        passwordConfirm: action.value,
+      };
+    }
+    case 'NAME': {
+      return {
+        ...state,
+        name: action.value,
+      };
+    }
+    case 'ADDRESS': {
+      return {
+        ...state,
+        address: action.value,
+      };
+    }
+    default: {
+      return state;
+    }
+  }
 }
 
 const SignUpContainer = () => {
@@ -22,34 +53,54 @@ const SignUpContainer = () => {
   });
   const { id, password, passwordConfirm, name, address } = state;
 
-  const [emailReg, emailRegConfirm] = useState(false);
-  const [isEmailCheck, setIsEmail] = useState(null);
-  const [passReg, passRegComfirm] = useState(false);
-  const [isPassConfirm, setIsConfirm] = useState(false);
+  const [validations, setValidations] = useState({
+    duplicate: {
+      id: false,
+      password: false,
+    },
+    regExp: {
+      id: false,
+      password: false,
+    },
+    isComfirm: {
+      form: false,
+    },
+  });
 
   const navigate = useNavigate();
   const reduxDispatch = useDispatch();
 
   const handleInputs = e => {
-    const emailRegex = /[\w\-\.]+\@[\w\-\.]+/;
-    const passwordRegex = new RegExp('[A-Za-z0-9]{6,12}');
-
     dispatch(e.target);
-
-    if (emailRegex.test(id)) {
-      emailRegConfirm(true);
-    }
-    if (passwordRegex.test(password)) {
-      passRegComfirm(true);
-    }
-    if (password === passwordConfirm) {
-      setIsConfirm(true);
-    }
   };
   const onCheckEmail = () => {
+    if (id === '') {
+      setValidations(() => ({
+        ...validations,
+        duplicate: {
+          ...validations.duplicate,
+          id: false,
+        },
+      }));
+      return alert('이메일을 입력해주세요.');
+    }
+    if (validations.duplicate.id) {
+      alert('사용 가능한 이메일입니다.');
+    } else {
+      alert('중복된 이메일입니다.');
+    }
+
     const promise = checkEmail({ id });
-    const fetchData = () => {
-      promise.then(res => setIsEmail(res));
+    const fetchData = async () => {
+      await promise.then(res => {
+        setValidations(() => ({
+          ...validations,
+          duplicate: {
+            ...validations.duplicate,
+            id: res,
+          },
+        }));
+      });
     };
     fetchData();
   };
@@ -64,8 +115,21 @@ const SignUpContainer = () => {
       })
     );
 
+    if (id === '') {
+      return alert('이메일을 입력해주세요.');
+    } else if (password === '' || passwordConfirm === '') {
+      return alert('비밀번호를 입력해주세요.');
+    } else if (name === '') {
+      return alert('이름을 입력해주세요.');
+    } else if (address === '') {
+      return alert('주소를 입력해주세요.');
+    }
+
+    if (password !== passwordConfirm) {
+      return alert('비밀번호가 다릅니다.');
+    }
+
     const promise = signUp({ id, password, name, address });
-    console.log(promise);
     const fetchData = () => {
       promise
         .then(res => {
@@ -89,12 +153,9 @@ const SignUpContainer = () => {
       passwordConfirm={passwordConfirm}
       name={name}
       address={address}
+      validations={validations}
       handleInputs={handleInputs}
-      emailReg={emailReg}
-      isEmailCheck={isEmailCheck}
       onCheckEmail={onCheckEmail}
-      passReg={passReg}
-      isPassConfirm={isPassConfirm}
       onSubmit={onSubmit}
     />
   );
