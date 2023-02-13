@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import Header from './common/Header';
 import Navigation from './common/Navigation';
 import Banner from '../assets/banner.PNG';
-import CommodityList from './CommodityList';
-import MarketList from './MarketList';
+import SelectLocationContainer from '../containers/SelectLoactionContainer';
+import CommodityListContainer from '../containers/CommodityListContainer';
+import MarketListContainer from '../containers/MarketListContainer';
 
 const HomeContainer = styled.main`
   margin: 56px 0;
@@ -42,12 +43,13 @@ const Home = () => {
   return (
     <>
       <Header modify={'LOGO_BLOCK'} title={''} />
+      <SelectLocationContainer />
       <HomeContainer>
         <img src={Banner} alt='banner' className='banner' />
         <h2 className='list_title'>품목 별로 최저가를 보여드려요.</h2>
-        <CommodityList />
+        <CommodityListContainer />
         <h2 className='list_title'>이 지역의 있는 매장들을 보여드려요.</h2>
-        <MarketList />
+        <MarketListContainer />
         <Contact>
           <div>
             <p>장보고 - 서울시 식자재 조회</p>

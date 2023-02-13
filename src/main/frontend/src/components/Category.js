@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { MdOutlineNavigateNext } from 'react-icons/md';
 import Header from './common/Header';
 import Navigation from './common/Navigation';
+import SelectLocationContainer from '../containers/SelectLoactionContainer';
 
 const categories = [
   {
@@ -41,6 +42,7 @@ const Category = ({ isLogin }) => {
   return (
     <>
       <Header modify={'DEFAULT_BLOCK'} title={'카테고리'} />
+      <SelectLocationContainer />
       <CategoryBlock>
         <ul>
           {categories.map(c => (

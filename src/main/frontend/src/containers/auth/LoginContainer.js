@@ -19,7 +19,7 @@ const LoginContainer = () => {
   });
   const { id, password } = state;
 
-  const reduxDispatch = useDispatch();
+  const storeDispatch = useDispatch();
   const navigate = useNavigate();
 
   const moveSignUp = () => navigate('/member/signup');
@@ -33,7 +33,7 @@ const LoginContainer = () => {
       promise
         .then(res => {
           console.log(res);
-          reduxDispatch(
+          storeDispatch(
             postLogin({
               id: id,
               accessToken: res.data.accessToken,

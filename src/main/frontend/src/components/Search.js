@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Header from './common/Header';
 import Navigation from './common/Navigation';
+import SelectLocationContainer from '../containers/SelectLoactionContainer';
 
 const recommandKeyword = [
   {
@@ -52,6 +53,17 @@ const RecommandBlock = styled.section`
 `;
 
 const Search = () => {
+  const [keywords, setKeywords] = useState([{}]);
+  const recommandList = keywords.map((keyword, index) => (
+    <li key={index}>
+      <span>{keyword.name}</span>
+    </li>
+  ));
+
+  useEffect(() => {
+    setKeywords(recommandKeyword);
+  }, []);
+
   const handleChange = e => {
     console.log(e.target.value);
   };
@@ -59,19 +71,11 @@ const Search = () => {
     if (e.key !== 'Enter') return;
     console.log(e.target.value);
   };
-  const [keywords, setKeywords] = useState([{}]);
-  const recommandList = keywords.map((keyword, index) => (
-    <li key={index}>
-      <span>{keyword.name}</span>
-    </li>
-  ));
-  useEffect(() => {
-    setKeywords(recommandKeyword);
-  }, []);
 
   return (
     <>
       <Header modify={'DEFAULT_BLOCK'} title={'검색'} />
+      <SelectLocationContainer />
       <SearchBlock>
         <input
           type={'text'}
