@@ -19,7 +19,7 @@ const LoginContainer = () => {
   });
   const { id, password } = state;
 
-  const reduxDispatch = useDispatch();
+  const storeDispatch = useDispatch();
   const navigate = useNavigate();
 
   const moveSignUp = () => navigate('/member/signup');
@@ -33,10 +33,9 @@ const LoginContainer = () => {
       promise
         .then(res => {
           console.log(res);
-          reduxDispatch(
+          storeDispatch(
             postLogin({
               id: id,
-              password: password,
               accessToken: res.data.accessToken,
               isLogin: true,
             })
@@ -45,8 +44,7 @@ const LoginContainer = () => {
             'user',
             JSON.stringify({
               id: id,
-              password: password,
-              accessToken: res.data.accessToken,
+              refreshToken: res.data.refreshToken,
             })
           );
           alert('로그인되었습니다.');

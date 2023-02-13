@@ -10,4 +10,7 @@ export const getMarketList = async id => {
   return res.data;
 };
 
-export const getLocationList = () => client.get(`/gu/findAllGuInfo`);
+export const getLocationList = async () => {
+  const res = await client.get(`/gu/findAllGuInfo`);
+  return res.data.guInfoList;
+};

@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { getCommodityList } from '../lib/api/list';
 
 const CommodityListBlock = styled.ul`
   display: flex;
@@ -29,18 +28,7 @@ const CommodityListBlock = styled.ul`
   }
 `;
 
-const CommodityList = () => {
-  const [commoditys, setCommoditys] = useState([]);
-
-  useEffect(() => {
-    const promise = getCommodityList(110000);
-    const fetchData = () => {
-      promise.then(res => setCommoditys(res));
-    };
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+const CommodityList = ({ commoditys }) => {
   const commodityListItem = commoditys.map((commodity, index) => (
     <li key={index}>
       <img src={''} alt='thumbnail' />

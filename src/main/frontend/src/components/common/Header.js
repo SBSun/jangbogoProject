@@ -8,6 +8,8 @@ import {
 } from 'react-icons/md';
 import logo from '../../assets/Logo_eng.svg';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsVisible } from '../../modules/location';
 
 const DefaultBlock = styled.header`
   position: fixed;
@@ -70,16 +72,22 @@ const LogoBlock = styled(DefaultBlock)`
 const Header = ({ modify, title }) => {
   const navigate = useNavigate();
 
-  const onLocationClick = () => {
-    console.log('Loca Click');
+  const { isVisible } = useSelector(({ location }) => ({
+    isVisible: location.isVisible,
+  }));
+  const storeDispatch = useDispatch();
+
+  const onClick = () => {
+    storeDispatch(setIsVisible(!isVisible));
   };
+
   const HandleModify = () => {
     switch (modify) {
       case 'LOGO_BLOCK':
         return (
           <LogoBlock>
             <img src={logo} alt='logo' />
-            <MdPlace onClick={onLocationClick} />
+            <MdPlace onClick={onClick} />
           </LogoBlock>
         );
 
@@ -97,7 +105,7 @@ const Header = ({ modify, title }) => {
           <WhiteBlock>
             <MdKeyboardArrowLeft onClick={() => navigate(-1, true)} />
             <h2>{title}</h2>
-            <MdOutlinePlace onClick={onLocationClick} />
+            <MdOutlinePlace onClick={onClick} />
           </WhiteBlock>
         );
 
@@ -106,7 +114,7 @@ const Header = ({ modify, title }) => {
           <DefaultBlock>
             <span></span>
             <h2>{title}</h2>
-            <MdPlace onClick={onLocationClick} />
+            <MdPlace onClick={onClick} />
           </DefaultBlock>
         );
     }
