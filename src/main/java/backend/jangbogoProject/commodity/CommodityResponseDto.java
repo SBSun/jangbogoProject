@@ -1,6 +1,8 @@
 package backend.jangbogoProject.commodity;
 
 import backend.jangbogoProject.dto.BasicResponse;
+import backend.jangbogoProject.paging.Page;
+import backend.jangbogoProject.paging.PageResponseDTO;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -20,6 +22,6 @@ public class CommodityResponseDto {
     @AllArgsConstructor
     public static class CommodityInfoList{
         private List<CommodityInfoProjection> infoList;
-        private BasicResponse basicResponse;
+        private PageResponseDTO pageResponseDTO;
     }
 }

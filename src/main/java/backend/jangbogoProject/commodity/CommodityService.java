@@ -5,6 +5,7 @@ import backend.jangbogoProject.category.CategoryResponseDTO;
 import backend.jangbogoProject.category.CategoryService;
 import backend.jangbogoProject.commodity.market.Market;
 import backend.jangbogoProject.commodity.market.MarketService;
+import backend.jangbogoProject.commodity.search.SearchRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -27,16 +28,29 @@ public class CommodityService {
     private final MarketService marketService;
     private final CategoryService categoryService;
 
+    public int getCommodityCntInGu(int gu_id){
+        return commodityRepository.getCommodityCntInGu(gu_id);
+    }
+
     public List<CommodityInfoProjection> findCommoditiesInGu(int gu_id){
         List<CommodityInfoProjection> list = commodityRepository.findCommoditiesInGu(gu_id);
 
         return list;
     }
 
-    public List<CommodityInfoProjection> findSearchInGu(int gu_id, String find){
-        List<CommodityInfoProjection> list = commodityRepository.findSearchInGu(gu_id, find);
+    public List<CommodityInfoProjection> findSearchInGu(int gu_id, SearchRequestDTO searchRequestDTO){
+        String keyword = searchRequestDTO.getKeyword();
+        int startIndex = (searchRequestDTO.getCurPage() - 1) * searchRequestDTO.getRecordSize();
+        int recordSize = searchRequestDTO.getRecordSize();
+
+        List<CommodityInfoProjection> list
+                = commodityRepository.findSearchInGu(gu_id, keyword, startIndex, recordSize);
 
         return list;
+    }
+
+    public int getSearchCntInGu(int gu_id, String keyword){
+        return commodityRepository.getSearchCntInGu(gu_id, keyword);
     }
 
     public List<CommodityInfoProjection> findCategoryInGu(int gu_id, String category_name){

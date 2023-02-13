@@ -1,5 +1,7 @@
 package backend.jangbogoProject.commodity;
 
+import backend.jangbogoProject.commodity.search.SearchRequestDTO;
+import backend.jangbogoProject.paging.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +24,16 @@ public class CommodityController {
     @GetMapping("/findCategoryInGu")
     private List<CommodityInfoProjection> findCategoryInGu(int gu_id, String category_name){
         return commodityService.findCategoryInGu(gu_id, category_name);
+    }
+
+    @GetMapping("/findSearchInGu")
+    private CommodityResponseDto.CommodityInfoList findSearchInGu(int gu_id, SearchRequestDTO searchRequestDTO){
+        int totalDataCnt = commodityService.getSearchCntInGu(gu_id, searchRequestDTO.getKeyword());
+        System.out.println("totalDataCnt : " + totalDataCnt);
+        Page page = new Page(searchRequestDTO, totalDataCnt);
+        List<CommodityInfoProjection> list = commodityService.findSearchInGu(gu_id, searchRequestDTO);
+        System.out.println("keyword : " + searchRequestDTO.getKeyword() + ", curPage : " + searchRequestDTO.getCurPage());
+        return new CommodityResponseDto.CommodityInfoList(list, page.toResponse());
     }
 
     @PostMapping("/load_save")

@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Page {
-    private int totalDataCount; // 전체 데이터 개수
+    private int totalDataCnt; // 전체 데이터 개수
     private int pageSize;       // 화면 하단에 출력할 페이지 사이즈
 
     private int curPage;
@@ -18,13 +18,13 @@ public class Page {
 
     private SearchRequestDTO searchRequestDTO;
 
-    public Page(SearchRequestDTO searchRequestDTO, int totalDataCount){
+    public Page(SearchRequestDTO searchRequestDTO, int totalDataCnt){
         pageSize = 10;
 
         this.searchRequestDTO = searchRequestDTO;
 
         this.curPage = searchRequestDTO.getCurPage();
-        this.totalDataCount = totalDataCount;
+        this.totalDataCnt = totalDataCnt;
 
         SetPageData();
     }
@@ -35,7 +35,7 @@ public class Page {
         startPage = (endPage - pageSize) + 1;
         // (마지막 페이지 - 화면에 보여질 페이지 번호의 개수) + 1
 
-        int tempEndPage = (int)(Math.ceil(totalDataCount / (double)searchRequestDTO.getRecordSize()));
+        int tempEndPage = (int)(Math.ceil(totalDataCnt / (double)searchRequestDTO.getRecordSize()));
         // (전체 데이터 개수 / 한 페이지당 보여줄 데이터의 개수) -> 마지막 페이지 번호를 알 수 있다.
 
         if(endPage > tempEndPage){
@@ -45,7 +45,7 @@ public class Page {
 
         canPrev = startPage == 1 ? false : true;
 
-        canNext = endPage * searchRequestDTO.getRecordSize() >= totalDataCount ? false : true;
+        canNext = endPage * searchRequestDTO.getRecordSize() >= tempEndPage ? false : true;
     }
 
     public PageResponseDTO toResponse(){

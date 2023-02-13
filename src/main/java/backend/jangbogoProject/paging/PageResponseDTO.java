@@ -2,7 +2,9 @@ package backend.jangbogoProject.paging;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 
+@Getter
 @AllArgsConstructor
 @Builder
 public class PageResponseDTO {
