@@ -68,7 +68,7 @@ const SignUpContainer = () => {
   });
 
   const navigate = useNavigate();
-  const reduxDispatch = useDispatch();
+  const storeDispatch = useDispatch();
 
   const handleInputs = e => {
     dispatch(e.target);
@@ -106,7 +106,7 @@ const SignUpContainer = () => {
   };
   const onSubmit = e => {
     e.preventDefault();
-    reduxDispatch(
+    storeDispatch(
       postRegister({
         id: id,
         password: password,

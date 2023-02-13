@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Button from '../common/Button';
 import Header from '../common/Header';
 import Navigation from '../common/Navigation';
+import SelectLocationContainer from '../../containers/SelectLoactionContainer';
 
 const SignUpForm = styled.form`
   margin: 56px 0;
@@ -65,6 +66,7 @@ const SignUp = ({
   return (
     <>
       <Header modify={'WHITE_BLOCK_LOCATION'} title={'회원가입'} />
+      <SelectLocationContainer />
       <SignUpForm>
         <section className='email-block'>
           <SignUpLabel>이메일</SignUpLabel>

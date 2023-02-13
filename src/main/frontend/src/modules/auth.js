@@ -15,7 +15,6 @@ const initialState = {
   },
   login: {
     id: '',
-    password: '',
     accessToken: '',
     isLogin: false,
   },
