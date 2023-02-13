@@ -8,6 +8,8 @@ public class UserRequestDto {
     @Getter
     @Setter
     @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
     public static class SignUp {
         private String id;
         private String password;
