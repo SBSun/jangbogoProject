@@ -28,7 +28,7 @@ public class Page {
 
         SetPageData();
     }
-    
+
     private void SetPageData(){
         endPage = (int)(Math.ceil(curPage / (double)pageSize) * pageSize);
         // (현재 페이지 번호 / 화면에 보여질 페이지 번호의 개수) * 화면에 보여질 페이지 번호의 개수
@@ -46,5 +46,14 @@ public class Page {
         canPrev = startPage == 1 ? false : true;
 
         canNext = endPage * searchRequestDTO.getRecordSize() >= totalDataCount ? false : true;
+    }
+
+    public PageResponseDTO toResponse(){
+        return PageResponseDTO.builder()
+                .startPage(startPage)
+                .endPage(endPage)
+                .canPrev(canPrev)
+                .canNext(canNext)
+                .build();
     }
 }
