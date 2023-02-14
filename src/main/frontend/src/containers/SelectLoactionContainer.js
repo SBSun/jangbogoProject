@@ -38,7 +38,6 @@ const SelectLoactionContainer = () => {
     );
     storeDispatch(setIsVisible(false));
     sessionStorage.setItem('location-id', e.target.id);
-    window.location.reload();
   };
 
   return (

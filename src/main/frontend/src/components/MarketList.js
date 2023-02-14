@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { getMarketList } from '../lib/api/list';
 
@@ -24,9 +25,12 @@ const MarketListBlock = styled.ul`
 const MarketList = () => {
   const [markets, setMarkets] = useState([]);
 
-  const locationId = window.sessionStorage.getItem('location-id');
+  const sessionLocationId = window.sessionStorage.getItem('location-id');
+  const { storeLocationId } = useSelector(({ location }) => ({
+    storeLocationId: location.id,
+  }));
 
-  const promise = getMarketList(locationId);
+  const promise = getMarketList(sessionLocationId);
   const fetchData = () => {
     promise.then(res => {
       setMarkets(res.marketList);
@@ -36,7 +40,7 @@ const MarketList = () => {
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [locationId]);
+  }, [storeLocationId]);
 
   const marketListItem = markets.map(market => (
     <li key={market.marketId}>
