@@ -34,7 +34,8 @@ const CommodityList = ({ commoditys }) => {
       <img src={''} alt='thumbnail' />
       <dl className='commodity_info'>
         <dd className='market_name'>{commodity.marketName}</dd>
-        <dt className='commodity_name'>{commodity.itemName}</dt>
+        <dt className='commodity_name'>{commodity.categoryName}</dt>
+        <dd className='commodity_price'>{commodity.remarks}</dd>
         <dd className='commodity_price'>{commodity.price}원</dd>
       </dl>
     </li>

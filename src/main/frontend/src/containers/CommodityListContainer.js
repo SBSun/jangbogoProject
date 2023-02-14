@@ -10,7 +10,7 @@ const CommodityListContainer = () => {
     locationId: location.id,
   }));
 
-  const promise = getCommodityList(locationId);
+  const promise = getCommodityList(locationId, 1, 1000);
   const fetchData = () => {
     promise.then(res => setCommoditys(res));
   };
