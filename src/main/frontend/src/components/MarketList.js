@@ -25,7 +25,7 @@ const MarketListBlock = styled.ul`
 const MarketList = () => {
   const [markets, setMarkets] = useState([]);
 
-  const sessionLocationId = window.sessionStorage.getItem('location-id');
+  const sessionLocationId = sessionStorage.getItem('location-id');
   const { storeLocationId } = useSelector(({ location }) => ({
     storeLocationId: location.id,
   }));

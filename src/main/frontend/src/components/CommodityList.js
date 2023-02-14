@@ -33,7 +33,7 @@ const CommodityListBlock = styled.ul`
 const CommodityList = () => {
   const [commoditys, setCommoditys] = useState([]);
 
-  const sessionLocationId = window.sessionStorage.getItem('location-id');
+  const sessionLocationId = sessionStorage.getItem('location-id');
   const { storeLocationId } = useSelector(({ location }) => ({
     storeLocationId: location.id,
   }));

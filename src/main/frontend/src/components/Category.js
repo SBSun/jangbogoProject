@@ -35,7 +35,7 @@ const CategoryBlock = styled.main`
   }
 `;
 
-const Category = ({ isLogin }) => {
+const Category = () => {
   const onCategoryClick = e => {
     console.log(e.target);
   };
@@ -53,7 +53,7 @@ const Category = ({ isLogin }) => {
           ))}
         </ul>
       </CategoryBlock>
-      <Navigation isLogin={isLogin} />
+      <Navigation />
     </>
   );
 };

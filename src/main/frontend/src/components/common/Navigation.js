@@ -26,7 +26,7 @@ const Menu = styled(NavLink)`
 `;
 
 const Navigation = () => {
-  const user = localStorage.getItem('user');
+  const user = sessionStorage.getItem('user');
   const isLogin = JSON.parse(user);
 
   return (

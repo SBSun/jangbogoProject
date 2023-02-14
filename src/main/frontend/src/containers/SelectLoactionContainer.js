@@ -23,7 +23,7 @@ const SelectLoactionContainer = () => {
   useEffect(() => {
     fetchData();
 
-    if (!window.sessionStorage.getItem('location-id')) {
+    if (!sessionStorage.getItem('location-id')) {
       storeDispatch(setIsVisible(true));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
