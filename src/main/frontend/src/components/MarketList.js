@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { getMarketList } from '../lib/api/list';
 
 const MarketListBlock = styled.ul`
   display: flex;
@@ -20,13 +22,33 @@ const MarketListBlock = styled.ul`
   }
 `;
 
-const MarketList = ({ markets }) => {
+const MarketList = () => {
+  const [markets, setMarkets] = useState([]);
+
+  const sessionLocationId = sessionStorage.getItem('location-id');
+  const { storeLocationId } = useSelector(({ location }) => ({
+    storeLocationId: location.id,
+  }));
+
+  const promise = getMarketList(sessionLocationId);
+  const fetchData = () => {
+    promise.then(res => {
+      setMarkets(res.marketList);
+    });
+  };
+
+  useEffect(() => {
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [storeLocationId]);
+
   const marketListItem = markets.map(market => (
     <li key={market.marketId}>
       <img src={''} alt='thumbnail' />
       <div className='market_name'>{market.name}</div>
     </li>
   ));
+
   return (
     <>
       <MarketListBlock>{marketListItem}</MarketListBlock>

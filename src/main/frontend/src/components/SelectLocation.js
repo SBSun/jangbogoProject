@@ -1,8 +1,9 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
+// CSS
 const LocationBlock = styled.div`
-  display: none;
+  display: ${({ isVisible }) => (isVisible ? `block` : `none`)};
   position: fixed;
   top: 0;
   left: 0;
@@ -10,12 +11,6 @@ const LocationBlock = styled.div`
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 1000;
-
-  ${props =>
-    props.isVisible &&
-    css`
-      display: block;
-    `}
 `;
 const LocationWrap = styled.div`
   position: relative;
@@ -61,7 +56,6 @@ const LocationList = styled.ul`
 `;
 
 const SelectLocation = ({ isVisible, locationList, onItemClick }) => {
-  console.log(locationList);
   const locationListItem = locationList.map((item, index) => (
     <li key={index} title={item.name} id={item.gu_Id} onClick={onItemClick}>
       {item.name}
