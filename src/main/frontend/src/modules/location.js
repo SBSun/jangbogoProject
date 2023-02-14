@@ -9,7 +9,7 @@ export const setIsVisible = createAction(SET_IS_VISIBLE);
 const initialState = {
   id: '',
   name: '',
-  isVisible: true,
+  isVisible: false,
 };
 
 const location = handleActions(

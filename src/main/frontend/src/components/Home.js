@@ -4,8 +4,8 @@ import Header from './common/Header';
 import Navigation from './common/Navigation';
 import Banner from '../assets/banner.PNG';
 import SelectLocationContainer from '../containers/SelectLoactionContainer';
-import CommodityListContainer from '../containers/CommodityListContainer';
-import MarketListContainer from '../containers/MarketListContainer';
+import CommodityList from './CommodityList';
+import MarketList from './MarketList';
 
 const HomeContainer = styled.main`
   margin: 56px 0;
@@ -47,9 +47,9 @@ const Home = () => {
       <HomeContainer>
         <img src={Banner} alt='banner' className='banner' />
         <h2 className='list_title'>품목 별로 최저가를 보여드려요.</h2>
-        <CommodityListContainer />
+        <CommodityList />
         <h2 className='list_title'>이 지역의 있는 매장들을 보여드려요.</h2>
-        <MarketListContainer />
+        <MarketList />
         <Contact>
           <div>
             <p>장보고 - 서울시 식자재 조회</p>
