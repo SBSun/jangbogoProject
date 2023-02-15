@@ -22,10 +22,6 @@ const HomeContainer = styled.main`
     font-weight: 500;
   }
 `;
-const HomeCommodity = styled(CommodityList)`
-  display: flex;
-  overflow-x: scroll;
-`;
 const Contact = styled.div`
   background-color: var(--light-gray);
   padding: 1rem;
@@ -51,7 +47,7 @@ const Home = () => {
       <HomeContainer>
         <img src={Banner} alt='banner' className='banner' />
         <h2 className='list_title'>품목 별로 최저가를 보여드려요.</h2>
-        <HomeCommodity curPage={1} recordSize={1000} />
+        <CommodityList curPage={1} recordSize={1000} />
         <h2 className='list_title'>이 지역의 있는 매장들을 보여드려요.</h2>
         <MarketList />
         <Contact>

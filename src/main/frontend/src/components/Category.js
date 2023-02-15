@@ -1,20 +1,21 @@
 import React, { useCallback, useReducer } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
 import Header from './common/Header';
 import Navigation from './common/Navigation';
 import SelectLocationContainer from '../containers/SelectLoactionContainer';
+import { useNavigate } from 'react-router-dom';
 
 // 상세 정보 리스트
 const meatDetialItems = [
-  { id: 2, name: '정육/달걀', text: '전체보기' },
+  { id: 2, name: '정육', text: '전체보기' },
   { id: 9, name: '달걀', text: '달걀' },
   { id: 10, name: '닭고기', text: '닭고기' },
   { id: 13, name: '돼지고기', text: '돼지고기' },
   { id: 21, name: '쇠고기', text: '쇠고기' },
 ];
 const seafoodDetailItems = [
-  { id: 3, name: '수산/해산물', text: '전체보기' },
+  { id: 3, name: '수산물', text: '전체보기' },
   { id: 6, name: '갈치', text: '갈치' },
   { id: 7, name: '건멸치', text: '건멸치' },
   { id: 8, name: '고등어', text: '고등어' },
@@ -57,15 +58,28 @@ const CategoryBlock = styled.main`
   }
 `;
 const DetailBlock = styled.ul`
-  display: ${({ isShow }) => (isShow ? `block` : `none`)};
+  visibility: hidden;
   background: var(--light-gray);
   color: var(--gray);
+  height: 0;
 
   > li {
     margin-left: 1rem;
     padding: 1rem;
     cursor: pointer;
+    height: 0;
   }
+
+  ${({ isShow }) =>
+    isShow &&
+    css`
+      visibility: visible;
+      height: auto;
+
+      > li {
+        height: auto;
+      }
+    `};
 `;
 
 // 체크박스 상태 관리 리듀서
@@ -84,6 +98,8 @@ const Category = () => {
     fruit: false,
   });
 
+  const navigate = useNavigate();
+
   // 체크박스 값을 리듀서에 최신화
   const handleCheck = useCallback(e => {
     dispatch(e.target);
@@ -91,22 +107,46 @@ const Category = () => {
 
   // 상세 보기 메뉴를 동적 출력
   const meatItemList = meatDetialItems.map(item => (
-    <li key={item.id} name={item.name}>
+    <li
+      key={item.id}
+      name={item.name}
+      onClick={() => {
+        navigate(`/category/${item.name}`);
+      }}
+    >
       {item.text}
     </li>
   ));
   const seafoodItemList = seafoodDetailItems.map(item => (
-    <li key={item.id} name={item.name}>
+    <li
+      key={item.id}
+      name={item.name}
+      onClick={() => {
+        navigate(`/category/${item.name}`);
+      }}
+    >
       {item.text}
     </li>
   ));
   const vegetaItemList = vegetaDetailItems.map(item => (
-    <li key={item.id} name={item.name}>
+    <li
+      key={item.id}
+      name={item.name}
+      onClick={() => {
+        navigate(`/category/${item.name}`);
+      }}
+    >
       {item.text}
     </li>
   ));
   const fruitItemList = fruitDetailItems.map(item => (
-    <li key={item.id} name={item.name}>
+    <li
+      key={item.id}
+      name={item.name}
+      onClick={() => {
+        navigate(`/category/${item.name}`);
+      }}
+    >
       {item.text}
     </li>
   ));

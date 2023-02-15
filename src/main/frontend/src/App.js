@@ -4,6 +4,7 @@ import GlobalStyle from './GlobalStyle';
 import SignUpPage from './pages/SignUpPage';
 import HomePage from './pages/HomePage';
 import CategoryPage from './pages/CategoryPage';
+import CatagoryDetailPage from './pages/CatagoryDetailPage';
 import SearchPage from './pages/SearchPage';
 import MyPagePage from './pages/MyPagePage';
 import LoginPage from './pages/LoginPage';
@@ -15,6 +16,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/category' element={<CategoryPage />} />
+        <Route path='/category/:name' element={<CatagoryDetailPage />} />
         <Route path='/search' element={<SearchPage />} />
         <Route path='/mypage' element={<MyPagePage />} />
         <Route path='/member/login' element={<LoginPage />} />
