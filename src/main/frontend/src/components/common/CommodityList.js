@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { getCommodityList } from '../lib/api/list';
+import { getCommodityList } from '../../lib/api/list';
 
 const CommodityListBlock = styled.ul`
-  display: flex;
-  overflow-x: scroll;
-
   > li {
     padding: 1rem;
   }
@@ -30,7 +27,13 @@ const CommodityListBlock = styled.ul`
   }
 `;
 
-const CommodityList = () => {
+const CommodityList = ({
+  modify,
+  curPage,
+  recordSize,
+  keyword,
+  searchType,
+}) => {
   const [commoditys, setCommoditys] = useState([]);
 
   const sessionLocationId = sessionStorage.getItem('location-id');
@@ -38,15 +41,15 @@ const CommodityList = () => {
     storeLocationId: location.id,
   }));
 
-  const promise = getCommodityList(sessionLocationId, 1, 1000);
+  const promise = getCommodityList(sessionLocationId, curPage, recordSize);
   const fetchData = () => {
-    promise.then(res => setCommoditys(res));
+    promise.then(res => setCommoditys(res.infoList));
   };
 
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [storeLocationId]);
+  }, [storeLocationId, curPage, keyword, searchType]);
 
   const commodityListItem = commoditys.map((commodity, index) => (
     <li key={index}>

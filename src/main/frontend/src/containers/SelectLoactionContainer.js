@@ -1,4 +1,4 @@
-import SelectLocation from '../components/SelectLocation';
+import SelectLocation from '../components/common/SelectLocation';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getLocationList } from '../lib/api/list';

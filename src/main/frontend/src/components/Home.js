@@ -4,8 +4,8 @@ import Header from './common/Header';
 import Navigation from './common/Navigation';
 import Banner from '../assets/banner.PNG';
 import SelectLocationContainer from '../containers/SelectLoactionContainer';
-import CommodityList from './CommodityList';
-import MarketList from './MarketList';
+import CommodityList from './common/CommodityList';
+import MarketList from './common/MarketList';
 
 const HomeContainer = styled.main`
   margin: 56px 0;
@@ -21,6 +21,10 @@ const HomeContainer = styled.main`
     font-size: 1.25rem;
     font-weight: 500;
   }
+`;
+const HomeCommodity = styled(CommodityList)`
+  display: flex;
+  overflow-x: scroll;
 `;
 const Contact = styled.div`
   background-color: var(--light-gray);
@@ -47,7 +51,7 @@ const Home = () => {
       <HomeContainer>
         <img src={Banner} alt='banner' className='banner' />
         <h2 className='list_title'>품목 별로 최저가를 보여드려요.</h2>
-        <CommodityList />
+        <HomeCommodity curPage={1} recordSize={1000} />
         <h2 className='list_title'>이 지역의 있는 매장들을 보여드려요.</h2>
         <MarketList />
         <Contact>
