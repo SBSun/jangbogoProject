@@ -4,8 +4,8 @@ import Header from './common/Header';
 import Navigation from './common/Navigation';
 import Banner from '../assets/banner.PNG';
 import SelectLocationContainer from '../containers/SelectLoactionContainer';
-import CommodityListContainer from '../containers/CommodityListContainer';
-import MarketListContainer from '../containers/MarketListContainer';
+import CommodityList from './common/CommodityList';
+import MarketList from './common/MarketList';
 
 const HomeContainer = styled.main`
   margin: 56px 0;
@@ -14,9 +14,13 @@ const HomeContainer = styled.main`
     width: 100vw;
     height: 40vh;
     border-bottom: 1px solid var(--light-gray);
+
+    @media (min-width: 415px) {
+      width: 412px;
+      height: 275px;
+    }
   }
   > .list_title {
-    /* margin: 1rem 0 0 0; */
     padding: 1rem;
     font-size: 1.25rem;
     font-weight: 500;
@@ -47,9 +51,9 @@ const Home = () => {
       <HomeContainer>
         <img src={Banner} alt='banner' className='banner' />
         <h2 className='list_title'>품목 별로 최저가를 보여드려요.</h2>
-        <CommodityListContainer />
+        <CommodityList curPage={1} recordSize={1000} />
         <h2 className='list_title'>이 지역의 있는 매장들을 보여드려요.</h2>
-        <MarketListContainer />
+        <MarketList />
         <Contact>
           <div>
             <p>장보고 - 서울시 식자재 조회</p>

@@ -40,7 +40,7 @@ const LoginContainer = () => {
               isLogin: true,
             })
           );
-          localStorage.setItem(
+          sessionStorage.setItem(
             'user',
             JSON.stringify({
               id: id,

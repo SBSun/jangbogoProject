@@ -12,11 +12,12 @@ const Container = styled.footer`
   justify-content: space-around;
   align-items: center;
   height: 2.5rem;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0;
   border-top: solid 1px var(--light-gray);
   background-color: white;
 `;
 const Menu = styled(NavLink)`
+  padding: 0 1rem;
   font-size: 1.75rem;
   color: var(--black);
 
@@ -26,7 +27,7 @@ const Menu = styled(NavLink)`
 `;
 
 const Navigation = () => {
-  const user = localStorage.getItem('user');
+  const user = sessionStorage.getItem('user');
   const isLogin = JSON.parse(user);
 
   return (

@@ -17,6 +17,18 @@ const GlobalStyle = createGlobalStyle`
     body {
       font-family: 'Noto Sans KR', sans-serif;
     }
+
+    @media (min-width: 415px) {
+      body {
+        width: 412px;
+        margin: auto;
+      }
+      body > div#root > header, 
+      body > div#root > footer {
+        width: 412px;
+        margin: auto;
+      }
+    }
 `;
 
 export default GlobalStyle;
