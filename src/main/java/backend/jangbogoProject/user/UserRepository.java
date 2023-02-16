@@ -8,10 +8,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, String> {
-    @Query(value = "SELECT * FROM user WHERE user_id = ?1", nativeQuery = true)
-    UserInfo findByUserId(String id);
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findById(Long id);
 
-    @Query(value = "SELECT user_id, password, name, address FROM user", nativeQuery = true)
-    List<UserInfo> findAllUser();
+    Optional<User> findByEmail(String email);
+
+    List<User> findAll();
+
+    Boolean existsByEmail(String email);
 }

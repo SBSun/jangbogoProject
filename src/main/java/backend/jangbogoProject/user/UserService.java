@@ -18,6 +18,7 @@ import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -32,12 +33,12 @@ public class UserService{
     //회원가입
     public UserResponseDto.Info signUp(UserRequestDto.SignUp signUp)
     {
-        if(userRepository.existsById(signUp.getId())){
-            throw new IllegalArgumentException("해당 아이디는 이미 가입되어 있는 아이디입니다.");
+        if(userRepository.existsByEmail(signUp.getEmail())){
+            throw new IllegalArgumentException("해당 이메일은 이미 가입되어 있는 이메일입니다.");
         }
 
         User user = User.builder()
-                .id(signUp.getId())
+                .email(signUp.getEmail())
                 .password(passwordEncoder.encode(signUp.getPassword()))
                 .name(signUp.getName())
                 .address(signUp.getAddress())
@@ -47,37 +48,29 @@ public class UserService{
         return UserResponseDto.Info.of(userRepository.save(user));
     }
 
-    public UserInfo getUserInfo(String id){
+    public UserResponseDto.Info getUserInfo(String email){
 
-        UserInfo info = userRepository.findByUserId(id);
+        UserResponseDto.Info info = UserResponseDto.Info.of(userRepository.findByEmail(email).get());
 
         return info;
     }
 
-    public UserResponseDto.InfoList findALlUser(){
-        List<UserInfo> infoList = userRepository.findAllUser();
+    public List<UserResponseDto.Info> findAllUser(){
+        List<User> userList = userRepository.findAll();
 
-        int state;
-        String message;
+        List<UserResponseDto.Info> infoList =
+                userList.stream()
+                        .map(user -> UserResponseDto.Info.of(user))
+                        .collect(Collectors.toList());
 
-        if(infoList.isEmpty()){
-            state = 404;
-            message = "데이터가 존재하지 않습니다.";
-        }else{
-            state = 200;
-            message = "데이터 반환 성공";
-        }
-
-        BasicResponse basicResponse = new BasicResponse(state, message);
-
-        return new UserResponseDto.InfoList(infoList, basicResponse);
+        return infoList;
     }
 
     @Transactional
     // 트랜잭션 안에서 데이터베이스의 데이터를 가져오면 이 데이터는 영속성 컨텍스트가 유지된 상태가 된다.
     //이 상태에서 해당 데이터의 값을 변경하면 트랜잭션이 끝나는 시점에 변경된 데이터를 데이터베이스에 반영해준다.
     public void updateUserInfo(UserInfo info){
-        User user = userRepository.findById(info.getUser_Id()).get();
+        User user = userRepository.findByEmail(info.getEmail()).get();
 
         if(user == null)
             new IllegalArgumentException("해당 회원은 존재하지 않습니다.");
@@ -90,7 +83,7 @@ public class UserService{
     public UserResponseDto.TokenInfo login(UserRequestDto.Login login){
         // 1. Login ID/PW 를 기반으로 Authentication 객체 생성
         // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(login.getId(), login.getPassword());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(login.getEmail(), login.getPassword());
 
         // 2. 실제 검증 (사용자 비밀번호 체크)이 이루어지는 부분
         // authenticate 매서드가 실행될 때 CustomUserDetailsService 에서 만든 loadUserByUsername 메서드가 실행
@@ -162,7 +155,7 @@ public class UserService{
         return new BasicResponse(HttpStatus.OK.value(), "로그아웃 되었습니다.");
     }
 
-    public boolean checkId(String id){
-        return !userRepository.existsById(id);
+    public boolean checkEmail(String email){
+        return !userRepository.existsByEmail(email);
     }
 }

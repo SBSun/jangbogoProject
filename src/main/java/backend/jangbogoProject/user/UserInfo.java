@@ -1,7 +1,7 @@
 package backend.jangbogoProject.user;
 
 public interface UserInfo {
-    String getUser_Id();
+    String getEmail();
     String getPassword();
     String getName();
     String getAddress();

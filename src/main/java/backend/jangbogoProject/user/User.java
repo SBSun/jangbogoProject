@@ -19,7 +19,10 @@ import java.util.Collection;
 public class User implements UserDetails {
     @Id
     @Column(name = "user_id")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(nullable = false)
+    private String email;
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
@@ -30,8 +33,9 @@ public class User implements UserDetails {
     private String authority;
 
     @Builder
-    public User(String id, String password, String name, String address, String authority) {
+    public User(Long id, String email, String password, String name, String address, String authority) {
         this.id = id;
+        this.email = email;
         this.password = password;
         this.name = name;
         this.address = address;
@@ -55,7 +59,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return id;
+        return email;
     }
 
     @Override

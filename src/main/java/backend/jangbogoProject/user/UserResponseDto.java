@@ -10,7 +10,8 @@ public class UserResponseDto {
     @Getter
     @Builder
     public static class Info{
-        private String user_id;
+        private Long user_id;
+        private String email;
         private String password;
         private String name;
         private String address;
@@ -18,25 +19,12 @@ public class UserResponseDto {
         public static Info of(User user){
             return Info.builder()
                     .user_id(user.getId())
+                    .email(user.getEmail())
                     .password(user.getPassword())
                     .name(user.getName())
                     .address(user.getAddress())
                     .build();
         }
-    }
-
-    @Getter
-    @AllArgsConstructor
-    public static class InfoList{
-        private List<UserInfo> infoList;
-        private BasicResponse basicResponse;
-    }
-
-    @Builder
-    @Getter
-    public static class Response {
-        private UserInfo info;
-        private BasicResponse basicResponse;
     }
 
     @Builder

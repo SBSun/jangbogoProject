@@ -11,7 +11,7 @@ public class UserRequestDto {
     @AllArgsConstructor
     @Builder
     public static class SignUp {
-        private String id;
+        private String email;
         private String password;
         private String name;
         private String address;
@@ -21,11 +21,11 @@ public class UserRequestDto {
     @Setter
     @NoArgsConstructor
     public static class Login {
-        private String id;
+        private String email;
         private String password;
 
         public UsernamePasswordAuthenticationToken toAuthentication() {
-            return new UsernamePasswordAuthenticationToken(id, password);
+            return new UsernamePasswordAuthenticationToken(email, password);
         }
     }
 

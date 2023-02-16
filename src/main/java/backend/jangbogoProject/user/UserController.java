@@ -4,6 +4,8 @@ import backend.jangbogoProject.dto.BasicResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class UserController {
@@ -11,13 +13,13 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/users")
-    public UserResponseDto.InfoList findAllUser(){
-        return userService.findALlUser();
+    public List<UserResponseDto.Info> findAllUser(){
+        return userService.findAllUser();
     }
 
-    @GetMapping("/user/checkId")
-    public boolean checkId(String id){
-        return userService.checkId(id);
+    @GetMapping("/user/checkEmail")
+    public boolean checkEmail(String email){
+        return userService.checkEmail(email);
     }
 
     @PostMapping("/user/signUpUser")

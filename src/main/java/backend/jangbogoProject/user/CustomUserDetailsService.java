@@ -15,20 +15,21 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String id) {
-        User user = userRepository.findById(id).get();
+    public UserDetails loadUserByUsername(String email) {
+        User user = userRepository.findByEmail(email).get();
 
         if (user != null) {
             // USER 라는 역할을 넣어준다.
             User authUser = User.builder()
                     .id(user.getId())
+                    .email(user.getEmail())
                     .password(user.getPassword())
                     .name(user.getName())
                     .address(user.getAddress())
                     .authority(user.getAuthority()).build();
             return authUser;
         } else {
-            throw new UsernameNotFoundException("can not find User : " + id);
+            throw new UsernameNotFoundException("can not find User : " + email);
         }
     }
 }

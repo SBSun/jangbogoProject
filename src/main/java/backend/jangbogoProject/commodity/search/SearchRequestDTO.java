@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @Getter
-@Setter
 @AllArgsConstructor
 public class SearchRequestDTO {
     private int curPage;        // 현재 페이지 번호

@@ -28,7 +28,7 @@ public class UserServiceTest {
 
     private UserRequestDto.SignUp signUpRequest(){
         return UserRequestDto.SignUp.builder()
-                .id("test@test.test")
+                .email("test@test.test")
                 .password("test Password")
                 .name("test Name")
                 .address("test Address")
@@ -37,7 +37,7 @@ public class UserServiceTest {
 
     private UserResponseDto.Info userResponse(){
         return UserResponseDto.Info.builder()
-                .user_id("test@test.test")
+                .email("test@test.test")
                 .password("test Password")
                 .name("test Name")
                 .address("test Address")
@@ -52,7 +52,7 @@ public class UserServiceTest {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
 
         User user = User.builder()
-                .id(request.getId())
+                .email(request.getEmail())
                 .password(encoder.encode(request.getPassword()))
                 .name(request.getName())
                 .address(request.getAddress())
@@ -66,7 +66,7 @@ public class UserServiceTest {
         UserResponseDto.Info info = userService.signUp(request);
 
         // then
-        assertThat(user.getId()).isEqualTo(request.getId());
+        assertThat(user.getEmail()).isEqualTo(request.getEmail());
         assertThat(encoder.matches(request.getPassword(), info.getPassword())).isTrue();
 
         // verify
@@ -75,7 +75,7 @@ public class UserServiceTest {
     }
 
     @Test
-    void 아이디_중복확인(){
+    void 이메일_중복확인(){
         // given
         UserRequestDto.SignUp signUp1 = signUpRequest();
         UserRequestDto.SignUp signUp2 = signUpRequest();
@@ -83,7 +83,7 @@ public class UserServiceTest {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
 
         User user = User.builder()
-                .id(signUp1.getId())
+                .email(signUp1.getEmail())
                 .password(encoder.encode(signUp1.getPassword()))
                 .name(signUp1.getName())
                 .address(signUp1.getAddress())
@@ -97,6 +97,6 @@ public class UserServiceTest {
         userService.signUp(signUp1);
 
         // then
-        assertThat(userService.checkId(signUp2.getId())).isFalse();
+        assertThat(userService.checkEmail(signUp2.getEmail())).isFalse();
     }
 }
