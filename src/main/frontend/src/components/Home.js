@@ -14,9 +14,13 @@ const HomeContainer = styled.main`
     width: 100vw;
     height: 40vh;
     border-bottom: 1px solid var(--light-gray);
+
+    @media (min-width: 415px) {
+      width: 412px;
+      height: 275px;
+    }
   }
   > .list_title {
-    /* margin: 1rem 0 0 0; */
     padding: 1rem;
     font-size: 1.25rem;
     font-weight: 500;

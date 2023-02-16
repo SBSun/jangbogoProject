@@ -20,20 +20,23 @@ const DefaultBlock = styled.header`
   align-items: center;
   justify-content: center;
   height: 2.5rem;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0;
   font-size: 1.25rem;
   font-weight: 600;
   background-color: var(--green);
   color: white;
 
   > span {
+    padding: 0 1rem;
     flex: 1;
   }
   > h2 {
+    padding: 0 1rem;
     flex: 8;
     text-align: center;
   }
   > svg {
+    padding: 0 1rem;
     flex: 1;
     font-size: 2rem;
     cursor: pointer;
@@ -45,13 +48,16 @@ const WhiteBlock = styled(DefaultBlock)`
   color: var(--black);
 
   > svg {
+    padding: 0 1rem;
     flex: 1;
   }
   > h2 {
+    padding: 0 1rem;
     text-align: center;
     flex: 8;
   }
   > span {
+    padding: 0 1rem;
     flex: 1;
   }
 `;
@@ -59,10 +65,12 @@ const LogoBlock = styled(DefaultBlock)`
   justify-content: space-between;
 
   > img {
+    padding: 0 1rem;
     width: 6rem;
     height: 3rem;
   }
   > svg {
+    padding: 0 1rem;
     flex: none;
     font-size: 2rem;
     cursor: pointer;
