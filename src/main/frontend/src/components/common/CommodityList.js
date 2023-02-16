@@ -7,27 +7,36 @@ import {
   getSearchList,
 } from '../../lib/api/list';
 
-const CommodityListBlock = styled.ul`
+const CommodityXScrollBlock = styled.ul`
   display: flex;
   overflow-x: auto;
+`;
+const CommodityYScrollBlock = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
 
   li {
-    padding: 1rem;
+    margin: 0 auto;
+    width: 130px;
   }
-  li > img {
+`;
+const CommodityItemStyled = styled.li`
+  padding: 1rem;
+
+  img {
     width: 130px;
     height: 160px;
   }
-  li > .commodity_info > .market_name {
+  .commodity_info > .market_name {
     color: var(--red);
     font-size: 14px;
   }
-  li > .commodity_info > .commodity_name {
+  .commodity_info > .commodity_name {
     margin: 0.25rem 0 0 0;
     font-weight: 600;
     font-size: 16px;
   }
-  li > .commodity_info > .commodity_price {
+  .commodity_info > .commodity_price {
     margin: 0.5rem 0 0 0;
     color: var(--yellow);
     font-size: 16px;
@@ -72,7 +81,7 @@ const CommodityList = ({ modify, curPage, recordSize, keyword }) => {
 
   // 받아온 품목 데이터 동적 생성
   const commodityListItem = commoditys.map((commodity, index) => (
-    <li key={index}>
+    <CommodityItemStyled key={index}>
       <img src={''} alt='thumbnail' />
       <dl className='commodity_info'>
         <dd className='market_name'>{commodity.marketName}</dd>
@@ -80,12 +89,33 @@ const CommodityList = ({ modify, curPage, recordSize, keyword }) => {
         <dd className='commodity_price'>{commodity.remarks}</dd>
         <dd className='commodity_price'>{commodity.price}원</dd>
       </dl>
-    </li>
+    </CommodityItemStyled>
   ));
+
+  // modify 값에 따라 다르게 품목 출력
+  const HandleCommodityStyled = () => {
+    switch (modify) {
+      case 'CATEGORY': {
+        return (
+          <CommodityYScrollBlock>{commodityListItem}</CommodityYScrollBlock>
+        );
+      }
+      case 'SEARCH': {
+        return (
+          <CommodityYScrollBlock>{commodityListItem}</CommodityYScrollBlock>
+        );
+      }
+      default: {
+        return (
+          <CommodityXScrollBlock>{commodityListItem}</CommodityXScrollBlock>
+        );
+      }
+    }
+  };
 
   return (
     <>
-      <CommodityListBlock>{commodityListItem}</CommodityListBlock>
+      <HandleCommodityStyled />
     </>
   );
 };

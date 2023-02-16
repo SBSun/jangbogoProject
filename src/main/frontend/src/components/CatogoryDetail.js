@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import SelectLoactionContainer from '../containers/SelectLoactionContainer';
@@ -13,6 +13,7 @@ const CategoryDetailBlock = styled.main`
 
 const CatogoryDetail = () => {
   const params = useParams();
+  const [curPage, setCurPage] = useState(1);
 
   return (
     <>
@@ -21,7 +22,7 @@ const CatogoryDetail = () => {
       <CategoryDetailBlock>
         <CommodityList
           modify={'CATEGORY'}
-          curPage={1}
+          curPage={curPage}
           recordSize={20}
           keyword={params.name}
         />

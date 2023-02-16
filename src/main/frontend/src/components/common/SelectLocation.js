@@ -6,11 +6,15 @@ const LocationBlock = styled.div`
   display: ${({ isVisible }) => (isVisible ? `block` : `none`)};
   position: fixed;
   top: 0;
-  left: 0;
   width: 100%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 1000;
+
+  @media (min-width: 415px) {
+    margin: 0 auto;
+    width: 412px;
+  }
 `;
 const LocationWrap = styled.div`
   position: relative;
@@ -37,21 +41,31 @@ const LocationPopUp = styled.div`
     text-align: center;
     font-size: 1.25rem;
     font-weight: 800;
-    padding: 1rem;
+    padding: 1rem 0;
     color: white;
     background: var(--green);
+
+    @media (min-width: 415px) {
+      margin: 0 auto;
+      width: 412px;
+    }
   }
 `;
 const LocationList = styled.ul`
   margin: 53px 0 0 0;
-  padding: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: flex-start;
 
-  > li {
-    padding: 1rem;
-    width: 30%;
-    display: inline-block;
-    text-align: center;
+  li {
+    width: 130px;
+    margin: 0 auto;
+    padding: 1.25rem;
     cursor: pointer;
+  }
+  li:last-child {
+    margin-right: auto;
   }
 `;
 
