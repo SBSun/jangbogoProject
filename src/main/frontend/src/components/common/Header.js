@@ -89,7 +89,7 @@ const Header = ({ modify, title }) => {
     storeDispatch(setIsVisible(!isVisible));
   };
 
-  const HandleModify = () => {
+  const HandleHeaderStyled = () => {
     switch (modify) {
       case 'LOGO_BLOCK':
         return (
@@ -130,7 +130,7 @@ const Header = ({ modify, title }) => {
 
   return (
     <>
-      <HandleModify />
+      <HandleHeaderStyled />
     </>
   );
 };

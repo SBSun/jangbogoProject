@@ -53,14 +53,19 @@ const LocationPopUp = styled.div`
 `;
 const LocationList = styled.ul`
   margin: 53px 0 0 0;
-  padding: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: flex-start;
 
-  > li {
-    padding: 1rem;
-    width: 30%;
-    display: inline-block;
-    text-align: center;
+  li {
+    width: 130px;
+    margin: 0 auto;
+    padding: 1.25rem;
     cursor: pointer;
+  }
+  li:last-child {
+    margin-right: auto;
   }
 `;
 
