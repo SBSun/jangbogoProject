@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @NoArgsConstructor
+@Getter
 @Entity
 public class Review extends BaseTimeEntity {
     @Id

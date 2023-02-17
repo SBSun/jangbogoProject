@@ -66,7 +66,7 @@ public class UserControllerTest {
 
     private UserRequestDto.SignUp signUpRequest(){
         return UserRequestDto.SignUp.builder()
-                .id("test@test.test")
+                .email("test@test.test")
                 .password("test Password")
                 .name("test Name")
                 .address("test Address")
@@ -75,7 +75,7 @@ public class UserControllerTest {
 
     private UserResponseDto.Info userResponse(){
         return UserResponseDto.Info.builder()
-                .user_id("test@test.test")
+                .email("test@test.test")
                 .password("test Password")
                 .name("test Name")
                 .address("test Address")
