@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 public class ReviewService {
     private final ReviewRepository reviewRepository;
 
-    public Long createReview(ReviewRequestDTO.Save saveDTO){
-        Review review = saveDTO.toEntity();
+    public ReviewResponseDTO.Info createReview(ReviewRequestDTO.Create createDTO){
+        Review review = createDTO.toEntity();
 
-        return reviewRepository.save(review).getId();
+        return ReviewResponseDTO.Info.of(reviewRepository.save(review));
     }
 }
