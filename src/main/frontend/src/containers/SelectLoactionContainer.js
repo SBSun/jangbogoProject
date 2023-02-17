@@ -15,8 +15,8 @@ const SelectLoactionContainer = () => {
 
   const promise = getLocationList();
   const fetchData = async () => {
-    await promise.then(res => {
-      setLocationList(res);
+    await promise.then(data => {
+      setLocationList(data);
     });
   };
 

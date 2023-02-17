@@ -33,5 +33,5 @@ export const getMarketList = async id => {
 // 지역 리스트 API
 export const getLocationList = async () => {
   const res = await client.get(`/gu/findAllGuInfo`);
-  return res.data.guInfoList;
+  return res.data;
 };
