@@ -72,7 +72,7 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
   }));
 
   // modify에 따라 다르게 품목을 출력
-  const selectAPI = () => {
+  const selectAPI = useCallback(() => {
     switch (modify) {
       case 'CATEGORY': {
         return getCatagoryList(sessionLocationId, curPage, recordSize, keyword);
@@ -84,7 +84,8 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
         return getCommodityList(sessionLocationId, curPage, recordSize);
       }
     }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [storeLocationId]);
 
   // API Fetch
   const promise = selectAPI();
