@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import {
@@ -42,10 +42,28 @@ const CommodityItemStyled = styled.li`
     font-size: 16px;
   }
 `;
+const CommoditySelectPage = styled.ul`
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-const CommodityList = ({ modify, curPage, recordSize, keyword }) => {
+  li {
+    padding: 1rem;
+    cursor: pointer;
+  }
+  li:nth-child(${({ curPage }) => curPage}) {
+    color: var(--green);
+  }
+`;
+
+const CommodityList = ({ modify, recordSize, keyword }) => {
   // 품목 데이터 상태
   const [commoditys, setCommoditys] = useState([]);
+
+  // 페이지 상태
+  const [curPage, setCurPage] = useState(1);
+  const [endPage, setEndPage] = useState(1);
 
   // 지역 ID 가져오기
   const sessionLocationId = sessionStorage.getItem('location-id');
@@ -71,7 +89,10 @@ const CommodityList = ({ modify, curPage, recordSize, keyword }) => {
   // API Fetch
   const promise = selectAPI();
   const fetchData = () => {
-    promise.then(data => setCommoditys(data.infoList));
+    promise.then(data => {
+      setCommoditys(data.infoList);
+      setEndPage(data.pageResponseDTO.endPage);
+    });
   };
 
   useEffect(() => {
@@ -92,17 +113,48 @@ const CommodityList = ({ modify, curPage, recordSize, keyword }) => {
     </CommodityItemStyled>
   ));
 
+  // 품목 페이지 이동
+  const onPageClick = useCallback(
+    e => {
+      setCurPage(e.target.value);
+      window.scrollTo(0, 0);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [curPage]
+  );
+
+  // 페이지 버튼 배열 생성
+  const pageArray = Array(endPage)
+    .fill()
+    .map((value, index) => index + 1);
+  // 데이터 양에 따른 페이지 이동 버튼 동적 생성
+  const pageButtons = pageArray.map(element => (
+    <li key={element} value={element} onClick={onPageClick}>
+      {element}
+    </li>
+  ));
+
   // modify 값에 따라 다르게 품목 출력
   const HandleCommodityStyled = () => {
     switch (modify) {
       case 'CATEGORY': {
         return (
-          <CommodityYScrollBlock>{commodityListItem}</CommodityYScrollBlock>
+          <>
+            <CommodityYScrollBlock>{commodityListItem}</CommodityYScrollBlock>
+            <CommoditySelectPage curPage={curPage}>
+              {pageButtons}
+            </CommoditySelectPage>
+          </>
         );
       }
       case 'SEARCH': {
         return (
-          <CommodityYScrollBlock>{commodityListItem}</CommodityYScrollBlock>
+          <>
+            <CommodityYScrollBlock>{commodityListItem}</CommodityYScrollBlock>
+            <CommoditySelectPage curPage={curPage}>
+              {pageButtons}
+            </CommoditySelectPage>
+          </>
         );
       }
       default: {
