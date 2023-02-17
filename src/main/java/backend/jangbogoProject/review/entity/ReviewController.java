@@ -23,4 +23,9 @@ public class ReviewController {
     private ReviewResponseDTO.Info editReview(@RequestBody ReviewRequestDTO.Edit editDTO){
         return reviewService.editReview(editDTO);
     }
+
+    @DeleteMapping("/delete")
+    private void deleteReview(Long review_id){
+        reviewService.deleteReview(review_id);
+    }
 }

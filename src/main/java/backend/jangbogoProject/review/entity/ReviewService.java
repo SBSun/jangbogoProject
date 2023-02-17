@@ -33,4 +33,12 @@ public class ReviewService {
 
         return ReviewResponseDTO.Info.of(review);
     }
+
+    @Transactional
+    public void deleteReview(Long review_id){
+        if(!reviewRepository.existsById(review_id))
+            throw new IllegalArgumentException("해당 리뷰가 존재하지 않습니다. " + review_id);
+
+        reviewRepository.deleteById(review_id);
+    }
 }
