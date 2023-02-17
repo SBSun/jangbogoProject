@@ -32,8 +32,8 @@ const MarketList = () => {
 
   const promise = getMarketList(sessionLocationId);
   const fetchData = () => {
-    promise.then(res => {
-      setMarkets(res.marketList);
+    promise.then(data => {
+      setMarkets(data);
     });
   };
 

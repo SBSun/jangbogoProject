@@ -27,16 +27,16 @@ const LoginForm = styled.form`
   }
 `;
 
-const Login = ({ id, password, handleInputs, onSubmit, moveSignUp }) => {
+const Login = ({ email, password, handleInputs, onSubmit, moveSignUp }) => {
   return (
     <>
       <Header modify={'WHITE_BLOCK'} title={'로그인'} />
       <LoginForm>
         <input
           type={'text'}
-          name={'id'}
+          name={'email'}
           placeholder={'이메일을 입력해주세요.'}
-          value={id}
+          value={email}
           onChange={handleInputs}
         />
         <input
