@@ -1,13 +1,9 @@
 package backend.jangbogoProject.user;
 
-import backend.jangbogoProject.category.Category;
-import backend.jangbogoProject.dto.BasicResponse;
 import backend.jangbogoProject.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -103,8 +99,7 @@ public class UserService{
     public UserResponseDto.TokenInfo reissue(UserRequestDto.Reissue reissue) {
         // 1. Refresh Token 검증
         if (!jwtTokenProvider.validateToken(reissue.getRefreshToken())) {
-            BasicResponse basicResponse = new BasicResponse(HttpStatus.BAD_REQUEST.value(), "Refresh Token 정보가 유효하지 않습니다.");
-            return new UserResponseDto.TokenInfo(basicResponse);
+            throw new IllegalArgumentException("Refresh Token 정보가 유효하지 않습니다.");
         }
 
         // 2. Access Token 에서 User email 를 가져옵니다.
@@ -114,12 +109,11 @@ public class UserService{
         String refreshToken = (String)redisTemplate.opsForValue().get("RT:" + authentication.getName());
         // 로그아웃되어 Redis에 Refresh Token이 존재하지 않는 경우
         if(ObjectUtils.isEmpty(refreshToken)){
-            BasicResponse basicResponse = new BasicResponse(HttpStatus.BAD_REQUEST.value(), "잘못된 요청입니다.");
-            return new UserResponseDto.TokenInfo(basicResponse);
+            throw new IllegalArgumentException("잘못된 요청입니다.");
         }
+
         if(!refreshToken.equals(reissue.getRefreshToken())) {
-            BasicResponse basicResponse = new BasicResponse(HttpStatus.BAD_REQUEST.value(), "Refresh Token 정보가 일치하지 않습니다.");
-            return new UserResponseDto.TokenInfo(basicResponse);
+            throw new IllegalArgumentException("Refresh Token 정보가 일치하지 않습니다.");
         }
 
         // 4. 새로운 토큰 생성
@@ -132,10 +126,10 @@ public class UserService{
         return tokenInfo;
     }
 
-    public BasicResponse logout(UserRequestDto.Logout logout) {
+    public String logout(UserRequestDto.Logout logout) {
         // 1. Access Token 검증
         if (!jwtTokenProvider.validateToken(logout.getAccessToken())) {
-            return new BasicResponse(HttpStatus.BAD_REQUEST.value(), "잘못된 요청입니다.");
+            return "잘못된 요청입니다.";
         }
 
         // 2. Access Token 에서 User email 을 가져옵니다.
@@ -152,7 +146,7 @@ public class UserService{
         redisTemplate.opsForValue()
                 .set(logout.getAccessToken(), "logout", expiration, TimeUnit.MILLISECONDS);
 
-        return new BasicResponse(HttpStatus.OK.value(), "로그아웃 되었습니다.");
+        return "로그아웃 되었습니다.";
     }
 
     public boolean checkEmail(String email){

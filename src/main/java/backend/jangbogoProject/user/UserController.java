@@ -1,6 +1,5 @@
 package backend.jangbogoProject.user;
 
-import backend.jangbogoProject.dto.BasicResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,7 +39,7 @@ public class UserController {
     }
 
     @PostMapping("/user/logout")
-    public BasicResponse logout(@RequestBody UserRequestDto.Logout logout) {
+    public String logout(@RequestBody UserRequestDto.Logout logout) {
         return userService.logout(logout);
     }
 }

@@ -1,6 +1,5 @@
 package backend.jangbogoProject.user;
 
-import backend.jangbogoProject.dto.BasicResponse;
 import lombok.*;
 
 import java.util.List;
@@ -35,10 +34,5 @@ public class UserResponseDto {
         private String accessToken;
         private String refreshToken;
         private Long refreshTokenExpirationTime;
-        private BasicResponse basicResponse;
-
-        public TokenInfo(BasicResponse basicResponse){
-            this.basicResponse = basicResponse;
-        }
     }
 }

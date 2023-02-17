@@ -1,12 +1,12 @@
 package backend.jangbogoProject.serviceTest;
 
 import backend.jangbogoProject.commodity.gu.GuInfoProjection;
-import backend.jangbogoProject.commodity.gu.GuResponseDto;
 import backend.jangbogoProject.commodity.gu.GuService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 @SpringBootTest
 public class GuServiceTest {
@@ -16,9 +16,9 @@ public class GuServiceTest {
 
     @Test
     public void findAllGuInfo(){
-        GuResponseDto.GuInfoList guInfoList = guService.findAllGuInfo();
+        List<GuInfoProjection> guInfoList = guService.findAllGuInfo();
 
-        for(GuInfoProjection guInfoProjection : guInfoList.getGuInfoList()){
+        for(GuInfoProjection guInfoProjection : guInfoList){
             System.out.println(guInfoProjection.getGu_Id() + ", " + guInfoProjection.getName());
         }
     }
