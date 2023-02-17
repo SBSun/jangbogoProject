@@ -22,7 +22,7 @@ public class ReviewServiceTest {
     @Test
     void createReview(){
         // given
-        ReviewRequestDTO.Create request = requestReview();
+        ReviewRequestDTO.Create request = createRequest();
 
         Review requestReview = request.toEntity();
 
@@ -34,11 +34,11 @@ public class ReviewServiceTest {
 
         // then
         assertThat(requestReview.getContent()).isEqualTo(createdReview.getContent());
-        System.out.println(requestReview.getContent() + ", " + createdReview.getContent());
+
         verify(reviewRepository, times(1)).save(any(Review.class));
     }
 
-    private ReviewRequestDTO.Create requestReview(){
+    private ReviewRequestDTO.Create createRequest(){
         return ReviewRequestDTO.Create.builder()
                 .market_id(1L)
                 .user_id(1L)

@@ -1,5 +1,6 @@
 package backend.jangbogoProject.review.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,5 +27,13 @@ public class ReviewRequestDTO {
                     .content(content)
                     .build();
         }
+    }
+
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Edit{
+        private Long review_id;
+        private String content;
     }
 }

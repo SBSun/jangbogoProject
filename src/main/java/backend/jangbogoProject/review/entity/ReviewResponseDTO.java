@@ -1,5 +1,6 @@
 package backend.jangbogoProject.review.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -13,7 +14,9 @@ public class ReviewResponseDTO {
         private Long market_id;
         private Long user_id;
         private String content;
+        @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
         private LocalDateTime createdDate;
+        @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
         private LocalDateTime lastModifiedDate;
 
         public static ReviewResponseDTO.Info of(Review review){

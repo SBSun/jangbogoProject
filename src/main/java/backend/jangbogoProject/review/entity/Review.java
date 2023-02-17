@@ -5,9 +5,9 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@NoArgsConstructor
 @Getter
 @Entity
+@NoArgsConstructor
 public class Review extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +20,7 @@ public class Review extends BaseTimeEntity {
     @Column(nullable = false, name = "user_id")
     private Long user_id;
 
-    @Column
+    @Column(nullable = false)
     private String content;
 
     @Builder
@@ -28,6 +28,10 @@ public class Review extends BaseTimeEntity {
         this.id = id;
         this.market_id = market_id;
         this.user_id = user_id;
+        this.content = content;
+    }
+
+    public void update(String content){
         this.content = content;
     }
 }

@@ -29,6 +29,18 @@ public class ReviewRepositoryTest {
         assertThat(createdReview.getContent()).isEqualTo(review.getContent());
     }
 
+    @Test
+    void findById(){
+        // given
+        Long id = 1L;
+
+        // when
+        Review review = reviewRepository.findById(id).get();
+
+        // then
+        assertThat(review).isNotNull();
+    }
+
     private Review review(){
         return Review.builder()
                 .market_id(1L)
