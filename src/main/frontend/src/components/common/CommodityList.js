@@ -71,7 +71,7 @@ const CommodityList = ({ modify, curPage, recordSize, keyword }) => {
   // API Fetch
   const promise = selectAPI();
   const fetchData = () => {
-    promise.then(res => setCommoditys(res.infoList));
+    promise.then(data => setCommoditys(data.infoList));
   };
 
   useEffect(() => {

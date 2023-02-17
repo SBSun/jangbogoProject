@@ -53,7 +53,7 @@ const SignUpButton = styled(Button)`
 `;
 
 const SignUp = ({
-  id,
+  email,
   password,
   passwordConfirm,
   name,
@@ -74,7 +74,7 @@ const SignUp = ({
             <SignUpInput
               name='EMAIL'
               placeholder='name@example.com'
-              value={id}
+              value={email}
               onChange={handleInputs}
             />
             <SignUpButton

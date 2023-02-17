@@ -14,10 +14,10 @@ function reducer(state, action) {
 
 const LoginContainer = () => {
   const [state, dispatch] = useReducer(reducer, {
-    id: '',
+    email: '',
     password: '',
   });
-  const { id, password } = state;
+  const { email, password } = state;
 
   const storeDispatch = useDispatch();
   const navigate = useNavigate();
@@ -28,14 +28,14 @@ const LoginContainer = () => {
   };
   const onSubmit = e => {
     e.preventDefault();
-    const promise = login({ id, password });
+    const promise = login({ email, password });
     const fetchData = () => {
       promise
         .then(res => {
           console.log(res);
           storeDispatch(
             postLogin({
-              id: id,
+              email: email,
               accessToken: res.data.accessToken,
               isLogin: true,
             })
@@ -43,7 +43,7 @@ const LoginContainer = () => {
           sessionStorage.setItem(
             'user',
             JSON.stringify({
-              id: id,
+              email: email,
               refreshToken: res.data.refreshToken,
             })
           );
@@ -60,7 +60,7 @@ const LoginContainer = () => {
 
   return (
     <Login
-      id={id}
+      email={email}
       password={password}
       handleInputs={handleInputs}
       onSubmit={onSubmit}

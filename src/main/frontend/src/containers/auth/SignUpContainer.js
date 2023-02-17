@@ -10,7 +10,7 @@ function reducer(state, action) {
     case 'EMAIL': {
       return {
         ...state,
-        id: action.value,
+        email: action.value,
       };
     }
     case 'PASSWORD': {
@@ -45,21 +45,21 @@ function reducer(state, action) {
 
 const SignUpContainer = () => {
   const [state, dispatch] = useReducer(reducer, {
-    id: '',
+    email: '',
     password: '',
     passwordConfirm: '',
     name: '',
     address: '',
   });
-  const { id, password, passwordConfirm, name, address } = state;
+  const { email, password, passwordConfirm, name, address } = state;
 
   const [validations, setValidations] = useState({
     duplicate: {
-      id: false,
+      email: false,
       password: false,
     },
     regExp: {
-      id: false,
+      email: false,
       password: false,
     },
     isComfirm: {
@@ -74,30 +74,30 @@ const SignUpContainer = () => {
     dispatch(e.target);
   };
   const onCheckEmail = () => {
-    if (id === '') {
+    if (email === '') {
       setValidations(() => ({
         ...validations,
         duplicate: {
           ...validations.duplicate,
-          id: false,
+          email: false,
         },
       }));
       return alert('이메일을 입력해주세요.');
     }
-    if (validations.duplicate.id) {
+    if (validations.duplicate.email) {
       alert('사용 가능한 이메일입니다.');
     } else {
       alert('중복된 이메일입니다.');
     }
 
-    const promise = checkEmail({ id });
+    const promise = checkEmail({ email });
     const fetchData = async () => {
-      await promise.then(res => {
+      await promise.then(data => {
         setValidations(() => ({
           ...validations,
           duplicate: {
             ...validations.duplicate,
-            id: res,
+            email: data,
           },
         }));
       });
@@ -108,14 +108,14 @@ const SignUpContainer = () => {
     e.preventDefault();
     storeDispatch(
       postRegister({
-        id: id,
+        email: email,
         password: password,
         name: name,
         address: address,
       })
     );
 
-    if (id === '') {
+    if (email === '') {
       return alert('이메일을 입력해주세요.');
     } else if (password === '' || passwordConfirm === '') {
       return alert('비밀번호를 입력해주세요.');
@@ -129,7 +129,7 @@ const SignUpContainer = () => {
       return alert('비밀번호가 다릅니다.');
     }
 
-    const promise = signUp({ id, password, name, address });
+    const promise = signUp({ email, password, name, address });
     const fetchData = () => {
       promise
         .then(res => {
@@ -148,7 +148,7 @@ const SignUpContainer = () => {
 
   return (
     <SignUp
-      id={id}
+      email={email}
       password={password}
       passwordConfirm={passwordConfirm}
       name={name}
