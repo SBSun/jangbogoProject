@@ -1,6 +1,7 @@
 package backend.jangbogoProject.user;
 
 import backend.jangbogoProject.jwt.JwtTokenProvider;
+import backend.jangbogoProject.utils.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.redis.core.RedisTemplate;
@@ -12,9 +13,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+
+import static backend.jangbogoProject.jwt.JwtAuthenticationFilter.AUTHORIZATION_HEADER;
 
 
 @Service
@@ -26,7 +30,7 @@ public class UserService{
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
 
-    //회원가입
+    @Transactional
     public UserResponseDto.Info signUp(UserRequestDto.SignUp signUp)
     {
         if(userRepository.existsByEmail(signUp.getEmail())){
@@ -65,15 +69,29 @@ public class UserService{
     @Transactional
     // 트랜잭션 안에서 데이터베이스의 데이터를 가져오면 이 데이터는 영속성 컨텍스트가 유지된 상태가 된다.
     //이 상태에서 해당 데이터의 값을 변경하면 트랜잭션이 끝나는 시점에 변경된 데이터를 데이터베이스에 반영해준다.
-    public void updateUserInfo(UserInfo info){
-        User user = userRepository.findByEmail(info.getEmail()).get();
+    public void editUser(UserRequestDto.Edit edit){
+        String loginUserEmail = SecurityUtil.getCurrentUserEmail().get();
 
-        if(user == null)
-            new IllegalArgumentException("해당 회원은 존재하지 않습니다.");
+        if(loginUserEmail == null){
+            throw new RuntimeException("로그인 유저 정보가 없습니다.");
+        }
 
-        String encPassword = passwordEncoder.encode(info.getPassword());
+        User user = userRepository.findByEmail(loginUserEmail).get();
 
-        user.update(encPassword, info.getName(), info.getAddress());
+        String encPassword = passwordEncoder.encode(edit.getPassword());
+
+        user.update(encPassword, edit.getName(), edit.getName());
+    }
+
+    @Transactional
+    public Long deleteUser(){
+        String loginUserEmail = SecurityUtil.getCurrentUserEmail().get();
+
+        if(loginUserEmail == null){
+            throw new RuntimeException("로그인 유저 정보가 없습니다.");
+        }
+
+        return userRepository.deleteByEmail(loginUserEmail);
     }
 
     public UserResponseDto.TokenInfo login(UserRequestDto.Login login){
@@ -126,14 +144,16 @@ public class UserService{
         return tokenInfo;
     }
 
-    public String logout(UserRequestDto.Logout logout) {
+    public String logout(HttpServletRequest request) {
+        String accessToken = request.getHeader(AUTHORIZATION_HEADER).substring(7); // "Bearer " 이후의 ACCESS_TOKEN 문자열 반환
+
         // 1. Access Token 검증
-        if (!jwtTokenProvider.validateToken(logout.getAccessToken())) {
-            return "잘못된 요청입니다.";
+        if (!jwtTokenProvider.validateToken(accessToken)) {
+            throw new IllegalArgumentException("로그아웃 : 유효하지 않은 토큰입니다.");
         }
 
         // 2. Access Token 에서 User email 을 가져옵니다.
-        Authentication authentication = jwtTokenProvider.getAuthentication(logout.getAccessToken());
+        Authentication authentication = jwtTokenProvider.getAuthentication(accessToken);
 
         // 3. Redis 에서 해당 User email 로 저장된 Refresh Token 이 있는지 여부를 확인 후 있을 경우 삭제합니다.
         if (redisTemplate.opsForValue().get("RT:" + authentication.getName()) != null) {
@@ -142,9 +162,9 @@ public class UserService{
         }
 
         // 4. 해당 Access Token 유효시간 가지고 와서 BlackList 로 저장하기
-        Long expiration = jwtTokenProvider.getExpiration(logout.getAccessToken());
+        Long expiration = jwtTokenProvider.getExpiration(accessToken);
         redisTemplate.opsForValue()
-                .set(logout.getAccessToken(), "logout", expiration, TimeUnit.MILLISECONDS);
+                .set(accessToken, "logout", expiration, TimeUnit.MILLISECONDS);
 
         return "로그아웃 되었습니다.";
     }

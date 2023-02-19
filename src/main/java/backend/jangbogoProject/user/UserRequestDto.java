@@ -30,6 +30,15 @@ public class UserRequestDto {
     }
 
     @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Edit{
+        private String password;
+        private String name;
+        private String address;
+    }
+
+    @Getter
     @Setter
     public static class Reissue {
         private String accessToken;

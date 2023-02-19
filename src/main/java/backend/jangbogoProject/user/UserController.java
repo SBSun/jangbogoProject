@@ -1,8 +1,12 @@
 package backend.jangbogoProject.user;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -26,6 +30,20 @@ public class UserController {
         return userService.signUp(signUp);
     }
 
+    @PatchMapping("/user/edit")
+    public ResponseEntity<String> editUser(@RequestBody UserRequestDto.Edit edit){
+        userService.editUser(edit);
+
+        return new ResponseEntity<>("회원 정보 수정 성공", HttpStatus.OK);
+    }
+
+    @DeleteMapping("/user/delete")
+    public ResponseEntity<String> deleteUser(HttpServletRequest request){
+        userService.logout(request);
+        userService.deleteUser();
+        return new ResponseEntity<>("회원 탈퇴 성공", HttpStatus.OK);
+    }
+
     @PostMapping("/user/login")
     public UserResponseDto.TokenInfo login(@RequestBody UserRequestDto.Login login) {
         UserResponseDto.TokenInfo tokenInfo = userService.login(login);
@@ -39,7 +57,7 @@ public class UserController {
     }
 
     @PostMapping("/user/logout")
-    public String logout(@RequestBody UserRequestDto.Logout logout) {
-        return userService.logout(logout);
+    public String logout(HttpServletRequest request) {
+        return userService.logout(request);
     }
 }
