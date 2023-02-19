@@ -7,6 +7,7 @@ import {
   getSearchList,
 } from '../../lib/api/list';
 
+// CSS
 const CommodityXScrollBlock = styled.ul`
   display: flex;
   overflow-x: auto;
@@ -85,7 +86,7 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [storeLocationId]);
+  }, [storeLocationId, keyword]);
 
   // API Fetch
   const promise = selectAPI();

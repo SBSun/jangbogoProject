@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsVisible } from '../../modules/location';
 
+// CSS
 const DefaultBlock = styled.header`
   position: fixed;
   top: 0;
@@ -26,16 +27,16 @@ const DefaultBlock = styled.header`
   background-color: var(--green);
   color: white;
 
-  > span {
+  span {
     padding: 0 1rem;
     flex: 1;
   }
-  > h2 {
+  h2 {
     padding: 0 1rem;
     flex: 8;
     text-align: center;
   }
-  > svg {
+  svg {
     padding: 0 1rem;
     flex: 1;
     font-size: 2rem;
@@ -47,16 +48,16 @@ const WhiteBlock = styled(DefaultBlock)`
   background-color: white;
   color: var(--black);
 
-  > svg {
+  svg {
     padding: 0 1rem;
     flex: 1;
   }
-  > h2 {
+  h2 {
     padding: 0 1rem;
     text-align: center;
     flex: 8;
   }
-  > span {
+  span {
     padding: 0 1rem;
     flex: 1;
   }
@@ -64,12 +65,12 @@ const WhiteBlock = styled(DefaultBlock)`
 const LogoBlock = styled(DefaultBlock)`
   justify-content: space-between;
 
-  > img {
+  img {
     padding: 0 1rem;
     width: 6rem;
     height: 3rem;
   }
-  > svg {
+  svg {
     padding: 0 1rem;
     flex: none;
     font-size: 2rem;

@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage';
 import CategoryPage from './pages/CategoryPage';
 import CatagoryDetailPage from './pages/CatagoryDetailPage';
 import SearchPage from './pages/SearchPage';
+import SearchDetailPage from './pages/SearchDetailPage';
 import MyPagePage from './pages/MyPagePage';
 import LoginPage from './pages/LoginPage';
 
@@ -18,6 +19,7 @@ const App = () => {
         <Route path='/category' element={<CategoryPage />} />
         <Route path='/category/:name' element={<CatagoryDetailPage />} />
         <Route path='/search' element={<SearchPage />} />
+        <Route path='/search/:keyword' element={<SearchDetailPage />} />
         <Route path='/mypage' element={<MyPagePage />} />
         <Route path='/member/login' element={<LoginPage />} />
         <Route path='/member/signup' element={<SignUpPage />} />
