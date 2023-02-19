@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import Header from './common/Header';
 import Navigation from './common/Navigation';
 import SelectLocationContainer from '../containers/SelectLoactionContainer';
+import { useNavigate } from 'react-router-dom';
 
+// CSS
 const recommandKeyword = [
   {
     name: '돼지고기',
@@ -30,6 +32,7 @@ const SearchBlock = styled.main`
     border: none;
     border-radius: 15px;
     background-color: var(--light-gray);
+    font-size: 18px;
   }
 `;
 const RecommandBlock = styled.section`
@@ -49,27 +52,41 @@ const RecommandBlock = styled.section`
     color: var(--green);
     background-color: rgba(85, 239, 196, 0.5);
     border-radius: 15px;
+    cursor: pointer;
   }
 `;
 
 const Search = () => {
+  // 검색 입력 값, 추천 검색어 상태
+  const [input, setInput] = useState('');
   const [keywords, setKeywords] = useState([{}]);
-  const recommandList = keywords.map((keyword, index) => (
-    <li key={index}>
-      <span>{keyword.name}</span>
-    </li>
-  ));
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setKeywords(recommandKeyword);
   }, []);
 
-  const handleChange = e => {
-    console.log(e.target.value);
+  // 추천 검색어 동적 생성
+  const recommandList = keywords.map((keyword, index) => (
+    <li
+      key={index}
+      onClick={() => {
+        navigate(`/search/${keyword.name}`);
+      }}
+    >
+      <span>{keyword.name}</span>
+    </li>
+  ));
+
+  // 검색 입력 값 관리
+  const onChange = e => {
+    setInput(e.target.value);
   };
-  const handleKeyDown = e => {
+  // 엔터 누르면 키워드 저장 및 페이지 이동
+  const onKeyDown = e => {
     if (e.key !== 'Enter') return;
-    console.log(e.target.value);
+    navigate(`/search/${input}`);
   };
 
   return (
@@ -80,8 +97,9 @@ const Search = () => {
         <input
           type={'text'}
           placeholder={'검색어를 입력해주세요.'}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
+          value={input}
+          onChange={onChange}
+          onKeyDown={onKeyDown}
         />
         <RecommandBlock>
           <h2>추천 검색어</h2>
