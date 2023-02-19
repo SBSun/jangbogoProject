@@ -44,7 +44,8 @@ public class SecurityConfiguration {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/user/signUpAdmin", "/user/reissue", "/user/logout", "/user/edit", "/user/delete").hasRole("USER")
+                .antMatchers("/user/signUpAdmin", "/user/reissue", "/user/logout", "/user/edit", "/user/delete"
+                , "/review/create", "/review/edit", "/review/delete").hasRole("USER")
                 .anyRequest().permitAll()
                 .and()
                 //  JWT 인증을 위하여 직접 구현한 필터를 UsernamePasswordAuthenticationFilter 전에 실행하겠다는 설정이다.
