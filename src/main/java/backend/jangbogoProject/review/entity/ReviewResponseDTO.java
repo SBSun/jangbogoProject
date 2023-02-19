@@ -12,7 +12,7 @@ public class ReviewResponseDTO {
     public static class Info{
         private Long review_id;
         private Long market_id;
-        private Long user_id;
+        private String user_email;
         private String content;
         @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
         private LocalDateTime createdDate;
@@ -23,7 +23,7 @@ public class ReviewResponseDTO {
             return Info.builder()
                     .review_id(review.getId())
                     .market_id(review.getMarket_id())
-                    .user_id(review.getUser_id())
+                    .user_email(review.getUser_email())
                     .content(review.getContent())
                     .createdDate(review.getCreatedDate())
                     .lastModifiedDate(review.getLastModifiedDate())

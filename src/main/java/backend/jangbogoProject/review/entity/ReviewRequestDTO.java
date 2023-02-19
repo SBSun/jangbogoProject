@@ -10,20 +10,20 @@ public class ReviewRequestDTO {
     @NoArgsConstructor
     public static class Create{
         private Long market_id;
-        private Long user_id;
+        private String user_email;
         private String content;
 
         @Builder
-        public Create(final Long market_id, final Long user_id, final String content) {
+        public Create(final Long market_id, final String user_email, final String content) {
             this.market_id = market_id;
-            this.user_id = user_id;
+            this.user_email = user_email;
             this.content = content;
         }
 
         public Review toEntity(){
             return Review.builder()
                     .market_id(market_id)
-                    .user_id(user_id)
+                    .user_email(user_email)
                     .content(content)
                     .build();
         }

@@ -1,5 +1,7 @@
 package backend.jangbogoProject.review.entity;
 
+import backend.jangbogoProject.user.UserService;
+import backend.jangbogoProject.utils.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,9 +27,14 @@ public class ReviewService {
 
     @Transactional
     public ReviewResponseDTO.Info editReview(ReviewRequestDTO.Edit editDTO){
-        Review review = reviewRepository.findById(editDTO.getReview_id())
+        Review review = reviewRepository.findById(editDTO.getReview_id()).get();
+
+        String loginUserEmail = SecurityUtil.getCurrentUserEmail()
                 .orElseThrow(() ->
-                        new IllegalArgumentException("해당 리뷰가 존재하지 않습니다. " + editDTO.getReview_id()));
+                        new RuntimeException("로그인 유저 정보가 없습니다."));
+
+        if(!review.getUser_email().equals(loginUserEmail))
+            throw new RuntimeException("작성자가 아닙니다.");
 
         review.update(editDTO.getContent());
 
