@@ -10,9 +10,9 @@ public class ReviewResponseDTO {
     @Getter
     @Builder
     public static class Info{
-        private Long review_id;
-        private Long market_id;
-        private String user_email;
+        private Long reviewId;
+        private Long marketId;
+        private String userEmail;
         private String content;
         @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
         private LocalDateTime createdDate;
@@ -21,9 +21,9 @@ public class ReviewResponseDTO {
 
         public static ReviewResponseDTO.Info of(Review review){
             return Info.builder()
-                    .review_id(review.getId())
-                    .market_id(review.getMarket_id())
-                    .user_email(review.getUser_email())
+                    .reviewId(review.getId())
+                    .marketId(review.getMarketId())
+                    .userEmail(review.getUserEmail())
                     .content(review.getContent())
                     .createdDate(review.getCreatedDate())
                     .lastModifiedDate(review.getLastModifiedDate())

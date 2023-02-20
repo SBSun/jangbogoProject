@@ -9,21 +9,21 @@ public class ReviewRequestDTO {
     @Getter
     @NoArgsConstructor
     public static class Create{
-        private Long market_id;
-        private String user_email;
+        private Long marketId;
+        private String userEmail;
         private String content;
 
         @Builder
-        public Create(final Long market_id, final String user_email, final String content) {
-            this.market_id = market_id;
-            this.user_email = user_email;
+        public Create(final Long marketId, final String userEmail, final String content) {
+            this.marketId = marketId;
+            this.userEmail = userEmail;
             this.content = content;
         }
 
         public Review toEntity(){
             return Review.builder()
-                    .market_id(market_id)
-                    .user_email(user_email)
+                    .marketId(marketId)
+                    .userEmail(userEmail)
                     .content(content)
                     .build();
         }
@@ -33,7 +33,7 @@ public class ReviewRequestDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Edit{
-        private Long review_id;
+        private Long reviewId;
         private String content;
     }
 }
