@@ -16,4 +16,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     void deleteByUserEmail(String user_email);
 
     List<Review> findAllByUserEmail(String userEmail);
+
+    List<Review> findAllByMarketId(Long marketId);
 }

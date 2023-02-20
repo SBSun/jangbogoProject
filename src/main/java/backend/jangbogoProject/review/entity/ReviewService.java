@@ -51,6 +51,16 @@ public class ReviewService {
         return responseList;
     }
 
+    public List<ReviewResponseDTO.Info> findAllByMarketId(Long marketId){
+        List<Review> reviewList = reviewRepository.findAllByMarketId(marketId);
+
+        List<ReviewResponseDTO.Info> responseList = reviewList.stream()
+                .map(review -> ReviewResponseDTO.Info.of(review))
+                .collect(Collectors.toList());
+
+        return responseList;
+    }
+
     @Transactional
     public ReviewResponseDTO.Info editReview(ReviewRequestDTO.Edit editDTO){
         Review review = reviewRepository.findById(editDTO.getReviewId()).get();

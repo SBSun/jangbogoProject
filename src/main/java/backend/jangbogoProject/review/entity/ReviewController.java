@@ -34,6 +34,17 @@ public class ReviewController {
         }
     }
 
+    @GetMapping("/findAllByMarketId")
+    private ResponseEntity<List<ReviewResponseDTO.Info>> findAllByMarketId(Long marketId){
+        List<ReviewResponseDTO.Info> infoList = reviewService.findAllByMarketId(marketId);
+
+        if(infoList.isEmpty()){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }else{
+            return new ResponseEntity<>(infoList, HttpStatus.OK);
+        }
+    }
+
     @PatchMapping("/edit")
     private ReviewResponseDTO.Info editReview(@RequestBody ReviewRequestDTO.Edit editDTO){
         return reviewService.editReview(editDTO);
