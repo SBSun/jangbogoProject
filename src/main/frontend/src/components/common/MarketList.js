@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { getMarketList } from '../../lib/api/list';
+import thumbnail from '../../assets/thumbnail_market.svg';
 
 const MarketListBlock = styled.ul`
   display: flex;
@@ -44,7 +45,7 @@ const MarketList = () => {
 
   const marketListItem = markets.map(market => (
     <li key={market.marketId}>
-      <img src={''} alt='thumbnail' />
+      <img src={thumbnail} alt='thumbnail' />
       <div className='market_name'>{market.name}</div>
     </li>
   ));

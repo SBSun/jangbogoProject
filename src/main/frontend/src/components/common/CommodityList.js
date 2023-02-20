@@ -6,6 +6,7 @@ import {
   getCatagoryList,
   getSearchList,
 } from '../../lib/api/list';
+import thumbnail from '../../assets/thumbnail_commo.svg';
 
 // CSS
 const CommodityXScrollBlock = styled.ul`
@@ -105,7 +106,7 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
   // 받아온 품목 데이터 동적 생성
   const commodityListItem = commoditys.map((commodity, index) => (
     <CommodityItemStyled key={index}>
-      <img src={''} alt='thumbnail' />
+      <img src={thumbnail} alt='thumbnail' />
       <dl className='commodity_info'>
         <dd className='market_name'>{commodity.marketName}</dd>
         <dt className='commodity_name'>{commodity.categoryName}</dt>
