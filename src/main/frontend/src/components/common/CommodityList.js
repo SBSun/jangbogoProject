@@ -6,7 +6,7 @@ import {
   getCatagoryList,
   getSearchList,
   getMarketItemList,
-} from '../../lib/api/list';
+} from '../../lib/api/commodity';
 import thumbnail from '../../assets/thumbnail_commo.svg';
 
 // CSS

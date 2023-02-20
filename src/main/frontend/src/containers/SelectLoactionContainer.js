@@ -1,7 +1,7 @@
 import SelectLocation from '../components/common/SelectLocation';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getLocationList } from '../lib/api/list';
+import { getLocationList } from '../lib/api/etc';
 import { setIsVisible, setLocation } from '../modules/location';
 
 const SelectLoactionContainer = () => {

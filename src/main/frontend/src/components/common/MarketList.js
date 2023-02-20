@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { getMarketList } from '../../lib/api/list';
+import { getMarketList } from '../../lib/api/etc';
 import thumbnail from '../../assets/thumbnail_market.svg';
 import { useNavigate } from 'react-router-dom';
 
