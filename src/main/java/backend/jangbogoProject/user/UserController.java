@@ -50,6 +50,16 @@ public class UserController {
         return tokenInfo;
     }
 
+    @GetMapping("/user/getLoginUserEmail")
+    public ResponseEntity<String> getLoginUserEmail(){
+        String loginUserEmail = userService.getLoginUserEmail().get();
+        System.out.println("loginUserEmail : " + loginUserEmail);
+        if(loginUserEmail.equals("anonymousUser"))
+            return new ResponseEntity<>("로그인 상태가 아닙니다.", HttpStatus.NOT_FOUND);
+        else
+            return new ResponseEntity<>(loginUserEmail, HttpStatus.OK);
+    }
+
     @PostMapping("/user/reissue")
     public UserResponseDto.TokenInfo reissue(@RequestBody UserRequestDto.Reissue reissue){
         UserResponseDto.TokenInfo tokenInfo = userService.reissue(reissue);

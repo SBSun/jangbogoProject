@@ -30,7 +30,7 @@ public class SecurityUtil {
         if(authentication.getPrincipal() instanceof UserDetails){
             UserDetails user = (UserDetails)authentication.getPrincipal();
             userEmail = user.getUsername();
-        }else if(authentication.getPrincipal() instanceof String){
+        }else if(authentication.getPrincipal() instanceof String){ // 로그인 하지 않은 사용자의 return 값은 "anonymousUser"
             userEmail = (String)authentication.getPrincipal();
         }
 
