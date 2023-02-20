@@ -1,7 +1,11 @@
 package backend.jangbogoProject.review.entity;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -15,8 +19,19 @@ public class ReviewController {
     }
 
     @GetMapping("/findById")
-    private ReviewResponseDTO.Info findById(Long review_id){
-        return reviewService.findById(review_id);
+    private ReviewResponseDTO.Info findById(Long reviewId){
+        return reviewService.findById(reviewId);
+    }
+
+    @GetMapping("/findAllByUserEmail")
+    private ResponseEntity<List<ReviewResponseDTO.Info>> findAllByUserEmail(){
+        List<ReviewResponseDTO.Info> infoList = reviewService.findAllByUserEmail();
+
+        if(infoList.isEmpty()){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }else{
+            return new ResponseEntity<>(infoList, HttpStatus.OK);
+        }
     }
 
     @PatchMapping("/edit")
@@ -25,7 +40,7 @@ public class ReviewController {
     }
 
     @DeleteMapping("/delete")
-    private void deleteReview(Long review_id){
-        reviewService.deleteReview(review_id);
+    private void deleteReview(Long reviewId){
+        reviewService.deleteReview(reviewId);
     }
 }

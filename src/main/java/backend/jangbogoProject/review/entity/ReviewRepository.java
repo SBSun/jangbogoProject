@@ -14,4 +14,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Transactional
     @Query(value = "DELETE FROM review WHERE user_email = ?1", nativeQuery = true)
     void deleteByUserEmail(String user_email);
+
+    List<Review> findAllByUserEmail(String userEmail);
 }

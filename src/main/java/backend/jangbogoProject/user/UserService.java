@@ -76,9 +76,8 @@ public class UserService{
     public void editUser(UserRequestDto.Edit edit){
         String loginUserEmail = SecurityUtil.getCurrentUserEmail().get();
 
-        if(loginUserEmail == null){
-            throw new RuntimeException("로그인 유저 정보가 없습니다.");
-        }
+        if(loginUserEmail.equals("anonymousUser"))
+            throw new RuntimeException("로그인한 유저가 아닙니다.");
 
         User user = userRepository.findByEmail(loginUserEmail).get();
 
@@ -91,9 +90,8 @@ public class UserService{
     public Long deleteUser(){
         String loginUserEmail = SecurityUtil.getCurrentUserEmail().get();
 
-        if(loginUserEmail == null){
-            throw new RuntimeException("로그인 유저 정보가 없습니다.");
-        }
+        if(loginUserEmail.equals("anonymousUser"))
+            throw new RuntimeException("로그인한 유저가 아닙니다.");
 
         reviewRepository.deleteByUserEmail(loginUserEmail);
         return userRepository.deleteByEmail(loginUserEmail);

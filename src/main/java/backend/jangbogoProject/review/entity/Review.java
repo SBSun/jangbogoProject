@@ -15,19 +15,19 @@ public class Review extends BaseTimeEntity {
     private Long id;
 
     @Column(nullable = false, name = "market_id")
-    private Long market_id;
+    private Long marketId;
 
     @Column(nullable = false, name = "user_email")
-    private String user_email;
+    private String userEmail;
 
     @Column(nullable = false)
     private String content;
 
     @Builder
-    public Review(Long id, Long market_id, String user_email, String content) {
+    public Review(Long id, Long marketId, String userEmail, String content) {
         this.id = id;
-        this.market_id = market_id;
-        this.user_email = user_email;
+        this.marketId = marketId;
+        this.userEmail = userEmail;
         this.content = content;
     }
 
