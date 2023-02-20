@@ -24,6 +24,13 @@ export const getSearchList = async (id, curPage, recordSize, keyword) => {
   return res.data;
 };
 
+export const getMarketItemList = async (curPage, recordSize, keyword) => {
+  const res = await client.get(
+    `/commodity/findByMarket?curPage=${curPage}&recordSize=${recordSize}&keyword=${keyword}`
+  );
+  return res.data;
+};
+
 // 매장 리스트 API
 export const getMarketList = async id => {
   const res = await client.get(`/market/findMarketsInGu?gu_id=${id}`);

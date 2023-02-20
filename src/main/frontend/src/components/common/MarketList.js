@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { getMarketList } from '../../lib/api/list';
 import thumbnail from '../../assets/thumbnail_market.svg';
+import { useNavigate } from 'react-router-dom';
 
 const MarketListBlock = styled.ul`
   display: flex;
@@ -26,6 +27,8 @@ const MarketListBlock = styled.ul`
 const MarketList = () => {
   const [markets, setMarkets] = useState([]);
 
+  const navigate = useNavigate();
+
   const sessionLocationId = sessionStorage.getItem('location-id');
   const { storeLocationId } = useSelector(({ location }) => ({
     storeLocationId: location.id,
@@ -44,7 +47,14 @@ const MarketList = () => {
   }, [storeLocationId]);
 
   const marketListItem = markets.map(market => (
-    <li key={market.marketId}>
+    <li
+      key={market.marketId}
+      onClick={() => {
+        navigate(`/market/${market.marketId}`, {
+          state: { name: market.name },
+        });
+      }}
+    >
       <img src={thumbnail} alt='thumbnail' />
       <div className='market_name'>{market.name}</div>
     </li>
