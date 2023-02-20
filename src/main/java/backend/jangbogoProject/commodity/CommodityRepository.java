@@ -31,6 +31,23 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
     @Query(value = "SELECT c1.commodity_id, m.name AS marketName, c2.name AS categoryName, " +
             "c1.unit, c1.price, c1.remarks, c1.p_date " +
             "FROM commodity c1 " +
+            "INNER JOIN market m ON m.market_id = ?1 " +
+            "INNER JOIN category c2 ON c1.category_id = c2.category_id " +
+            "WHERE c1.price > 0  AND c1.market_id = m.market_id " +
+            "LIMIT ?2, ?3", nativeQuery = true)
+    List<CommodityInfoProjection> findByMarket(int market_id, int startIndex, int recordSize);
+
+    @Query(value = "SELECT COUNT(*) " +
+            "FROM commodity c1 " +
+            "INNER JOIN market m ON m.market_id = ?1 " +
+            "INNER JOIN category c2 ON c1.category_id = c2.category_id " +
+            "WHERE c1.price > 0 AND c1.market_id = m.market_id", nativeQuery = true)
+    int findByMarketCnt(int market_id);
+
+
+    @Query(value = "SELECT c1.commodity_id, m.name AS marketName, c2.name AS categoryName, " +
+            "c1.unit, c1.price, c1.remarks, c1.p_date " +
+            "FROM commodity c1 " +
             "INNER JOIN market m ON m.gu_id = ?1 AND c1.market_id = m.market_id " +
             "INNER JOIN category c2 ON c2.name LIKE %?2% " +
             "WHERE c1.category_id = c2.category_id AND c1.price > 0 " +

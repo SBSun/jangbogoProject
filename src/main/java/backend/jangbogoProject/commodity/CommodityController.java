@@ -27,6 +27,11 @@ public class CommodityController {
         return commodityService.findByCategory(gu_id, searchRequestDTO);
     }
 
+    @GetMapping("/findByMarket")
+    private CommodityResponseDto.CommodityInfoList findByMarket(SearchRequestDTO searchRequestDTO){
+        return commodityService.findByMarket(searchRequestDTO);
+    }
+
     @GetMapping("/findByKeyword")
     private CommodityResponseDto.CommodityInfoList findByKeyword(int gu_id, SearchRequestDTO searchRequestDTO){
         return commodityService.findByKeyword(gu_id, searchRequestDTO);

@@ -54,6 +54,20 @@ public class CommodityService {
         return new CommodityResponseDto.CommodityInfoList(list, page.toResponse());
     }
 
+    public CommodityResponseDto.CommodityInfoList findByMarket(SearchRequestDTO searchRequestDTO){
+        int market_id = Integer.parseInt(searchRequestDTO.getKeyword());
+        int startIndex = searchRequestDTO.getOffset();
+        int recordSize = searchRequestDTO.getRecordSize();
+
+        List<CommodityInfoProjection> list
+                = commodityRepository.findByMarket(market_id, startIndex, recordSize);
+
+        int totalDataCnt = commodityRepository.findByMarketCnt(market_id);
+        Page page = new Page(searchRequestDTO, totalDataCnt);
+
+        return new CommodityResponseDto.CommodityInfoList(list, page.toResponse());
+    }
+
     public CommodityResponseDto.CommodityInfoList findByCategory(int gu_id, SearchRequestDTO searchRequestDTO){
         String keyword = searchRequestDTO.getKeyword();
         int startIndex = searchRequestDTO.getOffset();
