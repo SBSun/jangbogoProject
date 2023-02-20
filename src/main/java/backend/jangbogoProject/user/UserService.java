@@ -1,6 +1,7 @@
 package backend.jangbogoProject.user;
 
 import backend.jangbogoProject.jwt.JwtTokenProvider;
+import backend.jangbogoProject.review.entity.ReviewRepository;
 import backend.jangbogoProject.utils.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 
@@ -29,6 +30,8 @@ public class UserService{
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
+
+    private final ReviewRepository reviewRepository;
 
     @Transactional
     public UserResponseDto.Info signUp(UserRequestDto.SignUp signUp)
@@ -91,6 +94,7 @@ public class UserService{
             throw new RuntimeException("로그인 유저 정보가 없습니다.");
         }
 
+        reviewRepository.deleteByUserEmail(loginUserEmail);
         return userRepository.deleteByEmail(loginUserEmail);
     }
 

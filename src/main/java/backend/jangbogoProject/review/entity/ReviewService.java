@@ -14,6 +14,13 @@ public class ReviewService {
     public ReviewResponseDTO.Info createReview(ReviewRequestDTO.Create createDTO){
         Review review = createDTO.toEntity();
 
+        String loginUserEmail = SecurityUtil.getCurrentUserEmail()
+                .orElseThrow(() ->
+                        new RuntimeException("로그인 유저 정보가 없습니다."));
+
+        if(!review.getUser_email().equals(loginUserEmail))
+            throw new RuntimeException("로그인한 유저가 아닙니다.");
+
         return ReviewResponseDTO.Info.of(reviewRepository.save(review));
     }
 
