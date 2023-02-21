@@ -111,7 +111,9 @@ const Category = () => {
       key={item.id}
       name={item.name}
       onClick={() => {
-        navigate(`/category/${item.name}`);
+        navigate(`/category/${item.name}`, {
+          state: [...meatDetialItems],
+        });
       }}
     >
       {item.text}
@@ -122,7 +124,9 @@ const Category = () => {
       key={item.id}
       name={item.name}
       onClick={() => {
-        navigate(`/category/${item.name}`);
+        navigate(`/category/${item.name}`, {
+          state: [...seafoodDetailItems],
+        });
       }}
     >
       {item.text}
@@ -133,7 +137,9 @@ const Category = () => {
       key={item.id}
       name={item.name}
       onClick={() => {
-        navigate(`/category/${item.name}`);
+        navigate(`/category/${item.name}`, {
+          state: [...vegetaDetailItems],
+        });
       }}
     >
       {item.text}
@@ -144,7 +150,9 @@ const Category = () => {
       key={item.id}
       name={item.name}
       onClick={() => {
-        navigate(`/category/${item.name}`);
+        navigate(`/category/${item.name}`, {
+          state: [...fruitDetailItems],
+        });
       }}
     >
       {item.text}

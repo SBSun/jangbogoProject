@@ -24,25 +24,31 @@ const CommodityYScrollBlock = styled.ul`
   }
 `;
 const CommodityItemStyled = styled.li`
-  padding: 1rem;
+  padding: 0.5rem 1rem;
 
   img {
     width: 130px;
     height: 160px;
   }
   .commodity_info > .market_name {
-    color: var(--red);
-    font-size: 14px;
+    color: var(--gray);
+    font-size: 12px;
   }
   .commodity_info > .commodity_name {
-    margin: 0.25rem 0 0 0;
+    padding: 0.5rem 0 0 0;
     font-weight: 600;
     font-size: 16px;
   }
+  .commodity_info > .commodity_remarks {
+    padding: 0.5rem 0 0 0;
+    color: var(--gray);
+    font-size: 14px;
+  }
   .commodity_info > .commodity_price {
-    margin: 0.5rem 0 0 0;
-    color: var(--yellow);
-    font-size: 16px;
+    padding: 0.5rem 0 0 0;
+    color: var(--black);
+    font-weight: bold;
+    font-size: 18px;
   }
 `;
 const CommoditySelectPage = styled.ul`
@@ -114,8 +120,13 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
       <dl className='commodity_info'>
         <dd className='market_name'>{commodity.marketName}</dd>
         <dt className='commodity_name'>{commodity.categoryName}</dt>
-        <dd className='commodity_price'>{commodity.remarks}</dd>
-        <dd className='commodity_price'>{commodity.price}원</dd>
+        <dd className='commodity_remarks'>{commodity.remarks}</dd>
+        <dd className='commodity_price'>
+          {commodity.price
+            .toString()
+            .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}
+          원
+        </dd>
       </dl>
     </CommodityItemStyled>
   ));
