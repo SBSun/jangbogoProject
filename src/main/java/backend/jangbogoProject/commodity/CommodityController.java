@@ -4,6 +4,8 @@ import backend.jangbogoProject.category.CategoryResponseDTO;
 import backend.jangbogoProject.commodity.search.SearchRequestDTO;
 import backend.jangbogoProject.paging.Page;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,17 @@ public class CommodityController {
     @GetMapping("/getCommodities")
     private CommodityResponseDto.CommodityInfoList getCommodities(int gu_id, SearchRequestDTO searchRequestDTO){
         return commodityService.getCommodities(gu_id, searchRequestDTO);
+    }
+
+    @GetMapping("/getLowestPriceCommodities")
+    private ResponseEntity<List<CommodityInfoProjection>> getLowestPriceCommodities(int gu_id){
+        List<CommodityInfoProjection> list = commodityService.getLowestPriceCommodities(gu_id);
+
+        if(list.isEmpty()){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }else{
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        }
     }
 
     @GetMapping("/findByCategory")

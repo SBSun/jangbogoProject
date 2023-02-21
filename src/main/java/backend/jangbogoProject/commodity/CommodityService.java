@@ -40,6 +40,10 @@ public class CommodityService {
         return new CommodityResponseDto.CommodityInfoList(list, page.toResponse());
     }
 
+    public List<CommodityInfoProjection> getLowestPriceCommodities(int gu_id){
+        return commodityRepository.getLowestPriceCommodities(gu_id);
+    }
+
     public CommodityResponseDto.CommodityInfoList findByKeyword(int gu_id, SearchRequestDTO searchRequestDTO){
         String keyword = searchRequestDTO.getKeyword();
         int startIndex = searchRequestDTO.getOffset();
