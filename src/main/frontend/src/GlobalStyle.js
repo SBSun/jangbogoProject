@@ -15,7 +15,8 @@ const GlobalStyle = createGlobalStyle`
     }
 
     body {
-      font-family: 'Noto Sans KR', sans-serif;
+      font-family: 'Noto Sans KR';
+      color: var(--black);
     }
 
     @media (min-width: 415px) {

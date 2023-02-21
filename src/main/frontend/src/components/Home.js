@@ -21,13 +21,13 @@ const HomeContainer = styled.main`
     }
   }
   > .list_title {
-    padding: 1rem;
-    font-size: 1.25rem;
-    font-weight: 500;
+    padding: 1.75rem 1rem 0 1rem;
+    font-size: 18px;
   }
 `;
 const Contact = styled.div`
   background-color: var(--light-gray);
+  margin-top: 0.5rem;
   padding: 1rem;
 
   > div {

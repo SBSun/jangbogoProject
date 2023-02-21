@@ -20,6 +20,19 @@ const MakertInfoBlock = styled.section`
     display: inherit;
     flex-direction: row;
   }
+  .market_text {
+    display: inherit;
+    flex-direction: column;
+
+    h2 {
+      margin: 1rem 0 0 0;
+      font-size: 20px;
+      font-weight: 600;
+    }
+    p {
+      margin: 1.5rem 0 0 0;
+    }
+  }
 `;
 const MarketDetailBlock = styled.section`
   display: flex;
@@ -60,7 +73,10 @@ const MarketDetail = () => {
       <MakertInfoBlock>
         <div className='market_info'>
           <img src={thumbnail} className='market_thumbnail' alt='thumbnail' />
-          <span>{name}</span>
+          <div className='market_text'>
+            <h2>{name}</h2>
+            <p>상세 정보</p>
+          </div>
         </div>
         <MarketDetailBlock>
           <input

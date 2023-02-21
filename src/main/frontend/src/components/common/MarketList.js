@@ -10,16 +10,14 @@ const MarketListBlock = styled.ul`
   overflow-x: scroll;
 
   > li {
-    padding: 1rem;
+    padding: 0.5rem 1rem;
   }
   > li > img {
     width: 130px;
     height: 160px;
   }
   > li > .market_name {
-    margin: 0.25rem 0 0 0;
-    font-weight: 600;
-    font-size: 16px;
+    text-align: center;
     color: var(--black);
   }
 `;
