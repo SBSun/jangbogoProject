@@ -13,17 +13,17 @@ const CategoryDetailBlock = styled.main`
 const CategoryMenuBlock = styled.div`
   display: flex;
   overflow-x: auto;
-  justify-content: space-around;
   padding: 0.5rem;
 `;
 const CategoryMenu = styled.span`
   padding: 1rem 0.5rem;
-  text-decoration: none;
-  color: var(--black);
+  text-align: center;
+  flex-basis: 25%;
+  flex-shrink: 0;
 
   &.active {
     color: var(--green);
-    border-bottom: 1px solid var(--green);
+    border-bottom: 2px solid var(--green);
   }
 `;
 
