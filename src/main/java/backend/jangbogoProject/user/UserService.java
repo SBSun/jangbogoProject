@@ -97,7 +97,7 @@ public class UserService{
         return userRepository.deleteByEmail(loginUserEmail);
     }
 
-    public UserResponseDto.TokenInfo login(UserRequestDto.Login login){
+    public UserResponseDto.LoginInfo login(UserRequestDto.Login login){
         // 1. Login ID/PW 를 기반으로 Authentication 객체 생성
         // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(login.getEmail(), login.getPassword());
@@ -113,7 +113,9 @@ public class UserService{
         redisTemplate.opsForValue()
                 .set("RT:" + authentication.getName(), tokenInfo.getRefreshToken(), tokenInfo.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);
 
-        return tokenInfo;
+        User loginUser = userRepository.findByEmail(login.getEmail()).get();
+
+        return new UserResponseDto.LoginInfo(loginUser.getName(), loginUser.getAddress(), tokenInfo);
     }
 
     public Optional<String> getLoginUserEmail(){

@@ -26,6 +26,14 @@ public class UserResponseDto {
         }
     }
 
+    @Getter
+    @AllArgsConstructor
+    public static class LoginInfo{
+        private String name;
+        private String address;
+        private TokenInfo tokenInfo;
+    }
+
     @Builder
     @Getter
     @AllArgsConstructor

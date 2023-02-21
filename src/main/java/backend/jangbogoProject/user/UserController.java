@@ -45,9 +45,9 @@ public class UserController {
     }
 
     @PostMapping("/user/login")
-    public UserResponseDto.TokenInfo login(@RequestBody UserRequestDto.Login login) {
-        UserResponseDto.TokenInfo tokenInfo = userService.login(login);
-        return tokenInfo;
+    public UserResponseDto.LoginInfo login(@RequestBody UserRequestDto.Login login) {
+
+        return userService.login(login);
     }
 
     @GetMapping("/user/getLoginUserEmail")
