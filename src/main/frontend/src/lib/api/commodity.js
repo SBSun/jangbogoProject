@@ -31,3 +31,11 @@ export const getMarketItemList = async (curPage, recordSize, keyword) => {
   );
   return res.data;
 };
+
+// 지역 내 최저가 품목 리스트 API
+export const getLowPriceItemList = async id => {
+  const res = await client.get(
+    `/commodity/getLowestPriceCommodities?gu_id=${id}`
+  );
+  return res.data;
+};
