@@ -31,20 +31,24 @@ const LoginContainer = () => {
     const promise = login({ email, password });
     const fetchData = () => {
       promise
-        .then(res => {
-          console.log(res);
+        .then(data => {
+          console.log(data);
+          // Store에 로그인 정보 저장
           storeDispatch(
             postLogin({
               email: email,
-              accessToken: res.data.accessToken,
+              accessToken: data.tokenInfo.accessToken,
               isLogin: true,
             })
           );
+          // 세션에 로그인 정보 저장
           sessionStorage.setItem(
             'user',
             JSON.stringify({
               email: email,
-              refreshToken: res.data.refreshToken,
+              name: data.name,
+              address: data.address,
+              refreshToken: data.tokenInfo.refreshToken,
             })
           );
           alert('로그인되었습니다.');

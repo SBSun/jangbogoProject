@@ -16,7 +16,10 @@ export const signUp = async ({ email, password, name, address }) => {
 };
 
 export const login = async ({ email, password }) => {
-  const res = await client.post(`/user/login`, { email, password });
-  console.log(res);
-  return res;
+  return await client.post(`/user/login`, { email, password }).then(res => {
+    client.defaults.headers.common[
+      'Authorization'
+    ] = `Bearer ${res.data.tokenInfo.accessToken}`;
+    return res.data;
+  });
 };

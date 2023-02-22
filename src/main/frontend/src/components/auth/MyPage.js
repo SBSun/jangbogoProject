@@ -51,11 +51,13 @@ const MyPage = () => {
       <SelectLocationContainer />
       <Container>
         <UserInfoBlock>
-          <h2>님, 환영합니다.</h2>
+          <h2>{user.name}님, 환영합니다.</h2>
           <span>
             이메일 - <strong>{user.email}</strong>
           </span>
-          <span>주소 - </span>
+          <span>
+            주소 - <strong>{user.address}</strong>
+          </span>
           <ButtonBlock>
             <Button type={'button'} modify={'GRAY_BLOCK'}>
               계정 설정
