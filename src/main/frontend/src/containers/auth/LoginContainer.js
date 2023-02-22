@@ -32,7 +32,6 @@ const LoginContainer = () => {
     const fetchData = () => {
       promise
         .then(data => {
-          console.log(data);
           // Store에 로그인 정보 저장
           storeDispatch(
             postLogin({
