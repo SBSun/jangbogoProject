@@ -6,6 +6,7 @@ import {
   getCatagoryList,
   getSearchList,
   getMarketItemList,
+  getLowPriceItemList,
 } from '../../lib/api/commodity';
 import thumbnail from '../../assets/thumbnail_commo.svg';
 
@@ -91,6 +92,9 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
       }
       case 'MARKET': {
         return getMarketItemList(curPage, recordSize, keyword);
+      }
+      case 'PRICE': {
+        return getLowPriceItemList(sessionLocationId);
       }
       default: {
         return getCommodityList(sessionLocationId, curPage, recordSize);
@@ -183,6 +187,11 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
               {pageButtons}
             </CommoditySelectPage>
           </>
+        );
+      }
+      case 'PRICE': {
+        return (
+          <CommodityXScrollBlock>{commodityListItem}</CommodityXScrollBlock>
         );
       }
       default: {

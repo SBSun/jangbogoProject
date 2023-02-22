@@ -4,8 +4,8 @@ import Header from '../common/Header';
 import Navigation from '../common/Navigation';
 import Button from '../common/Button';
 import SelectLocationContainer from '../../containers/SelectLoactionContainer';
-import { useNavigate } from 'react-router-dom';
 
+// CSS
 const Container = styled.main`
   margin: 56px 0 0 0;
   background: var(--light-gray);
@@ -37,25 +37,24 @@ const ButtonBlock = styled.div`
   button {
     margin: 0 0.5rem 0.5rem 0.5rem;
     flex: 1;
+    cursor: pointer;
   }
 `;
 
-const MyPage = () => {
-  const user = JSON.parse(sessionStorage.getItem('user'));
-
-  const navigate = useNavigate();
-
+const MyPage = ({ user, onLogoutClick }) => {
   return (
     <>
       <Header modify={'DEFAULT_BLOCK'} title={'내 정보'} />
       <SelectLocationContainer />
       <Container>
         <UserInfoBlock>
-          <h2>님, 환영합니다.</h2>
+          <h2>{user.name}님, 환영합니다.</h2>
           <span>
             이메일 - <strong>{user.email}</strong>
           </span>
-          <span>주소 - </span>
+          <span>
+            주소 - <strong>{user.address}</strong>
+          </span>
           <ButtonBlock>
             <Button type={'button'} modify={'GRAY_BLOCK'}>
               계정 설정
@@ -63,11 +62,7 @@ const MyPage = () => {
             <Button
               type={'button'}
               modify={'GRAY_BLOCK'}
-              onClick={() => {
-                sessionStorage.removeItem('user');
-                alert('로그아웃되었습니다.');
-                navigate('/', true);
-              }}
+              onClick={onLogoutClick}
             >
               로그아웃
             </Button>
