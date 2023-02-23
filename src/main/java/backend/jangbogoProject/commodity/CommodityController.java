@@ -2,6 +2,7 @@ package backend.jangbogoProject.commodity;
 
 import backend.jangbogoProject.category.CategoryResponseDTO;
 import backend.jangbogoProject.commodity.search.SearchRequestDTO;
+import backend.jangbogoProject.dto.DataResponseDTO;
 import backend.jangbogoProject.paging.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,19 +21,16 @@ public class CommodityController {
     private final CommodityService commodityService;
 
     @GetMapping("/getCommodities")
-    private CommodityResponseDto.CommodityInfoList getCommodities(int gu_id, SearchRequestDTO searchRequestDTO){
-        return commodityService.getCommodities(gu_id, searchRequestDTO);
+    private DataResponseDTO<CommodityResponseDto.CommodityInfoList> getCommodities(int gu_id, SearchRequestDTO searchRequestDTO){
+        CommodityResponseDto.CommodityInfoList infoList = commodityService.getCommodities(gu_id, searchRequestDTO);
+        return DataResponseDTO.of(infoList);
     }
 
     @GetMapping("/getLowestPriceCommodities")
-    private ResponseEntity<List<CommodityInfoProjection>> getLowestPriceCommodities(int gu_id){
-        List<CommodityInfoProjection> list = commodityService.getLowestPriceCommodities(gu_id);
+    private DataResponseDTO<CommodityResponseDto.CommodityInfoList> getLowestPriceCommodities(int gu_id){
+        List<CommodityInfoProjection> infoList = commodityService.getLowestPriceCommodities(gu_id);
 
-        if(list.isEmpty()){
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }else{
-            return new ResponseEntity<>(list, HttpStatus.OK);
-        }
+        return DataResponseDTO.of(new CommodityResponseDto.CommodityInfoList(infoList, null));
     }
 
     @GetMapping("/findByCategory")
