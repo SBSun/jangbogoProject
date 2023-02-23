@@ -1,5 +1,6 @@
 package backend.jangbogoProject.service;
 
+import backend.jangbogoProject.dto.ResponseDTO;
 import backend.jangbogoProject.dto.UserRequestDto;
 import backend.jangbogoProject.dto.UserResponseDto;
 import backend.jangbogoProject.entity.User;
@@ -40,7 +41,7 @@ public class UserService{
     private final ReviewRepository reviewRepository;
 
     @Transactional
-    public UserResponseDto.Info signUp(UserRequestDto.SignUp signUp)
+    public Long signUp(UserRequestDto.SignUp signUp)
     {
         if(userRepository.existsByEmail(signUp.getEmail())){
             throw new IllegalArgumentException("해당 이메일은 이미 가입되어 있는 이메일입니다.");
@@ -54,7 +55,7 @@ public class UserService{
                 .authority(Authority.USER.getValue())
                 .build();
 
-        return UserResponseDto.Info.of(userRepository.save(user));
+        return userRepository.save(user).getId();
     }
 
     public UserResponseDto.Info getUserInfo(String email){

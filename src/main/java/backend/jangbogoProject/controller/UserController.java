@@ -1,5 +1,7 @@
 package backend.jangbogoProject.controller;
 
+import backend.jangbogoProject.constant.StatusCode;
+import backend.jangbogoProject.dto.ResponseDTO;
 import backend.jangbogoProject.dto.UserRequestDto;
 import backend.jangbogoProject.dto.UserResponseDto;
 import backend.jangbogoProject.service.UserService;
@@ -28,8 +30,10 @@ public class UserController {
     }
 
     @PostMapping("/user/signUpUser")
-    public UserResponseDto.Info signUpUser(@RequestBody UserRequestDto.SignUp signUp){
-        return userService.signUp(signUp);
+    public ResponseDTO signUpUser(@RequestBody UserRequestDto.SignUp signUp){
+        userService.signUp(signUp);
+
+        return ResponseDTO.of(StatusCode.OK);
     }
 
     @PatchMapping("/user/edit")

@@ -44,7 +44,9 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
             "\tINNER JOIN market m ON m.gu_id = 215000\n" +
             "\tWHERE c2.market_id = m.market_id AND c2.price > 0\n" +
             "    GROUP BY c2.category_id\n" +
-            ") c3 ON c1.price = c3.price AND c1.category_id = c3.category_id ", nativeQuery = true)
+            ") c3 ON c1.price = c3.price AND c1.category_id = c3.category_id " +
+            "ORDER BY categoryName", nativeQuery = true)
+
     List<CommodityInfoProjection> getLowestPriceCommodities(int gu_id);
 
     @Query(value = "SELECT c1.commodity_id, m.name AS marketName, c2.name AS categoryName, " +
