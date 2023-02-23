@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 @RequiredArgsConstructor
 public enum StatusCode {
-    OK(HttpStatus.OK.value(), "Ok"),
+    OK(HttpStatus.OK.value(), "OK"),
 
     BAD_REQUEST(HttpStatus.BAD_REQUEST.value(), "Bad request"),
 
