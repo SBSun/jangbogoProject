@@ -29,16 +29,22 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
             "WHERE c1.price > 0", nativeQuery = true)
     int getCommodityCnt(int gu_id);
 
-    @Query(value = "SELECT c1.commodity_id, c1.name AS marketName, ca.name AS categoryName, " +
-            "c1.unit, c1.price, c1.remarks, c1.p_date\n" +
+    @Query(value =
+            "SELECT c1.commodity_id, c1.market_name AS marketName, cate.name AS categoryName, c1.price, c1.unit, c1.remarks, c1.p_date\n" +
             "FROM (\n" +
-            "SELECT c.commodity_id, m.name, c.category_id, " +
-            "c.unit, c.price, c.remarks, c.p_date, MIN(c.price)\n" +
-            "FROM commodity c\n" +
-            "INNER JOIN market m ON m.gu_id = ?1\n" +
-            "WHERE c.price > 0 AND c.market_id = m.market_id\n" +
-            "GROUP BY c.category_id\n" +
-            ") c1 INNER JOIN category ca ON c1.category_id = ca.category_id", nativeQuery = true)
+            "\tSELECT c.commodity_id, m.name AS market_name, c.category_id, c.price, c.unit, c.remarks, c.p_date\n" +
+            "    FROM commodity c\n" +
+            "    INNER JOIN market m ON m.gu_id = 215000\n" +
+            "    WHERE c.market_id = m.market_id\n" +
+            ") c1\n" +
+            "INNER JOIN category cate ON cate.category_id = c1.category_id\n" +
+            "INNER JOIN(\n" +
+            "\tSELECT c2.commodity_id, c2.market_id, c2.category_id, MIN(price) AS price, c2.unit, c2.remarks, c2.p_date\n" +
+            "    FROM commodity c2\n" +
+            "\tINNER JOIN market m ON m.gu_id = 215000\n" +
+            "\tWHERE c2.market_id = m.market_id AND c2.price > 0\n" +
+            "    GROUP BY c2.category_id\n" +
+            ") c3 ON c1.price = c3.price AND c1.category_id = c3.category_id ", nativeQuery = true)
     List<CommodityInfoProjection> getLowestPriceCommodities(int gu_id);
 
     @Query(value = "SELECT c1.commodity_id, m.name AS marketName, c2.name AS categoryName, " +
