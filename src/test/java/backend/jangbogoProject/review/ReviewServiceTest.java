@@ -1,6 +1,10 @@
 package backend.jangbogoProject.review;
 
-import backend.jangbogoProject.review.entity.*;
+import backend.jangbogoProject.dto.ReviewRequestDTO;
+import backend.jangbogoProject.dto.ReviewResponseDTO;
+import backend.jangbogoProject.entity.Review;
+import backend.jangbogoProject.repository.ReviewRepository;
+import backend.jangbogoProject.service.ReviewService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

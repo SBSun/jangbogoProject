@@ -1,9 +1,9 @@
 package backend.jangbogoProject.controllerTest;
 
-import backend.jangbogoProject.user.UserController;
-import backend.jangbogoProject.user.UserRequestDto;
-import backend.jangbogoProject.user.UserResponseDto;
-import backend.jangbogoProject.user.UserService;
+import backend.jangbogoProject.controller.UserController;
+import backend.jangbogoProject.dto.UserRequestDto;
+import backend.jangbogoProject.dto.UserResponseDto;
+import backend.jangbogoProject.service.UserService;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

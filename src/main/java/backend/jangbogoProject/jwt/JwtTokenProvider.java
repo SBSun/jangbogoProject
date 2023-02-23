@@ -1,6 +1,6 @@
 package backend.jangbogoProject.jwt;
 
-import backend.jangbogoProject.user.UserResponseDto;
+import backend.jangbogoProject.dto.UserResponseDto;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

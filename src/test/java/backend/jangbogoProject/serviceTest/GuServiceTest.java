@@ -1,7 +1,7 @@
 package backend.jangbogoProject.serviceTest;
 
-import backend.jangbogoProject.commodity.gu.GuInfoProjection;
-import backend.jangbogoProject.commodity.gu.GuService;
+import backend.jangbogoProject.dto.GuInfoProjection;
+import backend.jangbogoProject.service.GuService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

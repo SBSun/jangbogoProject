@@ -1,7 +1,7 @@
 package backend.jangbogoProject.review;
 
-import backend.jangbogoProject.review.entity.Review;
-import backend.jangbogoProject.review.entity.ReviewRepository;
+import backend.jangbogoProject.entity.Review;
+import backend.jangbogoProject.repository.ReviewRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;

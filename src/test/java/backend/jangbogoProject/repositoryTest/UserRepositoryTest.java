@@ -1,8 +1,8 @@
 package backend.jangbogoProject.repositoryTest;
 
-import backend.jangbogoProject.user.Authority;
-import backend.jangbogoProject.user.User;
-import backend.jangbogoProject.user.UserRepository;
+import backend.jangbogoProject.constant.Authority;
+import backend.jangbogoProject.entity.User;
+import backend.jangbogoProject.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,11 @@
 package backend.jangbogoProject.serviceTest;
 
-import backend.jangbogoProject.user.*;
+import backend.jangbogoProject.constant.Authority;
+import backend.jangbogoProject.dto.UserRequestDto;
+import backend.jangbogoProject.dto.UserResponseDto;
+import backend.jangbogoProject.entity.User;
+import backend.jangbogoProject.repository.UserRepository;
+import backend.jangbogoProject.service.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

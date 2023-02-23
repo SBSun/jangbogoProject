@@ -1,5 +1,8 @@
 package backend.jangbogoProject.category;
 
+import backend.jangbogoProject.dto.CategoryRequestDTO;
+import backend.jangbogoProject.dto.CategoryResponseDTO;
+import backend.jangbogoProject.service.CategoryService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

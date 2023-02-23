@@ -1,6 +1,9 @@
 package backend.jangbogoProject.review;
 
-import backend.jangbogoProject.review.entity.*;
+import backend.jangbogoProject.controller.ReviewController;
+import backend.jangbogoProject.dto.ReviewRequestDTO;
+import backend.jangbogoProject.dto.ReviewResponseDTO;
+import backend.jangbogoProject.service.ReviewService;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

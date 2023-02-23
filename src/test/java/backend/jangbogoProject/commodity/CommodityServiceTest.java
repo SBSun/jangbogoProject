@@ -1,22 +1,13 @@
 package backend.jangbogoProject.commodity;
 
-import backend.jangbogoProject.commodity.CommodityInfoProjection;
-import backend.jangbogoProject.commodity.CommodityResponseDto;
-import backend.jangbogoProject.commodity.CommodityService;
-import backend.jangbogoProject.commodity.search.SearchRequestDTO;
-import backend.jangbogoProject.commodity.search.SearchResponseDto;
-import lombok.RequiredArgsConstructor;
+import backend.jangbogoProject.repository.CommodityRepository;
+import backend.jangbogoProject.service.CommodityService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
