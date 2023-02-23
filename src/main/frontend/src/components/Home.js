@@ -51,7 +51,7 @@ const Home = () => {
       <HomeContainer>
         <img src={Banner} alt='banner' className='banner' />
         <h2 className='list_title'>품목 별로 최저가를 보여드려요.</h2>
-        <CommodityList recordSize={1000} />
+        <CommodityList modify={'PRICE'} recordSize={1000} />
         <h2 className='list_title'>이 지역의 있는 매장들을 보여드려요.</h2>
         <MarketList />
         <Contact>
