@@ -5,6 +5,7 @@ export const getCommodityList = async (id, curPage, recordSize) => {
   const res = await client.get(
     `/commodity/getCommodities?gu_id=${id}&curPage=${curPage}&recordSize=${recordSize}`
   );
+  console.log(res);
   return res.data;
 };
 
@@ -13,6 +14,7 @@ export const getCatagoryList = async (id, curPage, recordSize, keyword) => {
   const res = await client.get(
     `/commodity/findByCategory?gu_id=${id}&curPage=${curPage}&recordSize=${recordSize}&keyword=${keyword}`
   );
+  console.log(res);
   return res.data;
 };
 
@@ -21,6 +23,7 @@ export const getSearchList = async (id, curPage, recordSize, keyword) => {
   const res = await client.get(
     `/commodity/findByKeyword?gu_id=${id}&curPage=${curPage}&recordSize=${recordSize}&keyword=${keyword}`
   );
+  console.log(res);
   return res.data;
 };
 
@@ -29,6 +32,7 @@ export const getMarketItemList = async (curPage, recordSize, keyword) => {
   const res = await client.get(
     `/commodity/findByMarket?curPage=${curPage}&recordSize=${recordSize}&keyword=${keyword}`
   );
+  console.log(res);
   return res.data;
 };
 
@@ -37,5 +41,6 @@ export const getLowPriceItemList = async id => {
   const res = await client.get(
     `/commodity/getLowestPriceCommodities?gu_id=${id}`
   );
+  console.log(res);
   return res.data;
 };

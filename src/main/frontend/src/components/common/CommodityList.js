@@ -107,8 +107,8 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
   const promise = selectAPI();
   const fetchData = () => {
     promise.then(data => {
-      setCommoditys(data.infoList);
-      setEndPage(data.pageResponseDTO.endPage);
+      setCommoditys(data.data.infoList);
+      setEndPage(data.data.pageResponseDTO.endPage);
     });
   };
 
