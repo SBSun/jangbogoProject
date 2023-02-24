@@ -5,15 +5,18 @@ import backend.jangbogoProject.dto.GuInfoProjection;
 import backend.jangbogoProject.entity.Gu;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class GuService {
 
     private final GuRepository guRepository;
 
+    @Transactional
     public void save(Gu gu){
         guRepository.save(gu);
     }

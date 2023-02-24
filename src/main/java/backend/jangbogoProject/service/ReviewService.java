@@ -14,9 +14,11 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ReviewService {
     private final ReviewRepository reviewRepository;
 
+    @Transactional
     public ReviewResponseDTO.Info createReview(ReviewRequestDTO.Create createDTO){
         Review review = createDTO.toEntity();
 

@@ -14,6 +14,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -22,6 +23,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class CommodityService {
 
     private final CommodityRepository commodityRepository;
@@ -100,6 +102,7 @@ public class CommodityService {
         commodityRepository.truncateCommodity();
     }
 
+    @Transactional
     public String load_save(){
         commodityRepository.truncateCommodity();
 

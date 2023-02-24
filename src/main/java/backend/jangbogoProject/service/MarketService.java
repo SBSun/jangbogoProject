@@ -6,15 +6,18 @@ import backend.jangbogoProject.dto.MarketInfoProjection;
 import backend.jangbogoProject.entity.Market;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MarketService {
     private final MarketRepository marketRepository;
     private final GuService guService;
 
+    @Transactional
     public void save(Market _market, String guName){
         if(!guService.existsById(_market.getGu_id())){
             Gu gu = Gu.builder()

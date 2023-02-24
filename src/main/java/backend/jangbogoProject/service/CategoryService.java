@@ -11,10 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 public class CategoryService {
     private final CategoryRepository categoryRepository;
 
+    @Transactional
     public Long create(CategoryRequestDTO categoryRequestDTO){
         if(categoryRepository.existsByName(categoryRequestDTO.getName())){
             throw new IllegalArgumentException("해당 카테고리는 이미 존재합니다.");

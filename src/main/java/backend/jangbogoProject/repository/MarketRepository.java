@@ -4,9 +4,11 @@ import backend.jangbogoProject.dto.MarketInfoProjection;
 import backend.jangbogoProject.entity.Market;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface MarketRepository extends JpaRepository<Market, Integer> {
     @Query(value = "SELECT name FROM item WHERE market_id = ?1", nativeQuery = true)
     String getMarketName(int id);

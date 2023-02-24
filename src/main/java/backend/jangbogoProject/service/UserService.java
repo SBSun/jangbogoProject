@@ -31,6 +31,7 @@ import static backend.jangbogoProject.jwt.JwtAuthenticationFilter.AUTHORIZATION_
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class UserService{
     private final UserRepository userRepository;
     private final RedisTemplate redisTemplate;
@@ -41,8 +42,7 @@ public class UserService{
     private final ReviewRepository reviewRepository;
 
     @Transactional
-    public Long signUp(UserRequestDto.SignUp signUp)
-    {
+    public Long signUp(UserRequestDto.SignUp signUp) {
         if(userRepository.existsByEmail(signUp.getEmail())){
             throw new IllegalArgumentException("해당 이메일은 이미 가입되어 있는 이메일입니다.");
         }
@@ -59,7 +59,6 @@ public class UserService{
     }
 
     public UserResponseDto.Info getUserInfo(String email){
-
         UserResponseDto.Info info = UserResponseDto.Info.of(userRepository.findByEmail(email).get());
 
         return info;
