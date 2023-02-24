@@ -15,6 +15,7 @@ export const postMarketReview = async (id, email, content) => {
   });
 };
 
+// 리뷰 수정 API
 export const editMarketReview = async (id, content) => {
   return await client.patch(`/review/edit`, {
     marketId: id,

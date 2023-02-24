@@ -131,7 +131,7 @@ const MarketDetail = () => {
           />
         ) : (
           <>
-            <ReviewList marketId={params.id} />
+            <ReviewList marketId={params.id} marketName={name} />
             <MarketReviewBlock
               onClick={() => {
                 user

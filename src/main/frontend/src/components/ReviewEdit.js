@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from './common/Header';
-import { postMarketReview } from '../lib/api/review';
+import { editMarketReview } from '../lib/api/review';
 
-const ReviewWriteForm = styled.form`
+const ReviewEditForm = styled.form`
   margin: 56px 0 0 0;
   text-align: center;
 
@@ -28,7 +28,7 @@ const ReviewWriteForm = styled.form`
     border: 2px solid var(--blue);
   }
 `;
-const WriteCompleteButton = styled.button`
+const EditCompleteButton = styled.button`
   outline: none;
   border: none;
   position: fixed;
@@ -47,7 +47,7 @@ const WriteCompleteButton = styled.button`
   }
 `;
 
-const ReviewWrite = () => {
+const ReviewEdit = () => {
   const params = useParams();
   const navigate = useNavigate();
   const location = useLocation();
@@ -55,9 +55,7 @@ const ReviewWrite = () => {
   const { name } = location.state;
 
   const [content, setContent] = useState('');
-
-  const user = JSON.parse(sessionStorage.getItem('user'));
-
+  console.log(params.reviewId);
   const onChange = e => {
     setContent(e.target.value);
     console.log(content);
@@ -69,11 +67,12 @@ const ReviewWrite = () => {
       alert('내용을 입력해주세요.');
     }
 
-    const promise = postMarketReview(params.id, user.email, content);
+    const promise = editMarketReview(params.reviewId, content);
     const fetchData = () => {
       promise
         .then(res => {
           console.log(res);
+          alert('리뷰가 수정되었습니다.');
           navigate(`/market/${params.id}`, { state: { name: name } });
         })
         .catch(error => console.log(error));
@@ -84,18 +83,18 @@ const ReviewWrite = () => {
 
   return (
     <>
-      <Header modify={'WHITE_BLOCK'} title={'리뷰 작성하기'} />
-      <ReviewWriteForm onSubmit={onSubmit}>
+      <Header modify={'WHITE_BLOCK'} title={'리뷰 편집하기'} />
+      <ReviewEditForm onSubmit={onSubmit}>
         <textarea
           className='review-content'
           placeholder='리뷰를 작성해주세요.'
           onChange={onChange}
           value={content}
         />
-        <WriteCompleteButton>리뷰 작성 완료</WriteCompleteButton>
-      </ReviewWriteForm>
+        <EditCompleteButton>리뷰 편집 완료</EditCompleteButton>
+      </ReviewEditForm>
     </>
   );
 };
 
-export default ReviewWrite;
+export default ReviewEdit;

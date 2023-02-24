@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MdModeEdit, MdDelete } from 'react-icons/md';
 import { getMarketReviewList, deleteMarketReview } from '../../lib/api/review';
+import { useNavigate } from 'react-router-dom';
 
+// CSS
 const ReviewListBlock = styled.ul`
   padding: 1rem;
   margin-bottom: 52px;
@@ -39,11 +41,14 @@ const ReviewListBlock = styled.ul`
   }
 `;
 
-const ReviewList = ({ marketId }) => {
+const ReviewList = ({ marketId, marketName }) => {
   const [reviews, setReviews] = useState([{}]);
 
   const user = JSON.parse(sessionStorage.getItem('user'));
 
+  const navigate = useNavigate();
+
+  // API에서 받아온 리뷰 데이터 저장
   const promise = getMarketReviewList(marketId);
   const fetchData = () => {
     promise
@@ -74,7 +79,7 @@ const ReviewList = ({ marketId }) => {
 
   // 리뷰 동적 생성
   const reviewList = reviews.map((review, index) => (
-    <li key={index} id={review.reviewId}>
+    <li key={index}>
       <div className='review-info'>
         <span>{review.userEmail}</span>
         {user ? (
@@ -82,7 +87,12 @@ const ReviewList = ({ marketId }) => {
             <>
               <MdModeEdit
                 id={review.reviewId}
-                onClick={e => console.log(e.target.id)}
+                onClick={e => {
+                  console.log(e.target.id);
+                  navigate(`/market/${marketId}/${e.target.id}`, {
+                    state: { name: marketName },
+                  });
+                }}
               />
               <MdDelete id={review.reviewId} onClick={onDeleteClick} />
             </>
