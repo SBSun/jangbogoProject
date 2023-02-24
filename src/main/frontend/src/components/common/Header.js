@@ -6,7 +6,7 @@ import {
   MdKeyboardArrowLeft,
   MdOutlinePlace,
 } from 'react-icons/md';
-import logo from '../../assets/logo_eng.svg';
+import logo from '../../assets/Logo_eng.svg';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsVisible } from '../../modules/location';
