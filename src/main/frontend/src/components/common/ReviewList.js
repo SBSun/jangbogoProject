@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MdModeEdit, MdDelete } from 'react-icons/md';
-import { getMarketReviewList } from '../../lib/api/review';
+import { getMarketReviewList, deleteMarketReview } from '../../lib/api/review';
 
 const ReviewListBlock = styled.ul`
   padding: 1rem;
@@ -55,10 +55,24 @@ const ReviewList = ({ marketId }) => {
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [marketId]);
+  }, [marketId, reviews]);
 
-  //   if (reviews === '') return;
+  // 리뷰 삭제 이벤트
+  const onDeleteClick = e => {
+    const promise = deleteMarketReview(e.target.id);
+    const fetchData = () => {
+      promise
+        .then(res => {
+          console.log(res);
+          alert('리뷰가 삭제되었습니다.');
+        })
+        .catch(error => console.log(error));
+    };
 
+    fetchData();
+  };
+
+  // 리뷰 동적 생성
   const reviewList = reviews.map((review, index) => (
     <li key={index} id={review.reviewId}>
       <div className='review-info'>
@@ -66,8 +80,11 @@ const ReviewList = ({ marketId }) => {
         {user ? (
           review.userEmail === user.email ? (
             <>
-              <MdModeEdit onClick={() => console.log('Edit Click')} />
-              <MdDelete onClick={() => console.log('Delete Click')} />
+              <MdModeEdit
+                id={review.reviewId}
+                onClick={e => console.log(e.target.id)}
+              />
+              <MdDelete id={review.reviewId} onClick={onDeleteClick} />
             </>
           ) : undefined
         ) : undefined}

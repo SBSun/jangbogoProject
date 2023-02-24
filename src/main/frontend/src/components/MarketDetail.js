@@ -7,6 +7,7 @@ import thumbnail from '../assets/thumbnail_market.svg';
 import CommodityList from './common/CommodityList';
 import ReviewList from './common/ReviewList';
 
+// CSS
 const MakertInfoBlock = styled.section`
   margin: 56px 0;
   display: flex;
@@ -77,6 +78,7 @@ const MarketReviewBlock = styled.div`
 `;
 
 const MarketDetail = () => {
+  // 매장 이름 값 받아오기
   const location = useLocation();
   const { name } = location.state;
 
@@ -84,6 +86,7 @@ const MarketDetail = () => {
 
   const user = JSON.parse(sessionStorage.getItem('user'));
 
+  // 메뉴 활성화 상태
   const [isChecked, setIsChecked] = useState({
     item: true,
     review: false,
