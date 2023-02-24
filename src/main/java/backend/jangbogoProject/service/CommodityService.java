@@ -101,9 +101,11 @@ public class CommodityService {
     }
 
     public String load_save(){
+        commodityRepository.truncateCommodity();
+
         String result = "";
 
-        int maxCommodityCount = 2000;
+        int maxCommodityCount = 4000;
         int start = 1, end = 1000, cycle;
 
         cycle = maxCommodityCount / 1000;
@@ -113,7 +115,7 @@ public class CommodityService {
 
         try {
             while(cycle > 0){
-                URL url = new URL("http://openapi.seoul.go.kr:8088/736c497a7462797539316141576a42/json/ListNecessariesPricesService/"+start+"/"+end+"/");
+                URL url = new URL("http://openapi.seoul.go.kr:8088/736c497a7462797539316141576a42/json/ListNecessariesPricesService/"+start+"/"+end+"///2023-02/");
                 BufferedReader bf;
                 bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
                 result = bf.readLine();
@@ -131,6 +133,12 @@ public class CommodityService {
 
                     Double m_seq = (Double)tmp.get("M_SEQ");
                     String a_name = (String)tmp.get("A_NAME");
+                    String a_unit = (String)tmp.get("A_UNIT");
+                    String a_price = (String)tmp.get("A_PRICE");
+                    if(Integer.parseInt(a_price) == 0)
+                        continue;
+                    String add_col = (String)tmp.get("ADD_COL");
+                    String p_date = (String)tmp.get("P_DATE");
 
                     if(a_name.contains("("))
                         a_name = a_name.substring(0, a_name.indexOf("("));
@@ -140,15 +148,17 @@ public class CommodityService {
                     if(a_name.contains("호박"))
                         a_name = "애호박";
 
+                    int category_id = categoryService.findIdByName(a_name).intValue();
+
                     System.out.println(a_name);
                     Commodity commodity = Commodity.builder()
                             .id(start + i)
                             .m_SEQ(m_seq.intValue())
-                            .category_id(categoryService.findIdByName(a_name).intValue())
-                            .a_UNIT((String)tmp.get("A_UNIT"))
-                            .a_PRICE((String)tmp.get("A_PRICE"))
-                            .add_COL((String)tmp.get("ADD_COL"))
-                            .p_DATE((String)tmp.get("P_DATE"))
+                            .category_id(category_id)
+                            .a_UNIT(a_unit)
+                            .a_PRICE(a_price)
+                            .add_COL(add_col)
+                            .p_DATE(p_date)
                             .build();
 
                     String gu_code = (String)tmp.get("M_GU_CODE");

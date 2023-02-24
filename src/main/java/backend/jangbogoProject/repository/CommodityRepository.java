@@ -3,16 +3,23 @@ package backend.jangbogoProject.repository;
 import backend.jangbogoProject.dto.CommodityInfoProjection;
 import backend.jangbogoProject.entity.Commodity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Repository
 public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
 
+    @Modifying
+    @Transactional
     @Query(value = "TRUNCATE TABLE commodity", nativeQuery = true)
     void truncateCommodity();
+
+    @Query(value = "ALTER TABLE commodity AUTO_INCREMENT = 1", nativeQuery = true)
+    void resetIncrement();
 
     @Query(value = "SELECT c1.commodity_id, m.name AS marketName, c2.name AS categoryName, " +
             "c1.unit, c1.price, c1.remarks, c1.p_date " +
