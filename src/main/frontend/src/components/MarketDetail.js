@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from './common/Header';
 import Navigation from './common/Navigation';
 import thumbnail from '../assets/thumbnail_market.svg';
 import CommodityList from './common/CommodityList';
+import ReviewList from './common/ReviewList';
 
+// CSS
 const MakertInfoBlock = styled.section`
   margin: 56px 0;
   display: flex;
@@ -55,11 +57,36 @@ const MarketDetailBlock = styled.section`
     }
   }
 `;
+const MarketReviewBlock = styled.div`
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 57px;
+  padding: 1rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--blue);
+  color: white;
+  font-size: 1.25rem;
+  cursor: pointer;
+
+  @media (min-width: 415px) {
+    width: 412px;
+    margin: 0 auto;
+  }
+`;
 
 const MarketDetail = () => {
+  // 매장 이름 값 받아오기
   const location = useLocation();
   const { name } = location.state;
 
+  const navigate = useNavigate();
+
+  const user = JSON.parse(sessionStorage.getItem('user'));
+
+  // 메뉴 활성화 상태
   const [isChecked, setIsChecked] = useState({
     item: true,
     review: false,
@@ -103,7 +130,20 @@ const MarketDetail = () => {
             keyword={params.id}
           />
         ) : (
-          <div>review</div>
+          <>
+            <ReviewList marketId={params.id} marketName={name} />
+            <MarketReviewBlock
+              onClick={() => {
+                user
+                  ? navigate(`/market/${params.id}/write`, {
+                      state: { name: name },
+                    })
+                  : navigate(`/member/login`);
+              }}
+            >
+              리뷰 작성
+            </MarketReviewBlock>
+          </>
         )}
       </MakertInfoBlock>
       <Navigation />
