@@ -11,6 +11,7 @@ import MyPagePage from './pages/MyPagePage';
 import LoginPage from './pages/LoginPage';
 import MarketDetailPage from './pages/MarketDetailPage';
 import ReviewWritePage from './pages/ReviewWritePage';
+import ReviewEditPage from './pages/ReviewEditPage';
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
         <Route path='/member/signup' element={<SignUpPage />} />
         <Route path='/market/:id' element={<MarketDetailPage />} />
         <Route path='/market/:id/write' element={<ReviewWritePage />} />
+        <Route path='/market/:id/:reviewId' element={<ReviewEditPage />} />
       </Routes>
     </>
   );

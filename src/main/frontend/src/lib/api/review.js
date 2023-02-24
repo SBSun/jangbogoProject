@@ -15,6 +15,13 @@ export const postMarketReview = async (id, email, content) => {
   });
 };
 
+export const editMarketReview = async (id, content) => {
+  return await client.patch(`/review/edit`, {
+    marketId: id,
+    content,
+  });
+};
+
 // 리뷰 삭제 API
 export const deleteMarketReview = async id => {
   return await client.delete(`/review/delete?reviewId=${id}`);
