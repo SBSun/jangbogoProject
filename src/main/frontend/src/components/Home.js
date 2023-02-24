@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import Header from './common/Header';
 import Navigation from './common/Navigation';
-import Banner from '../assets/banner.PNG';
 import SelectLocationContainer from '../containers/SelectLoactionContainer';
 import CommodityList from './common/CommodityList';
 import MarketList from './common/MarketList';
@@ -49,7 +48,7 @@ const Home = () => {
       <Header modify={'LOGO_BLOCK'} title={''} />
       <SelectLocationContainer />
       <HomeContainer>
-        <img src={Banner} alt='banner' className='banner' />
+        <img src={'/assets/banner.png'} alt='banner' className='banner' />
         <h2 className='list_title'>품목 별로 최저가를 보여드려요.</h2>
         <CommodityList modify={'PRICE'} recordSize={1000} />
         <h2 className='list_title'>이 지역의 있는 매장들을 보여드려요.</h2>

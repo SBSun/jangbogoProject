@@ -6,7 +6,6 @@ import {
   MdKeyboardArrowLeft,
   MdOutlinePlace,
 } from 'react-icons/md';
-import logo from '../../assets/Logo_eng.svg';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsVisible } from '../../modules/location';
@@ -95,7 +94,7 @@ const Header = ({ modify, title }) => {
       case 'LOGO_BLOCK':
         return (
           <LogoBlock>
-            <img src={logo} alt='logo' />
+            <img src={'/assets/svg/Logo_eng.svg'} alt='logo' />
             <MdPlace onClick={onClick} />
           </LogoBlock>
         );
