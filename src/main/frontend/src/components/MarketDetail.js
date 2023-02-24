@@ -132,7 +132,9 @@ const MarketDetail = () => {
             <MarketReviewBlock
               onClick={() => {
                 user
-                  ? navigate(`/market/${params.id}/write`)
+                  ? navigate(`/market/${params.id}/write`, {
+                      state: { name: name },
+                    })
                   : navigate(`/member/login`);
               }}
             >

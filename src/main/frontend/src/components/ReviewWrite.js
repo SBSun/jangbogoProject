@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from './common/Header';
 import { postMarketReview } from '../lib/api/review';
@@ -50,6 +50,9 @@ const WriteCompleteButton = styled.button`
 const ReviewWrite = () => {
   const params = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const { marketName } = location.state;
 
   const [content, setContent] = useState('');
 
@@ -72,7 +75,7 @@ const ReviewWrite = () => {
         .then(res => {
           console.log(res);
           console.log('Submit!');
-          navigate(`/market/${params.id}`, true);
+          navigate(`/market/${params.id}`, { state: { name: marketName } });
         })
         .catch(error => console.log(error));
     };
