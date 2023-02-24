@@ -16,9 +16,6 @@ const recommandKeyword = [
   {
     name: '고등어',
   },
-  {
-    name: '이마트',
-  },
 ];
 
 const SearchBlock = styled.main`
