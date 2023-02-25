@@ -1,6 +1,7 @@
 package backend.jangbogoProject.service;
 
 
+import backend.jangbogoProject.aop.ExecutionTimeChecker;
 import backend.jangbogoProject.repository.CommodityRepository;
 import backend.jangbogoProject.dto.CategoryResponseDTO;
 import backend.jangbogoProject.entity.Commodity;
@@ -30,7 +31,9 @@ public class CommodityService {
     private final MarketService marketService;
     private final CategoryService categoryService;
 
+    @ExecutionTimeChecker
     public CommodityResponseDto.CommodityInfoList getCommodities(int gu_id, SearchRequestDTO searchRequestDTO){
+
         int startIndex = searchRequestDTO.getOffset();
         int recordSize = searchRequestDTO.getRecordSize();
 
