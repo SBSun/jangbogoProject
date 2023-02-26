@@ -36,7 +36,6 @@ public class UserServiceTest {
                 .email("test@test.test")
                 .password("test Password")
                 .name("test Name")
-                .address("test Address")
                 .build();
     }
 
@@ -45,7 +44,6 @@ public class UserServiceTest {
                 .email("test@test.test")
                 .password("test Password")
                 .name("test Name")
-                .address("test Address")
                 .build();
     }
 
@@ -60,7 +58,6 @@ public class UserServiceTest {
                 .email(request.getEmail())
                 .password(encoder.encode(request.getPassword()))
                 .name(request.getName())
-                .address(request.getAddress())
                 .authority(Authority.USER.getValue())
                 .build();
 
@@ -68,11 +65,10 @@ public class UserServiceTest {
                 .save(any(User.class));
 
         // when
-        UserResponseDto.Info info = userService.signUp(request);
+        Long createdUserId = userService.signUp(request);
 
         // then
         assertThat(user.getEmail()).isEqualTo(request.getEmail());
-        assertThat(encoder.matches(request.getPassword(), info.getPassword())).isTrue();
 
         // verify
         verify(userRepository, times(1)).save(any(User.class));
@@ -91,7 +87,6 @@ public class UserServiceTest {
                 .email(signUp1.getEmail())
                 .password(encoder.encode(signUp1.getPassword()))
                 .name(signUp1.getName())
-                .address(signUp1.getAddress())
                 .authority(Authority.USER.getValue())
                 .build();
 
