@@ -9,13 +9,13 @@ public class NaverOAuth2UserInfo extends OAuth2UserInfo{
     }
 
     @Override
-    public String getId() {
+    public String getEmail() {
         Map<String, Object> response = (Map<String, Object>) attributes.get("response");
 
         if (response == null) {
             return null;
         }
-        return (String) response.get("id");
+        return (String) response.get("email");
     }
 
     @Override
