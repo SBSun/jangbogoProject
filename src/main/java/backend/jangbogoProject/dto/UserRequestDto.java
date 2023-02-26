@@ -14,7 +14,6 @@ public class UserRequestDto {
         private String email;
         private String password;
         private String name;
-        private String address;
     }
 
     @Getter
@@ -35,7 +34,6 @@ public class UserRequestDto {
     public static class Edit{
         private String password;
         private String name;
-        private String address;
     }
 
     @Getter

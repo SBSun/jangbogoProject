@@ -51,7 +51,6 @@ public class UserService{
                 .email(signUp.getEmail())
                 .password(passwordEncoder.encode(signUp.getPassword()))
                 .name(signUp.getName())
-                .address(signUp.getAddress())
                 .authority(Authority.USER.getValue())
                 .build();
 
@@ -88,7 +87,7 @@ public class UserService{
 
         String encPassword = passwordEncoder.encode(edit.getPassword());
 
-        user.update(encPassword, edit.getName(), edit.getName());
+        user.update(encPassword, edit.getName());
     }
 
     @Transactional
@@ -120,7 +119,7 @@ public class UserService{
 
         User loginUser = userRepository.findByEmail(login.getEmail()).get();
 
-        return new UserResponseDto.LoginInfo(loginUser.getName(), loginUser.getAddress(), tokenInfo);
+        return new UserResponseDto.LoginInfo(loginUser.getName(), tokenInfo);
     }
 
     public Optional<String> getLoginUserEmail(){

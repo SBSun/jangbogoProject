@@ -12,7 +12,6 @@ public class UserResponseDto {
         private String email;
         private String password;
         private String name;
-        private String address;
 
         public static Info of(User user){
             return Info.builder()
@@ -20,7 +19,6 @@ public class UserResponseDto {
                     .email(user.getEmail())
                     .password(user.getPassword())
                     .name(user.getName())
-                    .address(user.getAddress())
                     .build();
         }
     }
@@ -29,7 +27,6 @@ public class UserResponseDto {
     @AllArgsConstructor
     public static class LoginInfo{
         private String name;
-        private String address;
         private TokenInfo tokenInfo;
     }
 

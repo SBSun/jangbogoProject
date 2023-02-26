@@ -28,24 +28,20 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
-    private String address;
-    @Column(nullable = false)
     private String authority;
 
     @Builder
-    public User(Long id, String email, String password, String name, String address, String authority) {
+    public User(Long id, String email, String password, String name, String authority) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.name = name;
-        this.address = address;
         this.authority = authority;
     }
 
-    public void update(String password, String name, String address){
+    public void update(String password, String name){
         this.password = password;
         this.name = name;
-        this.address = address;
     }
 
     @Override
