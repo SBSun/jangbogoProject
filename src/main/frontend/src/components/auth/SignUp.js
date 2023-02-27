@@ -21,21 +21,10 @@ const SignUpForm = styled.form`
       align-items: center;
     }
   }
-  > .password-block,
-  .user-block {
+  > .password-user-block {
     display: inherit;
     flex-direction: inherit;
-    margin: 1rem 0;
-  }
-  > .user-block > .address-block {
-    margin: 0 0 1rem 0;
-
-    > span {
-      color: var(--black);
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin: 0 1rem 0 0.5rem;
-    }
+    margin: 1rem 0 3rem 0;
   }
 `;
 const SignUpLabel = styled.label`
@@ -57,7 +46,6 @@ const SignUp = ({
   password,
   passwordConfirm,
   name,
-  address,
   handleInputs,
   validations,
   onCheckEmail,
@@ -86,7 +74,7 @@ const SignUp = ({
             </SignUpButton>
           </div>
         </section>
-        <section className='password-block'>
+        <section className='password-user-block'>
           <SignUpLabel>비밀번호</SignUpLabel>
           <SignUpInput
             type={'password'}
@@ -104,8 +92,6 @@ const SignUp = ({
             value={passwordConfirm}
             onChange={handleInputs}
           />
-        </section>
-        <section className='user-block'>
           <SignUpLabel>이름</SignUpLabel>
           <SignUpInput
             name={'NAME'}
@@ -113,16 +99,6 @@ const SignUp = ({
             value={name}
             onChange={handleInputs}
           />
-          <SignUpLabel>주소</SignUpLabel>
-          <div className='address-block'>
-            <span>서울시</span>
-            <SignUpInput
-              name={'ADDRESS'}
-              placeholder='OO구'
-              value={address}
-              onChange={handleInputs}
-            />
-          </div>
         </section>
         <SignUpButton
           type={'submit'}

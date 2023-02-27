@@ -11,7 +11,6 @@ const initialState = {
     id: '',
     password: '',
     name: '',
-    address: '',
   },
   login: {
     id: '',

@@ -7,18 +7,18 @@ export const getMarketReviewList = async id => {
 };
 
 // 리뷰 작성 API
-export const postMarketReview = async (id, email, content) => {
+export const postMarketReview = async (marketId, userEmail, content) => {
   return await client.post(`/review/create`, {
-    marketId: id,
-    userEmail: email,
+    marketId,
+    userEmail,
     content,
   });
 };
 
 // 리뷰 수정 API
-export const editMarketReview = async (id, content) => {
+export const editMarketReview = async (reviewId, content) => {
   return await client.patch(`/review/edit`, {
-    reviewId: id,
+    reviewId,
     content,
   });
 };
