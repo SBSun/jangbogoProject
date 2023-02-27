@@ -4,6 +4,8 @@ import backend.jangbogoProject.dto.UserResponseDto;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 
 import org.slf4j.Logger;
@@ -15,30 +17,52 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletResponse;
 import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+@Slf4j
+@Getter
 @Component
 public class JwtTokenProvider {
     private final Logger LOGGER = LoggerFactory.getLogger(JwtTokenProvider.class);
 
-    private final String secret;                     // 사용할 알고리즘에 따라 길이를 맞추어 base64로 인코딩 된 임의 값
-    public static final String BEARER_TYPE = "Bearer ";
+    private String secret;            // 사용할 알고리즘에 따라 길이를 맞추어 base64로 인코딩 된 임의 값
+
+    @Value("${jwt.access.expiration}")
+    private long accessTokenExpirationPeriod = 30 * 60 * 1000L; // 30분 엑세스 토큰 만료 시간
+
+    @Value("${jwt.refresh.expiration}")
+    private long refreshTokenExpirationPeriod = 7 * 24 * 60 * 60 * 1000L; // 7일  리프레시 토큰 만료 시간
+
+    @Value("${jwt.access.header}")
+    private String accessHeader;
+
+    @Value("${jwt.refresh.header}")
+    private String refreshHeader;
+
+    /**
+     * JWT의 Subject와 Claim으로 email 사용 -> 클레임의 name을 "email"으로 설정
+     * JWT의 헤더에 들어오는 값 : 'Authorization(Key) = Bearer {토큰} (Value)' 형식
+     */
+    private static final String ACCESS_TOKEN_SUBJECT = "AccessToken";
+    private static final String REFRESH_TOKEN_SUBJECT = "RefreshToken";
+    public static final String BEARER = "Bearer ";
     private static final String AUTHORITIES_KEY = "auth";
-    public static final long ACCESS_TOKEN_EXPIRE_TIME = 30 * 60 * 1000L;              // 30분 엑세스 토큰 만료 시간
-    public static final long REFRESH_TOKEN_EXPIRE_TIME = 7 * 24 * 60 * 60 * 1000L;    // 7일  리프레시 토큰 만료 시간
 
     private Key key;
 
     public JwtTokenProvider(@Value("${jwt.secret}") String secret){
         this.secret = secret;
+
         // secret 값을 Base64 Decode해서 key 변수에 할당
         byte[] keyBytes = Decoders.BASE64.decode(secret);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
+
     // 토큰 추출 메서드. payload를 가져온다.
     public Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
@@ -47,6 +71,7 @@ public class JwtTokenProvider {
                 .parseClaimsJws(token)
                 .getBody();
     }
+
     // 해당 토큰이 만료되었는지
     public Boolean isTokenExpired(String token) {
         Date expiration = extractAllClaims(token).getExpiration();
@@ -63,23 +88,24 @@ public class JwtTokenProvider {
         long now = (new Date()).getTime();
 
         String accessToken = Jwts.builder()
-                .setSubject(authentication.getName())
+                .setSubject(ACCESS_TOKEN_SUBJECT)
                 .claim(AUTHORITIES_KEY, authorities)
-                .setExpiration(new Date(now + ACCESS_TOKEN_EXPIRE_TIME))
+                .setExpiration(new Date(now + accessTokenExpirationPeriod))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
         // Refresh Token 생성
         String refreshToken = Jwts.builder()
-                .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
+                .setSubject(REFRESH_TOKEN_SUBJECT)
+                .setExpiration(new Date(now + refreshTokenExpirationPeriod))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
         return UserResponseDto.TokenInfo.builder()
-                .grantType(BEARER_TYPE)
+                .grantType(BEARER)
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
-                .refreshTokenExpirationTime(REFRESH_TOKEN_EXPIRE_TIME)
+                .refreshTokenExpirationTime(refreshTokenExpirationPeriod)
                 .build();
     }
 
@@ -118,6 +144,31 @@ public class JwtTokenProvider {
             LOGGER.info("JWT 토큰이 잘못되었습니다.");
         }
         return false;
+    }
+
+    /**
+     * AccessToken + RefreshToken 헤더에 실어서 보내기
+     */
+    public void sendAccessAndRefreshToken(HttpServletResponse response, String accessToken, String refreshToken) {
+        response.setStatus(HttpServletResponse.SC_OK);
+
+        setAccessTokenHeader(response, accessToken);
+        setRefreshTokenHeader(response, refreshToken);
+        log.info("Access Token, Refresh Token 헤더 설정 완료");
+    }
+
+    /**
+     * AccessToken 헤더 설정
+     */
+    public void setAccessTokenHeader(HttpServletResponse response, String accessToken) {
+        response.setHeader(accessHeader, accessToken);
+    }
+
+    /**
+     * RefreshToken 헤더 설정
+     */
+    public void setRefreshTokenHeader(HttpServletResponse response, String refreshToken) {
+        response.setHeader(refreshHeader, refreshToken);
     }
 
     private Claims parseClaims(String accessToken) {
