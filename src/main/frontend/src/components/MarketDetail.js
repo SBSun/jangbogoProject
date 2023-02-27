@@ -79,7 +79,7 @@ const MarketReviewBlock = styled.div`
 const MarketDetail = () => {
   // 매장 이름 값 받아오기
   const location = useLocation();
-  const { name } = location.state;
+  const { name, thumbnail } = location.state;
 
   const navigate = useNavigate();
 
@@ -99,7 +99,7 @@ const MarketDetail = () => {
       <MakertInfoBlock>
         <div className='market_info'>
           <img
-            src={'/assets/svg/thumbnail_market.svg'}
+            src={`/assets/market/${thumbnail}.png`}
             className='market_thumbnail'
             alt='thumbnail'
           />
@@ -134,12 +134,16 @@ const MarketDetail = () => {
           />
         ) : (
           <>
-            <ReviewList marketId={params.id} marketName={name} />
+            <ReviewList
+              marketId={params.id}
+              marketName={name}
+              thumbnail={thumbnail}
+            />
             <MarketReviewBlock
               onClick={() => {
                 user
                   ? navigate(`/market/${params.id}/write`, {
-                      state: { name: name },
+                      state: { name: name, thumbnail: thumbnail },
                     })
                   : navigate(`/member/login`);
               }}

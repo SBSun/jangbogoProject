@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Header from './common/Header';
 import { editMarketReview } from '../lib/api/review';
 
+// CSS
 const ReviewEditForm = styled.form`
   margin: 56px 0 0 0;
   text-align: center;
@@ -52,7 +53,7 @@ const ReviewEdit = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { name } = location.state;
+  const { name, thumbnail } = location.state;
 
   const [content, setContent] = useState('');
   console.log(params.reviewId);
@@ -73,7 +74,9 @@ const ReviewEdit = () => {
         .then(res => {
           console.log(res);
           alert('리뷰가 수정되었습니다.');
-          navigate(`/market/${params.id}`, { state: { name: name } });
+          navigate(`/market/${params.id}`, {
+            state: { name: name, thumbnail: thumbnail },
+          });
         })
         .catch(error => console.log(error));
     };
