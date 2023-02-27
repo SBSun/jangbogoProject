@@ -21,7 +21,7 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
     @Query(value = "ALTER TABLE commodity AUTO_INCREMENT = 1", nativeQuery = true)
     void resetIncrement();
 
-    @Query(value = "SELECT c1.commodity_id, m.name AS marketName, c2.name AS categoryName, " +
+    @Query(value = "SELECT c1.commodity_id, m.name AS marketName,c1.category_id ,c2.name AS categoryName, " +
             "c1.unit, c1.price, c1.remarks, c1.p_date " +
             "FROM commodity c1 " +
             "INNER JOIN market m ON m.gu_id = ?1 AND c1.market_id = m.market_id " +
@@ -37,7 +37,7 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
     int getCommodityCnt(int gu_id);
 
     @Query(value =
-            "SELECT c1.commodity_id, c1.market_name AS marketName, cate.name AS categoryName, c1.price, c1.unit, c1.remarks, c1.p_date\n" +
+            "SELECT c1.commodity_id, c1.market_name AS marketName, c1.category_id, cate.name AS categoryName, c1.price, c1.unit, c1.remarks, c1.p_date\n" +
             "FROM (\n" +
             "\tSELECT c.commodity_id, m.name AS market_name, c.category_id, c.price, c.unit, c.remarks, c.p_date\n" +
             "    FROM commodity c\n" +
@@ -56,7 +56,7 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
 
     List<CommodityInfoProjection> getLowestPriceCommodities(int gu_id);
 
-    @Query(value = "SELECT c1.commodity_id, m.name AS marketName, c2.name AS categoryName, " +
+    @Query(value = "SELECT c1.commodity_id, m.name AS marketName, c1.category_id, c2.name AS categoryName, " +
             "c1.unit, c1.price, c1.remarks, c1.p_date " +
             "FROM commodity c1 " +
             "INNER JOIN market m ON m.market_id = ?1 " +
@@ -73,7 +73,7 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
     int findByMarketCnt(int market_id);
 
 
-    @Query(value = "SELECT c1.commodity_id, m.name AS marketName, c2.name AS categoryName, " +
+    @Query(value = "SELECT c1.commodity_id, m.name AS marketName, c1.category_id, c2.name AS categoryName, " +
             "c1.unit, c1.price, c1.remarks, c1.p_date " +
             "FROM commodity c1 " +
             "INNER JOIN market m ON m.gu_id = ?1 AND c1.market_id = m.market_id " +
@@ -89,7 +89,7 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
             "WHERE c1.category_id = c2.category_id AND c1.price > 0", nativeQuery = true)
     int findByKeywordCnt(int gu_id, String keyword);
 
-    @Query(value = "SELECT c1.commodity_id, m.name AS marketName, c2.name AS categoryName, " +
+    @Query(value = "SELECT c1.commodity_id, m.name AS marketName, c1.category_id, c2.name AS categoryName, " +
             "c1.unit, c1.price, c1.remarks, c1.p_date " +
             "FROM commodity c1 " +
             "INNER JOIN market m ON m.gu_id = ?1 AND c1.market_id = m.market_id " +
@@ -105,7 +105,7 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
             "WHERE c1.price > 0 AND c1.category_id = c2.category_id", nativeQuery = true)
     int findByParentCategoryCnt(int gu_id, Long parent_id);
 
-    @Query(value = "SELECT c1.commodity_id, m.name AS marketName, c2.name AS categoryName, " +
+    @Query(value = "SELECT c1.commodity_id, m.name AS marketName, c1.category_id, c2.name AS categoryName, " +
             "c1.unit, c1.price, c1.remarks, c1.p_date " +
             "FROM commodity c1 " +
             "INNER JOIN market m ON m.gu_id = ?1 AND c1.market_id = m.market_id " +
