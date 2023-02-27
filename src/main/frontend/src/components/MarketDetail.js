@@ -3,7 +3,6 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from './common/Header';
 import Navigation from './common/Navigation';
-import thumbnail from '../assets/thumbnail_market.svg';
 import CommodityList from './common/CommodityList';
 import ReviewList from './common/ReviewList';
 
@@ -99,7 +98,11 @@ const MarketDetail = () => {
       <Header modify={'WHITE_BLOCK'} title={'매장 정보'} />
       <MakertInfoBlock>
         <div className='market_info'>
-          <img src={thumbnail} className='market_thumbnail' alt='thumbnail' />
+          <img
+            src={'/assets/svg/thumbnail_market.svg'}
+            className='market_thumbnail'
+            alt='thumbnail'
+          />
           <div className='market_text'>
             <h2>{name}</h2>
             <p>상세 정보</p>

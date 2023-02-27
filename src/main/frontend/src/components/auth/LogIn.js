@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Header from '../common/Header';
 import Button from '../common/Button';
+import { SiKakaotalk, SiGoogle, SiNaver } from 'react-icons/si';
 
 const LoginForm = styled.form`
   margin: 56px 0 0 0;
@@ -24,6 +25,28 @@ const LoginForm = styled.form`
   }
   > button:nth-child(4) {
     margin-top: 10px;
+  }
+`;
+const SocialLoginForm = styled.div`
+  margin-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+  p {
+    color: var(--gray);
+    margin-bottom: 2rem;
+  }
+`;
+const SocialButtons = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  a {
+    text-decoration: none;
+    color: var(--black);
+    font-size: 3rem;
   }
 `;
 
@@ -53,6 +76,21 @@ const Login = ({ email, password, handleInputs, onSubmit, moveSignUp }) => {
           회원가입
         </Button>
       </LoginForm>
+
+      <SocialLoginForm>
+        <p>소셜 로그인</p>
+        <SocialButtons>
+          <a href='/oauth2/authorization/kakao' className='kakao'>
+            <SiKakaotalk />
+          </a>
+          <a href='/oauth2/authorization/google' className='google'>
+            <SiGoogle />
+          </a>
+          <a href='/oauth2/authorization/naver' className='naver'>
+            <SiNaver />
+          </a>
+        </SocialButtons>
+      </SocialLoginForm>
     </>
   );
 };
