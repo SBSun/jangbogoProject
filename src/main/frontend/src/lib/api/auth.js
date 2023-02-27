@@ -7,12 +7,11 @@ export const checkEmail = async ({ email }) => {
 };
 
 // 회원가입 API
-export const signUp = async ({ email, password, name, address }) => {
+export const signUp = async (email, password, name) => {
   const res = await client.post(`/user/signUpUser`, {
-    email: email,
-    password: password,
-    name: name,
-    address: address,
+    email,
+    password,
+    name,
   });
   return res;
 };

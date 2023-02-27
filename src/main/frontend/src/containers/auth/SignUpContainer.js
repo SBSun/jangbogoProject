@@ -31,12 +31,6 @@ function reducer(state, action) {
         name: action.value,
       };
     }
-    case 'ADDRESS': {
-      return {
-        ...state,
-        address: action.value,
-      };
-    }
     default: {
       return state;
     }
@@ -49,9 +43,8 @@ const SignUpContainer = () => {
     password: '',
     passwordConfirm: '',
     name: '',
-    address: '',
   });
-  const { email, password, passwordConfirm, name, address } = state;
+  const { email, password, passwordConfirm, name } = state;
 
   const [validations, setValidations] = useState({
     duplicate: {
@@ -111,7 +104,6 @@ const SignUpContainer = () => {
         email: email,
         password: password,
         name: name,
-        address: address,
       })
     );
 
@@ -121,15 +113,13 @@ const SignUpContainer = () => {
       return alert('비밀번호를 입력해주세요.');
     } else if (name === '') {
       return alert('이름을 입력해주세요.');
-    } else if (address === '') {
-      return alert('주소를 입력해주세요.');
     }
 
     if (password !== passwordConfirm) {
       return alert('비밀번호가 다릅니다.');
     }
 
-    const promise = signUp({ email, password, name, address });
+    const promise = signUp(email, password, name);
     const fetchData = () => {
       promise
         .then(res => {
@@ -152,7 +142,6 @@ const SignUpContainer = () => {
       password={password}
       passwordConfirm={passwordConfirm}
       name={name}
-      address={address}
       validations={validations}
       handleInputs={handleInputs}
       onCheckEmail={onCheckEmail}
