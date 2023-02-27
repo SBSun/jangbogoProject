@@ -52,7 +52,7 @@ const ReviewWrite = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { name } = location.state;
+  const { name, thumbnail } = location.state;
 
   const [content, setContent] = useState('');
 
@@ -74,7 +74,9 @@ const ReviewWrite = () => {
       promise
         .then(res => {
           console.log(res);
-          navigate(`/market/${params.id}`, { state: { name: name } });
+          navigate(`/market/${params.id}`, {
+            state: { name: name, thumbnail: thumbnail },
+          });
         })
         .catch(error => console.log(error));
     };

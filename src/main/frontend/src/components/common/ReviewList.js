@@ -41,7 +41,7 @@ const ReviewListBlock = styled.ul`
   }
 `;
 
-const ReviewList = ({ marketId, marketName }) => {
+const ReviewList = ({ marketId, marketName, thumbnail }) => {
   const [reviews, setReviews] = useState([{}]);
 
   const user = JSON.parse(sessionStorage.getItem('user'));
@@ -90,7 +90,7 @@ const ReviewList = ({ marketId, marketName }) => {
                 onClick={e => {
                   console.log(e.target.id);
                   navigate(`/market/${marketId}/${e.target.id}`, {
-                    state: { name: marketName },
+                    state: { name: marketName, thumbnail: thumbnail },
                   });
                 }}
               />
