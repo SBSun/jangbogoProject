@@ -13,8 +13,8 @@ const MarketListBlock = styled.ul`
   }
   > li > img {
     padding: 1rem 0;
-    width: 120px;
-    height: 120px;
+    width: 7.5rem;
+    height: 7.5rem;
   }
   > li > .market_name {
     text-align: center;
