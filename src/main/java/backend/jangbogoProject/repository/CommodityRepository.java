@@ -27,6 +27,7 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
             "INNER JOIN market m ON m.gu_id = ?1 AND c1.market_id = m.market_id " +
             "INNER JOIN category c2 ON c1.category_id = c2.category_id " +
             "WHERE c1.price > 0 " +
+            "ORDER BY categoryName " +
             "LIMIT ?2, ?3", nativeQuery = true)
     List<CommodityInfoProjection> getCommodities(int gu_id, int startIndex, int recordSize);
 
@@ -41,18 +42,18 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
             "FROM (\n" +
             "\tSELECT c.commodity_id, m.name AS market_name, c.category_id, c.price, c.unit, c.remarks, c.p_date\n" +
             "    FROM commodity c\n" +
-            "    INNER JOIN market m ON m.gu_id = 215000\n" +
+            "    INNER JOIN market m ON m.gu_id = ?1\n" +
             "    WHERE c.market_id = m.market_id\n" +
             ") c1\n" +
             "INNER JOIN category cate ON cate.category_id = c1.category_id\n" +
             "INNER JOIN(\n" +
             "\tSELECT c2.commodity_id, c2.market_id, c2.category_id, MIN(price) AS price, c2.unit, c2.remarks, c2.p_date\n" +
             "    FROM commodity c2\n" +
-            "\tINNER JOIN market m ON m.gu_id = 215000\n" +
+            "\tINNER JOIN market m ON m.gu_id = ?1\n" +
             "\tWHERE c2.market_id = m.market_id AND c2.price > 0\n" +
             "    GROUP BY c2.category_id\n" +
             ") c3 ON c1.price = c3.price AND c1.category_id = c3.category_id " +
-            "ORDER BY categoryName", nativeQuery = true)
+            "", nativeQuery = true)
 
     List<CommodityInfoProjection> getLowestPriceCommodities(int gu_id);
 
@@ -62,6 +63,7 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
             "INNER JOIN market m ON m.market_id = ?1 " +
             "INNER JOIN category c2 ON c1.category_id = c2.category_id " +
             "WHERE c1.price > 0  AND c1.market_id = m.market_id " +
+            "ORDER BY categoryName " +
             "LIMIT ?2, ?3", nativeQuery = true)
     List<CommodityInfoProjection> findByMarket(int market_id, int startIndex, int recordSize);
 
@@ -79,6 +81,7 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
             "INNER JOIN market m ON m.gu_id = ?1 AND c1.market_id = m.market_id " +
             "INNER JOIN category c2 ON c2.name LIKE %?2% " +
             "WHERE c1.category_id = c2.category_id AND c1.price > 0 " +
+            "ORDER BY categoryName " +
             "LIMIT ?3, ?4", nativeQuery = true)
     List<CommodityInfoProjection> findByKeyword(int gu_id, String keyword, int startIndex, int recordSize);
 
@@ -95,6 +98,7 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
             "INNER JOIN market m ON m.gu_id = ?1 AND c1.market_id = m.market_id " +
             "INNER JOIN category c2 ON c2.parent_id = ?2 " +
             "WHERE c1.price > 0 AND c1.category_id = c2.category_id " +
+            "ORDER BY categoryName " +
             "LIMIT ?3, ?4", nativeQuery = true)
     List<CommodityInfoProjection> findByParentCategory(int gu_id, Long parent_id, int startIndex, int recordSize);
 
@@ -111,6 +115,7 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
             "INNER JOIN market m ON m.gu_id = ?1 AND c1.market_id = m.market_id " +
             "INNER JOIN category c2 ON c2.category_id = ?2 " +
             "WHERE c1.price > 0 AND c1.category_id = c2.category_id " +
+            "ORDER BY categoryName " +
             "LIMIT ?3, ?4", nativeQuery = true)
     List<CommodityInfoProjection> findByChildCategory(int gu_id, Long category_id, int startIndex, int recordSize);
 
