@@ -100,7 +100,7 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [storeLocationId, keyword]);
+  }, [storeLocationId, curPage, keyword]);
 
   // API Fetch
   const promise = selectAPI();
