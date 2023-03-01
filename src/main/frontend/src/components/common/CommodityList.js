@@ -27,8 +27,9 @@ const CommodityItemStyled = styled.li`
   padding: 0.5rem 1rem;
 
   img {
-    width: 130px;
-    height: 160px;
+    padding: 1rem 0;
+    width: 7.5rem;
+    height: 7.5rem;
   }
   .commodity_info > .market_name {
     color: var(--gray);
@@ -66,6 +67,60 @@ const CommoditySelectPage = styled.ul`
   }
 `;
 
+function handleCommodityThumbnail(id) {
+  switch (id) {
+    // 정육
+    case 9:
+      return 'egg';
+    case 10:
+      return 'chicken';
+    case 13:
+      return 'pork';
+    case 21:
+      return 'beef';
+    // 수산물
+    case 6:
+      return 'galchi';
+    case 7:
+      return 'myeolchi';
+    case 8:
+      return 'mackerel';
+    case 12:
+      return 'dongtae';
+    case 14:
+      return 'myeongtae';
+    case 25:
+      return 'squid';
+    case 26:
+      return 'zogi';
+    // 채소
+    case 15:
+      return 'radish';
+    case 18:
+      return 'cabbage';
+    case 20:
+      return 'lettuce';
+    case 22:
+      return 'zucchini';
+    case 23:
+      return 'onion';
+    case 24:
+      return 'cucumber';
+    // 과일
+    case 11:
+      return 'jujube';
+    case 16:
+      return 'chestnut';
+    case 17:
+      return 'pear';
+    case 19:
+      return 'apple';
+    default: {
+      return 'none';
+    }
+  }
+}
+
 const CommodityList = ({ modify, recordSize, keyword }) => {
   // 품목 데이터 상태
   const [commoditys, setCommoditys] = useState([]);
@@ -100,7 +155,7 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [storeLocationId, keyword]);
+  }, [storeLocationId, curPage, keyword]);
 
   // API Fetch
   const promise = selectAPI();
@@ -117,22 +172,26 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
   }, [storeLocationId, curPage, keyword]);
 
   // 받아온 품목 데이터 동적 생성
-  const commodityListItem = commoditys.map((commodity, index) => (
-    <CommodityItemStyled key={index}>
-      <img src={`/assets/svg/thumbnail_commo.svg`} alt='thumbnail' />
-      <dl className='commodity_info'>
-        <dd className='market_name'>{commodity.marketName}</dd>
-        <dt className='commodity_name'>{commodity.categoryName}</dt>
-        <dd className='commodity_remarks'>{commodity.remarks}</dd>
-        <dd className='commodity_price'>
-          {commodity.price
-            .toString()
-            .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}
-          원
-        </dd>
-      </dl>
-    </CommodityItemStyled>
-  ));
+  const commodityListItem = commoditys.map((commodity, index) => {
+    const thumbnail = handleCommodityThumbnail(commodity.category_Id);
+
+    return (
+      <CommodityItemStyled key={index}>
+        <img src={`/assets/commodity/${thumbnail}.png`} alt='thumbnail' />
+        <dl className='commodity_info'>
+          <dd className='market_name'>{commodity.marketName}</dd>
+          <dt className='commodity_name'>{commodity.categoryName}</dt>
+          <dd className='commodity_remarks'>{commodity.remarks}</dd>
+          <dd className='commodity_price'>
+            {commodity.price
+              .toString()
+              .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}
+            원
+          </dd>
+        </dl>
+      </CommodityItemStyled>
+    );
+  });
 
   // 품목 페이지 이동
   const onPageClick = useCallback(

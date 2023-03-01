@@ -20,6 +20,7 @@ const CategoryMenu = styled.span`
   text-align: center;
   flex-basis: 25%;
   flex-shrink: 0;
+  cursor: pointer;
 
   &.active {
     color: var(--green);
