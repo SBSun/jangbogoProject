@@ -5,6 +5,7 @@ import Header from '../common/Header';
 import Navigation from '../common/Navigation';
 import SelectLocationContainer from '../../containers/SelectLoactionContainer';
 
+// CSS
 const SignUpForm = styled.form`
   margin: 56px 0;
   padding: 1rem;

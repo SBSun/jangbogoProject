@@ -22,7 +22,16 @@ const MyPageContainer = () => {
     alert('로그아웃되었습니다.');
     navigate('/', true);
   };
-  return <MyPage user={user} onLogoutClick={onLogoutClick} />;
+  const onAccountClick = () => {
+    navigate('/mypage/account');
+  };
+  return (
+    <MyPage
+      user={user}
+      onAccountClick={onAccountClick}
+      onLogoutClick={onLogoutClick}
+    />
+  );
 };
 
 export default MyPageContainer;
