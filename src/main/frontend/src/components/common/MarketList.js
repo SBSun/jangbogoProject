@@ -75,7 +75,7 @@ const MarketList = () => {
 
   const marketListItem = markets.map(market => {
     const thumbnail = handleMarketThumbnail(market.name);
-    console.log(thumbnail);
+
     return (
       <li
         key={market.marketId}

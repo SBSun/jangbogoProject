@@ -8,6 +8,7 @@ import CatagoryDetailPage from './pages/CatagoryDetailPage';
 import SearchPage from './pages/SearchPage';
 import SearchDetailPage from './pages/SearchDetailPage';
 import MyPagePage from './pages/MyPagePage';
+import AccountSettingPage from './pages/AccountSettingPage';
 import LoginPage from './pages/LoginPage';
 import MarketDetailPage from './pages/MarketDetailPage';
 import ReviewWritePage from './pages/ReviewWritePage';
@@ -24,6 +25,7 @@ const App = () => {
         <Route path='/search' element={<SearchPage />} />
         <Route path='/search/:keyword' element={<SearchDetailPage />} />
         <Route path='/mypage' element={<MyPagePage />} />
+        <Route path='/mypage/account' element={<AccountSettingPage />} />
         <Route path='/member/login' element={<LoginPage />} />
         <Route path='/member/signup' element={<SignUpPage />} />
         <Route path='/market/:id' element={<MarketDetailPage />} />

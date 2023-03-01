@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import Header from '../common/Header';
 import Navigation from '../common/Navigation';
 import Button from '../common/Button';
-import AccountSetting from './AccountSetting';
 import SelectLocationContainer from '../../containers/SelectLoactionContainer';
 
 // CSS
@@ -42,7 +41,7 @@ const ButtonBlock = styled.div`
   }
 `;
 
-const MyPage = ({ user, onLogoutClick }) => {
+const MyPage = ({ user, onAccountClick, onLogoutClick }) => {
   return (
     <>
       <Header modify={'DEFAULT_BLOCK'} title={'내 정보'} />
@@ -54,7 +53,11 @@ const MyPage = ({ user, onLogoutClick }) => {
             이메일 - <strong>{user.email}</strong>
           </span>
           <ButtonBlock>
-            <Button type={'button'} modify={'GRAY_BLOCK'}>
+            <Button
+              type={'button'}
+              modify={'GRAY_BLOCK'}
+              onClick={onAccountClick}
+            >
               계정 설정
             </Button>
             <Button
@@ -66,7 +69,6 @@ const MyPage = ({ user, onLogoutClick }) => {
             </Button>
           </ButtonBlock>
         </UserInfoBlock>
-        <AccountSetting />
       </Container>
       <Navigation />
     </>

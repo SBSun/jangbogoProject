@@ -2,7 +2,7 @@ import React, { useReducer } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Login from '../../components/auth/LogIn';
 import { useDispatch } from 'react-redux';
-import { login } from '../../lib/api/auth';
+import { login, setAuthorizationToken } from '../../lib/api/auth';
 import { postLogin } from '../../modules/auth';
 
 function reducer(state, action) {
@@ -23,12 +23,13 @@ const LoginContainer = () => {
   const navigate = useNavigate();
 
   const moveSignUp = () => navigate('/member/signup');
+
   const handleInputs = e => {
     dispatch(e.target);
   };
   const onSubmit = e => {
     e.preventDefault();
-    const promise = login({ email, password });
+    const promise = login(email, password);
     const fetchData = () => {
       promise
         .then(data => {
@@ -50,6 +51,10 @@ const LoginContainer = () => {
               refreshToken: data.tokenInfo.refreshToken,
             })
           );
+
+          // 헤더에 엑세스 토큰 설정
+          setAuthorizationToken(data.tokenInfo.accessToken);
+
           alert('로그인되었습니다.');
           navigate('/', true);
         })
