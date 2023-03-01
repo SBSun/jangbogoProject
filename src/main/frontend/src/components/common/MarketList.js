@@ -12,14 +12,44 @@ const MarketListBlock = styled.ul`
     padding: 0.5rem 1rem;
   }
   > li > img {
-    width: 130px;
-    height: 160px;
+    padding: 1rem 0;
+    width: 120px;
+    height: 120px;
   }
   > li > .market_name {
     text-align: center;
     color: var(--black);
   }
 `;
+
+function handleMarketThumbnail(name) {
+  switch (true) {
+    case name.includes('이마트'): {
+      return 'emart';
+    }
+    case name.includes('롯데백화점'): {
+      return 'lotte_depart';
+    }
+    case name.includes('롯데마트'): {
+      return 'lotte_mart';
+    }
+    case name.includes('신세계'): {
+      return 'shinsegae';
+    }
+    case name.includes('농협'): {
+      return 'nh';
+    }
+    case name.includes('홈플러스'): {
+      return 'homeplus';
+    }
+    case name.includes('시장'): {
+      return 'tradition';
+    }
+    default: {
+      return 'none';
+    }
+  }
+}
 
 const MarketList = () => {
   const [markets, setMarkets] = useState([]);
@@ -43,19 +73,23 @@ const MarketList = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storeLocationId]);
 
-  const marketListItem = markets.map(market => (
-    <li
-      key={market.marketId}
-      onClick={() => {
-        navigate(`/market/${market.marketId}`, {
-          state: { name: market.name },
-        });
-      }}
-    >
-      <img src={'/assets/svg/thumbnail_market.svg'} alt='thumbnail' />
-      <div className='market_name'>{market.name}</div>
-    </li>
-  ));
+  const marketListItem = markets.map(market => {
+    const thumbnail = handleMarketThumbnail(market.name);
+    console.log(thumbnail);
+    return (
+      <li
+        key={market.marketId}
+        onClick={() => {
+          navigate(`/market/${market.marketId}`, {
+            state: { name: market.name, thumbnail: thumbnail },
+          });
+        }}
+      >
+        <img src={`/assets/market/${thumbnail}.png`} alt='thumbnail' />
+        <div className='market_name'>{market.name}</div>
+      </li>
+    );
+  });
 
   return (
     <>
