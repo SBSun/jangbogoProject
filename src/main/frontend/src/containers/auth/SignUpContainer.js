@@ -125,7 +125,7 @@ const SignUpContainer = () => {
         .then(res => {
           console.log(res.data);
           alert('가입되었습니다.');
-          navigate('/', true);
+          navigate('/', { replace: true });
         })
         .catch(error => {
           console.log(error);

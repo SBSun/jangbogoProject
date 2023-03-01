@@ -38,7 +38,6 @@ const LoginContainer = () => {
             postLogin({
               email: email,
               accessToken: data.tokenInfo.accessToken,
-              isLogin: true,
             })
           );
           // 세션에 로그인 정보 저장
@@ -56,7 +55,7 @@ const LoginContainer = () => {
           setAuthorizationToken(data.tokenInfo.accessToken);
 
           alert('로그인되었습니다.');
-          navigate('/', true);
+          navigate('/', { replace: true });
         })
         .catch(error => {
           console.log(error);

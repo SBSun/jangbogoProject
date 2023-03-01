@@ -75,6 +75,7 @@ const ReviewEdit = () => {
           console.log(res);
           alert('리뷰가 수정되었습니다.');
           navigate(`/market/${params.id}`, {
+            replace: true,
             state: { name: name, thumbnail: thumbnail },
           });
         })
