@@ -2,6 +2,9 @@ package backend.jangbogoProject.security;
 
 import backend.jangbogoProject.jwt.JwtAuthenticationFilter;
 import backend.jangbogoProject.jwt.JwtTokenProvider;
+import backend.jangbogoProject.oauth.handler.OAuth2LoginFailureHandler;
+import backend.jangbogoProject.oauth.handler.OAuth2LoginSuccessHandler;
+import backend.jangbogoProject.oauth.service.CustomOAuth2UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -26,32 +29,43 @@ public class SecurityConfiguration {
     private final UserDetailsService userDetailsService;
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisTemplate redisTemplate;
-
-    @Bean
-    public static BCryptPasswordEncoder bCryptPasswordEncoder() {
-        //  AuthenticationManagerBuilder에  패스워드 암호화를 위해 Spring Security에서 제공하는 BCryptPasswordEncoder를 추가
-        return new BCryptPasswordEncoder();
-    }
+    private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+    private final OAuth2LoginFailureHandler oAuth2LoginFailureHandler;
+    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        /* @formatter:off */
         http
+                .formLogin().disable() // FormLogin 사용 x
                 // rest api이므로 basic auth 및 csrf 보안을 사용하지 않는다는 설정이다.
                 .httpBasic().disable()
                 .csrf().disable()
                 // JWT를 사용하기 때문에 세션을 사용하지 않는다는 설정
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+
+                // URL별 권한 관리 옵션
                 .authorizeRequests()
                 .antMatchers("/user/signUpAdmin", "/user/reissue", "/user/logout", "/user/edit", "/user/delete"
                 , "/review/create", "/review/edit", "/review/delete").hasRole("USER")
                 .anyRequest().permitAll()
                 .and()
-                //  JWT 인증을 위하여 직접 구현한 필터를 UsernamePasswordAuthenticationFilter 전에 실행하겠다는 설정이다.
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, redisTemplate), UsernamePasswordAuthenticationFilter.class);
+
+                // 소셜 로그인 설정
+                .oauth2Login()
+                .successHandler(oAuth2LoginSuccessHandler)
+                .failureHandler(oAuth2LoginFailureHandler)
+                .userInfoEndpoint().userService(customOAuth2UserService);
+
+        //  JWT 인증을 위하여 직접 구현한 필터를 UsernamePasswordAuthenticationFilter 전에 실행하겠다는 설정이다.
+        http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, redisTemplate), UsernamePasswordAuthenticationFilter.class);
         return http.build();
-        /* @formatter:on */
+    }
+
+    @Bean
+    public static BCryptPasswordEncoder bCryptPasswordEncoder() {
+        //  AuthenticationManagerBuilder에  패스워드 암호화를 위해 Spring Security에서 제공하는 BCryptPasswordEncoder를 추가
+        return new BCryptPasswordEncoder();
     }
 
     @Autowired

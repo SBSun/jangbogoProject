@@ -79,6 +79,7 @@ public class UserService{
     //이 상태에서 해당 데이터의 값을 변경하면 트랜잭션이 끝나는 시점에 변경된 데이터를 데이터베이스에 반영해준다.
     public void editUser(UserRequestDto.Edit edit){
         String loginUserEmail = SecurityUtil.getCurrentUserEmail().get();
+        System.out.println("loginUserEmail : " + loginUserEmail);
 
         if(loginUserEmail.equals("anonymousUser"))
             throw new RuntimeException("로그인한 유저가 아닙니다.");

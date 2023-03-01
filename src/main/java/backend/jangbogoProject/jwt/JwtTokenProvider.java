@@ -45,11 +45,8 @@ public class JwtTokenProvider {
     private String refreshHeader;
 
     /**
-     * JWT의 Subject와 Claim으로 email 사용 -> 클레임의 name을 "email"으로 설정
      * JWT의 헤더에 들어오는 값 : 'Authorization(Key) = Bearer {토큰} (Value)' 형식
      */
-    private static final String ACCESS_TOKEN_SUBJECT = "AccessToken";
-    private static final String REFRESH_TOKEN_SUBJECT = "RefreshToken";
     public static final String BEARER = "Bearer ";
     private static final String AUTHORITIES_KEY = "auth";
 
@@ -88,7 +85,7 @@ public class JwtTokenProvider {
         long now = (new Date()).getTime();
 
         String accessToken = Jwts.builder()
-                .setSubject(ACCESS_TOKEN_SUBJECT)
+                .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
                 .setExpiration(new Date(now + accessTokenExpirationPeriod))
                 .signWith(key, SignatureAlgorithm.HS256)
@@ -96,7 +93,6 @@ public class JwtTokenProvider {
 
         // Refresh Token 생성
         String refreshToken = Jwts.builder()
-                .setSubject(REFRESH_TOKEN_SUBJECT)
                 .setExpiration(new Date(now + refreshTokenExpirationPeriod))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
