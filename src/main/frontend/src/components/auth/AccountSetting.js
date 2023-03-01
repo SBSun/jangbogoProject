@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { editUserInfo, deleteAccount } from '../../lib/api/auth';
 import Button from '../common/Button';
 import Header from '../common/Header';
 import Navigation from '../common/Navigation';
@@ -25,7 +27,7 @@ const AccountForm = styled.form`
   }
   span {
     margin-left: auto;
-    padding: 1rem 0;
+    padding: 1rem 0 2rem 0;
     color: var(--green);
     text-decoration: underline;
     cursor: pointer;
@@ -37,6 +39,7 @@ const AccountButton = styled(Button)`
 
 const AccountSetting = () => {
   const user = JSON.parse(sessionStorage.getItem('user'));
+  const navigate = useNavigate();
 
   // 인풋 상태 관리
   const [form, setForm] = useState({
@@ -45,14 +48,16 @@ const AccountSetting = () => {
     name: '',
   });
 
+  const { password, passwordConfirm, name } = form;
+
   // 사용자 이름 받아오기
   useEffect(() => {
     setForm({ ...form, name: user.name });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.name]);
 
+  // 인풋 값 관리
   const onChange = e => {
-    console.log(e.target.value);
     switch (e.target.name) {
       case 'PASSWORD': {
         return setForm({ ...form, password: e.target.value });
@@ -68,15 +73,51 @@ const AccountSetting = () => {
       }
     }
   };
+  // 회원탈퇴 기능
+  const onClick = () => {
+    const isDelete = window.confirm('정말 삭제하시겠습니까?');
+
+    if (isDelete) {
+      const promise = deleteAccount();
+      const fetchData = () => {
+        promise.then(res => {
+          console.log(res);
+          // 세션에서 유저 정보 삭제
+          sessionStorage.removeItem('user');
+          alert('계정이 삭제되었습니다.');
+          navigate('/', { replace: true });
+        });
+      };
+
+      fetchData();
+    }
+  };
+  // 회원 정보 수정
   const onSubmit = e => {
     e.preventDefault();
-    if (form.password === '' || form.passwordConfirm === '') {
+    if (password === '' || passwordConfirm === '') {
       return alert('비밀번호를 입력해주세요.');
     }
-    if (form.password !== form.passwordConfirm) {
+    if (password !== passwordConfirm) {
       return alert('비밀번호가 서로 다릅니다.');
     }
-    console.log(form);
+
+    const promise = editUserInfo(passwordConfirm, name);
+    console.log(passwordConfirm, name);
+    const fetchData = () => {
+      promise
+        .then(res => {
+          console.log(res);
+          sessionStorage.setItem(
+            'user',
+            JSON.stringify({ ...user, name: name })
+          );
+          alert('사용자 정보가 변경되었습니다.');
+          navigate('/mypage', { replace: true });
+        })
+        .catch(error => console.log(error));
+    };
+    fetchData();
   };
 
   return (
@@ -90,7 +131,7 @@ const AccountSetting = () => {
           type={'password'}
           name={'PASSWORD'}
           placeholder={'새 비밀번호를 입력해주세요'}
-          value={form.password}
+          value={password}
           onChange={onChange}
         />
         <label>새 비밀번호 확인</label>
@@ -98,18 +139,13 @@ const AccountSetting = () => {
           type={'password'}
           name={'PASSWORD_CONFIRM'}
           placeholder={'새 비밀번호를 다시 입력해주세요'}
-          value={form.passwordConfirm}
+          value={passwordConfirm}
           onChange={onChange}
         />
         <label>이름</label>
-        <input
-          type={'text'}
-          name={'NAME'}
-          value={form.name}
-          onChange={onChange}
-        />
-        <p> </p>
-        <span>탈퇴하기</span>
+        <input type={'text'} name={'NAME'} value={name} onChange={onChange} />
+        <p></p>
+        <span onClick={onClick}>계정 삭제</span>
         <AccountButton>수정하기</AccountButton>
       </AccountForm>
       <Navigation />
