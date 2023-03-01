@@ -39,10 +39,10 @@ export const login = async (email, password) => {
 
 // 로그아웃 API
 export const logout = async (accessToken, refreshToken) => {
-  return await client
-    .post(`/user/logout`, { accessToken, refreshToken })
-    .then(res => {
-      client.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-      return res;
-    });
+  return await client.post(`/user/logout`, { accessToken, refreshToken });
+};
+
+// 계정 삭제 API
+export const deleteAccount = async () => {
+  return await client.delete(`/user/delete`);
 };

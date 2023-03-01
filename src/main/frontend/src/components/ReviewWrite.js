@@ -75,6 +75,7 @@ const ReviewWrite = () => {
         .then(res => {
           console.log(res);
           navigate(`/market/${params.id}`, {
+            replace: true,
             state: { name: name, thumbnail: thumbnail },
           });
         })

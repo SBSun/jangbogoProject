@@ -27,8 +27,7 @@ const Menu = styled(NavLink)`
 `;
 
 const Navigation = () => {
-  const user = sessionStorage.getItem('user');
-  const isLogin = JSON.parse(user);
+  const user = JSON.parse(sessionStorage.getItem('user'));
 
   return (
     <>
@@ -52,7 +51,7 @@ const Navigation = () => {
           <MdSearch />
         </Menu>
         <Menu
-          to={isLogin ? '/mypage' : '/member/login'}
+          to={user ? '/mypage' : '/member/login'}
           className={({ isActive }) => (isActive ? 'active' : undefined)}
         >
           <MdPerson />

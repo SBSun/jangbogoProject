@@ -20,7 +20,7 @@ const MyPageContainer = () => {
     logout(accessToken, refreshToken);
     sessionStorage.removeItem('user');
     alert('로그아웃되었습니다.');
-    navigate('/', true);
+    navigate('/', { replace: true });
   };
   const onAccountClick = () => {
     navigate('/mypage/account');
