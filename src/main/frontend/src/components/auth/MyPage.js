@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Header from '../common/Header';
 import Navigation from '../common/Navigation';
 import Button from '../common/Button';
+import AccountSetting from './AccountSetting';
 import SelectLocationContainer from '../../containers/SelectLoactionContainer';
 
 // CSS
@@ -65,6 +66,7 @@ const MyPage = ({ user, onLogoutClick }) => {
             </Button>
           </ButtonBlock>
         </UserInfoBlock>
+        <AccountSetting />
       </Container>
       <Navigation />
     </>
