@@ -48,19 +48,18 @@ const ReviewList = ({ marketId, marketName, thumbnail }) => {
 
   const navigate = useNavigate();
 
-  // API에서 받아온 리뷰 데이터 저장
-  const promise = getMarketReviewList(marketId);
-  const fetchData = () => {
-    promise
-      .then(data => {
-        setReviews(data);
-      })
-      .catch(error => console.log(error));
-  };
   useEffect(() => {
+    // API에서 받아온 리뷰 데이터 저장
+    const promise = getMarketReviewList(marketId);
+    const fetchData = () => {
+      promise
+        .then(data => {
+          setReviews(data);
+        })
+        .catch(error => console.log(error));
+    };
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [marketId, reviews]);
+  }, [marketId]);
 
   // 리뷰 삭제 이벤트
   const onDeleteClick = e => {
