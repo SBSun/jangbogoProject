@@ -111,7 +111,7 @@ public class CommodityService {
 
         String result = "";
 
-        int maxCommodityCount = 4000;
+        int maxCommodityCount = 5000;
         int start = 1, end = 1000, cycle;
 
         cycle = maxCommodityCount / 1000;

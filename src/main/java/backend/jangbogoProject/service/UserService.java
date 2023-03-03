@@ -94,7 +94,7 @@ public class UserService{
     @Transactional
     public Long deleteUser(){
         String loginUserEmail = SecurityUtil.getCurrentUserEmail().get();
-
+        System.out.println("loginUserEmail : " + loginUserEmail);
         if(loginUserEmail.equals("anonymousUser"))
             throw new RuntimeException("로그인한 유저가 아닙니다.");
 
