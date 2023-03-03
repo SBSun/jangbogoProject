@@ -70,9 +70,9 @@ task buildReact(type: Exec) {
 	inputs.dir "$webappDir"
 	group = BasePlugin.BUILD_GROUP
 	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-		commandLine "yarn.cmd", "run", "build"
+		commandLine "npm.cmd", "run-script", "build"
 	} else {
-		commandLine "yarn", "run", "build"
+		commandLine "npm", "run-script", "build"
 	}
 }
 
@@ -84,7 +84,7 @@ task installReact(type: Exec) {
 		commandLine "yarn.cmd", "audit", "fix"
 		commandLine 'yarn.cmd', 'install'
 	} else {
-		commandLine "yarn-audit-fix"
-		commandLine 'yarn', 'install'
+		commandLine "npm", "audit", "fix"
+		commandLine 'npm', 'install'
 	}
 }
