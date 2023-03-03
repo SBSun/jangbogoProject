@@ -29,7 +29,8 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
 
         UserResponseDto.TokenInfo tokenInfo = jwtTokenProvider.createToken(authentication);
-        response.addHeader(jwtTokenProvider.getAccessHeader(), jwtTokenProvider.BEARER + tokenInfo.getAccessToken());
+        response.addHeader(jwtTokenProvider.getAccessHeader(), "Bearer " + tokenInfo.getAccessToken());
+        response.sendRedirect("/");
 
         jwtTokenProvider.sendAccessAndRefreshToken(response, tokenInfo.getAccessToken(), tokenInfo.getRefreshToken());
 
