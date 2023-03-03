@@ -91,8 +91,8 @@ public class ReviewControllerTest {
 */
     private ReviewRequestDTO.Create createRequest(){
         return ReviewRequestDTO.Create.builder()
-                .market_id(1L)
-                .user_id(1L)
+                .marketId(1L)
+                .userEmail("sbs")
                 .content("test content")
                 .build();
     }
