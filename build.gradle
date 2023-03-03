@@ -1,6 +1,7 @@
 plugins {
 	id 'org.springframework.boot' version '2.7.2'
 	id 'io.spring.dependency-management' version '1.0.12.RELEASE'
+	id 'com.github.node-gradle.node' version '3.2.1'
 	id 'java'
 }
 
@@ -47,4 +48,43 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+def webappDir = "$projectDir/src/main/frontend"
+
+sourceSets {
+	main {
+		resources {
+			srcDirs = ["$webappDir/build", "$projectDir/src/main/resources"]
+		}
+	}
+}
+
+processResources {
+	dependsOn "buildReact"
+}
+
+task buildReact(type: Exec) {
+	dependsOn "installReact"
+	workingDir "$webappDir"
+	inputs.dir "$webappDir"
+	group = BasePlugin.BUILD_GROUP
+	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+		commandLine "yarn.cmd", "run", "build"
+	} else {
+		commandLine "yarn", "run", "build"
+	}
+}
+
+task installReact(type: Exec) {
+	workingDir "$webappDir"
+	inputs.dir "$webappDir"
+	group = BasePlugin.BUILD_GROUP
+	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+		commandLine "yarn.cmd", "audit", "fix"
+		commandLine 'yarn.cmd', 'install'
+	} else {
+		commandLine "yarn-audit-fix"
+		commandLine 'yarn', 'install'
+	}
 }

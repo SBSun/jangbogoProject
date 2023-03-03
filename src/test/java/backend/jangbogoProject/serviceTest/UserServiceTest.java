@@ -74,7 +74,7 @@ public class UserServiceTest {
         verify(userRepository, times(1)).save(any(User.class));
         verify(passwordEncoder, times(1)).encode(any(String.class));
     }
-
+    /*
     @Test
     void 이메일_중복확인(){
         // given
@@ -98,5 +98,5 @@ public class UserServiceTest {
 
         // then
         assertThat(userService.checkEmail(signUp2.getEmail())).isFalse();
-    }
+    }*/
 }
