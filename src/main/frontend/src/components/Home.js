@@ -48,7 +48,11 @@ const Home = () => {
       <Header modify={'LOGO_BLOCK'} title={''} />
       <SelectLocationContainer />
       <HomeContainer>
-        <img src={'/assets/banner.png'} alt='banner' className='banner' />
+        <img
+          src={'/assets/banner/banner1.png'}
+          alt='banner'
+          className='banner'
+        />
         <h2 className='list_title'>품목 별로 최저가를 보여드려요.</h2>
         <CommodityList modify={'PRICE'} recordSize={1000} />
         <h2 className='list_title'>이 지역의 있는 매장들을 보여드려요.</h2>
