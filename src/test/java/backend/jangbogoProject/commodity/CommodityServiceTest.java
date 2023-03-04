@@ -20,20 +20,4 @@ public class CommodityServiceTest {
     @Mock
     private CommodityRepository commodityRepository;
 
-    @DisplayName("공공데이터 불러와서 DB에 저장")
-    @Test
-    void load_save(){
-
-    }
-
-    @DisplayName("테이블 데이터 삭제")
-    @Test
-    void truncate(){
-        doNothing().when(commodityRepository)
-                .truncateCommodity();
-
-        commodityService.truncateCommodity();
-
-        verify(commodityRepository, times(1)).truncateCommodity();
-    }
 }

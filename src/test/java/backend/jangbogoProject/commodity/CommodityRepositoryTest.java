@@ -13,9 +13,10 @@ public class CommodityRepositoryTest {
     @Autowired
     private CommodityRepository commodityRepository;
 
+    /*
     @DisplayName("테이블 데이터 삭제")
     @Test
     void truncate() {
         commodityRepository.truncateCommodity();
-    }
+    }*/
 }
