@@ -19,26 +19,26 @@ const GrayBlock = styled(DefaultBlock)`
   background: var(--light-gray);
   color: var(--black);
 `;
-const Button = ({ type, modify, children, onClick }) => {
+const Button = ({ type, modify, children, onClick, disabled }) => {
   const HandleModify = () => {
     switch (modify) {
       case 'WHITE_BLOCK': {
         return (
-          <WhiteBlock type={type} onClick={onClick}>
+          <WhiteBlock type={type} onClick={onClick} disabled={disabled}>
             {children}
           </WhiteBlock>
         );
       }
       case 'GRAY_BLOCK': {
         return (
-          <GrayBlock type={type} onClick={onClick}>
+          <GrayBlock type={type} onClick={onClick} disabled={disabled}>
             {children}
           </GrayBlock>
         );
       }
       default: {
         return (
-          <DefaultBlock type={type} onClick={onClick}>
+          <DefaultBlock type={type} onClick={onClick} disabled={disabled}>
             {children}
           </DefaultBlock>
         );
