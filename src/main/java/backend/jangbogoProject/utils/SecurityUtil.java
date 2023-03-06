@@ -1,15 +1,20 @@
 package backend.jangbogoProject.utils;
 
+import backend.jangbogoProject.oauth.usefinfo.OAuth2UserInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Optional;
 
+@Slf4j
 public class SecurityUtil {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SecurityUtil.class);
 
     private SecurityUtil(){
 
@@ -20,7 +25,7 @@ public class SecurityUtil {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if(authentication == null){
-            LOGGER.debug("Security Context에 인증 정보가 없습니다.");
+            log.debug("Security Context에 인증 정보가 없습니다.");
             return Optional.empty();
         }
 

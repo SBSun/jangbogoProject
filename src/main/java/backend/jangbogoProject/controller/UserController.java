@@ -4,10 +4,13 @@ import backend.jangbogoProject.constant.StatusCode;
 import backend.jangbogoProject.dto.ResponseDTO;
 import backend.jangbogoProject.dto.UserRequestDto;
 import backend.jangbogoProject.dto.UserResponseDto;
+import backend.jangbogoProject.security.PrincipalDetails;
 import backend.jangbogoProject.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,9 +47,12 @@ public class UserController {
     }
 
     @DeleteMapping("/user/delete")
-    public ResponseEntity<String> deleteUser(HttpServletRequest request){
+    public ResponseEntity<String> deleteUser(HttpServletRequest request, @AuthenticationPrincipal PrincipalDetails principalDetails){
+
+        System.out.println("principalDetails.getUser().getEmail() : " + principalDetails.getUser().getEmail());
+
         userService.logout(request);
-        userService.deleteUser();
+        userService.deleteUser(principalDetails.getUsername());
         return new ResponseEntity<>("회원 탈퇴 성공", HttpStatus.OK);
     }
 
@@ -57,9 +63,9 @@ public class UserController {
     }
 
     @GetMapping("/user/getLoginUserEmail")
-    public ResponseEntity<String> getLoginUserEmail(){
-        String loginUserEmail = userService.getLoginUserEmail().get();
-        System.out.println("loginUserEmail : " + loginUserEmail);
+    public ResponseEntity<String> getLoginUserEmail(@AuthenticationPrincipal PrincipalDetails principalDetails){
+        String loginUserEmail = principalDetails.getUser().getEmail();
+
         if(loginUserEmail.equals("anonymousUser"))
             return new ResponseEntity<>("로그인 상태가 아닙니다.", HttpStatus.NOT_FOUND);
         else

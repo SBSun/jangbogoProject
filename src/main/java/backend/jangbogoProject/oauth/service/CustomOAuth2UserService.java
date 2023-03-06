@@ -4,6 +4,7 @@ import backend.jangbogoProject.constant.SocialType;
 import backend.jangbogoProject.entity.User;
 import backend.jangbogoProject.oauth.OAuthAttributes;
 import backend.jangbogoProject.repository.UserRepository;
+import backend.jangbogoProject.security.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -61,12 +62,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         // getUser() 메소드로 User 객체 생성 후 반환
         User createdUser = getUser(extractAttributes);
 
-        // DefaultOAuth2User 객체를 생성해서 반환
-        return new DefaultOAuth2User(
-                Collections.singleton(new SimpleGrantedAuthority(createdUser.getAuthority())),
-                attributes,
-                extractAttributes.getNameAttributeKey()
-        );
+        // PrincipalDetails 객체를 생성해서 반환
+        return new PrincipalDetails(createdUser, attributes);
     }
 
     // registrationId로 SocialType 반환

@@ -121,7 +121,7 @@ public class CommodityService {
 
         try {
             while(cycle > 0){
-                URL url = new URL("http://openapi.seoul.go.kr:8088/736c497a7462797539316141576a42/json/ListNecessariesPricesService/"+start+"/"+end+"///2023-02/");
+                URL url = new URL("http://openapi.seoul.go.kr:8088/736c497a7462797539316141576a42/json/ListNecessariesPricesService/"+start+"/"+end+"///2023-03/");
                 BufferedReader bf;
                 bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
                 result = bf.readLine();

@@ -8,6 +8,7 @@ import backend.jangbogoProject.jwt.JwtTokenProvider;
 import backend.jangbogoProject.repository.ReviewRepository;
 import backend.jangbogoProject.constant.Authority;
 import backend.jangbogoProject.repository.UserRepository;
+import backend.jangbogoProject.security.PrincipalDetails;
 import backend.jangbogoProject.utils.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 
@@ -92,14 +93,10 @@ public class UserService{
     }
 
     @Transactional
-    public Long deleteUser(){
-        String loginUserEmail = SecurityUtil.getCurrentUserEmail().get();
-        System.out.println("loginUserEmail : " + loginUserEmail);
-        if(loginUserEmail.equals("anonymousUser"))
-            throw new RuntimeException("로그인한 유저가 아닙니다.");
+    public Long deleteUser(String email){
 
-        reviewRepository.deleteByUserEmail(loginUserEmail);
-        return userRepository.deleteByEmail(loginUserEmail);
+        reviewRepository.deleteByUserEmail(email);
+        return userRepository.deleteByEmail(email);
     }
 
     public UserResponseDto.LoginInfo login(UserRequestDto.Login login){

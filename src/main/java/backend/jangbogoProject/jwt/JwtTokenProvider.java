@@ -1,11 +1,13 @@
 package backend.jangbogoProject.jwt;
 
 import backend.jangbogoProject.dto.UserResponseDto;
+import backend.jangbogoProject.service.CustomUserDetailsService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import org.slf4j.Logger;
@@ -28,6 +30,9 @@ import java.util.stream.Collectors;
 @Getter
 @Component
 public class JwtTokenProvider {
+
+    @Autowired
+    private CustomUserDetailsService userDetailsService;
     private final Logger LOGGER = LoggerFactory.getLogger(JwtTokenProvider.class);
 
     private String secret;            // 사용할 알고리즘에 따라 길이를 맞추어 base64로 인코딩 된 임의 값
@@ -120,9 +125,10 @@ public class JwtTokenProvider {
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
+
         // UserDetails 객체를 만들어서 Authentication 리턴
-        UserDetails principal = new org.springframework.security.core.userdetails.User(claims.getSubject(), "", authorities);
-        return new UsernamePasswordAuthenticationToken(principal, "", authorities);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(claims.getSubject());
+        return new UsernamePasswordAuthenticationToken(userDetails, accessToken, authorities);
     }
 
     // 토큰 정보 검사

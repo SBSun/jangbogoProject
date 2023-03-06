@@ -2,6 +2,7 @@ package backend.jangbogoProject.service;
 
 import backend.jangbogoProject.entity.User;
 import backend.jangbogoProject.repository.UserRepository;
+import backend.jangbogoProject.security.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,13 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         if (user != null) {
             // USER 라는 역할을 넣어준다.
-            User authUser = User.builder()
-                    .id(user.getId())
-                    .email(user.getEmail())
-                    .password(user.getPassword())
-                    .name(user.getName())
-                    .authority(user.getAuthority()).build();
-            return authUser;
+            return new PrincipalDetails(user);
         } else {
             throw new UsernameNotFoundException("can not find User : " + email);
         }
