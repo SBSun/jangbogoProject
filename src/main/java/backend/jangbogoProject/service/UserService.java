@@ -1,5 +1,6 @@
 package backend.jangbogoProject.service;
 
+import backend.jangbogoProject.constant.LoginType;
 import backend.jangbogoProject.dto.ResponseDTO;
 import backend.jangbogoProject.dto.UserRequestDto;
 import backend.jangbogoProject.dto.UserResponseDto;
@@ -52,6 +53,7 @@ public class UserService{
                 .email(signUp.getEmail())
                 .password(passwordEncoder.encode(signUp.getPassword()))
                 .name(signUp.getName())
+                .loginType(LoginType.Form.name())
                 .authority(Authority.USER.getValue())
                 .build();
 

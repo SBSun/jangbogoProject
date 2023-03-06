@@ -1,6 +1,7 @@
 package backend.jangbogoProject.oauth;
 
 import backend.jangbogoProject.constant.Authority;
+import backend.jangbogoProject.constant.LoginType;
 import backend.jangbogoProject.constant.SocialType;
 import backend.jangbogoProject.entity.User;
 import backend.jangbogoProject.oauth.usefinfo.GoogleOAuth2UserInfo;
@@ -62,6 +63,7 @@ public class OAuthAttributes {
                 .email(oauth2UserInfo.getEmail())
                 .name(oauth2UserInfo.getNickname())
                 .authority(Authority.USER.getValue())
+                .loginType(LoginType.Social.name())
                 .build();
     }
 }

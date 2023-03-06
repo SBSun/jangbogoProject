@@ -26,15 +26,18 @@ public class User {
     private String password;
     @Column(nullable = false)
     private String name;
+    @Column(nullable = false, name = "login_type")
+    private String loginType;
     @Column(nullable = false)
     private String authority;
 
     @Builder
-    public User(Long id, String email, String password, String name, String authority) {
+    public User(Long id, String email, String password, String name, String loginType, String authority) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.name = name;
+        this.loginType = loginType;
         this.authority = authority;
     }
 

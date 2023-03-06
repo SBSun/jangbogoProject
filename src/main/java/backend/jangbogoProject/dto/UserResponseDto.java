@@ -12,6 +12,7 @@ public class UserResponseDto {
         private String email;
         private String password;
         private String name;
+        private String loginType;
 
         public static Info of(User user){
             return Info.builder()
@@ -19,6 +20,7 @@ public class UserResponseDto {
                     .email(user.getEmail())
                     .password(user.getPassword())
                     .name(user.getName())
+                    .loginType(user.getLoginType())
                     .build();
         }
     }
