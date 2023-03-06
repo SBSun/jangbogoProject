@@ -41,14 +41,21 @@ const SignUpInput = styled.input`
 const SignUpButton = styled(Button)`
   height: 2.5rem;
 `;
+const ErrorMessage = styled.span`
+  color: var(--red);
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+  padding-left: 0.5rem;
+  visibility: ${({ validate }) => (validate ? 'hidden' : 'visible')};
+`;
 
 const SignUp = ({
   email,
   password,
   passwordConfirm,
   name,
-  handleInputs,
-  validations,
+  handleInput,
+  validate,
   onCheckEmail,
   onSubmit,
 }) => {
@@ -64,48 +71,62 @@ const SignUp = ({
               name='EMAIL'
               placeholder='name@example.com'
               value={email}
-              onChange={handleInputs}
+              onChange={handleInput}
             />
             <SignUpButton
               type={'button'}
               modify={'WHITE_BLOCK'}
+              disabled={!validate.email}
               onClick={onCheckEmail}
             >
               중복 확인
             </SignUpButton>
           </div>
+          <ErrorMessage validate={validate.email}>
+            이메일 형식을 맞춰주세요.
+          </ErrorMessage>
         </section>
+
         <section className='password-user-block'>
           <SignUpLabel>비밀번호</SignUpLabel>
           <SignUpInput
             type={'password'}
             name={'PASSWORD'}
-            placeholder='영문 포함 6 ~ 12자 형식으로 입력해주세요.'
+            placeholder='8자 이상 입력해주세요.'
             value={password}
-            onChange={handleInputs}
+            onChange={handleInput}
+            maxLength={12}
           />
+          <ErrorMessage validate={validate.password}>
+            비밀번호 형식을 맞춰주세요.
+          </ErrorMessage>
 
           <SignUpLabel>비밀번호 확인</SignUpLabel>
           <SignUpInput
             type={'password'}
             name={'PASSWORD_CONFIRM'}
-            placeholder='비밀번호를 한 번 더 입력해주세요.'
+            placeholder='비밀번호를 다시 입력해주세요.'
             value={passwordConfirm}
-            onChange={handleInputs}
+            onChange={handleInput}
+            maxLength={12}
           />
+          <ErrorMessage validate={validate.passwordConfirm}>
+            비밀번호가 서로 다릅니다.
+          </ErrorMessage>
           <SignUpLabel>이름</SignUpLabel>
           <SignUpInput
             name={'NAME'}
             placeholder='이름'
             value={name}
-            onChange={handleInputs}
+            onChange={handleInput}
+            maxLength={12}
           />
+          <ErrorMessage validate={validate.name}>
+            이름을 입력해주세요.
+          </ErrorMessage>
         </section>
-        <SignUpButton
-          type={'submit'}
-          onClick={onSubmit}
-          disable={validations.duplicate.id}
-        >
+
+        <SignUpButton type={'submit'} onClick={onSubmit}>
           가입하기
         </SignUpButton>
       </SignUpForm>
