@@ -105,7 +105,6 @@ const MarketDetail = () => {
           />
           <div className='market_text'>
             <h2>{name}</h2>
-            <p>상세 정보</p>
           </div>
         </div>
         <MarketDetailBlock>
