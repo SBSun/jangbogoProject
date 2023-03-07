@@ -119,7 +119,7 @@ public class UserService{
 
         User loginUser = userRepository.findByEmail(login.getEmail()).get();
 
-        return new UserResponseDto.LoginInfo(loginUser.getName(), tokenInfo);
+        return new UserResponseDto.LoginInfo(loginUser.getName(), loginUser.getLoginType(), tokenInfo);
     }
 
     public Optional<String> getLoginUserEmail(){

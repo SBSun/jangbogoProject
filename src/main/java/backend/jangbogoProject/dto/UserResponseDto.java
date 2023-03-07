@@ -29,6 +29,7 @@ public class UserResponseDto {
     @AllArgsConstructor
     public static class LoginInfo{
         private String name;
+        private String loginType;
         private TokenInfo tokenInfo;
     }
 
