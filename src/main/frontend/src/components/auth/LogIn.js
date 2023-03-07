@@ -28,25 +28,42 @@ const LoginForm = styled.form`
   }
 `;
 const SocialLoginForm = styled.div`
-  margin-top: 5rem;
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
-  text-align: center;
+  align-items: center;
 
   p {
     color: var(--gray);
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
-`;
-const SocialButtons = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-
   a {
+    width: 80%;
     text-decoration: none;
-    color: var(--black);
-    font-size: 3rem;
+    color: white;
+    margin: 1rem 0;
+    padding: 1rem;
+    display: inherit;
+    align-items: center;
+    border-radius: 15px;
+
+    svg {
+      padding-right: 1rem;
+      font-size: 1.25rem;
+    }
+    span {
+      padding-left: 1rem;
+    }
+  }
+  .google {
+    background: #4285f4;
+  }
+  .kakao {
+    background: #fee500;
+    color: black;
+  }
+  .naver {
+    background: #03c75a;
   }
 `;
 
@@ -79,17 +96,18 @@ const Login = ({ email, password, handleInputs, onSubmit, moveSignUp }) => {
 
       <SocialLoginForm>
         <p>소셜 로그인</p>
-        <SocialButtons>
-          <a href='/oauth2/authorization/kakao' className='kakao'>
-            <SiKakaotalk />
-          </a>
-          <a href='/oauth2/authorization/google' className='google'>
-            <SiGoogle />
-          </a>
-          <a href='/oauth2/authorization/naver' className='naver'>
-            <SiNaver />
-          </a>
-        </SocialButtons>
+        <a href='/oauth2/authorization/google' className='google'>
+          <SiGoogle className='google-logo' />
+          <span>Login With Google</span>
+        </a>
+        <a href='/oauth2/authorization/kakao' className='kakao'>
+          <SiKakaotalk className='kakao-logo' />
+          <span>Login With Kakao</span>
+        </a>
+        <a href='/oauth2/authorization/naver' className='naver'>
+          <SiNaver className='naver-logo' />
+          <span>Login With Naver</span>
+        </a>
       </SocialLoginForm>
     </>
   );
