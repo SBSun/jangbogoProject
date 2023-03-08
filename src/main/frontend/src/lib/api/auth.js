@@ -23,7 +23,7 @@ export const editUserInfo = async (password, name) => {
 
 // 로그인 세션 연장 API
 export const reissueAuthorizationToken = async (accessToken, refreshToken) => {
-  return await client.post(`/uesr/reissue`, { accessToken, refreshToken });
+  return await client.post(`/user/reissue`, { accessToken, refreshToken });
 };
 
 // 로그인 토큰 헤더 설정 API
