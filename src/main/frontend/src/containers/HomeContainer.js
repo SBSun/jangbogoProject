@@ -1,10 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Home from '../components/Home';
-import {
-  reissueAuthorizationToken,
-  setAuthorizationToken,
-} from '../lib/api/auth';
+import { reissueAuthorizationToken } from '../lib/api/auth';
 import { postLogin } from '../modules/auth';
 
 const HomeContainer = () => {
@@ -18,7 +15,6 @@ const HomeContainer = () => {
     if (!user) return;
 
     const refreshToken = user.refreshToken;
-
     const promise = reissueAuthorizationToken(accessToken, refreshToken);
     const fetchData = () => {
       promise
@@ -37,7 +33,6 @@ const HomeContainer = () => {
               refreshToken: res.data.refreshToken,
             })
           );
-          setAuthorizationToken(res.data.accessToken);
         })
         .catch(e => console.log(e));
     };
