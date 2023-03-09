@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MdModeEdit, MdDelete } from 'react-icons/md';
 import { getMarketReviewList, deleteMarketReview } from '../../lib/api/review';
@@ -42,7 +42,7 @@ const ReviewListBlock = styled.ul`
 `;
 
 const ReviewList = ({ marketId, marketName, thumbnail }) => {
-  const [reviews, setReviews] = useState([{}]);
+  const [reviews, setReviews] = useState([]);
 
   const user = JSON.parse(sessionStorage.getItem('user'));
 
@@ -58,23 +58,25 @@ const ReviewList = ({ marketId, marketName, thumbnail }) => {
         })
         .catch(error => console.log(error));
     };
+
     fetchData();
   }, [marketId]);
 
   // 리뷰 삭제 이벤트
-  const onDeleteClick = e => {
+  const onDeleteClick = useCallback(e => {
     const promise = deleteMarketReview(e.target.id);
     const fetchData = () => {
       promise
         .then(res => {
           console.log(res);
           alert('리뷰가 삭제되었습니다.');
+          window.location.reload();
         })
         .catch(error => console.log(error));
     };
 
     fetchData();
-  };
+  }, []);
 
   // 리뷰 동적 생성
   const reviewList = reviews.map((review, index) => (
