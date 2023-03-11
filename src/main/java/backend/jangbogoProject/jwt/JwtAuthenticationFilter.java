@@ -32,9 +32,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         String token = resolveToken(httpServletRequest);
         String requestURI = httpServletRequest.getRequestURI();
 
-        System.out.println(token + ", " + jwtTokenProvider.validateToken(token));
         // 2. validateToken 으로 토큰 유효성 검사
-
         if(StringUtils.hasText(token) && jwtTokenProvider.validateToken(token)){
             // Redis에 해당 accessToken logout 여부 확인
             String isLogout = (String)redisTemplate.opsForValue().get(token);
@@ -48,7 +46,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
                 LOGGER.info("Logout된 Access Token입니다., uri: {}", requestURI);
             }
         }else{
-            LOGGER.info("유효한 JWT 토큰이 없습니다., uri: {}", requestURI);
+            //LOGGER.info("유효한 JWT 토큰이 없습니다., uri: {}", requestURI);
         }
         chain.doFilter(httpServletRequest, response);
     }

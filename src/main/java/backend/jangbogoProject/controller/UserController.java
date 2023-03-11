@@ -1,16 +1,17 @@
 package backend.jangbogoProject.controller;
 
 import backend.jangbogoProject.constant.StatusCode;
+import backend.jangbogoProject.dto.DataResponseDTO;
 import backend.jangbogoProject.dto.ResponseDTO;
 import backend.jangbogoProject.dto.UserRequestDto;
 import backend.jangbogoProject.dto.UserResponseDto;
+import backend.jangbogoProject.entity.User;
 import backend.jangbogoProject.security.PrincipalDetails;
 import backend.jangbogoProject.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -57,19 +58,22 @@ public class UserController {
     }
 
     @PostMapping("/user/login")
-    public UserResponseDto.LoginInfo login(@RequestBody UserRequestDto.Login login) {
+    public UserResponseDto.LoginSuccessInfo login(@RequestBody UserRequestDto.Login login) {
 
         return userService.login(login);
     }
 
-    @GetMapping("/user/getLoginUserEmail")
-    public ResponseEntity<String> getLoginUserEmail(@AuthenticationPrincipal PrincipalDetails principalDetails){
-        String loginUserEmail = principalDetails.getUser().getEmail();
+    @GetMapping("/user/getLoginUser")
+    public DataResponseDTO<UserResponseDto.LoginUserInfo> getLoginUser(@AuthenticationPrincipal PrincipalDetails principalDetails){
+        User user = principalDetails.getUser();
 
-        if(loginUserEmail.equals("anonymousUser"))
-            return new ResponseEntity<>("로그인 상태가 아닙니다.", HttpStatus.NOT_FOUND);
-        else
-            return new ResponseEntity<>(loginUserEmail, HttpStatus.OK);
+        String email = user.getEmail();
+        String name = user.getName();
+        String loginType = user.getLoginType();
+
+        UserResponseDto.LoginUserInfo loginUserInfo = new UserResponseDto.LoginUserInfo(email, name, loginType);
+
+        return DataResponseDTO.of(loginUserInfo);
     }
 
     @PostMapping("/user/reissue")

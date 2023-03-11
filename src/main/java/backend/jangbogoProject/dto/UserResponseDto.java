@@ -27,10 +27,18 @@ public class UserResponseDto {
 
     @Getter
     @AllArgsConstructor
-    public static class LoginInfo{
+    public static class LoginSuccessInfo {
         private String name;
         private String loginType;
         private TokenInfo tokenInfo;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public static class LoginUserInfo {
+        private String email;
+        private String name;
+        private String loginType;
     }
 
     @Builder

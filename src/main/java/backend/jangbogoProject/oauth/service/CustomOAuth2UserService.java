@@ -31,12 +31,20 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     private static final String NAVER = "naver";
     private static final String KAKAO = "kakao";
 
+    // 소셜 서버로부터 받은 UserRequest 데이터에 대한 후처리되는 함수
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         log.debug("CustomOAuth2UserService.loadUser() 실행 - OAuth2 로그인 요청 진입");
+        log.debug("UserRequest getClientRegistration : " + userRequest.getClientRegistration());
+        log.debug("UserRequest getAccessToken : " + userRequest.getAccessToken());
 
         /**
-         * DefaultOAuth2UserService 객체를 생성하여, loadUser(userRequest)를 통하 DefaultOAuth2UserService 객체를 생성 후 반환
+         * 소셜 로그인 버튼 클릭 -> 소셜 로그인창 -> 로그인 완료 -> code를 리턴(OAuth-Client 라이브러리) -> AccessToken 요청
+         * userRequest 정보 -> loadUser 함수 호출 -> 소셜 서버로부터 회원 정보를 받아준다.
+         */
+
+        /**
+         * DefaultOAuth2UserService 객체를 생성하여, loadUser(userRequest)를 통한 DefaultOAuth2UserService 객체를 생성 후 반환
          * DefaultOAuth2UserService의 loadUser()는 소셜 로그인 API의 사용자 정보 제공 URI로 요청을 보내서
          * 사용자 정보를 얻은 후, 이를 통해 DefaultOAuth2User 객체를 생성 후 반환한다.
          */

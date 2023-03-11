@@ -1,7 +1,6 @@
 package backend.jangbogoProject.service;
 
 import backend.jangbogoProject.constant.LoginType;
-import backend.jangbogoProject.dto.ResponseDTO;
 import backend.jangbogoProject.dto.UserRequestDto;
 import backend.jangbogoProject.dto.UserResponseDto;
 import backend.jangbogoProject.entity.User;
@@ -9,7 +8,6 @@ import backend.jangbogoProject.jwt.JwtTokenProvider;
 import backend.jangbogoProject.repository.ReviewRepository;
 import backend.jangbogoProject.constant.Authority;
 import backend.jangbogoProject.repository.UserRepository;
-import backend.jangbogoProject.security.PrincipalDetails;
 import backend.jangbogoProject.utils.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 
@@ -101,7 +99,7 @@ public class UserService{
         return userRepository.deleteByEmail(email);
     }
 
-    public UserResponseDto.LoginInfo login(UserRequestDto.Login login){
+    public UserResponseDto.LoginSuccessInfo login(UserRequestDto.Login login){
         // 1. Login ID/PW 를 기반으로 Authentication 객체 생성
         // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(login.getEmail(), login.getPassword());
@@ -119,7 +117,7 @@ public class UserService{
 
         User loginUser = userRepository.findByEmail(login.getEmail()).get();
 
-        return new UserResponseDto.LoginInfo(loginUser.getName(), loginUser.getLoginType(), tokenInfo);
+        return new UserResponseDto.LoginSuccessInfo(loginUser.getName(), loginUser.getLoginType(), tokenInfo);
     }
 
     public Optional<String> getLoginUserEmail(){

@@ -1,4 +1,4 @@
-package backend.jangbogoProject.security;
+package backend.jangbogoProject.config;
 
 import backend.jangbogoProject.jwt.JwtAuthenticationFilter;
 import backend.jangbogoProject.jwt.JwtTokenProvider;
@@ -46,7 +46,7 @@ public class SecurityConfiguration {
 
                 // URL별 권한 관리 옵션
                 .authorizeRequests()
-                .antMatchers("/user/signUpAdmin", "/user/reissue", "/user/logout", "/user/edit", "/user/delete"
+                .antMatchers("/user/signUpAdmin", "/user/reissue", "/user/logout", "/user/edit", "/user/delete", "/user/getLoginUser"
                 , "/review/create", "/review/edit", "/review/delete").hasRole("USER")
                 .anyRequest().permitAll()
                 .and()
@@ -55,6 +55,7 @@ public class SecurityConfiguration {
                 .oauth2Login()
                 .successHandler(oAuth2LoginSuccessHandler)
                 .failureHandler(oAuth2LoginFailureHandler)
+                // 코드를 받아서 코드를 통해 엑스스 토큰을 받는다. 받은 엑세스 토큰으로 사용자 정보까지 받아와준다.
                 .userInfoEndpoint().userService(customOAuth2UserService);
 
         //  JWT 인증을 위하여 직접 구현한 필터를 UsernamePasswordAuthenticationFilter 전에 실행하겠다는 설정이다.
