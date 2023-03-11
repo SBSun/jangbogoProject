@@ -74,6 +74,7 @@ const ReviewWrite = () => {
       promise
         .then(res => {
           console.log(res);
+          alert('리뷰가 작성되었습니다.');
           navigate(`/market/${params.id}`, {
             replace: true,
             state: { name: name, thumbnail: thumbnail },

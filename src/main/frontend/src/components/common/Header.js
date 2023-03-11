@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import {
   MdClear,
@@ -9,6 +9,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsVisible } from '../../modules/location';
+import { setAuthorizationToken } from '../../lib/api/auth';
 
 // CSS
 const DefaultBlock = styled.header`
@@ -83,7 +84,19 @@ const Header = ({ modify, title }) => {
   const { isVisible } = useSelector(({ location }) => ({
     isVisible: location.isVisible,
   }));
+  const { accessToken } = useSelector(({ auth }) => ({
+    accessToken: auth.login.accessToken,
+  }));
   const storeDispatch = useDispatch();
+
+  const user = JSON.parse(sessionStorage.getItem('user'));
+
+  useEffect(() => {
+    if (user) {
+      setAuthorizationToken(accessToken);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [accessToken]);
 
   const onClick = () => {
     storeDispatch(setIsVisible(!isVisible));

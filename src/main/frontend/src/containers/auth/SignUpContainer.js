@@ -19,7 +19,6 @@ const SignUpContainer = () => {
     password: false,
     passwordConfirm: false,
     name: false,
-    isConfirm: false,
   });
 
   const { email, password, passwordConfirm, name } = form;
@@ -31,7 +30,14 @@ const SignUpContainer = () => {
     e => {
       switch (e.target.name) {
         case 'EMAIL': {
-          setForm(form => ({ ...form, email: e.target.value }));
+          setForm(form => ({
+            ...form,
+            email: e.target.value,
+          }));
+          setValidate(validate => ({
+            ...validate,
+            emailConfirm: false,
+          }));
           return form;
         }
         case 'PASSWORD': {
@@ -128,10 +134,6 @@ const SignUpContainer = () => {
         })
       );
 
-      if (!validate.isConfirm) {
-        return alert('형식에 맞춰서 입력해주세요.');
-      }
-
       const promise = signUp(email, password, name);
       const fetchData = () => {
         promise
@@ -146,10 +148,36 @@ const SignUpContainer = () => {
             return;
           });
       };
-      fetchData();
+
+      switch (true) {
+        case !validate.email: {
+          return alert('이메일를 입력해주세요.');
+        }
+        case !validate.emailConfirm: {
+          return alert('이메일 중복 확인을 해주세요.');
+        }
+        case !validate.password: {
+          return alert('비밀번호를 해주세요.');
+        }
+        case !validate.passwordConfirm: {
+          return alert('비밀번호가 서로 다릅니다.');
+        }
+        case !validate.name: {
+          return alert('이름을 입력해주세요.');
+        }
+        default: {
+          return fetchData();
+        }
+      }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [email, password, passwordConfirm, name]
+    [
+      validate.email,
+      validate.emailConfirm,
+      validate.password,
+      validate.passwordConfirm,
+      validate.name,
+    ]
   );
 
   return (
