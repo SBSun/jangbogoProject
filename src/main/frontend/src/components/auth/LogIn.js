@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Header from '../common/Header';
 import Button from '../common/Button';
-import { SiGoogle, SiNaver } from 'react-icons/si';
+import { SiNaver } from 'react-icons/si';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 
 const LoginForm = styled.form`
@@ -47,6 +47,7 @@ const SocialLoginForm = styled.div`
     display: inherit;
     align-items: center;
     border-radius: 15px;
+    cursor: pointer;
 
     svg {
       padding-right: 1rem;
@@ -55,9 +56,6 @@ const SocialLoginForm = styled.div`
     span {
       padding-left: 1rem;
     }
-  }
-  .google {
-    background: #4285f4;
   }
   .kakao {
     background: #fee500;
@@ -97,10 +95,6 @@ const Login = ({ email, password, handleInputs, onSubmit, moveSignUp }) => {
 
       <SocialLoginForm>
         <p>소셜 로그인</p>
-        <a href='/oauth2/authorization/google' className='google'>
-          <SiGoogle className='google-logo' />
-          <span>Login With Google</span>
-        </a>
         <a href='/oauth2/authorization/kakao' className='kakao'>
           <RiKakaoTalkFill className='kakao-logo' />
           <span>Login With Kakao</span>
