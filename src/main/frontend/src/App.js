@@ -13,6 +13,8 @@ import LoginPage from './pages/LoginPage';
 import MarketDetailPage from './pages/MarketDetailPage';
 import ReviewWritePage from './pages/ReviewWritePage';
 import ReviewEditPage from './pages/ReviewEditPage';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 const App = () => {
   return (

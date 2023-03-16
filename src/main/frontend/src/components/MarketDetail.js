@@ -28,7 +28,6 @@ const MakertInfoBlock = styled.section`
     h2 {
       margin: 1rem 0 0 0;
       font-size: 20px;
-      font-weight: 600;
     }
     p {
       margin: 1.5rem 0 0 0;

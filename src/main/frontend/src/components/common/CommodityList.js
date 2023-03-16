@@ -13,14 +13,26 @@ import {
 const CommodityXScrollBlock = styled.ul`
   display: flex;
   overflow-x: auto;
+  scrollbar-width: none;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 const CommodityYScrollBlock = styled.ul`
   display: flex;
   flex-wrap: wrap;
+  flex: 2;
 
   li {
-    margin: 0 auto;
+    flex: 1;
     width: 130px;
+  }
+  li:nth-child(odd) {
+    margin-left: 1rem;
+  }
+  li:last-child {
+    margin-left: 1rem;
   }
 `;
 const CommodityItemStyled = styled.li`
@@ -37,7 +49,6 @@ const CommodityItemStyled = styled.li`
   }
   .commodity_info > .commodity_name {
     padding: 0.5rem 0 0 0;
-    font-weight: 600;
     font-size: 16px;
   }
   .commodity_info > .commodity_remarks {
@@ -48,7 +59,6 @@ const CommodityItemStyled = styled.li`
   .commodity_info > .commodity_price {
     padding: 0.5rem 0 0 0;
     color: var(--black);
-    font-weight: bold;
     font-size: 18px;
   }
 `;
@@ -66,7 +76,10 @@ const CommoditySelectPage = styled.ul`
     color: var(--green);
   }
 `;
-
+const EmptyBlock = styled.div`
+  margin-top: 30vh;
+  text-align: center;
+`;
 function handleCommodityThumbnail(id) {
   switch (id) {
     // 정육
@@ -124,6 +137,8 @@ function handleCommodityThumbnail(id) {
 const CommodityList = ({ modify, recordSize, keyword }) => {
   // 품목 데이터 상태
   const [commoditys, setCommoditys] = useState([]);
+  const [isEmpty, setIsEmpty] = useState(false);
+  const [isOdd, setIsOdd] = useState(false);
 
   // 페이지 상태
   const [curPage, setCurPage] = useState(1);
@@ -161,15 +176,22 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
   const promise = selectAPI();
   const fetchData = () => {
     promise.then(data => {
+      data.data.infoList.length === 0 ? setIsEmpty(true) : setIsEmpty(false);
+      data.data.infoList.length % 2 === 1 ? setIsOdd(true) : setIsOdd(false);
+
       setCommoditys(data.data.infoList);
       setEndPage(data.data.pageResponseDTO.endPage);
     });
   };
 
   useEffect(() => {
+    if (endPage === 1) {
+      setCurPage(1);
+    }
+
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [storeLocationId, curPage, keyword]);
+  }, [storeLocationId, curPage, endPage, keyword]);
 
   // 받아온 품목 데이터 동적 생성
   const commodityListItem = commoditys.map((commodity, index) => {
@@ -218,9 +240,13 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
   const HandleCommodityStyled = () => {
     switch (modify) {
       case 'CATEGORY': {
-        return (
+        return isEmpty ? (
+          <EmptyBlock>해당 품목이 없습니다.</EmptyBlock>
+        ) : (
           <>
-            <CommodityYScrollBlock>{commodityListItem}</CommodityYScrollBlock>
+            <CommodityYScrollBlock isOdd={isOdd}>
+              {commodityListItem}
+            </CommodityYScrollBlock>
             <CommoditySelectPage curPage={curPage}>
               {pageButtons}
             </CommoditySelectPage>
@@ -228,9 +254,13 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
         );
       }
       case 'SEARCH': {
-        return (
+        return isEmpty ? (
+          <EmptyBlock>해당 품목이 없습니다.</EmptyBlock>
+        ) : (
           <>
-            <CommodityYScrollBlock>{commodityListItem}</CommodityYScrollBlock>
+            <CommodityYScrollBlock isOdd={isOdd}>
+              {commodityListItem}
+            </CommodityYScrollBlock>
             <CommoditySelectPage curPage={curPage}>
               {pageButtons}
             </CommoditySelectPage>
@@ -238,9 +268,13 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
         );
       }
       case 'MARKET': {
-        return (
+        return isEmpty ? (
+          <EmptyBlock>해당 품목이 없습니다.</EmptyBlock>
+        ) : (
           <>
-            <CommodityYScrollBlock>{commodityListItem}</CommodityYScrollBlock>
+            <CommodityYScrollBlock isOdd={isOdd}>
+              {commodityListItem}
+            </CommodityYScrollBlock>
             <CommoditySelectPage curPage={curPage}>
               {pageButtons}
             </CommoditySelectPage>
@@ -248,12 +282,16 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
         );
       }
       case 'PRICE': {
-        return (
+        return isEmpty ? (
+          <EmptyBlock>해당 품목이 없습니다.</EmptyBlock>
+        ) : (
           <CommodityXScrollBlock>{commodityListItem}</CommodityXScrollBlock>
         );
       }
       default: {
-        return (
+        return isEmpty ? (
+          <EmptyBlock>해당 품목이 없습니다.</EmptyBlock>
+        ) : (
           <CommodityXScrollBlock>{commodityListItem}</CommodityXScrollBlock>
         );
       }

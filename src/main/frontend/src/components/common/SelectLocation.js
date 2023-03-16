@@ -28,7 +28,6 @@ const LocationPopUp = styled.div`
   right: 0;
   height: 60vh;
   background: white;
-  text-align: center;
   overflow-y: scroll;
   border-radius: 15px 15px 0 0;
   z-index: 1000;
@@ -55,17 +54,13 @@ const LocationList = styled.ul`
   margin: 53px 0 0 0;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  align-content: flex-start;
 
   li {
+    text-align: center;
     width: 130px;
     margin: 0 auto;
     padding: 1.25rem;
     cursor: pointer;
-  }
-  li:last-child {
-    margin-right: auto;
   }
 `;
 
@@ -80,7 +75,10 @@ const SelectLocation = ({ isVisible, locationList, onItemClick }) => {
       <LocationWrap>
         <LocationPopUp>
           <h2 className='location-title'>지역을 선택해주세요.</h2>
-          <LocationList>{locationListItem}</LocationList>
+          <LocationList>
+            {locationListItem}
+            <li> </li>
+          </LocationList>
         </LocationPopUp>
       </LocationWrap>
     </LocationBlock>

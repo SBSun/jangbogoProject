@@ -23,9 +23,9 @@ const DefaultBlock = styled.header`
   height: 2.5rem;
   padding: 0.5rem 0;
   font-size: 1.25rem;
-  font-weight: 600;
   background-color: var(--green);
   color: white;
+  z-index: 1;
 
   span {
     padding: 0 1rem;

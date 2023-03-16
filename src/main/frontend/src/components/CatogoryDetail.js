@@ -14,6 +14,11 @@ const CategoryMenuBlock = styled.div`
   display: flex;
   overflow-x: auto;
   padding: 0.5rem;
+  scrollbar-width: none;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 const CategoryMenu = styled.span`
   padding: 1rem 0.5rem;

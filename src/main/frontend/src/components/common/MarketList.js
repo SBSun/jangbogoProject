@@ -7,6 +7,11 @@ import { useNavigate } from 'react-router-dom';
 const MarketListBlock = styled.ul`
   display: flex;
   overflow-x: scroll;
+  scrollbar-width: none;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 
   > li {
     padding: 0.5rem 1rem;
