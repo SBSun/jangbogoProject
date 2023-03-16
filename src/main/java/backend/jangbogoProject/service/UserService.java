@@ -120,6 +120,8 @@ public class UserService{
         return new UserResponseDto.LoginSuccessInfo(loginUser.getName(), loginUser.getLoginType(), tokenInfo);
     }
 
+
+
     public Optional<String> getLoginUserEmail(){
         return SecurityUtil.getCurrentUserEmail();
     }
