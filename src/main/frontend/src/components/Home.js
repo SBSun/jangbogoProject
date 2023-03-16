@@ -5,11 +5,19 @@ import Navigation from './common/Navigation';
 import SelectLocationContainer from '../containers/SelectLoactionContainer';
 import CommodityList from './common/CommodityList';
 import MarketList from './common/MarketList';
+import Slider from 'react-slick';
 
 const HomeContainer = styled.main`
   margin: 56px 0;
+  overflow-x: hidden;
 
-  > .banner {
+  > .list_title {
+    padding: 2.75rem 1rem 0 1rem;
+    font-size: 18px;
+  }
+`;
+const StyledSlider = styled(Slider)`
+  div > .banner {
     width: 100vw;
     height: 40vh;
     border-bottom: 1px solid var(--light-gray);
@@ -18,10 +26,6 @@ const HomeContainer = styled.main`
       width: 412px;
       height: 275px;
     }
-  }
-  > .list_title {
-    padding: 1.75rem 1rem 0 1rem;
-    font-size: 18px;
   }
 `;
 const Contact = styled.div`
@@ -41,6 +45,14 @@ const Contact = styled.div`
     color: var(--green);
   }
 `;
+const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  autoplay: true,
+};
 
 const Home = () => {
   return (
@@ -48,11 +60,29 @@ const Home = () => {
       <Header modify={'LOGO_BLOCK'} title={''} />
       <SelectLocationContainer />
       <HomeContainer>
-        <img
-          src={'/assets/banner/banner1.png'}
-          alt='banner'
-          className='banner'
-        />
+        <StyledSlider {...settings}>
+          <div>
+            <img
+              src={'/assets/banner/banner1.png'}
+              alt='banner'
+              className='banner'
+            />
+          </div>
+          <div>
+            <img
+              src={'/assets/banner/banner1.png'}
+              alt='banner'
+              className='banner'
+            />
+          </div>
+          <div>
+            <img
+              src={'/assets/banner/banner1.png'}
+              alt='banner'
+              className='banner'
+            />
+          </div>
+        </StyledSlider>
         <h2 className='list_title'>품목 별로 최저가를 보여드려요.</h2>
         <CommodityList modify={'PRICE'} recordSize={1000} />
         <h2 className='list_title'>이 지역의 있는 매장들을 보여드려요.</h2>
