@@ -21,7 +21,6 @@ const ReviewListBlock = styled.ul`
 
       span {
         margin-right: auto;
-        font-weight: 600;
       }
       svg {
         flex: none;
