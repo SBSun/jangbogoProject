@@ -40,9 +40,15 @@ const ReviewListBlock = styled.ul`
     }
   }
 `;
+const EmptyBlock = styled.div`
+  margin-top: 20vh;
+  text-align: center;
+`;
 
 const ReviewList = ({ marketId, marketName, thumbnail }) => {
+  // 리뷰 데이터
   const [reviews, setReviews] = useState([]);
+  const [isEmpty, setIsEmpty] = useState(false);
 
   const user = JSON.parse(sessionStorage.getItem('user'));
 
@@ -55,8 +61,12 @@ const ReviewList = ({ marketId, marketName, thumbnail }) => {
       promise
         .then(data => {
           setReviews(data);
+          setIsEmpty(false);
         })
-        .catch(error => console.log(error));
+        .catch(error => {
+          console.log(error);
+          setIsEmpty(true);
+        });
     };
 
     fetchData();
@@ -105,7 +115,9 @@ const ReviewList = ({ marketId, marketName, thumbnail }) => {
     </li>
   ));
 
-  return (
+  return isEmpty ? (
+    <EmptyBlock>리뷰가 없습니다.</EmptyBlock>
+  ) : (
     <>
       <ReviewListBlock>{reviewList}</ReviewListBlock>
     </>
