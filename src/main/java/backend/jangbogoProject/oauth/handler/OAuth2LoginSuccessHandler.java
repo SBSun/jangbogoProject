@@ -35,7 +35,6 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         String targetUrl = UriComponentsBuilder.fromUriString("/")
                 .queryParam(jwtTokenProvider.getAccessHeader(), "Bearer " + tokenInfo.getAccessToken())
                 .build().toUriString();
-
-        getRedirectStrategy().sendRedirect(request, response, targetUrl);
+         getRedirectStrategy().sendRedirect(request, response, targetUrl);
     }
 }
