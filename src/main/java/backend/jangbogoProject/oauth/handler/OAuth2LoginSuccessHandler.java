@@ -33,7 +33,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
         UserResponseDto.TokenInfo tokenInfo = jwtTokenProvider.createToken(authentication);
         String targetUrl = UriComponentsBuilder.fromUriString("/")
-                .queryParam(jwtTokenProvider.getAccessHeader(), "Bearer " + tokenInfo.getAccessToken())
+                .queryParam(jwtTokenProvider.getAccessHeader(), tokenInfo.getAccessToken())
                 .build().toUriString();
          getRedirectStrategy().sendRedirect(request, response, targetUrl);
     }
