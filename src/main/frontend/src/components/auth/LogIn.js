@@ -97,11 +97,11 @@ const Login = ({ email, password, handleInputs, onSubmit, moveSignUp }) => {
         <p>소셜 로그인</p>
         <a href='/oauth2/authorization/kakao' className='kakao'>
           <RiKakaoTalkFill className='kakao-logo' />
-          <span>Login With Kakao</span>
+          <span>카카오톡으로 로그인</span>
         </a>
         <a href='/oauth2/authorization/naver' className='naver'>
           <SiNaver className='naver-logo' />
-          <span>Login With Naver</span>
+          <span>네이버로 로그인</span>
         </a>
       </SocialLoginForm>
     </>
