@@ -6,6 +6,7 @@ import backend.jangbogoProject.oauth.handler.OAuth2LoginFailureHandler;
 import backend.jangbogoProject.oauth.handler.OAuth2LoginSuccessHandler;
 import backend.jangbogoProject.oauth.service.CustomOAuth2UserService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -8,7 +8,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +20,7 @@ import java.io.IOException;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
+public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private final JwtTokenProvider jwtTokenProvider;
 
     @Override
@@ -30,9 +32,10 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
 
         UserResponseDto.TokenInfo tokenInfo = jwtTokenProvider.createToken(authentication);
-        response.addHeader(jwtTokenProvider.getAccessHeader(), "Bearer " + tokenInfo.getAccessToken());
-        response.sendRedirect("/");
+        String targetUrl = UriComponentsBuilder.fromUriString("/")
+                .queryParam(jwtTokenProvider.getAccessHeader(), "Bearer " + tokenInfo.getAccessToken())
+                .build().toUriString();
 
-        jwtTokenProvider.sendAccessAndRefreshToken(response, tokenInfo.getAccessToken(), tokenInfo.getRefreshToken());
+        getRedirectStrategy().sendRedirect(request, response, targetUrl);
     }
 }
