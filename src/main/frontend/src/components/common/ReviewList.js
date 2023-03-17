@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MdModeEdit, MdDelete } from 'react-icons/md';
 import { getMarketReviewList, deleteMarketReview } from '../../lib/api/review';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 // CSS
 const ReviewListBlock = styled.ul`
@@ -51,6 +51,8 @@ const ReviewList = ({ marketId, marketName, thumbnail }) => {
 
   const user = JSON.parse(sessionStorage.getItem('user'));
 
+  const params = useParams();
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -79,12 +81,13 @@ const ReviewList = ({ marketId, marketName, thumbnail }) => {
         .then(res => {
           console.log(res);
           alert('리뷰가 삭제되었습니다.');
-          window.location.reload();
+          navigate(`market/${params.id}`);
         })
         .catch(error => console.log(error));
     };
 
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // 리뷰 동적 생성
