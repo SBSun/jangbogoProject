@@ -49,7 +49,7 @@ const CatogoryDetail = () => {
       name={menu.name}
       className={params.name === menu.name ? 'active' : undefined}
       onClick={() => {
-        navigate(`/category/${menu.name}`, { state: [...list] });
+        navigate(`/category/${menu.name}`, { state: [...list], replace: true });
       }}
     >
       {menu.text}

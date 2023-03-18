@@ -28,8 +28,9 @@ const MyPageContainer = () => {
     if (loginType === 'Social')
       return alert('소셜 로그인 상태에선 설정할 수 없습니다.');
     console.log(loginType);
-    navigate('/mypage/account', { replace: true });
+    navigate('/mypage/account');
   };
+
   return (
     <MyPage
       user={user}

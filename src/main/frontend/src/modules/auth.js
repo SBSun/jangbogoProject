@@ -8,12 +8,12 @@ export const postLogin = createAction(POST_LOGIN);
 
 const initialState = {
   register: {
-    id: '',
+    email: '',
     password: '',
     name: '',
   },
   login: {
-    id: '',
+    email: '',
     accessToken: '',
   },
 };

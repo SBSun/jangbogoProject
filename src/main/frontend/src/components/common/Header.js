@@ -115,7 +115,7 @@ const Header = ({ modify, title }) => {
       case 'WHITE_BLOCK':
         return (
           <WhiteBlock>
-            <MdClear onClick={() => navigate(-1, true)} />
+            <MdClear onClick={() => navigate(-1, { replace: true })} />
             <h2>{title}</h2>
             <span></span>
           </WhiteBlock>
@@ -124,7 +124,9 @@ const Header = ({ modify, title }) => {
       case 'WHITE_BLOCK_LOCATION':
         return (
           <WhiteBlock>
-            <MdKeyboardArrowLeft onClick={() => navigate(-1, true)} />
+            <MdKeyboardArrowLeft
+              onClick={() => navigate(-1, { replace: true })}
+            />
             <h2>{title}</h2>
             <MdOutlinePlace onClick={onClick} />
           </WhiteBlock>
