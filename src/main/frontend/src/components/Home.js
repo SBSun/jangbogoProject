@@ -19,12 +19,12 @@ const HomeContainer = styled.main`
 const StyledSlider = styled(Slider)`
   div > .banner {
     width: 100vw;
-    height: 40vh;
+    height: 17.188rem;
     border-bottom: 1px solid var(--light-gray);
 
     @media (min-width: 415px) {
-      width: 412px;
-      height: 275px;
+      width: 25.75rem;
+      height: 17.188rem;
     }
   }
 `;
@@ -63,21 +63,21 @@ const Home = () => {
         <StyledSlider {...settings}>
           <div>
             <img
-              src={'/assets/banner/banner1.png'}
+              src={'/assets/banner/banner1.jpg'}
               alt='banner'
               className='banner'
             />
           </div>
           <div>
             <img
-              src={'/assets/banner/banner1.png'}
+              src={'/assets/banner/banner2.jpg'}
               alt='banner'
               className='banner'
             />
           </div>
           <div>
             <img
-              src={'/assets/banner/banner1.png'}
+              src={'/assets/banner/banner3.jpg'}
               alt='banner'
               className='banner'
             />
@@ -90,7 +90,10 @@ const Home = () => {
         <Contact>
           <div>
             <p>장보고 - 서울시 식자재 조회</p>
-            문의 : <b className='content'>hc9064@gmail.com</b>
+            문의 : <b>hc9064@gmail.com</b>
+            <br />
+            <br />
+            <b>현재 모바일 해상도만 지원하고 있습니다.</b>
           </div>
         </Contact>
       </HomeContainer>
