@@ -26,7 +26,7 @@ const CommodityYScrollBlock = styled.ul`
 
   li {
     flex: 1;
-    width: 130px;
+    width: 8.125rem;
   }
   li:nth-child(odd) {
     margin-left: 1rem;
@@ -138,7 +138,6 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
   // 품목 데이터 상태
   const [commoditys, setCommoditys] = useState([]);
   const [isEmpty, setIsEmpty] = useState(false);
-  const [isOdd, setIsOdd] = useState(false);
 
   // 페이지 상태
   const [curPage, setCurPage] = useState(1);
@@ -177,7 +176,6 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
   const fetchData = () => {
     promise.then(data => {
       data.data.infoList.length === 0 ? setIsEmpty(true) : setIsEmpty(false);
-      data.data.infoList.length % 2 === 1 ? setIsOdd(true) : setIsOdd(false);
 
       setCommoditys(data.data.infoList);
       setEndPage(data.data.pageResponseDTO.endPage);
@@ -244,9 +242,7 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
           <EmptyBlock>해당 품목이 없습니다.</EmptyBlock>
         ) : (
           <>
-            <CommodityYScrollBlock isOdd={isOdd}>
-              {commodityListItem}
-            </CommodityYScrollBlock>
+            <CommodityYScrollBlock>{commodityListItem}</CommodityYScrollBlock>
             <CommoditySelectPage curPage={curPage}>
               {pageButtons}
             </CommoditySelectPage>
@@ -258,9 +254,7 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
           <EmptyBlock>해당 품목이 없습니다.</EmptyBlock>
         ) : (
           <>
-            <CommodityYScrollBlock isOdd={isOdd}>
-              {commodityListItem}
-            </CommodityYScrollBlock>
+            <CommodityYScrollBlock>{commodityListItem}</CommodityYScrollBlock>
             <CommoditySelectPage curPage={curPage}>
               {pageButtons}
             </CommoditySelectPage>
@@ -272,9 +266,7 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
           <EmptyBlock>해당 품목이 없습니다.</EmptyBlock>
         ) : (
           <>
-            <CommodityYScrollBlock isOdd={isOdd}>
-              {commodityListItem}
-            </CommodityYScrollBlock>
+            <CommodityYScrollBlock>{commodityListItem}</CommodityYScrollBlock>
             <CommoditySelectPage curPage={curPage}>
               {pageButtons}
             </CommoditySelectPage>

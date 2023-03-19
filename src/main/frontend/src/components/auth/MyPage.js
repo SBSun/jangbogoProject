@@ -18,12 +18,10 @@ const UserInfoBlock = styled.section`
   h2 {
     padding: 1rem;
     font-size: 20px;
-    font-weight: 900;
   }
   span {
     padding: 0 1rem 0.5rem 1rem;
     color: var(--green);
-    font-weight: 600;
 
     strong {
       color: var(--black);
