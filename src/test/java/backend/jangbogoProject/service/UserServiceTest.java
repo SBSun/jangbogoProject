@@ -113,7 +113,7 @@ public class UserServiceTest {
         UserResponseDto.Info userInfoDto = userService.editUser(dto);
 
         // then
-        
+
         assertTrue(encoder.matches(dto.getPassword(), userInfoDto.getPassword()));
         assertThat(userInfoDto.getName()).isEqualTo(dto.getName());
     }
