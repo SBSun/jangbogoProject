@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -64,8 +65,8 @@ public class UserRepositoryTest {
         User userPS = userRepository.save(user);
 
         // then
-        assertEquals(email, userPS.getEmail());
-        assertEquals(password, userPS.getPassword());
+        assertThat(email).isEqualTo(userPS.getEmail());
+        assertThat(password).isEqualTo(userPS.getPassword());
     } // 트랜잭션 종료 (저장된 데이터를 초기화함)
 
     @Test
@@ -78,8 +79,8 @@ public class UserRepositoryTest {
         List<User> usersPS = userRepository.findAll();
 
         // then
-        assertEquals(email, usersPS.get(usersPS.size() - 1).getEmail());
-        assertEquals(password, usersPS.get(usersPS.size() - 1).getPassword());
+        assertThat(email).isEqualTo( usersPS.get(usersPS.size() - 1).getEmail());
+        assertThat(password).isEqualTo( usersPS.get(usersPS.size() - 1).getPassword());
     }
 
     @Test
@@ -92,8 +93,8 @@ public class UserRepositoryTest {
         User userPS = userRepository.findByEmail(email).get();
 
         // then
-        assertEquals(email, userPS.getEmail());
-        assertEquals(password, userPS.getPassword());
+        assertThat(email).isEqualTo(userPS.getEmail());
+        assertThat(password).isEqualTo(userPS.getPassword());
     }
 
     @Test

@@ -34,10 +34,9 @@ public class UserController {
     }
 
     @PostMapping("/user/signUpUser")
-    public ResponseDTO signUpUser(@RequestBody UserRequestDto.SignUp signUp){
-        userService.signUp(signUp);
+    public DataResponseDTO<UserResponseDto.Info> signUpUser(@RequestBody UserRequestDto.SignUp signUp){
 
-        return ResponseDTO.of(StatusCode.OK);
+        return DataResponseDTO.of(userService.signUp(signUp));
     }
 
     @PatchMapping("/user/edit")

@@ -38,11 +38,10 @@ public class UserService{
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
-
     private final ReviewRepository reviewRepository;
 
     @Transactional
-    public Long signUp(UserRequestDto.SignUp signUp) {
+    public UserResponseDto.Info signUp(UserRequestDto.SignUp signUp) {
         if(userRepository.existsByEmail(signUp.getEmail())){
             throw new IllegalArgumentException("해당 이메일은 이미 가입되어 있는 이메일입니다.");
         }
@@ -55,13 +54,16 @@ public class UserService{
                 .authority(Authority.USER.getValue())
                 .build();
 
-        return userRepository.save(user).getId();
+        return UserResponseDto.Info.of(userRepository.save(user));
     }
 
-    public UserResponseDto.Info getUserInfo(String email){
-        UserResponseDto.Info info = UserResponseDto.Info.of(userRepository.findByEmail(email).get());
-
-        return info;
+    public UserResponseDto.Info findUserInfo(String email){
+        Optional<User> user = userRepository.findByEmail(email);
+        if(user.isPresent()){
+            return UserResponseDto.Info.of(userRepository.findByEmail(email).get());
+        }else {
+            throw new RuntimeException("해당 이메일을 찾을 수 없습니다.");
+        }
     }
 
     public List<UserResponseDto.Info> findAllUser(){
@@ -78,25 +80,24 @@ public class UserService{
     @Transactional
     // 트랜잭션 안에서 데이터베이스의 데이터를 가져오면 이 데이터는 영속성 컨텍스트가 유지된 상태가 된다.
     //이 상태에서 해당 데이터의 값을 변경하면 트랜잭션이 끝나는 시점에 변경된 데이터를 데이터베이스에 반영해준다.
-    public void editUser(UserRequestDto.Edit edit){
-        String loginUserEmail = SecurityUtil.getCurrentUserEmail().get();
-        System.out.println("loginUserEmail : " + loginUserEmail);
+    public UserResponseDto.Info editUser(UserRequestDto.Edit edit){
 
-        if(loginUserEmail.equals("anonymousUser"))
-            throw new RuntimeException("로그인한 유저가 아닙니다.");
+        Optional<User> user = userRepository.findByEmail(edit.getEmail());
+        if(user.isPresent()){
+            User userPS = user.get();
+            String encPassword = passwordEncoder.encode(edit.getPassword());
+            userPS.update(encPassword, edit.getName());
 
-        User user = userRepository.findByEmail(loginUserEmail).get();
-
-        String encPassword = passwordEncoder.encode(edit.getPassword());
-
-        user.update(encPassword, edit.getName());
+            return UserResponseDto.Info.of(userPS);
+        }else{
+            throw new RuntimeException("해당 이메일을 찾을 수 없습니다.");
+        }
     }
 
     @Transactional
-    public Long deleteUser(String email){
-
+    public void deleteUser(String email){
         reviewRepository.deleteByUserEmail(email);
-        return userRepository.deleteByEmail(email);
+        userRepository.deleteByEmail(email);
     }
 
     public UserResponseDto.LoginSuccessInfo login(UserRequestDto.Login login){
