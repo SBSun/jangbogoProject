@@ -5,6 +5,7 @@ import Header from './common/Header';
 import Navigation from './common/Navigation';
 import CommodityList from './common/CommodityList';
 import ReviewList from './common/ReviewList';
+import { useSelector } from 'react-redux';
 
 // CSS
 const MakertInfoBlock = styled.section`
@@ -82,7 +83,9 @@ const MarketDetail = () => {
 
   const navigate = useNavigate();
 
-  const user = JSON.parse(sessionStorage.getItem('user'));
+  const { isLogin } = useSelector(({ auth }) => ({
+    isLogin: auth.isLogin,
+  }));
 
   // 메뉴 활성화 상태
   const [isChecked, setIsChecked] = useState({
@@ -139,7 +142,7 @@ const MarketDetail = () => {
             />
             <MarketReviewBlock
               onClick={() => {
-                user
+                isLogin
                   ? navigate(`/market/${params.id}/write`, {
                       state: { name: name, thumbnail: thumbnail },
                     })

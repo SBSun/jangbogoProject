@@ -33,21 +33,14 @@ const LoginContainer = () => {
     const fetchData = () => {
       promise
         .then(data => {
-          // Store에 로그인 정보 저장
+          console.log(data);
+          // 리덕스에 로그인 정보 저장
           storeDispatch(
             postLogin({
-              email: email,
               accessToken: data.tokenInfo.accessToken,
-            })
-          );
-          // 세션에 로그인 정보 저장
-          sessionStorage.setItem(
-            'user',
-            JSON.stringify({
               email: email,
               name: data.name,
-              address: data.address,
-              refreshToken: data.tokenInfo.refreshToken,
+              loginType: data.loginType,
             })
           );
 

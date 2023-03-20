@@ -1,9 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import SignUp from '../../components/auth/SignUp';
 import { checkEmail, signUp } from '../../lib/api/auth';
-import { postRegister } from '../../modules/auth';
 
 const SignUpContainer = () => {
   const [form, setForm] = useState({
@@ -24,7 +22,6 @@ const SignUpContainer = () => {
   const { email, password, passwordConfirm, name } = form;
 
   const navigate = useNavigate();
-  const storeDispatch = useDispatch();
 
   const handleInput = useCallback(
     e => {
@@ -126,13 +123,6 @@ const SignUpContainer = () => {
   const onSubmit = useCallback(
     e => {
       e.preventDefault();
-      storeDispatch(
-        postRegister({
-          email: email,
-          password: password,
-          name: name,
-        })
-      );
 
       const promise = signUp(email, password, name);
       const fetchData = () => {

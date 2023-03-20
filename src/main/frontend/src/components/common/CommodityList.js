@@ -144,32 +144,30 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
   const [endPage, setEndPage] = useState(1);
 
   // 지역 ID 가져오기
-  const sessionLocationId = sessionStorage.getItem('location-id');
-  const { storeLocationId } = useSelector(({ location }) => ({
-    storeLocationId: location.id,
-  }));
+  const location = sessionStorage.getItem('location');
+  const storeLocation = useSelector(state => state.location);
 
   // modify에 따라 다르게 품목을 출력
   const selectAPI = useCallback(() => {
     switch (modify) {
       case 'CATEGORY': {
-        return getCatagoryList(sessionLocationId, curPage, recordSize, keyword);
+        return getCatagoryList(location, curPage, recordSize, keyword);
       }
       case 'SEARCH': {
-        return getSearchList(sessionLocationId, curPage, recordSize, keyword);
+        return getSearchList(location, curPage, recordSize, keyword);
       }
       case 'MARKET': {
         return getMarketItemList(curPage, recordSize, keyword);
       }
       case 'PRICE': {
-        return getLowPriceItemList(sessionLocationId);
+        return getLowPriceItemList(location);
       }
       default: {
-        return getCommodityList(sessionLocationId, curPage, recordSize);
+        return getCommodityList(location, curPage, recordSize);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [storeLocationId, curPage, keyword]);
+  }, [storeLocation.id, curPage, keyword]);
 
   // API Fetch
   const promise = selectAPI();
@@ -189,7 +187,7 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
 
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [storeLocationId, curPage, endPage, keyword]);
+  }, [storeLocation.id, curPage, endPage, keyword]);
 
   // 받아온 품목 데이터 동적 생성
   const commodityListItem = commoditys.map((commodity, index) => {

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { getMarketList } from '../../lib/api/etc';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const MarketListBlock = styled.ul`
   display: flex;
@@ -61,12 +61,10 @@ const MarketList = () => {
 
   const navigate = useNavigate();
 
-  const sessionLocationId = sessionStorage.getItem('location-id');
-  const { storeLocationId } = useSelector(({ location }) => ({
-    storeLocationId: location.id,
-  }));
+  const location = sessionStorage.getItem('location');
+  const storeLocation = useSelector(state => state.location);
 
-  const promise = getMarketList(sessionLocationId);
+  const promise = getMarketList(location);
   const fetchData = () => {
     promise.then(data => {
       setMarkets(data);
@@ -76,7 +74,7 @@ const MarketList = () => {
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [storeLocationId]);
+  }, [storeLocation.id]);
 
   const marketListItem = markets.map(market => {
     const thumbnail = handleMarketThumbnail(market.name);

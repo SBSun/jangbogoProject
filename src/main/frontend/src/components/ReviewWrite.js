@@ -3,6 +3,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from './common/Header';
 import { postMarketReview } from '../lib/api/review';
+import { useSelector } from 'react-redux';
 
 const ReviewWriteForm = styled.form`
   margin: 56px 0 0 0;
@@ -56,7 +57,7 @@ const ReviewWrite = () => {
 
   const [content, setContent] = useState('');
 
-  const user = JSON.parse(sessionStorage.getItem('user'));
+  const auth = useSelector(state => state.auth);
 
   const onChange = e => {
     setContent(e.target.value);
@@ -69,7 +70,7 @@ const ReviewWrite = () => {
       alert('내용을 입력해주세요.');
     }
 
-    const promise = postMarketReview(params.id, user.email, content);
+    const promise = postMarketReview(params.id, auth.email, content);
     const fetchData = () => {
       promise
         .then(res => {

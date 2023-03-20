@@ -16,14 +16,18 @@ export const signUp = async (email, password, name) => {
   });
 };
 
-// 사용자 정보 수정 API
-export const editUserInfo = async (password, name) => {
-  return await client.patch(`/user/edit`, { password, name });
+// 로그인 API
+export const login = async (email, password) => {
+  return await client.post(`/user/login`, { email, password }).then(res => {
+    return res.data;
+  });
 };
 
-// 로그인 세션 연장 API
-export const reissueAuthorizationToken = async (accessToken, refreshToken) => {
-  return await client.post(`/user/reissue`, { accessToken, refreshToken });
+// 로그인한 유저 정보 반환
+export const getUserInfo = async () => {
+  return await client.get(`/user/getLoginUser`).then(res => {
+    return res.data;
+  });
 };
 
 // 로그인 토큰 헤더 설정 API
@@ -35,11 +39,9 @@ export const setAuthorizationToken = token => {
   }
 };
 
-// 로그인 API
-export const login = async (email, password) => {
-  return await client.post(`/user/login`, { email, password }).then(res => {
-    return res.data;
-  });
+// 사용자 정보 수정 API
+export const editUserInfo = async (password, name) => {
+  return await client.patch(`/user/edit`, { password, name });
 };
 
 // 로그아웃 API

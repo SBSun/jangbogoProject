@@ -23,13 +23,14 @@ const SelectLoactionContainer = () => {
   useEffect(() => {
     fetchData();
 
-    if (!sessionStorage.getItem('location-id')) {
+    if (!sessionStorage.getItem('location')) {
       storeDispatch(setIsVisible(true));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, isVisible]);
 
   const onItemClick = e => {
+    sessionStorage.setItem('location', e.target.id);
     storeDispatch(
       setLocation({
         id: parseInt(e.target.id),
@@ -37,7 +38,6 @@ const SelectLoactionContainer = () => {
       })
     );
     storeDispatch(setIsVisible(false));
-    sessionStorage.setItem('location-id', e.target.id);
   };
 
   return (

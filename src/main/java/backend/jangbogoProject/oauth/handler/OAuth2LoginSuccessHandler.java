@@ -32,7 +32,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
 
         UserResponseDto.TokenInfo tokenInfo = jwtTokenProvider.createToken(authentication);
-        String targetUrl = UriComponentsBuilder.fromUriString("/")
+        String targetUrl = UriComponentsBuilder.fromUriString("/member/redirect")
                 .queryParam(jwtTokenProvider.getAccessHeader(), tokenInfo.getAccessToken())
                 .build().toUriString();
          getRedirectStrategy().sendRedirect(request, response, targetUrl);

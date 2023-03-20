@@ -39,16 +39,16 @@ const ButtonBlock = styled.div`
   }
 `;
 
-const MyPage = ({ user, onAccountClick, onLogoutClick }) => {
+const MyPage = ({ auth, onAccountClick, onLogoutClick }) => {
   return (
     <>
       <Header modify={'DEFAULT_BLOCK'} title={'내 정보'} />
       <SelectLocationContainer />
       <Container>
         <UserInfoBlock>
-          <h2>{user.name}님, 환영합니다.</h2>
+          <h2>{auth.name}님, 환영합니다.</h2>
           <span>
-            이메일 - <strong>{user.email}</strong>
+            이메일 - <strong>{auth.email}</strong>
           </span>
           <ButtonBlock>
             <Button

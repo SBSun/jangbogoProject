@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MdModeEdit, MdDelete } from 'react-icons/md';
 import { getMarketReviewList, deleteMarketReview } from '../../lib/api/review';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 // CSS
 const ReviewListBlock = styled.ul`
@@ -49,9 +50,7 @@ const ReviewList = ({ marketId, marketName, thumbnail }) => {
   const [reviews, setReviews] = useState([]);
   const [isEmpty, setIsEmpty] = useState(false);
 
-  const user = JSON.parse(sessionStorage.getItem('user'));
-
-  const params = useParams();
+  const auth = useSelector(state => state.auth);
 
   const navigate = useNavigate();
 
@@ -81,7 +80,7 @@ const ReviewList = ({ marketId, marketName, thumbnail }) => {
         .then(res => {
           console.log(res);
           alert('리뷰가 삭제되었습니다.');
-          navigate(`market/${params.id}`);
+          window.location.reload();
         })
         .catch(error => console.log(error));
     };
@@ -95,8 +94,8 @@ const ReviewList = ({ marketId, marketName, thumbnail }) => {
     <li key={index}>
       <div className='review-info'>
         <span>{review.userEmail}</span>
-        {user ? (
-          review.userEmail === user.email ? (
+        {auth.isLogin ? (
+          review.userEmail === auth.email ? (
             <>
               <MdModeEdit
                 id={review.reviewId}

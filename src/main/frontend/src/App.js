@@ -15,6 +15,7 @@ import ReviewWritePage from './pages/ReviewWritePage';
 import ReviewEditPage from './pages/ReviewEditPage';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import RedirectPage from './pages/RedirectPage';
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
         <Route path='/mypage' element={<MyPagePage />} />
         <Route path='/mypage/account' element={<AccountSettingPage />} />
         <Route path='/member/login' element={<LoginPage />} />
+        <Route path='/member/redirect' element={<RedirectPage />} />
         <Route path='/member/signup' element={<SignUpPage />} />
         <Route path='/market/:id' element={<MarketDetailPage />} />
         <Route path='/market/:id/write' element={<ReviewWritePage />} />

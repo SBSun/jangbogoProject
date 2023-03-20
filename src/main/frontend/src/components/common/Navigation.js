@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { MdHome, MdSearch, MdMenu, MdPerson } from 'react-icons/md';
+import { useSelector } from 'react-redux';
 
 const Container = styled.footer`
   position: fixed;
@@ -27,7 +28,7 @@ const Menu = styled(NavLink)`
 `;
 
 const Navigation = () => {
-  const user = JSON.parse(sessionStorage.getItem('user'));
+  const auth = useSelector(state => state.auth);
 
   return (
     <>
@@ -51,7 +52,7 @@ const Navigation = () => {
           <MdSearch />
         </Menu>
         <Menu
-          to={user ? '/mypage' : '/member/login'}
+          to={auth.isLogin ? '/mypage' : '/member/login'}
           className={({ isActive }) => (isActive ? 'active' : undefined)}
         >
           <MdPerson />
