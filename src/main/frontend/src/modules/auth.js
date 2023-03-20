@@ -1,32 +1,31 @@
 import { createAction, handleActions } from 'redux-actions';
 
-const POST_REGISTER = 'auth/POST_REGISTER';
 const POST_LOGIN = 'auth/POST_LOGIN';
+const POST_LOGOUT = 'auth/POST_LOGOUT';
 
-export const postRegister = createAction(POST_REGISTER);
 export const postLogin = createAction(POST_LOGIN);
+export const postLogout = createAction(POST_LOGOUT);
 
 const initialState = {
-  register: {
-    email: '',
-    password: '',
-    name: '',
-  },
-  login: {
-    email: '',
-    accessToken: '',
-  },
+  accessToken: '',
+  email: '',
+  name: '',
+  loginType: '',
+  isLogin: false,
 };
 
 const auth = handleActions(
   {
-    [POST_REGISTER]: (state, action) => ({
-      ...state,
-      register: action.payload,
-    }),
     [POST_LOGIN]: (state, action) => ({
-      ...state,
-      login: action.payload,
+      ...action.payload,
+      isLogin: true,
+    }),
+    [POST_LOGOUT]: (state, action) => ({
+      accessToken: '',
+      email: '',
+      name: '',
+      loginType: '',
+      isLogin: false,
     }),
   },
   initialState

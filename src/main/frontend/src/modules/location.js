@@ -15,8 +15,7 @@ const initialState = {
 const location = handleActions(
   {
     [SET_LOCATION]: (state, action) => ({
-      id: action.payload.id,
-      name: action.payload.name,
+      ...action.payload,
       isVisible: false,
     }),
     [SET_IS_VISIBLE]: (state, action) => ({

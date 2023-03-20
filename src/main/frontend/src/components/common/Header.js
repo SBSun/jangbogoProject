@@ -84,19 +84,16 @@ const Header = ({ modify, title }) => {
   const { isVisible } = useSelector(({ location }) => ({
     isVisible: location.isVisible,
   }));
-  const { accessToken } = useSelector(({ auth }) => ({
-    accessToken: auth.login.accessToken,
-  }));
+  const auth = useSelector(state => state.auth);
+
   const storeDispatch = useDispatch();
 
-  const user = JSON.parse(sessionStorage.getItem('user'));
-
   useEffect(() => {
-    if (user) {
-      setAuthorizationToken(accessToken);
+    if (auth.isLogin) {
+      setAuthorizationToken(auth.accessToken);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accessToken]);
+  }, [auth.accessToken]);
 
   const onClick = () => {
     storeDispatch(setIsVisible(!isVisible));
