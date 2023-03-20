@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { editUserInfo, deleteAccount } from '../../lib/api/auth';
 import Button from '../common/Button';
 import Header from '../common/Header';
 import Navigation from '../common/Navigation';
+import { editUserInfo, deleteAccount } from '../../lib/api/auth';
+import { postLogin, postLogout } from '../../modules/auth';
 
 // CSS
 const AccountForm = styled.form`
@@ -38,7 +40,9 @@ const AccountButton = styled(Button)`
 `;
 
 const AccountSetting = () => {
-  const user = JSON.parse(sessionStorage.getItem('user'));
+  const auth = useSelector(state => state.auth);
+  const storeDispatch = useDispatch();
+
   const navigate = useNavigate();
 
   // 인풋 상태 관리
@@ -52,9 +56,9 @@ const AccountSetting = () => {
 
   // 사용자 이름 받아오기
   useEffect(() => {
-    setForm({ ...form, name: user.name });
+    setForm({ ...form, name: auth.name });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user.name]);
+  }, [auth.name]);
 
   // 인풋 값 관리
   const onChange = e => {
@@ -82,8 +86,7 @@ const AccountSetting = () => {
       const fetchData = () => {
         promise.then(res => {
           console.log(res);
-          // 세션에서 유저 정보 삭제
-          sessionStorage.removeItem('user');
+          storeDispatch(postLogout());
           alert('계정이 삭제되었습니다.');
           navigate('/', { replace: true });
         });
@@ -102,16 +105,13 @@ const AccountSetting = () => {
       return alert('비밀번호가 서로 다릅니다.');
     }
 
-    const promise = editUserInfo(passwordConfirm, name);
     console.log(passwordConfirm, name);
+    const promise = editUserInfo(passwordConfirm, name);
     const fetchData = () => {
       promise
         .then(res => {
           console.log(res);
-          sessionStorage.setItem(
-            'user',
-            JSON.stringify({ ...user, name: name })
-          );
+          storeDispatch(postLogin({ ...auth, name: name }));
           alert('사용자 정보가 변경되었습니다.');
           navigate('/mypage', { replace: true });
         })
@@ -125,7 +125,7 @@ const AccountSetting = () => {
       <Header modify={'WHITE_BLOCK'} title={'계정 설정'} />
       <AccountForm onSubmit={onSubmit}>
         <label>이메일</label>
-        <input type={'text'} value={user.email} onChange={onChange} />
+        <input type={'text'} value={auth.email} onChange={onChange} />
         <label>새 비밀번호</label>
         <input
           type={'password'}
