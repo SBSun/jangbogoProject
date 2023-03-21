@@ -1,9 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { getMarketList } from '../../lib/api/etc';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+// CSS
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+const Container = styled.div`
+  animation: ${fadeIn} 0.5s ease-in forwards;
+`;
 const MarketListBlock = styled.ul`
   display: flex;
   overflow-x: scroll;
@@ -95,9 +107,9 @@ const MarketList = () => {
   });
 
   return (
-    <>
+    <Container>
       <MarketListBlock>{marketListItem}</MarketListBlock>
-    </>
+    </Container>
   );
 };
 

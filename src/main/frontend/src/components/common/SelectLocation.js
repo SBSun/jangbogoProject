@@ -1,7 +1,15 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 // CSS
+const fadeIn = keyframes`
+from {
+    opacity: 0;
+}
+to {
+    opacity: 1;
+}
+`;
 const LocationBlock = styled.div`
   display: ${({ isVisible }) => (isVisible ? `block` : `none`)};
   position: fixed;
@@ -10,6 +18,7 @@ const LocationBlock = styled.div`
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 1000;
+  animation: ${fadeIn} 0.5s ease-in forwards;
 
   @media (min-width: 415px) {
     margin: 0 auto;
@@ -39,7 +48,7 @@ const LocationPopUp = styled.div`
     right: 0;
     text-align: center;
     font-size: 1.25rem;
-    font-weight: 800;
+    font-weight: 500;
     padding: 1rem 0;
     color: white;
     background: var(--green);
