@@ -1,5 +1,5 @@
 import React, { useCallback, useReducer } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
 import Header from './common/Header';
 import Navigation from './common/Navigation';
@@ -58,28 +58,16 @@ const CategoryBlock = styled.main`
   }
 `;
 const DetailBlock = styled.ul`
-  visibility: hidden;
+  visibility: ${({ isShow }) => (isShow ? 'visible' : 'hidden')};
   background: var(--light-gray);
   color: var(--gray);
-  height: 0;
+  height: ${({ isShow }) => (isShow ? 'auto' : '0')};
 
-  > li {
+  li {
     margin-left: 1rem;
     padding: 1rem;
     cursor: pointer;
-    height: 0;
   }
-
-  ${({ isShow }) =>
-    isShow &&
-    css`
-      visibility: visible;
-      height: auto;
-
-      > li {
-        height: auto;
-      }
-    `};
 `;
 
 // 체크박스 상태 관리 리듀서
@@ -174,7 +162,7 @@ const Category = () => {
             />
             <label htmlFor='meat-category'>
               <div>
-                <span>정육 ・ 계란</span>
+                <span>정육・계란</span>
                 {state.meat ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
               </div>
             </label>
@@ -190,7 +178,7 @@ const Category = () => {
             />
             <label htmlFor='seafood-category'>
               <div>
-                <span>수산 ・ 해산물</span>
+                <span>수산・해산물</span>
                 {state.seafood ? (
                   <MdKeyboardArrowUp />
                 ) : (

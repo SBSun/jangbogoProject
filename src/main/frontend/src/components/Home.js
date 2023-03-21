@@ -14,6 +14,7 @@ const HomeContainer = styled.main`
   > .list_title {
     padding: 2.75rem 1rem 0 1rem;
     font-size: 18px;
+    font-weight: 500;
   }
 `;
 const StyledSlider = styled(Slider)`
