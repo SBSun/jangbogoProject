@@ -3,6 +3,8 @@ package backend.jangbogoProject.service;
 import backend.jangbogoProject.dto.ReviewRequestDTO;
 import backend.jangbogoProject.dto.ReviewResponseDTO;
 import backend.jangbogoProject.entity.Review;
+import backend.jangbogoProject.exception.errorCode.CommonErrorCode;
+import backend.jangbogoProject.exception.exception.RestApiException;
 import backend.jangbogoProject.repository.ReviewRepository;
 import backend.jangbogoProject.utils.SecurityUtil;
 import lombok.RequiredArgsConstructor;
@@ -25,10 +27,10 @@ public class ReviewService {
         String loginUserEmail = SecurityUtil.getCurrentUserEmail().get();
 
         if(loginUserEmail.equals("anonymousUser"))
-            throw new RuntimeException("로그인한 유저가 아닙니다.");
+            throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
 
         if(!review.getUserEmail().equals(loginUserEmail))
-            throw new RuntimeException("로그인한 유저가 아닙니다.");
+            throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
 
         return ReviewResponseDTO.Info.of(reviewRepository.save(review));
     }
@@ -36,7 +38,7 @@ public class ReviewService {
     public ReviewResponseDTO.Info findById(Long id){
         Review review = reviewRepository.findById(id)
                 .orElseThrow(() ->
-                        new IllegalArgumentException("해당 리뷰가 존재하지 않습니다. " + id));
+                     new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
 
         return ReviewResponseDTO.Info.of(review);
     }
@@ -45,7 +47,7 @@ public class ReviewService {
         String loginUserEmail = SecurityUtil.getCurrentUserEmail().get();
 
         if(loginUserEmail.equals("anonymousUser"))
-            throw new RuntimeException("로그인한 유저가 아닙니다.");
+            throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
 
         List<Review> reviewList = reviewRepository.findAllByUserEmail(loginUserEmail);
 
@@ -73,10 +75,10 @@ public class ReviewService {
         String loginUserEmail = SecurityUtil.getCurrentUserEmail().get();
 
         if(loginUserEmail.equals("anonymousUser"))
-            throw new RuntimeException("로그인한 유저가 아닙니다.");
+            throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
 
         if(!review.getUserEmail().equals(loginUserEmail))
-            throw new RuntimeException("작성자가 아닙니다.");
+            throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
 
         review.update(editDTO.getContent());
 
@@ -86,7 +88,7 @@ public class ReviewService {
     @Transactional
     public void deleteReview(Long review_id){
         if(!reviewRepository.existsById(review_id))
-            throw new IllegalArgumentException("해당 리뷰가 존재하지 않습니다. " + review_id);
+            throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
 
         reviewRepository.deleteById(review_id);
     }

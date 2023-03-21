@@ -4,6 +4,8 @@ import backend.jangbogoProject.constant.LoginType;
 import backend.jangbogoProject.dto.UserRequestDto;
 import backend.jangbogoProject.dto.UserResponseDto;
 import backend.jangbogoProject.entity.User;
+import backend.jangbogoProject.exception.errorCode.CommonErrorCode;
+import backend.jangbogoProject.exception.exception.RestApiException;
 import backend.jangbogoProject.jwt.JwtTokenProvider;
 import backend.jangbogoProject.repository.ReviewRepository;
 import backend.jangbogoProject.constant.Authority;
@@ -62,7 +64,7 @@ public class UserService{
         if(user.isPresent()){
             return UserResponseDto.Info.of(userRepository.findByEmail(email).get());
         }else {
-            throw new RuntimeException("해당 이메일을 찾을 수 없습니다.");
+            throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
         }
     }
 
@@ -90,7 +92,7 @@ public class UserService{
 
             return UserResponseDto.Info.of(userPS);
         }else{
-            throw new RuntimeException("해당 이메일을 찾을 수 없습니다.");
+            throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
         }
     }
 

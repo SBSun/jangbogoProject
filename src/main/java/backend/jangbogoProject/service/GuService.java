@@ -1,5 +1,7 @@
 package backend.jangbogoProject.service;
 
+import backend.jangbogoProject.exception.errorCode.CommonErrorCode;
+import backend.jangbogoProject.exception.exception.RestApiException;
 import backend.jangbogoProject.repository.GuRepository;
 import backend.jangbogoProject.dto.GuInfoProjection;
 import backend.jangbogoProject.entity.Gu;
@@ -25,7 +27,7 @@ public class GuService {
         Gu gu = guRepository.findById(id).get();
 
         if(gu == null)
-            new IllegalArgumentException("해당 객체는 존재하지 않습니다.");
+            throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
 
         return gu;
     }
@@ -38,13 +40,16 @@ public class GuService {
         String guName = guRepository.getGuName(id);
 
         if(guName.isEmpty())
-            new IllegalArgumentException("해당 객체는 존재하지 않습니다.");
+            throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
 
         return guName;
     }
 
     public List<GuInfoProjection> findAllGuInfo(){
         List<GuInfoProjection> guInfoList = guRepository.findAllGuInfo();
+
+        if(guInfoList.isEmpty())
+            throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
 
         return guInfoList;
     }

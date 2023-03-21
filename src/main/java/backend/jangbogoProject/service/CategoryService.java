@@ -1,5 +1,7 @@
 package backend.jangbogoProject.service;
 
+import backend.jangbogoProject.exception.errorCode.CommonErrorCode;
+import backend.jangbogoProject.exception.exception.RestApiException;
 import backend.jangbogoProject.repository.CategoryRepository;
 import backend.jangbogoProject.dto.CategoryRequestDTO;
 import backend.jangbogoProject.dto.CategoryResponseDTO;
@@ -18,7 +20,7 @@ public class CategoryService {
     @Transactional
     public Long create(CategoryRequestDTO categoryRequestDTO){
         if(categoryRepository.existsByName(categoryRequestDTO.getName())){
-            throw new IllegalArgumentException("해당 카테고리는 이미 존재합니다.");
+            throw new RestApiException(CommonErrorCode.ALREADY_SAVED_CATEGORY);
         }
 
         Category category;
@@ -45,8 +47,9 @@ public class CategoryService {
                     .build();
         }else{
             String parentName = categoryRequestDTO.getParentName();
+
             Category parent = categoryRepository.findByName(parentName)
-                    .orElseThrow(() -> new IllegalArgumentException("부모 카테고리 없음 예외"));
+                    .orElseThrow(() -> new RestApiException(CommonErrorCode.PARENT_CATEGORY_NOT_FOUND));
 
             category = Category.builder()
                     .name(categoryRequestDTO.getName())
@@ -62,7 +65,7 @@ public class CategoryService {
 
     public CategoryResponseDTO findById(Long id){
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 카테고리는 존재하지 않습니다."));
+                .orElseThrow(() -> new RestApiException(CommonErrorCode.CATEGORY_NOT_FOUND));
 
         CategoryResponseDTO categoryResponseDTO = CategoryResponseDTO.of(category);
 
@@ -71,7 +74,7 @@ public class CategoryService {
 
     public CategoryResponseDTO findByName(String name){
         Category category = categoryRepository.findByName(name)
-                .orElseThrow(() -> new IllegalArgumentException("해당 카테고리는 존재하지 않습니다."));
+                .orElseThrow(() -> new RestApiException(CommonErrorCode.CATEGORY_NOT_FOUND));
 
         CategoryResponseDTO categoryResponseDTO = CategoryResponseDTO.of(category);
 
@@ -80,7 +83,7 @@ public class CategoryService {
 
     public CategoryResponseDTO findAll(){
         Category category = categoryRepository.findById(1L)
-                .orElseThrow(() -> new IllegalArgumentException("해당 카테고리는 존재하지 않습니다."));
+                .orElseThrow(() -> new RestApiException(CommonErrorCode.CATEGORY_NOT_FOUND));
 
         CategoryResponseDTO categoryResponseDTO = CategoryResponseDTO.of(category);
 
@@ -89,7 +92,7 @@ public class CategoryService {
 
     public Long findIdByName(String name){
         Category category = categoryRepository.findByName(name)
-                .orElseThrow(() -> new IllegalArgumentException("해당 카테고리는 존재하지 않습니다."));
+                .orElseThrow(() -> new RestApiException(CommonErrorCode.CATEGORY_NOT_FOUND));
 
         return category.getId();
     }

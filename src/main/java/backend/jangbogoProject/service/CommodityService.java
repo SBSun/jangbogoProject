@@ -2,6 +2,8 @@ package backend.jangbogoProject.service;
 
 
 import backend.jangbogoProject.aop.ExecutionTimeChecker;
+import backend.jangbogoProject.exception.errorCode.CommonErrorCode;
+import backend.jangbogoProject.exception.exception.RestApiException;
 import backend.jangbogoProject.repository.CommodityRepository;
 import backend.jangbogoProject.dto.CategoryResponseDTO;
 import backend.jangbogoProject.entity.Commodity;
@@ -37,17 +39,27 @@ public class CommodityService {
         int startIndex = searchRequestDTO.getOffset();
         int recordSize = searchRequestDTO.getRecordSize();
 
+        int totalDataCnt = commodityRepository.getCommodityCnt(gu_id);
+
+        if(totalDataCnt == 0)
+            throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
+
+        Page page = new Page(searchRequestDTO, totalDataCnt);
+
         List<CommodityInfoProjection> list
                 = commodityRepository.getCommodities(gu_id, startIndex, recordSize);
-
-        int totalDataCnt = commodityRepository.getCommodityCnt(gu_id);
-        Page page = new Page(searchRequestDTO, totalDataCnt);
 
         return new CommodityResponseDto.CommodityInfoList(list, page.toResponse());
     }
 
     public List<CommodityInfoProjection> getLowestPriceCommodities(int gu_id){
-        return commodityRepository.getLowestPriceCommodities(gu_id);
+
+        List<CommodityInfoProjection> lowestPriceCommodities = commodityRepository.getLowestPriceCommodities(gu_id);
+
+        if(lowestPriceCommodities.isEmpty())
+            throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
+
+        return lowestPriceCommodities;
     }
 
     public CommodityResponseDto.CommodityInfoList findByKeyword(int gu_id, SearchRequestDTO searchRequestDTO){
@@ -55,11 +67,14 @@ public class CommodityService {
         int startIndex = searchRequestDTO.getOffset();
         int recordSize = searchRequestDTO.getRecordSize();
 
+        int totalDataCnt = commodityRepository.findByKeywordCnt(gu_id, keyword);
+        if(totalDataCnt == 0)
+            throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
+
+        Page page = new Page(searchRequestDTO, totalDataCnt);
+
         List<CommodityInfoProjection> list
                 = commodityRepository.findByKeyword(gu_id, keyword, startIndex, recordSize);
-
-        int totalDataCnt = commodityRepository.findByKeywordCnt(gu_id, keyword);
-        Page page = new Page(searchRequestDTO, totalDataCnt);
 
         return new CommodityResponseDto.CommodityInfoList(list, page.toResponse());
     }
@@ -69,11 +84,14 @@ public class CommodityService {
         int startIndex = searchRequestDTO.getOffset();
         int recordSize = searchRequestDTO.getRecordSize();
 
+        int totalDataCnt = commodityRepository.findByMarketCnt(market_id);
+        if(totalDataCnt == 0)
+            throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
+
+        Page page = new Page(searchRequestDTO, totalDataCnt);
+
         List<CommodityInfoProjection> list
                 = commodityRepository.findByMarket(market_id, startIndex, recordSize);
-
-        int totalDataCnt = commodityRepository.findByMarketCnt(market_id);
-        Page page = new Page(searchRequestDTO, totalDataCnt);
 
         return new CommodityResponseDto.CommodityInfoList(list, page.toResponse());
     }
@@ -95,6 +113,9 @@ public class CommodityService {
             list = commodityRepository.findByChildCategory(gu_id, category.getId(), startIndex, recordSize);
             totalDataCnt = commodityRepository.findByChildCategoryCnt(gu_id, category.getId());
         }
+
+        if(totalDataCnt == 0)
+            throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
 
         Page page = new Page(searchRequestDTO, totalDataCnt);
 

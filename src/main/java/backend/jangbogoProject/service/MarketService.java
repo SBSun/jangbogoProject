@@ -1,5 +1,7 @@
 package backend.jangbogoProject.service;
 
+import backend.jangbogoProject.exception.errorCode.CommonErrorCode;
+import backend.jangbogoProject.exception.exception.RestApiException;
 import backend.jangbogoProject.repository.MarketRepository;
 import backend.jangbogoProject.entity.Gu;
 import backend.jangbogoProject.dto.MarketInfoProjection;
@@ -34,7 +36,7 @@ public class MarketService {
         Market market = marketRepository.findById(id).get();
 
         if(market == null)
-            new IllegalArgumentException("해당 객체는 존재하지 않습니다.");
+            throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
 
         return market;
     }
@@ -47,7 +49,7 @@ public class MarketService {
         String marketName = marketRepository.getMarketName(id);
 
         if(marketName.isEmpty())
-            new IllegalArgumentException("해당 객체는 존재하지 않습니다.");
+            throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
 
         return marketName;
     }
@@ -55,11 +57,17 @@ public class MarketService {
     public List<MarketInfoProjection> findMarketsInGu(int gu_id){
         List<MarketInfoProjection> marketInfoList = marketRepository.findMarketsInGu(gu_id);
 
+        if(marketInfoList.isEmpty())
+            throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
+
         return marketInfoList;
     }
 
     public List<MarketInfoProjection> findMarketsByName(String name){
         List<MarketInfoProjection> marketInfoList = marketRepository.findMarketsByName(name);
+
+        if(marketInfoList.isEmpty())
+            throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
 
         return marketInfoList;
     }
