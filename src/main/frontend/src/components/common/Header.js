@@ -93,7 +93,7 @@ const Header = ({ modify, title }) => {
       setAuthorizationToken(auth.accessToken);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth.accessToken]);
+  }, [auth.accessToken, auth.isLogin]);
 
   const onClick = () => {
     storeDispatch(setIsVisible(!isVisible));

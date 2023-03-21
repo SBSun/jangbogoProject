@@ -16,6 +16,12 @@ const recommandKeyword = [
   {
     name: '고등어',
   },
+  {
+    name: '쇠고기',
+  },
+  {
+    name: '양파',
+  },
 ];
 
 const SearchBlock = styled.main`
@@ -23,13 +29,13 @@ const SearchBlock = styled.main`
   padding: 1rem;
   text-align: center;
 
-  > input {
+  input {
     width: 90%;
     padding: 1rem;
     border: none;
     border-radius: 15px;
     background-color: var(--light-gray);
-    font-size: 18px;
+    font-size: 1rem;
   }
 `;
 const RecommandBlock = styled.section`

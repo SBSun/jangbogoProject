@@ -30,13 +30,13 @@ const SelectLoactionContainer = () => {
   }, [id, isVisible]);
 
   const onItemClick = e => {
-    sessionStorage.setItem('location', e.target.id);
     storeDispatch(
       setLocation({
         id: parseInt(e.target.id),
         name: e.target.title,
       })
     );
+    sessionStorage.setItem('location', e.target.id);
     storeDispatch(setIsVisible(false));
   };
 

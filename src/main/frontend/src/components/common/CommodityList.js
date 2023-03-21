@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import {
   getCommodityList,
   getCatagoryList,
@@ -10,6 +10,17 @@ import {
 } from '../../lib/api/commodity';
 
 // CSS
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+const Container = styled.div`
+  animation: ${fadeIn} 0.5s ease-in forwards;
+`;
 const CommodityXScrollBlock = styled.ul`
   display: flex;
   overflow-x: auto;
@@ -23,15 +34,13 @@ const CommodityYScrollBlock = styled.ul`
   display: flex;
   flex-wrap: wrap;
   flex: 2;
+  animation: ${fadeIn} 0.5s ease-in forwards;
 
   li {
     flex: 1;
     width: 8.125rem;
   }
   li:nth-child(odd) {
-    margin-left: 1rem;
-  }
-  li:last-child {
     margin-left: 1rem;
   }
 `;
@@ -45,21 +54,20 @@ const CommodityItemStyled = styled.li`
   }
   .commodity_info > .market_name {
     color: var(--gray);
-    font-size: 12px;
+    font-size: 0.75rem;
   }
   .commodity_info > .commodity_name {
     padding: 0.5rem 0 0 0;
-    font-size: 16px;
   }
   .commodity_info > .commodity_remarks {
     padding: 0.5rem 0 0 0;
     color: var(--gray);
-    font-size: 14px;
+    font-size: 0.85rem;
   }
   .commodity_info > .commodity_price {
     padding: 0.5rem 0 0 0;
     color: var(--black);
-    font-size: 18px;
+    font-weight: 600;
   }
 `;
 const CommoditySelectPage = styled.ul`
@@ -261,7 +269,7 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
       }
       case 'MARKET': {
         return isEmpty ? (
-          <EmptyBlock>해당 품목이 없습니다.</EmptyBlock>
+          <EmptyBlock>품목이 없습니다.</EmptyBlock>
         ) : (
           <>
             <CommodityYScrollBlock>{commodityListItem}</CommodityYScrollBlock>
@@ -273,16 +281,20 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
       }
       case 'PRICE': {
         return isEmpty ? (
-          <EmptyBlock>해당 품목이 없습니다.</EmptyBlock>
+          <EmptyBlock>품목이 없습니다.</EmptyBlock>
         ) : (
-          <CommodityXScrollBlock>{commodityListItem}</CommodityXScrollBlock>
+          <Container>
+            <CommodityXScrollBlock>{commodityListItem}</CommodityXScrollBlock>
+          </Container>
         );
       }
       default: {
         return isEmpty ? (
-          <EmptyBlock>해당 품목이 없습니다.</EmptyBlock>
+          <EmptyBlock>품목이 없습니다.</EmptyBlock>
         ) : (
-          <CommodityXScrollBlock>{commodityListItem}</CommodityXScrollBlock>
+          <Container>
+            <CommodityXScrollBlock>{commodityListItem}</CommodityXScrollBlock>
+          </Container>
         );
       }
     }

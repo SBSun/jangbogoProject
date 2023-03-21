@@ -15,9 +15,22 @@ const UserInfoBlock = styled.section`
   flex-direction: column;
   background: white;
 
+  .user-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    span {
+      padding: 0.5rem;
+    }
+  }
   h2 {
     padding: 1rem;
     font-size: 20px;
+
+    strong {
+      font-weight: 600;
+    }
   }
   span {
     padding: 0 1rem 0.5rem 1rem;
@@ -25,6 +38,7 @@ const UserInfoBlock = styled.section`
 
     strong {
       color: var(--black);
+      font-weight: 600;
     }
   }
 `;
@@ -46,7 +60,16 @@ const MyPage = ({ auth, onAccountClick, onLogoutClick }) => {
       <SelectLocationContainer />
       <Container>
         <UserInfoBlock>
-          <h2>{auth.name}님, 환영합니다.</h2>
+          <div className='user-title'>
+            <h2>
+              <strong>{auth.name}</strong>님, 환영합니다.
+            </h2>
+            {auth.loginType === 'Social' ? (
+              <span>소셜 로그인</span>
+            ) : (
+              <span>일반 로그인</span>
+            )}
+          </div>
           <span>
             이메일 - <strong>{auth.email}</strong>
           </span>

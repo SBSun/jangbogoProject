@@ -60,13 +60,11 @@ const SignUpContainer = () => {
 
   // useState가 비동기이므로 useEffect에서 유효성 검사 진행
   useEffect(() => {
-    // prettier-ignore
     // eslint-disable-next-line no-useless-escape
-    const EMAIL_REGEX = '^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$';
+    const EMAIL_REGEX = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 
-    // prettier-ignore
     // eslint-disable-next-line no-useless-escape
-    const PASSWORD_REGEX = '^[\da-zA-Z0-9!@#]{8,}$';
+    const PASSWORD_REGEX = /^[\da-zA-Z0-9!@#]{8,}$/;
 
     console.log(validate);
 

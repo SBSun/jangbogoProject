@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import Header from './common/Header';
 import Navigation from './common/Navigation';
 import SelectLocationContainer from '../containers/SelectLoactionContainer';
@@ -7,6 +7,15 @@ import CommodityList from './common/CommodityList';
 import MarketList from './common/MarketList';
 import Slider from 'react-slick';
 
+// CSS
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 const HomeContainer = styled.main`
   margin: 56px 0;
   overflow-x: hidden;
@@ -14,6 +23,7 @@ const HomeContainer = styled.main`
   > .list_title {
     padding: 2.75rem 1rem 0 1rem;
     font-size: 18px;
+    font-weight: 500;
   }
 `;
 const StyledSlider = styled(Slider)`
@@ -21,6 +31,7 @@ const StyledSlider = styled(Slider)`
     width: 100vw;
     height: 17.188rem;
     border-bottom: 1px solid var(--light-gray);
+    animation: ${fadeIn} 0.5s ease-in forwards;
 
     @media (min-width: 415px) {
       width: 25.75rem;

@@ -18,7 +18,7 @@ const SearchBlock = styled.main`
       border-radius: 10px;
       background: var(--light-gray);
       padding: 0.5rem 1rem;
-      font-size: 18px;
+      font-size: 1rem;
       margin: 1rem 0;
     }
   }
