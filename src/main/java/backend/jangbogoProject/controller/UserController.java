@@ -6,17 +6,23 @@ import backend.jangbogoProject.dto.ResponseDTO;
 import backend.jangbogoProject.dto.UserRequestDto;
 import backend.jangbogoProject.dto.UserResponseDto;
 import backend.jangbogoProject.entity.User;
+import backend.jangbogoProject.exception.errorCode.CommonErrorCode;
+import backend.jangbogoProject.exception.exception.RestApiException;
 import backend.jangbogoProject.security.PrincipalDetails;
 import backend.jangbogoProject.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 import java.util.List;
 
+@Validated
 @RestController
 @RequiredArgsConstructor
 public class UserController {
@@ -29,18 +35,21 @@ public class UserController {
     }
 
     @GetMapping("/user/checkEmail")
-    public boolean checkEmail(String email){
+    public boolean checkEmail(@RequestParam @NotBlank @Email String email) {
+
         return userService.checkEmail(email);
     }
 
     @PostMapping("/user/signUpUser")
-    public DataResponseDTO<UserResponseDto.Info> signUpUser(@RequestBody UserRequestDto.SignUp signUp){
+    public DataResponseDTO<UserResponseDto.Info> signUpUser(@RequestBody @Valid UserRequestDto.SignUp signUp) {
+        if(signUp == null)
+            throw new RestApiException(CommonErrorCode.INVALID_PARAMETER);
 
         return DataResponseDTO.of(userService.signUp(signUp));
     }
 
     @PatchMapping("/user/edit")
-    public ResponseEntity<String> editUser(@RequestBody UserRequestDto.Edit edit, @AuthenticationPrincipal PrincipalDetails principalDetails){
+    public ResponseEntity<String> editUser(@RequestBody @Valid UserRequestDto.Edit edit, @AuthenticationPrincipal PrincipalDetails principalDetails){
         userService.editUser(edit, principalDetails.getUser().getEmail());
 
         return new ResponseEntity<>("회원 정보 수정 성공", HttpStatus.OK);
@@ -57,7 +66,7 @@ public class UserController {
     }
 
     @PostMapping("/user/login")
-    public UserResponseDto.LoginSuccessInfo login(@RequestBody UserRequestDto.Login login) {
+    public UserResponseDto.LoginSuccessInfo login(@RequestBody @Valid UserRequestDto.Login login) {
 
         return userService.login(login);
     }
@@ -76,7 +85,7 @@ public class UserController {
     }
 
     @PostMapping("/user/reissue")
-    public UserResponseDto.TokenInfo reissue(@RequestBody UserRequestDto.Reissue reissue){
+    public UserResponseDto.TokenInfo reissue(@RequestBody @Valid UserRequestDto.Reissue reissue){
         UserResponseDto.TokenInfo tokenInfo = userService.reissue(reissue);
         return tokenInfo;
     }
