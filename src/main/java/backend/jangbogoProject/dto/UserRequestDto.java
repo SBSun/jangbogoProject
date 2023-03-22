@@ -32,7 +32,6 @@ public class UserRequestDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Edit{
-        private String email;
         private String password;
         private String name;
     }

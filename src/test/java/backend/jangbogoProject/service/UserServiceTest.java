@@ -100,17 +100,18 @@ public class UserServiceTest {
     @Test
     public void 유저_수정_테스트(){
         // given
-        UserRequestDto.Edit dto = new UserRequestDto.Edit("Test Email", "Edit Password", "Edit Name");
+        String email = "Test Email";
+        UserRequestDto.Edit dto = new UserRequestDto.Edit("Edit Password", "Edit Name");
         PasswordEncoder encoder = new BCryptPasswordEncoder();
 
         // stub
         User user = CreateUser();
 
-        when(userRepository.findByEmail(dto.getEmail())).thenReturn(Optional.of(user));
+        when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
         when(passwordEncoder.encode(dto.getPassword())).thenReturn(encoder.encode(dto.getPassword()));
 
         // when
-        UserResponseDto.Info userInfoDto = userService.editUser(dto);
+        UserResponseDto.Info userInfoDto = userService.editUser(dto, email);
 
         // then
 

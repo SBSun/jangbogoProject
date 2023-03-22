@@ -10,7 +10,7 @@ public class SinglePageAppConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/{spring:\\w+}")
-                        .setViewName("forward:/");
+                .setViewName("forward:/");
         registry.addViewController("/**/{spring:\\w+}")
                 .setViewName("forward:/");
         registry.addViewController("/{spring:\\w+}/**{spring:?!(\\.jsl\\.css)$}")

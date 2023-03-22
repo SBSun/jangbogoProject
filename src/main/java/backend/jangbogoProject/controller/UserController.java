@@ -40,8 +40,8 @@ public class UserController {
     }
 
     @PatchMapping("/user/edit")
-    public ResponseEntity<String> editUser(@RequestBody UserRequestDto.Edit edit){
-        userService.editUser(edit);
+    public ResponseEntity<String> editUser(@RequestBody UserRequestDto.Edit edit, @AuthenticationPrincipal PrincipalDetails principalDetails){
+        userService.editUser(edit, principalDetails.getUser().getEmail());
 
         return new ResponseEntity<>("회원 정보 수정 성공", HttpStatus.OK);
     }

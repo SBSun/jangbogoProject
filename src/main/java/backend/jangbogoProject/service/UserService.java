@@ -82,9 +82,12 @@ public class UserService{
     @Transactional
     // 트랜잭션 안에서 데이터베이스의 데이터를 가져오면 이 데이터는 영속성 컨텍스트가 유지된 상태가 된다.
     //이 상태에서 해당 데이터의 값을 변경하면 트랜잭션이 끝나는 시점에 변경된 데이터를 데이터베이스에 반영해준다.
-    public UserResponseDto.Info editUser(UserRequestDto.Edit edit){
+    public UserResponseDto.Info editUser(UserRequestDto.Edit edit, String email){
 
-        Optional<User> user = userRepository.findByEmail(edit.getEmail());
+        if(email.isEmpty())
+            throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
+
+        Optional<User> user = userRepository.findByEmail(email);
         if(user.isPresent()){
             User userPS = user.get();
             String encPassword = passwordEncoder.encode(edit.getPassword());
