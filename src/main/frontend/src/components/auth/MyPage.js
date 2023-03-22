@@ -1,57 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import Header from '../common/Header';
 import Navigation from '../common/Navigation';
 import Button from '../common/Button';
 import SelectLocationContainer from '../../containers/SelectLoactionContainer';
-
-// CSS
-const Container = styled.main`
-  margin: 56px 0 0 0;
-  background: var(--light-gray);
-`;
-const UserInfoBlock = styled.section`
-  display: flex;
-  flex-direction: column;
-  background: white;
-
-  .user-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    span {
-      padding: 0.5rem;
-    }
-  }
-  h2 {
-    padding: 1rem;
-    font-size: 20px;
-
-    strong {
-      font-weight: 600;
-    }
-  }
-  span {
-    padding: 0 1rem 0.5rem 1rem;
-    color: var(--green);
-
-    strong {
-      color: var(--black);
-      font-weight: 600;
-    }
-  }
-`;
-const ButtonBlock = styled.div`
-  margin: 1.5rem 0 0 0;
-  display: flex;
-
-  button {
-    margin: 0 0.5rem 0.5rem 0.5rem;
-    flex: 1;
-    cursor: pointer;
-  }
-`;
 
 const MyPage = ({ auth, onAccountClick, onLogoutClick }) => {
   return (
@@ -95,5 +48,57 @@ const MyPage = ({ auth, onAccountClick, onLogoutClick }) => {
     </>
   );
 };
+
+// CSS
+const Container = styled.main`
+  margin: 56px 0 0 0;
+  background: var(--light-gray);
+`;
+
+const UserInfoBlock = styled.section`
+  display: flex;
+  flex-direction: column;
+  background: white;
+
+  .user-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    span {
+      padding: 0.5rem;
+    }
+  }
+
+  h2 {
+    padding: 1rem;
+    font-size: 20px;
+
+    strong {
+      font-weight: 600;
+    }
+  }
+
+  span {
+    padding: 0 1rem 0.5rem 1rem;
+    color: var(--green);
+
+    strong {
+      color: var(--black);
+      font-weight: 600;
+    }
+  }
+`;
+
+const ButtonBlock = styled.div`
+  margin: 1.5rem 0 0 0;
+  display: flex;
+
+  button {
+    margin: 0 0.5rem 0.5rem 0.5rem;
+    flex: 1;
+    cursor: pointer;
+  }
+`;
 
 export default MyPage;

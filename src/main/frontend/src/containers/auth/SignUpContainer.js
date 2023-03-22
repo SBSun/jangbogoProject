@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import SignUp from '../../components/auth/SignUp';
 import { checkEmail, signUp } from '../../lib/api/auth';
+
+import SignUp from '../../components/auth/SignUp';
 
 const SignUpContainer = () => {
   const [form, setForm] = useState({
@@ -68,17 +69,13 @@ const SignUpContainer = () => {
 
     console.log(validate);
 
-    if (email.match(EMAIL_REGEX)) {
-      setValidate(validate => ({ ...validate, email: true }));
-    } else {
-      setValidate(validate => ({ ...validate, email: false }));
-    }
+    email.match(EMAIL_REGEX)
+      ? setValidate(validate => ({ ...validate, email: true }))
+      : setValidate(validate => ({ ...validate, email: false }));
 
-    if (password.match(PASSWORD_REGEX)) {
-      setValidate(validate => ({ ...validate, password: true }));
-    } else {
-      setValidate(validate => ({ ...validate, password: false }));
-    }
+    password.match(PASSWORD_REGEX)
+      ? setValidate(validate => ({ ...validate, password: true }))
+      : setValidate(validate => ({ ...validate, password: false }));
 
     if (password !== '') {
       setValidate(validate => ({
@@ -103,9 +100,8 @@ const SignUpContainer = () => {
   }, [email, password, passwordConfirm, name]);
 
   const onCheckEmail = useCallback(() => {
-    const promise = checkEmail(email);
     const fetchData = () => {
-      promise
+      checkEmail(email)
         .then(data => {
           console.log(data);
           setValidate(validate => ({ ...validate, emailConfirm: data }));
@@ -122,9 +118,8 @@ const SignUpContainer = () => {
     e => {
       e.preventDefault();
 
-      const promise = signUp(email, password, name);
       const fetchData = () => {
-        promise
+        signUp(email, password, name)
           .then(res => {
             console.log(res.data);
             alert('가입되었습니다.');

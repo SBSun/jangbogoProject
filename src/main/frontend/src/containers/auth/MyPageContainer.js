@@ -1,9 +1,10 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import MyPage from '../../components/auth/MyPage';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../lib/api/auth';
 import { postLogout } from '../../modules/auth';
+
+import MyPage from '../../components/auth/MyPage';
 
 const MyPageContainer = () => {
   const navigate = useNavigate();
