@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import styled, { keyframes } from 'styled-components';
 import {
   getCommodityList,
   getCatagoryList,
@@ -8,86 +7,8 @@ import {
   getMarketItemList,
   getLowPriceItemList,
 } from '../../lib/api/commodity';
+import styled, { keyframes } from 'styled-components';
 
-// CSS
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
-const Container = styled.div`
-  animation: ${fadeIn} 0.5s ease-in forwards;
-`;
-const CommodityXScrollBlock = styled.ul`
-  display: flex;
-  overflow-x: auto;
-  scrollbar-width: none;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
-`;
-const CommodityYScrollBlock = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
-  flex: 2;
-  animation: ${fadeIn} 0.5s ease-in forwards;
-
-  li {
-    flex: 1;
-    width: 8.125rem;
-  }
-  li:nth-child(odd) {
-    margin-left: 1rem;
-  }
-`;
-const CommodityItemStyled = styled.li`
-  padding: 0.5rem 1rem;
-
-  img {
-    padding: 1rem 0;
-    width: 7.5rem;
-    height: 7.5rem;
-  }
-  .commodity_info > .market_name {
-    color: var(--gray);
-    font-size: 0.75rem;
-  }
-  .commodity_info > .commodity_name {
-    padding: 0.5rem 0 0 0;
-  }
-  .commodity_info > .commodity_remarks {
-    padding: 0.5rem 0 0 0;
-    color: var(--gray);
-    font-size: 0.85rem;
-  }
-  .commodity_info > .commodity_price {
-    padding: 0.5rem 0 0 0;
-    color: var(--black);
-    font-weight: 600;
-  }
-`;
-const CommoditySelectPage = styled.ul`
-  padding: 0.5rem 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  li {
-    padding: 1rem;
-    cursor: pointer;
-  }
-  li:nth-child(${({ curPage }) => curPage}) {
-    color: var(--green);
-  }
-`;
-const EmptyBlock = styled.div`
-  margin-top: 30vh;
-  text-align: center;
-`;
 function handleCommodityThumbnail(id) {
   switch (id) {
     // 정육
@@ -156,46 +77,45 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
   const storeLocation = useSelector(state => state.location);
 
   // modify에 따라 다르게 품목을 출력
-  const selectAPI = useCallback(() => {
+  const selectAPI = useMemo(() => {
     switch (modify) {
       case 'CATEGORY': {
-        return getCatagoryList(location, curPage, recordSize, keyword);
+        return () => getCatagoryList(location, curPage, recordSize, keyword);
       }
       case 'SEARCH': {
-        return getSearchList(location, curPage, recordSize, keyword);
+        return () => getSearchList(location, curPage, recordSize, keyword);
       }
       case 'MARKET': {
-        return getMarketItemList(curPage, recordSize, keyword);
+        return () => getMarketItemList(curPage, recordSize, keyword);
       }
       case 'PRICE': {
-        return getLowPriceItemList(location);
+        return () => getLowPriceItemList(location);
       }
       default: {
-        return getCommodityList(location, curPage, recordSize);
+        return () => getCommodityList(location, curPage, recordSize);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [storeLocation.id, curPage, keyword]);
-
-  // API Fetch
-  const promise = selectAPI();
-  const fetchData = () => {
-    promise.then(data => {
-      data.data.infoList.length === 0 ? setIsEmpty(true) : setIsEmpty(false);
-
-      setCommoditys(data.data.infoList);
-      setEndPage(data.data.pageResponseDTO.endPage);
-    });
-  };
+  }, [modify, storeLocation.id, curPage, recordSize, keyword]);
 
   useEffect(() => {
     if (endPage === 1) {
       setCurPage(1);
     }
+    const fetchData = () => {
+      selectAPI()
+        .then(data => {
+          setIsEmpty(data?.data?.infoList.length === 0);
+          setCommoditys(data?.data?.infoList);
+          setEndPage(data?.data?.pageResponseDTO.endPage);
+        })
+        .catch(error => {
+          if (error.response.status === 404) setIsEmpty(true);
+        });
+    };
 
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [storeLocation.id, curPage, endPage, keyword]);
+  }, [selectAPI, endPage]);
 
   // 받아온 품목 데이터 동적 생성
   const commodityListItem = commoditys.map((commodity, index) => {
@@ -220,19 +140,13 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
   });
 
   // 품목 페이지 이동
-  const onPageClick = useCallback(
-    e => {
-      setCurPage(e.target.value);
-      window.scrollTo(0, 0);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [curPage]
-  );
+  const onPageClick = useCallback(e => {
+    setCurPage(parseInt(e.target.value));
+    window.scrollTo(0, 0);
+  }, []);
 
   // 페이지 버튼 배열 생성
-  const pageArray = Array(endPage)
-    .fill()
-    .map((value, index) => index + 1);
+  const pageArray = Array.from({ length: endPage }, (_, index) => index + 1);
   // 데이터 양에 따른 페이지 이동 버튼 동적 생성
   const pageButtons = pageArray.map(element => (
     <li key={element} value={element} onClick={onPageClick}>
@@ -240,63 +154,29 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
     </li>
   ));
 
-  // modify 값에 따라 다르게 품목 출력
+  const commodityBlock = isEmpty ? (
+    <EmptyBlock>품목이 없습니다.</EmptyBlock>
+  ) : modify === 'PRICE' ? (
+    <Container>
+      <CommodityXScrollBlock>{commodityListItem}</CommodityXScrollBlock>
+    </Container>
+  ) : (
+    <>
+      <CommodityYScrollBlock>{commodityListItem}</CommodityYScrollBlock>
+      <CommoditySelectPage curPage={curPage}>{pageButtons}</CommoditySelectPage>
+    </>
+  );
+
   const HandleCommodityStyled = () => {
     switch (modify) {
-      case 'CATEGORY': {
-        return isEmpty ? (
-          <EmptyBlock>해당 품목이 없습니다.</EmptyBlock>
-        ) : (
-          <>
-            <CommodityYScrollBlock>{commodityListItem}</CommodityYScrollBlock>
-            <CommoditySelectPage curPage={curPage}>
-              {pageButtons}
-            </CommoditySelectPage>
-          </>
-        );
-      }
-      case 'SEARCH': {
-        return isEmpty ? (
-          <EmptyBlock>해당 품목이 없습니다.</EmptyBlock>
-        ) : (
-          <>
-            <CommodityYScrollBlock>{commodityListItem}</CommodityYScrollBlock>
-            <CommoditySelectPage curPage={curPage}>
-              {pageButtons}
-            </CommoditySelectPage>
-          </>
-        );
-      }
-      case 'MARKET': {
-        return isEmpty ? (
-          <EmptyBlock>품목이 없습니다.</EmptyBlock>
-        ) : (
-          <>
-            <CommodityYScrollBlock>{commodityListItem}</CommodityYScrollBlock>
-            <CommoditySelectPage curPage={curPage}>
-              {pageButtons}
-            </CommoditySelectPage>
-          </>
-        );
-      }
-      case 'PRICE': {
-        return isEmpty ? (
-          <EmptyBlock>품목이 없습니다.</EmptyBlock>
-        ) : (
-          <Container>
-            <CommodityXScrollBlock>{commodityListItem}</CommodityXScrollBlock>
-          </Container>
-        );
-      }
-      default: {
-        return isEmpty ? (
-          <EmptyBlock>품목이 없습니다.</EmptyBlock>
-        ) : (
-          <Container>
-            <CommodityXScrollBlock>{commodityListItem}</CommodityXScrollBlock>
-          </Container>
-        );
-      }
+      case 'CATEGORY':
+      case 'SEARCH':
+      case 'MARKET':
+        return commodityBlock;
+      case 'PRICE':
+        return commodityBlock;
+      default:
+        return commodityBlock;
     }
   };
 
@@ -307,4 +187,90 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
   );
 };
 
-export default CommodityList;
+// CSS
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
+const Container = styled.div`
+  animation: ${fadeIn} 0.5s ease-in forwards;
+`;
+
+const CommodityXScrollBlock = styled.ul`
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+const CommodityYScrollBlock = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  flex: 2;
+  animation: ${fadeIn} 0.5s ease-in forwards;
+
+  li {
+    flex: 1;
+    width: 8.125rem;
+  }
+  li:nth-child(odd) {
+    margin-left: 1rem;
+  }
+`;
+
+const CommodityItemStyled = styled.li`
+  padding: 0.5rem 1rem;
+
+  img {
+    padding: 1rem 0;
+    width: 7.5rem;
+    height: 7.5rem;
+  }
+  .commodity_info > .market_name {
+    color: var(--gray);
+    font-size: 0.75rem;
+  }
+  .commodity_info > .commodity_name {
+    padding: 0.5rem 0 0 0;
+  }
+  .commodity_info > .commodity_remarks {
+    padding: 0.5rem 0 0 0;
+    color: var(--gray);
+    font-size: 0.85rem;
+  }
+  .commodity_info > .commodity_price {
+    padding: 0.5rem 0 0 0;
+    color: var(--black);
+    font-weight: 600;
+  }
+`;
+
+const CommoditySelectPage = styled.ul`
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  li {
+    padding: 1rem;
+    cursor: pointer;
+  }
+  li:nth-child(${({ curPage }) => curPage}) {
+    color: var(--green);
+  }
+`;
+
+const EmptyBlock = styled.div`
+  margin-top: 30vh;
+  text-align: center;
+`;
+
+export default React.memo(CommodityList);

@@ -1,37 +1,11 @@
 import React from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+
 import SelectLoactionContainer from '../containers/SelectLoactionContainer';
 import CommodityList from './common/CommodityList';
 import Header from './common/Header';
 import Navigation from './common/Navigation';
-
-// CSS
-const CategoryDetailBlock = styled.main`
-  margin: 56px 0;
-`;
-const CategoryMenuBlock = styled.div`
-  display: flex;
-  overflow-x: auto;
-  padding: 0.5rem;
-  scrollbar-width: none;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
-`;
-const CategoryMenu = styled.span`
-  padding: 1rem 0.5rem;
-  text-align: center;
-  flex-basis: 25%;
-  flex-shrink: 0;
-  cursor: pointer;
-
-  &.active {
-    color: var(--green);
-    border-bottom: 2px solid var(--green);
-  }
-`;
 
 const CatogoryDetail = () => {
   const params = useParams();
@@ -72,5 +46,34 @@ const CatogoryDetail = () => {
     </>
   );
 };
+
+// CSS
+const CategoryDetailBlock = styled.main`
+  margin: 56px 0;
+`;
+
+const CategoryMenuBlock = styled.div`
+  display: flex;
+  overflow-x: auto;
+  padding: 0.5rem;
+  scrollbar-width: none;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+const CategoryMenu = styled.span`
+  padding: 1rem 0.5rem;
+  text-align: center;
+  flex-basis: 25%;
+  flex-shrink: 0;
+  cursor: pointer;
+
+  &.active {
+    color: var(--green);
+    border-bottom: 2px solid var(--green);
+  }
+`;
 
 export default CatogoryDetail;

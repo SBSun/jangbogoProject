@@ -1,64 +1,55 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { editUserInfo, deleteAccount } from '../../lib/api/auth';
+import { postLogin, postLogout } from '../../modules/auth';
 import styled from 'styled-components';
+
 import Button from '../common/Button';
 import Header from '../common/Header';
 import Navigation from '../common/Navigation';
-import { editUserInfo, deleteAccount } from '../../lib/api/auth';
-import { postLogin, postLogout } from '../../modules/auth';
-
-// CSS
-const AccountForm = styled.form`
-  margin: 56px 0;
-  padding: 0 1.25rem;
-  display: flex;
-  flex-direction: column;
-
-  label {
-    padding: 1.25rem 0 0.75rem 0;
-  }
-  input {
-    height: 2.5rem;
-    border: 1px solid var(--light-gray);
-    padding: 0 1rem;
-    border-radius: 10px;
-  }
-  p {
-    padding: 2rem;
-  }
-  span {
-    margin-left: auto;
-    padding: 1rem 0 2rem 0;
-    color: var(--green);
-    text-decoration: underline;
-    cursor: pointer;
-  }
-`;
-const AccountButton = styled(Button)`
-  height: 2.5rem;
-`;
 
 const AccountSetting = () => {
   const auth = useSelector(state => state.auth);
   const storeDispatch = useDispatch();
-
   const navigate = useNavigate();
 
   // 인풋 상태 관리
   const [form, setForm] = useState({
     password: '',
     passwordConfirm: '',
-    name: '',
+    name: auth.name,
+  });
+  // 유효성 검사
+  const [validate, setValidate] = useState({
+    password: false,
+    passwordConfirm: false,
+    name: true,
   });
 
   const { password, passwordConfirm, name } = form;
 
   // 사용자 이름 받아오기
   useEffect(() => {
-    setForm({ ...form, name: auth.name });
+    // eslint-disable-next-line no-useless-escape
+    const PASSWORD_REGEX = /^[\da-zA-Z0-9!@#]{8,}$/;
+
+    password.match(PASSWORD_REGEX)
+      ? setValidate(validate => ({ ...validate, password: true }))
+      : setValidate(validate => ({ ...validate, password: false }));
+
+    if (password !== '') {
+      setValidate(validate => ({
+        ...validate,
+        passwordConfirm: password === passwordConfirm,
+      }));
+    }
+
+    setValidate(validate => ({ ...validate, name: name !== '' }));
+
+    // setForm({ ...form, name: auth.name });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth.name]);
+  }, [password, passwordConfirm, name]);
 
   // 인풋 값 관리
   const onChange = e => {
@@ -82,9 +73,8 @@ const AccountSetting = () => {
     const isDelete = window.confirm('정말 삭제하시겠습니까?');
 
     if (isDelete) {
-      const promise = deleteAccount();
       const fetchData = () => {
-        promise.then(res => {
+        deleteAccount().then(res => {
           console.log(res);
           storeDispatch(postLogout());
           alert('계정이 삭제되었습니다.');
@@ -98,17 +88,18 @@ const AccountSetting = () => {
   // 회원 정보 수정
   const onSubmit = e => {
     e.preventDefault();
-    if (password === '' || passwordConfirm === '') {
-      return alert('비밀번호를 입력해주세요.');
+    if (!validate.password) {
+      return alert('비밀번호를 형식에 맞게 입력해주세요.');
     }
-    if (password !== passwordConfirm) {
+    if (!validate.passwordConfirm) {
       return alert('비밀번호가 서로 다릅니다.');
     }
+    if (!validate.name) {
+      return alert('이름을 꼭 입력해주세요.');
+    }
 
-    console.log(passwordConfirm, name);
-    const promise = editUserInfo(passwordConfirm, name);
     const fetchData = () => {
-      promise
+      editUserInfo(passwordConfirm, name)
         .then(res => {
           console.log(res);
           storeDispatch(postLogin({ ...auth, name: name }));
@@ -134,6 +125,9 @@ const AccountSetting = () => {
           value={password}
           onChange={onChange}
         />
+        <ErrorMessage validate={validate.password}>
+          비밀번호를 8자 이상 입력해주세요.
+        </ErrorMessage>
         <label>새 비밀번호 확인</label>
         <input
           type={'password'}
@@ -142,15 +136,63 @@ const AccountSetting = () => {
           value={passwordConfirm}
           onChange={onChange}
         />
+        <ErrorMessage validate={validate.passwordConfirm}>
+          비밀번호가 서로 다릅니다.
+        </ErrorMessage>
         <label>이름</label>
         <input type={'text'} name={'NAME'} value={name} onChange={onChange} />
+        <ErrorMessage validate={validate.name}>
+          이름을 입력해주세요.
+        </ErrorMessage>
         <p></p>
-        <span onClick={onClick}>계정 삭제</span>
+        <span className='delete-account' onClick={onClick}>
+          계정 삭제
+        </span>
         <AccountButton>수정하기</AccountButton>
       </AccountForm>
       <Navigation />
     </>
   );
 };
+
+// CSS
+const AccountForm = styled.form`
+  margin: 56px 0;
+  padding: 0 1.25rem 1.25rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+
+  label {
+    padding: 1.25rem 0 0.75rem 0;
+  }
+  input {
+    height: 2.5rem;
+    border: 1px solid var(--light-gray);
+    padding: 0 1rem;
+    border-radius: 10px;
+  }
+  p {
+    padding: 2rem;
+  }
+  .delete-account {
+    margin-left: auto;
+    padding: 1rem 0 2rem 0;
+    color: var(--green);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+`;
+
+const AccountButton = styled(Button)`
+  height: 2.5rem;
+`;
+
+const ErrorMessage = styled.span`
+  color: var(--red);
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+  padding-left: 0.5rem;
+  visibility: ${({ validate }) => (validate ? 'hidden' : 'visible')};
+`;
 
 export default AccountSetting;

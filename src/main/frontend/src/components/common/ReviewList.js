@@ -1,9 +1,85 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { MdModeEdit, MdDelete } from 'react-icons/md';
-import { getMarketReviewList, deleteMarketReview } from '../../lib/api/review';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { getMarketReviewList, deleteMarketReview } from '../../lib/api/review';
+import styled from 'styled-components';
+
+import { MdModeEdit, MdDelete } from 'react-icons/md';
+
+const ReviewList = ({ marketId, marketName, thumbnail }) => {
+  // 리뷰 데이터
+  const [reviews, setReviews] = useState([]);
+  const [isEmpty, setIsEmpty] = useState(false);
+
+  const { isLogin, email } = useSelector(state => state.auth);
+
+  const navigate = useNavigate();
+
+  // API에서 받아온 리뷰 데이터 저장
+  const fetchData = useCallback(async () => {
+    try {
+      const data = await getMarketReviewList(marketId);
+      setReviews(data);
+      setIsEmpty(false);
+    } catch (error) {
+      console.log(error);
+      setIsEmpty(true);
+    }
+  }, [marketId]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  // 리뷰 삭제 이벤트
+  const onDeleteClick = useCallback(e => {
+    const reviewId = e.target.id;
+    deleteMarketReview(reviewId)
+      .then(() => {
+        setReviews(prevReviews =>
+          prevReviews.filter(review => review.reviewId !== reviewId)
+        );
+        alert('리뷰가 삭제되었습니다.');
+        window.location.reload();
+      })
+      .catch(error => console.log(error));
+  }, []);
+
+  // 리뷰 동적 생성
+  const reviewList = reviews.map((review, index) => (
+    <li key={review.reviewId}>
+      <div className='review-info'>
+        <span>{review.userEmail}</span>
+        {isLogin ? (
+          review.userEmail === email ? (
+            <>
+              <MdModeEdit
+                id={review.reviewId}
+                onClick={e => {
+                  console.log(e.target.id);
+                  navigate(`/market/${marketId}/${e.target.id}`, {
+                    state: { name: marketName, thumbnail: thumbnail },
+                  });
+                }}
+              />
+              <MdDelete id={review.reviewId} onClick={onDeleteClick} />
+            </>
+          ) : null
+        ) : null}
+      </div>
+      <p className='review-content'>{review.content}</p>
+      <span className='review-date'>{review.createdDate}</span>
+    </li>
+  ));
+
+  return isEmpty ? (
+    <EmptyBlock>리뷰가 없습니다.</EmptyBlock>
+  ) : (
+    <>
+      <ReviewListBlock>{reviewList}</ReviewListBlock>
+    </>
+  );
+};
 
 // CSS
 const ReviewListBlock = styled.ul`
@@ -40,89 +116,10 @@ const ReviewListBlock = styled.ul`
     }
   }
 `;
+
 const EmptyBlock = styled.div`
   margin-top: 20vh;
   text-align: center;
 `;
 
-const ReviewList = ({ marketId, marketName, thumbnail }) => {
-  // 리뷰 데이터
-  const [reviews, setReviews] = useState([]);
-  const [isEmpty, setIsEmpty] = useState(false);
-
-  const auth = useSelector(state => state.auth);
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    // API에서 받아온 리뷰 데이터 저장
-    const promise = getMarketReviewList(marketId);
-    const fetchData = () => {
-      promise
-        .then(data => {
-          setReviews(data);
-          setIsEmpty(false);
-        })
-        .catch(error => {
-          console.log(error);
-          setIsEmpty(true);
-        });
-    };
-
-    fetchData();
-  }, [marketId]);
-
-  // 리뷰 삭제 이벤트
-  const onDeleteClick = useCallback(e => {
-    const promise = deleteMarketReview(e.target.id);
-    const fetchData = () => {
-      promise
-        .then(res => {
-          console.log(res);
-          alert('리뷰가 삭제되었습니다.');
-          window.location.reload();
-        })
-        .catch(error => console.log(error));
-    };
-
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // 리뷰 동적 생성
-  const reviewList = reviews.map((review, index) => (
-    <li key={index}>
-      <div className='review-info'>
-        <span>{review.userEmail}</span>
-        {auth.isLogin ? (
-          review.userEmail === auth.email ? (
-            <>
-              <MdModeEdit
-                id={review.reviewId}
-                onClick={e => {
-                  console.log(e.target.id);
-                  navigate(`/market/${marketId}/${e.target.id}`, {
-                    state: { name: marketName, thumbnail: thumbnail },
-                  });
-                }}
-              />
-              <MdDelete id={review.reviewId} onClick={onDeleteClick} />
-            </>
-          ) : undefined
-        ) : undefined}
-      </div>
-      <p className='review-content'>{review.content}</p>
-      <span className='review-date'>{review.createdDate}</span>
-    </li>
-  ));
-
-  return isEmpty ? (
-    <EmptyBlock>리뷰가 없습니다.</EmptyBlock>
-  ) : (
-    <>
-      <ReviewListBlock>{reviewList}</ReviewListBlock>
-    </>
-  );
-};
-
-export default ReviewList;
+export default React.memo(ReviewList);
