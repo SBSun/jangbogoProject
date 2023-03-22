@@ -1,53 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import Button from '../common/Button';
 import Header from '../common/Header';
 import Navigation from '../common/Navigation';
 import SelectLocationContainer from '../../containers/SelectLoactionContainer';
-
-// CSS
-const SignUpForm = styled.form`
-  margin: 56px 0;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-
-  > .email-block {
-    display: inherit;
-    flex-direction: inherit;
-
-    > div {
-      display: inherit;
-      justify-content: space-between;
-      align-items: center;
-    }
-  }
-  > .password-user-block {
-    display: inherit;
-    flex-direction: inherit;
-    margin: 1rem 0 3rem 0;
-  }
-`;
-const SignUpLabel = styled.label`
-  color: var(--black);
-  padding: 1rem 0 0.5rem 0.5rem;
-`;
-const SignUpInput = styled.input`
-  height: 2.5rem;
-  border: 1px solid var(--light-gray);
-  padding: 0.5rem 1rem;
-  border-radius: 10px;
-`;
-const SignUpButton = styled(Button)`
-  height: 2.5rem;
-`;
-const ErrorMessage = styled.span`
-  color: var(--red);
-  font-size: 0.75rem;
-  margin-top: 0.5rem;
-  padding-left: 0.5rem;
-  visibility: ${({ validate }) => (validate ? 'hidden' : 'visible')};
-`;
 
 const SignUp = ({
   email,
@@ -134,5 +91,53 @@ const SignUp = ({
     </>
   );
 };
+
+// CSS
+const SignUpForm = styled.form`
+  margin: 56px 0;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+
+  > .email-block {
+    display: inherit;
+    flex-direction: inherit;
+
+    > div {
+      display: inherit;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+  > .password-user-block {
+    display: inherit;
+    flex-direction: inherit;
+    margin: 1rem 0 3rem 0;
+  }
+`;
+
+const SignUpLabel = styled.label`
+  color: var(--black);
+  padding: 1rem 0 0.5rem 0.5rem;
+`;
+
+const SignUpInput = styled.input`
+  height: 2.5rem;
+  border: 1px solid var(--light-gray);
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+`;
+
+const SignUpButton = styled(Button)`
+  height: 2.5rem;
+`;
+
+const ErrorMessage = styled.span`
+  color: var(--red);
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+  padding-left: 0.5rem;
+  visibility: ${({ validate }) => (validate ? 'hidden' : 'visible')};
+`;
 
 export default SignUp;

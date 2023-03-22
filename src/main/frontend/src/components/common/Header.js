@@ -1,15 +1,84 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsVisible } from '../../modules/location';
+import { setAuthorizationToken } from '../../lib/api/auth';
 import styled from 'styled-components';
+
 import {
   MdClear,
   MdPlace,
   MdKeyboardArrowLeft,
   MdOutlinePlace,
 } from 'react-icons/md';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { setIsVisible } from '../../modules/location';
-import { setAuthorizationToken } from '../../lib/api/auth';
+
+const Header = ({ modify, title }) => {
+  const navigate = useNavigate();
+  const storeDispatch = useDispatch();
+
+  const { isVisible } = useSelector(({ location }) => ({
+    isVisible: location.isVisible,
+  }));
+  const { isLogin, accessToken } = useSelector(state => state.auth);
+
+  useEffect(() => {
+    if (isLogin) {
+      setAuthorizationToken(accessToken);
+    }
+  }, [accessToken, isLogin]);
+
+  const onClick = () => {
+    storeDispatch(setIsVisible(!isVisible));
+  };
+
+  const renderHeader = () => {
+    const commonProps = {
+      title,
+      onClick,
+    };
+
+    switch (modify) {
+      case 'LOGO_BLOCK':
+        return (
+          <LogoBlock>
+            <img src={'/assets/svg/Logo_eng.svg'} alt='logo' />
+            <MdPlace {...commonProps} />
+          </LogoBlock>
+        );
+
+      case 'WHITE_BLOCK':
+        return (
+          <WhiteBlock>
+            <MdClear onClick={() => navigate(-1, { replace: true })} />
+            <h2>{title}</h2>
+            <span></span>
+          </WhiteBlock>
+        );
+
+      case 'WHITE_BLOCK_LOCATION':
+        return (
+          <WhiteBlock>
+            <MdKeyboardArrowLeft
+              onClick={() => navigate(-1, { replace: true })}
+            />
+            <h2>{title}</h2>
+            <MdOutlinePlace {...commonProps} />
+          </WhiteBlock>
+        );
+
+      default:
+        return (
+          <DefaultBlock>
+            <span></span>
+            <h2>{title}</h2>
+            <MdPlace {...commonProps} />
+          </DefaultBlock>
+        );
+    }
+  };
+
+  return <>{renderHeader()}</>;
+};
 
 // CSS
 const DefaultBlock = styled.header`
@@ -43,6 +112,7 @@ const DefaultBlock = styled.header`
     cursor: pointer;
   }
 `;
+
 const WhiteBlock = styled(DefaultBlock)`
   justify-content: left;
   background-color: white;
@@ -62,6 +132,7 @@ const WhiteBlock = styled(DefaultBlock)`
     flex: 1;
   }
 `;
+
 const LogoBlock = styled(DefaultBlock)`
   justify-content: space-between;
 
@@ -77,74 +148,5 @@ const LogoBlock = styled(DefaultBlock)`
     cursor: pointer;
   }
 `;
-
-const Header = ({ modify, title }) => {
-  const navigate = useNavigate();
-
-  const { isVisible } = useSelector(({ location }) => ({
-    isVisible: location.isVisible,
-  }));
-  const auth = useSelector(state => state.auth);
-
-  const storeDispatch = useDispatch();
-
-  useEffect(() => {
-    if (auth.isLogin) {
-      setAuthorizationToken(auth.accessToken);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth.accessToken, auth.isLogin]);
-
-  const onClick = () => {
-    storeDispatch(setIsVisible(!isVisible));
-  };
-
-  const HandleHeaderStyled = () => {
-    switch (modify) {
-      case 'LOGO_BLOCK':
-        return (
-          <LogoBlock>
-            <img src={'/assets/svg/Logo_eng.svg'} alt='logo' />
-            <MdPlace onClick={onClick} />
-          </LogoBlock>
-        );
-
-      case 'WHITE_BLOCK':
-        return (
-          <WhiteBlock>
-            <MdClear onClick={() => navigate(-1, { replace: true })} />
-            <h2>{title}</h2>
-            <span></span>
-          </WhiteBlock>
-        );
-
-      case 'WHITE_BLOCK_LOCATION':
-        return (
-          <WhiteBlock>
-            <MdKeyboardArrowLeft
-              onClick={() => navigate(-1, { replace: true })}
-            />
-            <h2>{title}</h2>
-            <MdOutlinePlace onClick={onClick} />
-          </WhiteBlock>
-        );
-
-      default:
-        return (
-          <DefaultBlock>
-            <span></span>
-            <h2>{title}</h2>
-            <MdPlace onClick={onClick} />
-          </DefaultBlock>
-        );
-    }
-  };
-
-  return (
-    <>
-      <HandleHeaderStyled />
-    </>
-  );
-};
 
 export default Header;

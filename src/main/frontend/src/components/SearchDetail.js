@@ -1,46 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+
 import SelectLoactionContainer from '../containers/SelectLoactionContainer';
 import CommodityList from './common/CommodityList';
 import Header from './common/Header';
 import Navigation from './common/Navigation';
 
-// CSS
-const SearchBlock = styled.main`
-  margin: 56px 0;
-
-  .search-bar {
-    text-align: center;
-
-    input {
-      border: none;
-      border-radius: 10px;
-      background: var(--light-gray);
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-      margin: 1rem 0;
-    }
-  }
-`;
-
 const SearchDetail = () => {
   const params = useParams();
-
-  const [input, setInput] = useState('');
-
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setInput(params.keyword);
-  }, [params.keyword]);
+  const [input, setInput] = useState(params.keyword);
 
   const onChange = e => {
     setInput(e.target.value);
   };
+
   const onKeyDown = e => {
-    if (e.key !== 'Enter') return;
-    navigate(`/search/${input}`);
+    if (e.key === 'Enter') {
+      navigate(`/search/${input}`);
+    }
   };
 
   return (
@@ -67,5 +47,23 @@ const SearchDetail = () => {
     </>
   );
 };
+
+// CSS
+const SearchBlock = styled.main`
+  margin: 56px 0;
+
+  .search-bar {
+    text-align: center;
+
+    input {
+      border: none;
+      border-radius: 10px;
+      background: var(--light-gray);
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      margin: 1rem 0;
+    }
+  }
+`;
 
 export default SearchDetail;

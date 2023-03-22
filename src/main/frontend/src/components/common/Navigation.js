@@ -1,34 +1,12 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import styled from 'styled-components';
-import { MdHome, MdSearch, MdMenu, MdPerson } from 'react-icons/md';
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
 
-const Container = styled.footer`
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  height: 2.5rem;
-  padding: 0.5rem 0;
-  border-top: solid 1px var(--light-gray);
-  background-color: white;
-`;
-const Menu = styled(NavLink)`
-  padding: 0 1rem;
-  font-size: 1.75rem;
-  color: var(--black);
-
-  &.active {
-    color: var(--green);
-  }
-`;
+import { MdHome, MdSearch, MdMenu, MdPerson } from 'react-icons/md';
 
 const Navigation = () => {
-  const auth = useSelector(state => state.auth);
+  const { isLogin } = useSelector(state => state.auth);
 
   return (
     <>
@@ -52,7 +30,7 @@ const Navigation = () => {
           <MdSearch />
         </Menu>
         <Menu
-          to={auth.isLogin ? '/mypage' : '/member/login'}
+          to={isLogin ? '/mypage' : '/member/login'}
           className={({ isActive }) => (isActive ? 'active' : undefined)}
         >
           <MdPerson />
@@ -61,5 +39,29 @@ const Navigation = () => {
     </>
   );
 };
+
+const Container = styled.footer`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 2.5rem;
+  padding: 0.5rem 0;
+  border-top: solid 1px var(--light-gray);
+  background-color: white;
+`;
+
+const Menu = styled(NavLink)`
+  padding: 0 1rem;
+  font-size: 1.75rem;
+  color: var(--black);
+
+  &.active {
+    color: var(--green);
+  }
+`;
 
 export default Navigation;

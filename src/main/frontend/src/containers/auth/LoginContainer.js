@@ -1,22 +1,25 @@
 import React, { useReducer } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Login from '../../components/auth/LogIn';
 import { useDispatch } from 'react-redux';
 import { login, setAuthorizationToken } from '../../lib/api/auth';
 import { postLogin } from '../../modules/auth';
 
-function reducer(state, action) {
+import Login from '../../components/auth/LogIn';
+
+const initialState = {
+  email: '',
+  password: '',
+};
+
+function loginReducer(state, action) {
   return {
     ...state,
     [action.name]: action.value,
   };
 }
 
-const LoginContainer = () => {
-  const [state, dispatch] = useReducer(reducer, {
-    email: '',
-    password: '',
-  });
+function LoginContainer() {
+  const [state, dispatch] = useReducer(loginReducer, initialState);
   const { email, password } = state;
 
   const storeDispatch = useDispatch();
@@ -24,49 +27,45 @@ const LoginContainer = () => {
 
   const moveSignUp = () => navigate('/member/signup');
 
-  const handleInputs = e => {
-    dispatch(e.target);
-  };
-  const onSubmit = e => {
-    e.preventDefault();
-    const promise = login(email, password);
-    const fetchData = () => {
-      promise
-        .then(data => {
-          console.log(data);
-          // 리덕스에 로그인 정보 저장
-          storeDispatch(
-            postLogin({
-              accessToken: data.tokenInfo.accessToken,
-              email: email,
-              name: data.name,
-              loginType: data.loginType,
-            })
-          );
+  function handleInputChange(event) {
+    const { name, value } = event.target;
+    dispatch({ name, value });
+  }
 
-          // 헤더에 엑세스 토큰 설정
-          setAuthorizationToken(data.tokenInfo.accessToken);
+  async function handleSubmit(event) {
+    event.preventDefault();
+    try {
+      const data = await login(email, password);
+      console.log(data);
 
-          alert('로그인되었습니다.');
-          navigate('/', { replace: true });
+      storeDispatch(
+        postLogin({
+          accessToken: data.tokenInfo.accessToken,
+          email,
+          name: data.name,
+          loginType: data.loginType,
         })
-        .catch(error => {
-          console.log(error);
-          alert('다시 로그인해주세요.');
-        });
-    };
-    fetchData();
-  };
+      );
+
+      setAuthorizationToken(data.tokenInfo.accessToken);
+
+      alert('로그인되었습니다.');
+      navigate('/', { replace: true });
+    } catch (error) {
+      console.log(error);
+      alert('다시 로그인해주세요.');
+    }
+  }
 
   return (
     <Login
       email={email}
       password={password}
-      handleInputs={handleInputs}
-      onSubmit={onSubmit}
+      handleInputChange={handleInputChange}
+      handleSubmit={handleSubmit}
       moveSignUp={moveSignUp}
     />
   );
-};
+}
 
 export default LoginContainer;

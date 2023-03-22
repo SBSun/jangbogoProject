@@ -1,43 +1,40 @@
-import SelectLocation from '../components/common/SelectLocation';
 import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { getLocationList } from '../lib/api/etc';
 import { setIsVisible, setLocation } from '../modules/location';
 
-const SelectLoactionContainer = () => {
-  const [locationList, setLocationList] = useState([]);
+import SelectLocation from '../components/common/SelectLocation';
 
-  const { id, isVisible } = useSelector(({ location }) => ({
-    id: location.id,
-    isVisible: location.isVisible,
-  }));
-  const storeDispatch = useDispatch();
+const SelectLoactionContainer = ({
+  id,
+  isVisible,
+  setLocation,
+  setIsVisible,
+}) => {
+  const [locationList, setLocationList] = useState([]);
 
   const promise = getLocationList();
   const fetchData = async () => {
-    await promise.then(data => {
-      setLocationList(data);
-    });
+    const data = await promise;
+    setLocationList(data);
   };
 
   useEffect(() => {
     fetchData();
 
     if (!sessionStorage.getItem('location')) {
-      storeDispatch(setIsVisible(true));
+      setIsVisible(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, isVisible]);
 
   const onItemClick = e => {
-    storeDispatch(
-      setLocation({
-        id: parseInt(e.target.id),
-        name: e.target.title,
-      })
-    );
+    setLocation({
+      id: parseInt(e.target.id),
+      name: e.target.title,
+    });
     sessionStorage.setItem('location', e.target.id);
-    storeDispatch(setIsVisible(false));
+    setIsVisible(false);
   };
 
   return (
@@ -49,4 +46,11 @@ const SelectLoactionContainer = () => {
   );
 };
 
-export default SelectLoactionContainer;
+const mapStateToProps = ({ location }) => ({
+  id: location.id,
+  isVisible: location.isVisible,
+});
+
+export default connect(mapStateToProps, { setLocation, setIsVisible })(
+  SelectLoactionContainer
+);
