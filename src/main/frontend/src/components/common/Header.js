@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsVisible } from '../../modules/location';
 import { setAuthorizationToken } from '../../lib/api/auth';
+import styled from 'styled-components';
+
 import {
   MdClear,
   MdPlace,
   MdKeyboardArrowLeft,
   MdOutlinePlace,
 } from 'react-icons/md';
-import styled from 'styled-components';
 
 const Header = ({ modify, title }) => {
   const navigate = useNavigate();

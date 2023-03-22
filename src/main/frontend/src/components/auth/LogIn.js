@@ -1,7 +1,8 @@
 import React from 'react';
+import styled from 'styled-components';
+
 import { SiNaver } from 'react-icons/si';
 import { RiKakaoTalkFill } from 'react-icons/ri';
-import styled from 'styled-components';
 
 import Header from '../common/Header';
 import Button from '../common/Button';

@@ -1,8 +1,9 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { MdHome, MdSearch, MdMenu, MdPerson } from 'react-icons/md';
 import styled from 'styled-components';
+
+import { MdHome, MdSearch, MdMenu, MdPerson } from 'react-icons/md';
 
 const Navigation = () => {
   const { isLogin } = useSelector(state => state.auth);

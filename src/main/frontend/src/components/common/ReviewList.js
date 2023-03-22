@@ -2,8 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getMarketReviewList, deleteMarketReview } from '../../lib/api/review';
-import { MdModeEdit, MdDelete } from 'react-icons/md';
 import styled from 'styled-components';
+
+import { MdModeEdit, MdDelete } from 'react-icons/md';
 
 const ReviewList = ({ marketId, marketName, thumbnail }) => {
   // 리뷰 데이터
@@ -39,6 +40,7 @@ const ReviewList = ({ marketId, marketName, thumbnail }) => {
           prevReviews.filter(review => review.reviewId !== reviewId)
         );
         alert('리뷰가 삭제되었습니다.');
+        window.location.reload();
       })
       .catch(error => console.log(error));
   }, []);
