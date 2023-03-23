@@ -23,17 +23,17 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping("/create")
-    private ReviewResponseDTO.Info createReview(@RequestBody @Valid ReviewRequestDTO.Create createDTO){
+    public ReviewResponseDTO.Info createReview(@RequestBody @Valid ReviewRequestDTO.Create createDTO){
         return reviewService.createReview(createDTO);
     }
 
     @GetMapping("/findById")
-    private ReviewResponseDTO.Info findById(@RequestParam @Min(1) Long reviewId){
+    public ReviewResponseDTO.Info findById(@RequestParam @Min(1) Long reviewId){
         return reviewService.findById(reviewId);
     }
 
     @GetMapping("/findAllByUserEmail")
-    private ResponseEntity<List<ReviewResponseDTO.Info>> findAllByUserEmail(){
+    public ResponseEntity<List<ReviewResponseDTO.Info>> findAllByUserEmail(){
         List<ReviewResponseDTO.Info> infoList = reviewService.findAllByUserEmail();
 
         if(infoList.isEmpty()){
@@ -44,7 +44,7 @@ public class ReviewController {
     }
 
     @GetMapping("/findAllByMarketId")
-    private ResponseEntity<List<ReviewResponseDTO.Info>> findAllByMarketId(@RequestParam @NotBlank Long marketId){
+    public ResponseEntity<List<ReviewResponseDTO.Info>> findAllByMarketId(@RequestParam @NotBlank Long marketId){
         List<ReviewResponseDTO.Info> infoList = reviewService.findAllByMarketId(marketId);
 
         if(infoList.isEmpty()){
@@ -55,12 +55,12 @@ public class ReviewController {
     }
 
     @PatchMapping("/edit")
-    private ReviewResponseDTO.Info editReview(@RequestBody @Valid ReviewRequestDTO.Edit editDTO){
+    public ReviewResponseDTO.Info editReview(@RequestBody @Valid ReviewRequestDTO.Edit editDTO){
         return reviewService.editReview(editDTO);
     }
 
     @DeleteMapping("/delete")
-    private void deleteReview(@RequestParam @NotBlank Long reviewId){
+    public void deleteReview(@RequestParam @NotBlank Long reviewId){
         reviewService.deleteReview(reviewId);
     }
 }

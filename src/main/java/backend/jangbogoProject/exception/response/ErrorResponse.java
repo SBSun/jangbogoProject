@@ -34,20 +34,4 @@ public class ErrorResponse {
                     .build();
         }
     }
-
-    @Getter
-    @Builder
-    @RequiredArgsConstructor
-    public static class ConstraintViolationError { // @Valid를 사용했을 때 에러가 발생한 경우 어느 필드에서 에러가 발생했는지 응답을 위한 정적 클래스
-
-        private final String field;
-        private final String message;
-
-        public static ConstraintViolationError of(final FieldError fieldError) {
-            return ConstraintViolationError.builder()
-                    .field(fieldError.getField())
-                    .message(fieldError.getDefaultMessage())
-                    .build();
-        }
-    }
 }

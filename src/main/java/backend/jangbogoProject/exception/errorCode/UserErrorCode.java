@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum UserErrorCode implements ErrorCode{
 
+    // 403 FORBIDDEN 권한 없음
     INACTIVE_USER(HttpStatus.FORBIDDEN, "You don't have permission to access");
 
     private final HttpStatus httpStatus;

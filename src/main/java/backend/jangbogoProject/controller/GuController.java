@@ -16,7 +16,7 @@ public class GuController {
     private final GuService guService;
 
     @GetMapping("/findAllGuInfo")
-    private List<GuInfoProjection> findAllGuInfo(){
+    public List<GuInfoProjection> findAllGuInfo(){
         return guService.findAllGuInfo();
     }
 }

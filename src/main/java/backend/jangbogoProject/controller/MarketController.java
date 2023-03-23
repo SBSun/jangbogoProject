@@ -21,7 +21,7 @@ public class MarketController {
     private final MarketService marketService;
 
     @GetMapping("/findMarketsInGu")
-    private List<MarketInfoProjection> findMarketsInGu(@RequestParam @Min(1) int gu_id){
+    public List<MarketInfoProjection> findMarketsInGu(@RequestParam @Min(1) int gu_id){
         List<MarketInfoProjection> list = marketService.findMarketsInGu(gu_id);
 
         return list;
