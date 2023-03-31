@@ -4,7 +4,9 @@ import { useDispatch } from 'react-redux';
 import { getUserInfo, setAuthorizationToken } from '../../lib/api/auth';
 import { postLogin } from '../../modules/auth';
 
-import Redirect from '../../components/auth/Redirect';
+const Redirect = () => {
+  return <div>Redirecting...</div>;
+};
 
 const RedirectContainer = () => {
   const [searchParams] = useSearchParams();
