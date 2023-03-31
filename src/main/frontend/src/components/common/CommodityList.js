@@ -129,10 +129,7 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
           <dt className='commodity_name'>{commodity.categoryName}</dt>
           <dd className='commodity_remarks'>{commodity.remarks}</dd>
           <dd className='commodity_price'>
-            {commodity.price
-              .toString()
-              .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}
-            원
+            {commodity.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
           </dd>
         </dl>
       </CommodityItemStyled>
