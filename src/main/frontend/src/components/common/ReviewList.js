@@ -73,7 +73,9 @@ const ReviewList = ({ marketId, marketName, thumbnail }) => {
   ));
 
   return isEmpty ? (
-    <EmptyBlock>리뷰가 없습니다.</EmptyBlock>
+    <EmptyBlock>
+      <span>리뷰가 없습니다.</span>
+    </EmptyBlock>
   ) : (
     <>
       <ReviewListBlock>{reviewList}</ReviewListBlock>
@@ -118,8 +120,14 @@ const ReviewListBlock = styled.ul`
 `;
 
 const EmptyBlock = styled.div`
-  margin-top: 20vh;
-  text-align: center;
+  min-height: 45vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media screen and (max-height: 568px) {
+    min-height: 30vh;
+  }
 `;
 
 export default React.memo(ReviewList);
