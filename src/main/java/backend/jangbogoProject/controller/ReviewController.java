@@ -28,7 +28,7 @@ public class ReviewController {
     }
 
     @GetMapping("/findById")
-    public ReviewResponseDTO.Info findById(@RequestParam @Min(1) Long reviewId){
+    public ReviewResponseDTO.Info findById(@RequestParam @NotNull Long reviewId){
         return reviewService.findById(reviewId);
     }
 
@@ -44,7 +44,7 @@ public class ReviewController {
     }
 
     @GetMapping("/findAllByMarketId")
-    public ResponseEntity<List<ReviewResponseDTO.Info>> findAllByMarketId(@RequestParam @NotBlank Long marketId){
+    public ResponseEntity<List<ReviewResponseDTO.Info>> findAllByMarketId(@RequestParam @NotNull Long marketId){
         List<ReviewResponseDTO.Info> infoList = reviewService.findAllByMarketId(marketId);
 
         if(infoList.isEmpty()){

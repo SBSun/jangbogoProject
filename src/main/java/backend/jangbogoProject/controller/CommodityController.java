@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Validated
@@ -22,13 +23,13 @@ public class CommodityController {
     private final CommodityService commodityService;
 
     @GetMapping("/getCommodities")
-    public DataResponseDTO<CommodityResponseDto.CommodityInfoList> getCommodities(@RequestParam @NotBlank int gu_id, SearchRequestDTO searchRequestDTO){
+    public DataResponseDTO<CommodityResponseDto.CommodityInfoList> getCommodities(@RequestParam @NotNull int gu_id, SearchRequestDTO searchRequestDTO){
         CommodityResponseDto.CommodityInfoList infoList = commodityService.getCommodities(gu_id, searchRequestDTO);
         return DataResponseDTO.of(infoList);
     }
 
     @GetMapping("/getLowestPriceCommodities")
-    public DataResponseDTO<CommodityResponseDto.CommodityInfoList> getLowestPriceCommodities(@RequestParam @Min(1) int gu_id){
+    public DataResponseDTO<CommodityResponseDto.CommodityInfoList> getLowestPriceCommodities(@RequestParam @NotNull int gu_id){
         System.out.println(gu_id);
         List<CommodityInfoProjection> infoList = commodityService.getLowestPriceCommodities(gu_id);
 
@@ -36,7 +37,7 @@ public class CommodityController {
     }
 
     @GetMapping("/findByCategory")
-    public DataResponseDTO<CommodityResponseDto.CommodityInfoList> findByCategory(@RequestParam @Min(1) int gu_id, SearchRequestDTO searchRequestDTO){
+    public DataResponseDTO<CommodityResponseDto.CommodityInfoList> findByCategory(@RequestParam @NotNull int gu_id, SearchRequestDTO searchRequestDTO){
         CommodityResponseDto.CommodityInfoList infoList = commodityService.findByCategory(gu_id, searchRequestDTO);
         return DataResponseDTO.of(infoList);
     }
@@ -48,7 +49,7 @@ public class CommodityController {
     }
 
     @GetMapping("/findByKeyword")
-    public DataResponseDTO<CommodityResponseDto.CommodityInfoList> findByKeyword(@RequestParam @Min(1) int gu_id, SearchRequestDTO searchRequestDTO){
+    public DataResponseDTO<CommodityResponseDto.CommodityInfoList> findByKeyword(@RequestParam @NotNull int gu_id, SearchRequestDTO searchRequestDTO){
         CommodityResponseDto.CommodityInfoList infoList = commodityService.findByKeyword(gu_id, searchRequestDTO);
         return DataResponseDTO.of(infoList);
     }

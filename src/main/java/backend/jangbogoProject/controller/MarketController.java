@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Validated
@@ -21,7 +22,7 @@ public class MarketController {
     private final MarketService marketService;
 
     @GetMapping("/findMarketsInGu")
-    public List<MarketInfoProjection> findMarketsInGu(@RequestParam @Min(1) int gu_id){
+    public List<MarketInfoProjection> findMarketsInGu(@RequestParam @NotNull int gu_id){
         List<MarketInfoProjection> list = marketService.findMarketsInGu(gu_id);
 
         return list;
