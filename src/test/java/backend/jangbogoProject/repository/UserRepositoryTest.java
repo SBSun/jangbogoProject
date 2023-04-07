@@ -48,18 +48,18 @@ public class UserRepositoryTest {
     @Test
     public void 유저_등록_테스트(){
         // given
-        String email = "Save Email";
-        String password = "Save Password";
-        String name = "Save Name";
-        String loginType = "Save LoginType";
-        String authority = "Save Authority";
-        User user =  User.builder()
-                .email(email)
-                .password(password)
-                .name(name)
-                .loginType(loginType)
-                .authority(authority)
-                .build();
+            String email = "Save Email";
+            String password = "Save Password";
+            String name = "Save Name";
+            String loginType = "Save LoginType";
+            String authority = "Save Authority";
+            User user =  User.builder()
+                    .email(email)
+                    .password(password)
+                    .name(name)
+                    .loginType(loginType)
+                    .authority(authority)
+                    .build();
 
         // when
         User userPS = userRepository.save(user);
