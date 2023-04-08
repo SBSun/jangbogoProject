@@ -54,7 +54,6 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
             "    GROUP BY c2.category_id\n" +
             ") c3 ON c1.price = c3.price AND c1.category_id = c3.category_id " +
             "", nativeQuery = true)
-
     List<CommodityInfoProjection> getLowestPriceCommodities(int gu_id);
 
     @Query(value = "SELECT c1.commodity_id, m.name AS marketName, c1.category_id, c2.name AS categoryName, " +

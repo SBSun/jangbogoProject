@@ -83,7 +83,7 @@ public class UserServiceTest {
 
         // stub
         User user = CreateUser();
-        when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
+        when(userRepository.findByEmail(email)).thenReturn(user);
 
         // when
         UserResponseDto.Info userInfoDto = userService.findUserInfo(email);
@@ -107,7 +107,7 @@ public class UserServiceTest {
         // stub
         User user = CreateUser();
 
-        when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
+        when(userRepository.findByEmail(email)).thenReturn(user);
         when(passwordEncoder.encode(dto.getPassword())).thenReturn(encoder.encode(dto.getPassword()));
 
         // when

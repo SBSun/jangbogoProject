@@ -19,7 +19,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String email) {
-        User user = userRepository.findByEmail(email).get();
+        User user = userRepository.findByEmail(email);
 
         if (user != null) {
             // USER 라는 역할을 넣어준다.

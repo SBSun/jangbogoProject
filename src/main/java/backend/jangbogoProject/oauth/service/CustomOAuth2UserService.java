@@ -91,8 +91,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
      */
     @Transactional(readOnly = true)
     private User getUser(OAuthAttributes attributes) {
-        User findUser = userRepository.findByEmail(attributes.getOAuth2UserInfo().getEmail())
-                .orElse(null);
+        User findUser = userRepository.findByEmail(attributes.getOAuth2UserInfo().getEmail());
 
         if(findUser == null) {
             return saveUser(attributes);

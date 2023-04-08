@@ -60,9 +60,9 @@ public class UserService{
     }
 
     public UserResponseDto.Info findUserInfo(String email){
-        Optional<User> user = userRepository.findByEmail(email);
-        if(user.isPresent()){
-            return UserResponseDto.Info.of(userRepository.findByEmail(email).get());
+        User user = userRepository.findByEmail(email);
+        if(user != null){
+            return UserResponseDto.Info.of(user);
         }else {
             throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
         }
@@ -87,9 +87,9 @@ public class UserService{
         if(email.isEmpty())
             throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
 
-        Optional<User> user = userRepository.findByEmail(email);
-        if(user.isPresent()){
-            User userPS = user.get();
+        User user = userRepository.findByEmail(email);
+        if(user != null){
+            User userPS = user;
             String encPassword = passwordEncoder.encode(edit.getPassword());
             userPS.update(encPassword, edit.getName());
 
@@ -121,7 +121,7 @@ public class UserService{
         redisTemplate.opsForValue()
                 .set("RT:" + authentication.getName(), tokenInfo.getRefreshToken(), tokenInfo.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);
 
-        User loginUser = userRepository.findByEmail(login.getEmail()).get();
+        User loginUser = userRepository.findByEmail(login.getEmail());
 
         return new UserResponseDto.LoginSuccessInfo(loginUser.getName(), loginUser.getLoginType(), tokenInfo);
     }
