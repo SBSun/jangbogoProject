@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
+public interface CommodityRepository extends JpaRepository<Commodity, Integer>, CommodityRepositoryCustom  {
 
     @Modifying
     @Transactional
@@ -99,14 +99,14 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
             "WHERE c1.price > 0 AND c1.category_id = c2.category_id " +
             "ORDER BY categoryName " +
             "LIMIT ?3, ?4", nativeQuery = true)
-    List<CommodityInfoProjection> findByParentCategory(int gu_id, Long parent_id, int startIndex, int recordSize);
+    List<CommodityInfoProjection> findByParentCategory(int gu_id, int parent_id, int startIndex, int recordSize);
 
     @Query(value = "SELECT COUNT(*) " +
             "FROM commodity c1 " +
             "INNER JOIN market m ON m.gu_id = ?1 AND c1.market_id = m.market_id " +
             "INNER JOIN category c2 ON c2.parent_id = ?2 " +
             "WHERE c1.price > 0 AND c1.category_id = c2.category_id", nativeQuery = true)
-    int findByParentCategoryCnt(int gu_id, Long parent_id);
+    int findByParentCategoryCnt(int gu_id, int parent_id);
 
     @Query(value = "SELECT c1.commodity_id, m.name AS marketName, c1.category_id, c2.name AS categoryName, " +
             "c1.unit, c1.price, c1.remarks, c1.p_date " +
@@ -116,12 +116,12 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
             "WHERE c1.price > 0 AND c1.category_id = c2.category_id " +
             "ORDER BY categoryName " +
             "LIMIT ?3, ?4", nativeQuery = true)
-    List<CommodityInfoProjection> findByChildCategory(int gu_id, Long category_id, int startIndex, int recordSize);
+    List<CommodityInfoProjection> findByChildCategory(int gu_id, int category_id, int startIndex, int recordSize);
 
     @Query(value = "SELECT COUNT(*) " +
             "FROM commodity c1 " +
             "INNER JOIN market m ON m.gu_id = ?1 AND c1.market_id = m.market_id " +
             "INNER JOIN category c2 ON c2.category_id = ?2 " +
             "WHERE c1.price > 0 AND c1.category_id = c2.category_id", nativeQuery = true)
-    int findByChildCategoryCnt(int gu_id, Long category_id);
+    int findByChildCategoryCnt(int gu_id, int category_id);
 }

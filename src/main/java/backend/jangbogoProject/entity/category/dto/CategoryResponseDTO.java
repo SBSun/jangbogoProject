@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CategoryResponseDTO {
-    private Long id;
+    private int id;
     private String name;
     private String parentName;
     private Long depth;

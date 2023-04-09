@@ -177,7 +177,7 @@ public class CommodityService {
                     if(a_name.contains("호박"))
                         a_name = "애호박";
 
-                    int category_id = categoryService.findIdByName(a_name).intValue();
+                    int category_id = categoryService.findIdByName(a_name);
 
                     System.out.println(a_name);
                     Commodity commodity = Commodity.builder()

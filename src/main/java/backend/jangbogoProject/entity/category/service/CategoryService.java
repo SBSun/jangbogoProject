@@ -18,7 +18,7 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     @Transactional
-    public Long create(CategoryRequestDTO categoryRequestDTO){
+    public int create(CategoryRequestDTO categoryRequestDTO){
         if(categoryRepository.existsByName(categoryRequestDTO.getName())){
             throw new RestApiException(CommonErrorCode.ALREADY_SAVED_CATEGORY);
         }
@@ -90,7 +90,7 @@ public class CategoryService {
         return categoryResponseDTO;
     }
 
-    public Long findIdByName(String name){
+    public int findIdByName(String name){
         Category category = categoryRepository.findByName(name)
                 .orElseThrow(() -> new RestApiException(CommonErrorCode.CATEGORY_NOT_FOUND));
 

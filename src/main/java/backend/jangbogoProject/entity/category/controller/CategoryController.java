@@ -18,7 +18,7 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @PostMapping("/create")
-    public Long createCategory(@RequestBody @Valid CategoryRequestDTO categoryRequestDTO){
+    public int createCategory(@RequestBody @Valid CategoryRequestDTO categoryRequestDTO){
         return categoryService.create(categoryRequestDTO);
     }
 

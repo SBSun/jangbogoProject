@@ -1,7 +1,7 @@
 package backend.jangbogoProject.repository;
 
 import backend.jangbogoProject.TestConfig;
-import backend.jangbogoProject.entity.QUser;
+import backend.jangbogoProject.entity.user.QUser;
 import backend.jangbogoProject.entity.user.User;
 import backend.jangbogoProject.entity.user.repository.UserRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;

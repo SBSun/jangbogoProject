@@ -13,7 +13,6 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
 
     private final JPAQueryFactory queryFactory;
 
-
     @Override
     public User findByEmail(String email){
         return queryFactory.selectFrom(user)
