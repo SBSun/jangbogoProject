@@ -2,7 +2,8 @@ package backend.jangbogoProject.repository;
 
 import backend.jangbogoProject.TestConfig;
 import backend.jangbogoProject.entity.QUser;
-import backend.jangbogoProject.entity.User;
+import backend.jangbogoProject.entity.user.User;
+import backend.jangbogoProject.entity.user.repository.UserRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -10,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -2,26 +2,24 @@ package backend.jangbogoProject.service;
 
 import backend.jangbogoProject.constant.Authority;
 import backend.jangbogoProject.constant.LoginType;
-import backend.jangbogoProject.dto.UserRequestDto;
-import backend.jangbogoProject.dto.UserResponseDto;
-import backend.jangbogoProject.entity.User;
+import backend.jangbogoProject.entity.user.dto.UserRequestDto;
+import backend.jangbogoProject.entity.user.dto.UserResponseDto;
+import backend.jangbogoProject.entity.user.User;
+import backend.jangbogoProject.entity.user.service.UserService;
 import backend.jangbogoProject.jwt.JwtTokenProvider;
-import backend.jangbogoProject.repository.ReviewRepository;
-import backend.jangbogoProject.repository.UserRepository;
+import backend.jangbogoProject.entity.review.repository.ReviewRepository;
+import backend.jangbogoProject.entity.user.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.*;

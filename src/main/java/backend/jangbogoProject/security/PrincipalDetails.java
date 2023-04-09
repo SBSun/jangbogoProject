@@ -1,6 +1,6 @@
 package backend.jangbogoProject.security;
 
-import backend.jangbogoProject.entity.User;
+import backend.jangbogoProject.entity.user.User;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

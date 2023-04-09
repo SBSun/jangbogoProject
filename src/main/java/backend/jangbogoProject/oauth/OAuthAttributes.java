@@ -3,7 +3,7 @@ package backend.jangbogoProject.oauth;
 import backend.jangbogoProject.constant.Authority;
 import backend.jangbogoProject.constant.LoginType;
 import backend.jangbogoProject.constant.SocialType;
-import backend.jangbogoProject.entity.User;
+import backend.jangbogoProject.entity.user.User;
 import backend.jangbogoProject.oauth.usefinfo.GoogleOAuth2UserInfo;
 import backend.jangbogoProject.oauth.usefinfo.KakaoOAuth2UserInfo;
 import backend.jangbogoProject.oauth.usefinfo.NaverOAuth2UserInfo;

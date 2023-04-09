@@ -1,7 +1,7 @@
 package backend.jangbogoProject.jwt;
 
-import backend.jangbogoProject.dto.UserResponseDto;
-import backend.jangbogoProject.service.CustomUserDetailsService;
+import backend.jangbogoProject.entity.user.dto.UserResponseDto;
+import backend.jangbogoProject.entity.user.service.CustomUserDetailsService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -19,7 +19,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletResponse;
 import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
