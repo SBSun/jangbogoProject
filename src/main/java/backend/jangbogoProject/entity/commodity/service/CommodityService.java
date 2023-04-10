@@ -36,7 +36,7 @@ public class CommodityService {
     private final CategoryService categoryService;
 
     @ExecutionTimeChecker
-    public CommodityResponseDto.CommodityInfoList getCommodities(int gu_id, SearchRequestDTO searchRequestDTO){
+    public CommodityResponseDto.InfoList getCommodities(int gu_id, SearchRequestDTO searchRequestDTO){
 
         int startIndex = searchRequestDTO.getOffset();
         int recordSize = searchRequestDTO.getRecordSize();
@@ -48,10 +48,10 @@ public class CommodityService {
 
         Page page = new Page(searchRequestDTO, totalDataCnt);
 
-        List<CommodityInfoProjection> list
+        List<CommodityResponseDto.Info> list
                 = commodityRepository.getCommodities(gu_id, startIndex, recordSize);
 
-        return new CommodityResponseDto.CommodityInfoList(list, page.toResponse());
+        return new CommodityResponseDto.InfoList(list, page.toResponse());
     }
 
     public List<CommodityInfoProjection> getLowestPriceCommodities(int gu_id){

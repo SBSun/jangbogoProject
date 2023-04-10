@@ -1,6 +1,8 @@
 package backend.jangbogoProject.entity.commodity.repository;
 
+import backend.jangbogoProject.entity.commodity.Commodity;
 import backend.jangbogoProject.entity.commodity.dto.CommodityInfoProjection;
+import backend.jangbogoProject.entity.commodity.dto.CommodityResponseDto;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -21,9 +23,9 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<CommodityInfoProjection> getCommodities(int gu_id, int startIndex, int recordSize) {
+    public List<CommodityResponseDto.Info> getCommodities(int gu_id, int startIndex, int recordSize) {
         return queryFactory
-                .select(Projections.fields(CommodityInfoProjection.class,
+                .select(Projections.constructor(CommodityResponseDto.Info.class,
                     commodity.id,
                     market.name.as("marketName"),
                     commodity.category_id,

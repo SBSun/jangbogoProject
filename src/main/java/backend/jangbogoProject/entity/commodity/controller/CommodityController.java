@@ -20,8 +20,8 @@ public class CommodityController {
     private final CommodityService commodityService;
 
     @GetMapping("/getCommodities")
-    public DataResponseDTO<CommodityResponseDto.CommodityInfoList> getCommodities(@RequestParam @NotNull int gu_id, SearchRequestDTO searchRequestDTO){
-        CommodityResponseDto.CommodityInfoList infoList = commodityService.getCommodities(gu_id, searchRequestDTO);
+    public DataResponseDTO<CommodityResponseDto.InfoList> getCommodities(@RequestParam @NotNull int gu_id, SearchRequestDTO searchRequestDTO){
+        CommodityResponseDto.InfoList infoList = commodityService.getCommodities(gu_id, searchRequestDTO);
         return DataResponseDTO.of(infoList);
     }
 

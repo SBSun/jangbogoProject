@@ -2,6 +2,7 @@ package backend.jangbogoProject.repository;
 
 import backend.jangbogoProject.TestConfig;
 import backend.jangbogoProject.entity.commodity.dto.CommodityInfoProjection;
+import backend.jangbogoProject.entity.commodity.dto.CommodityResponseDto;
 import backend.jangbogoProject.entity.commodity.repository.CommodityRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.DisplayName;
@@ -35,11 +36,11 @@ public class CommodityRepositoryTest {
         int recordSize = 10;
 
         // when
-        List<CommodityInfoProjection> commodityList = commodityRepository.getCommodities(gu_id, startIndex, recordSize);
+        List<CommodityResponseDto.Info> commodityList = commodityRepository.getCommodities(gu_id, startIndex, recordSize);
 
         // then
         for (int i = 0; i < commodityList.size(); i++) {
-            CommodityInfoProjection info = commodityList.get(i);
+            CommodityResponseDto.Info info = commodityList.get(i);
             System.out.println(info.getMarketName() + ", " + info.getCategoryName() + ", " + info.getPrice());
         }
     }
