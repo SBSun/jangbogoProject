@@ -10,7 +10,6 @@ import backend.jangbogoProject.entity.category.dto.CategoryResponseDTO;
 import backend.jangbogoProject.entity.commodity.Commodity;
 import backend.jangbogoProject.entity.market.Market;
 import backend.jangbogoProject.dto.SearchRequestDTO;
-import backend.jangbogoProject.entity.commodity.dto.CommodityInfoProjection;
 import backend.jangbogoProject.entity.commodity.dto.CommodityResponseDto;
 import backend.jangbogoProject.entity.Page;
 import backend.jangbogoProject.entity.category.service.CategoryService;
@@ -54,9 +53,9 @@ public class CommodityService {
         return new CommodityResponseDto.InfoList(list, page.toResponse());
     }
 
-    public List<CommodityInfoProjection> getLowestPriceCommodities(int gu_id){
+    public List<CommodityResponseDto.Info> getLowestPriceCommodities(int gu_id){
 
-        List<CommodityInfoProjection> lowestPriceCommodities = commodityRepository.getLowestPriceCommodities(gu_id);
+        List<CommodityResponseDto.Info> lowestPriceCommodities = commodityRepository.getLowestPriceCommodities(gu_id);
 
         if(lowestPriceCommodities.isEmpty())
             throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
@@ -64,7 +63,7 @@ public class CommodityService {
         return lowestPriceCommodities;
     }
 
-    public CommodityResponseDto.CommodityInfoList findByKeyword(int gu_id, SearchRequestDTO searchRequestDTO){
+    public CommodityResponseDto.InfoList findByKeyword(int gu_id, SearchRequestDTO searchRequestDTO){
         String keyword = searchRequestDTO.getKeyword();
         int startIndex = searchRequestDTO.getOffset();
         int recordSize = searchRequestDTO.getRecordSize();
@@ -75,13 +74,13 @@ public class CommodityService {
 
         Page page = new Page(searchRequestDTO, totalDataCnt);
 
-        List<CommodityInfoProjection> list
+        List<CommodityResponseDto.Info> list
                 = commodityRepository.findByKeyword(gu_id, keyword, startIndex, recordSize);
 
-        return new CommodityResponseDto.CommodityInfoList(list, page.toResponse());
+        return new CommodityResponseDto.InfoList(list, page.toResponse());
     }
 
-    public CommodityResponseDto.CommodityInfoList findByMarket(SearchRequestDTO searchRequestDTO){
+    public CommodityResponseDto.InfoList findByMarket(SearchRequestDTO searchRequestDTO){
         int market_id = Integer.parseInt(searchRequestDTO.getKeyword());
         int startIndex = searchRequestDTO.getOffset();
         int recordSize = searchRequestDTO.getRecordSize();
@@ -92,20 +91,20 @@ public class CommodityService {
 
         Page page = new Page(searchRequestDTO, totalDataCnt);
 
-        List<CommodityInfoProjection> list
+        List<CommodityResponseDto.Info> list
                 = commodityRepository.findByMarket(market_id, startIndex, recordSize);
 
-        return new CommodityResponseDto.CommodityInfoList(list, page.toResponse());
+        return new CommodityResponseDto.InfoList(list, page.toResponse());
     }
 
-    public CommodityResponseDto.CommodityInfoList findByCategory(int gu_id, SearchRequestDTO searchRequestDTO){
+    public CommodityResponseDto.InfoList findByCategory(int gu_id, SearchRequestDTO searchRequestDTO){
         String keyword = searchRequestDTO.getKeyword();
         int startIndex = searchRequestDTO.getOffset();
         int recordSize = searchRequestDTO.getRecordSize();
 
         CategoryResponseDTO category = categoryService.findByName(keyword);
 
-        List<CommodityInfoProjection> list;
+        List<CommodityResponseDto.Info> list;
         int totalDataCnt;
 
         if(category.getDepth() == 1){
@@ -121,7 +120,7 @@ public class CommodityService {
 
         Page page = new Page(searchRequestDTO, totalDataCnt);
 
-        return new CommodityResponseDto.CommodityInfoList(list, page.toResponse());
+        return new CommodityResponseDto.InfoList(list, page.toResponse());
     }
 
     public void truncateCommodity(){

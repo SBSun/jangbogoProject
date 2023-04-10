@@ -1,7 +1,6 @@
 package backend.jangbogoProject.entity.commodity.controller;
 
 import backend.jangbogoProject.dto.SearchRequestDTO;
-import backend.jangbogoProject.entity.commodity.dto.CommodityInfoProjection;
 import backend.jangbogoProject.entity.commodity.dto.CommodityResponseDto;
 import backend.jangbogoProject.dto.DataResponseDTO;
 import backend.jangbogoProject.entity.commodity.service.CommodityService;
@@ -26,28 +25,28 @@ public class CommodityController {
     }
 
     @GetMapping("/getLowestPriceCommodities")
-    public DataResponseDTO<CommodityResponseDto.CommodityInfoList> getLowestPriceCommodities(@RequestParam @NotNull int gu_id){
+    public DataResponseDTO<CommodityResponseDto.InfoList> getLowestPriceCommodities(@RequestParam @NotNull int gu_id){
         System.out.println(gu_id);
-        List<CommodityInfoProjection> infoList = commodityService.getLowestPriceCommodities(gu_id);
+        List<CommodityResponseDto.Info> infoList = commodityService.getLowestPriceCommodities(gu_id);
 
-        return DataResponseDTO.of(new CommodityResponseDto.CommodityInfoList(infoList, null));
+        return DataResponseDTO.of(new CommodityResponseDto.InfoList(infoList, null));
     }
 
     @GetMapping("/findByCategory")
-    public DataResponseDTO<CommodityResponseDto.CommodityInfoList> findByCategory(@RequestParam @NotNull int gu_id, SearchRequestDTO searchRequestDTO){
-        CommodityResponseDto.CommodityInfoList infoList = commodityService.findByCategory(gu_id, searchRequestDTO);
+    public DataResponseDTO<CommodityResponseDto.InfoList> findByCategory(@RequestParam @NotNull int gu_id, SearchRequestDTO searchRequestDTO){
+        CommodityResponseDto.InfoList infoList = commodityService.findByCategory(gu_id, searchRequestDTO);
         return DataResponseDTO.of(infoList);
     }
 
     @GetMapping("/findByMarket")
-    public DataResponseDTO<CommodityResponseDto.CommodityInfoList> findByMarket(SearchRequestDTO searchRequestDTO){
-        CommodityResponseDto.CommodityInfoList infoList = commodityService.findByMarket(searchRequestDTO);
+    public DataResponseDTO<CommodityResponseDto.InfoList> findByMarket(SearchRequestDTO searchRequestDTO){
+        CommodityResponseDto.InfoList infoList = commodityService.findByMarket(searchRequestDTO);
         return DataResponseDTO.of(infoList);
     }
 
     @GetMapping("/findByKeyword")
-    public DataResponseDTO<CommodityResponseDto.CommodityInfoList> findByKeyword(@RequestParam @NotNull int gu_id, SearchRequestDTO searchRequestDTO){
-        CommodityResponseDto.CommodityInfoList infoList = commodityService.findByKeyword(gu_id, searchRequestDTO);
+    public DataResponseDTO<CommodityResponseDto.InfoList> findByKeyword(@RequestParam @NotNull int gu_id, SearchRequestDTO searchRequestDTO){
+        CommodityResponseDto.InfoList infoList = commodityService.findByKeyword(gu_id, searchRequestDTO);
         return DataResponseDTO.of(infoList);
     }
 

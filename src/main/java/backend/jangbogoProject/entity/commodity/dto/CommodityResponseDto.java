@@ -18,13 +18,10 @@ public class CommodityResponseDto {
         private String price;
         private String remarks;
         private String date;
-    }
 
-    @Getter
-    @AllArgsConstructor
-    public static class CommodityInfoList{
-        private List<CommodityInfoProjection> infoList;
-        private PageResponseDTO pageResponseDTO;
+        public String toString(){
+            return commodityId + ", " + marketName + ", " + categoryName + ", " + price + ", " + unit + ", " + remarks + ", " + date;
+        }
     }
 
     @Getter
