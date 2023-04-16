@@ -119,7 +119,7 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
 
   // 받아온 품목 데이터 동적 생성
   const commodityListItem = commoditys.map((commodity, index) => {
-    const thumbnail = handleCommodityThumbnail(commodity.category_Id);
+    const thumbnail = handleCommodityThumbnail(commodity.categoryId);
 
     return (
       <CommodityItemStyled key={index}>
