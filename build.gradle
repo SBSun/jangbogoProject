@@ -94,6 +94,12 @@ processResources {
 	dependsOn "buildReact"
 }
 
+// Spring Boot 2.5 버전부터는 빌드 시 일반 jar 파일 하나와 -plain.jar 파일 하나가 함께 만들어진다
+// 그래서 빌드 시 plain jar 파일은 만들어지지 않도록 build.gradle 파일에 다음 내용을 추가
+jar {
+	enabled = false
+}
+
 task buildReact(type: Exec) {
 	dependsOn "installReact"
 	workingDir "$webappDir"
