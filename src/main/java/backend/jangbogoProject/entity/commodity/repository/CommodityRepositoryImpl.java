@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 import static backend.jangbogoProject.entity.commodity.QCommodity.commodity;
@@ -19,6 +20,8 @@ import static backend.jangbogoProject.entity.category.QCategory.category;
 @Repository
 public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
 
+    @Autowired
+    private final EntityManager em;
     @Autowired
     private final JPAQueryFactory queryFactory;
 
@@ -199,5 +202,13 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
                         .and(builder))
                 .orderBy(category.name.asc())
                 .fetch();
+    }
+
+    @Override
+    public void truncate() {
+        em.createNativeQuery("SET FOREIGN_KEY_CHECKS = 0").executeUpdate();
+        em.createNativeQuery("TRUNCATE TABLE commodity").executeUpdate();
+        em.createNativeQuery("TRUNCATE TABLE market").executeUpdate();
+        em.createNativeQuery("SET FOREIGN_KEY_CHECKS = 1").executeUpdate();
     }
 }

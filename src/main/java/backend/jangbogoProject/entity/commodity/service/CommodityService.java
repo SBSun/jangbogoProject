@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -123,13 +124,10 @@ public class CommodityService {
         return new CommodityResponseDto.InfoList(list, page.toResponse());
     }
 
-    public void truncateCommodity(){
-        commodityRepository.truncateCommodity();
-    }
-
+    @Scheduled(fixedDelay = 300000)
     @Transactional
-    public String load_save(){
-        commodityRepository.truncateCommodity();
+    public void getCommodityData(){
+        commodityRepository.truncate();
 
         String result = "";
 
@@ -159,26 +157,38 @@ public class CommodityService {
                 for(int i=0; i<infoArr.size(); i++){
                     JSONObject tmp = (JSONObject)infoArr.get(i);
 
-                    Double m_seq = (Double)tmp.get("M_SEQ");
-                    String a_name = (String)tmp.get("A_NAME");
-                    String a_unit = (String)tmp.get("A_UNIT");
                     String a_price = (String)tmp.get("A_PRICE");
                     if(Integer.parseInt(a_price) == 0)
                         continue;
-                    String add_col = (String)tmp.get("ADD_COL");
-                    String p_date = (String)tmp.get("P_DATE");
 
+                    String a_name = (String)tmp.get("A_NAME");
+                    a_name = a_name.substring(0, a_name.indexOf(" "));
                     if(a_name.contains("("))
                         a_name = a_name.substring(0, a_name.indexOf("("));
-
                     if(a_name.contains("조기"))
                         a_name = "조기";
                     if(a_name.contains("호박"))
                         a_name = "애호박";
+                    System.out.println("name : " + a_name);
+
+                    Double m_seq = (Double)tmp.get("M_SEQ");
+                    String gu_code = (String)tmp.get("M_GU_CODE");
+                    if(!marketService.existsById(m_seq.intValue())){
+                        Market market = Market.builder()
+                                .id(m_seq.intValue())
+                                .name((String)tmp.get("M_NAME"))
+                                .gu_id(Integer.parseInt(gu_code))
+                                .build();
+
+                        marketService.save(market, (String)tmp.get("M_GU_NAME"));
+                    }
+
+                    String a_unit = (String)tmp.get("A_UNIT");
+                    String add_col = (String)tmp.get("ADD_COL");
+                    String p_date = (String)tmp.get("P_DATE");
 
                     int category_id = categoryService.findIdByName(a_name);
 
-                    System.out.println(a_name);
                     Commodity commodity = Commodity.builder()
                             .id(start + i)
                             .m_SEQ(m_seq.intValue())
@@ -188,17 +198,6 @@ public class CommodityService {
                             .add_COL(add_col)
                             .p_DATE(p_date)
                             .build();
-
-                    String gu_code = (String)tmp.get("M_GU_CODE");
-                    if(!marketService.existsById(commodity.getM_SEQ())){
-                        Market market = Market.builder()
-                                .id(commodity.getM_SEQ())
-                                .name((String)tmp.get("M_NAME"))
-                                .gu_id(Integer.parseInt(gu_code))
-                                .build();
-
-                        marketService.save(market, (String)tmp.get("M_GU_NAME"));
-                    }
 
                     commodityRepository.save(commodity);
                 }
@@ -221,7 +220,5 @@ public class CommodityService {
         }catch(Exception e) {
             e.printStackTrace();
         }
-
-        return result;
     }
 }

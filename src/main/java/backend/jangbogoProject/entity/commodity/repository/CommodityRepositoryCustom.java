@@ -17,4 +17,6 @@ public interface CommodityRepositoryCustom {
     List<CommodityResponseDto.Info> findByParentCategory(int gu_id, int parent_id, int startIndex, int recordSize);
 
     List<CommodityResponseDto.Info> getLowestPriceCommodities(int gu_id);
+
+    void truncate();
 }

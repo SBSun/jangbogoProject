@@ -12,11 +12,6 @@ import java.util.List;
 @Repository
 public interface CommodityRepository extends JpaRepository<Commodity, Integer>, CommodityRepositoryCustom  {
 
-    @Modifying
-    @Transactional
-    @Query(value = "TRUNCATE TABLE commodity", nativeQuery = true)
-    void truncateCommodity();
-
     @Query(value = "ALTER TABLE commodity AUTO_INCREMENT = 1", nativeQuery = true)
     void resetIncrement();
 

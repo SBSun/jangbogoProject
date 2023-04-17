@@ -72,4 +72,8 @@ public class MarketService {
 
         return marketInfoList;
     }
+
+    public void truncateMarket(){
+        marketRepository.truncateMarket();
+    }
 }

@@ -49,9 +49,4 @@ public class CommodityController {
         CommodityResponseDto.InfoList infoList = commodityService.findByKeyword(gu_id, searchRequestDTO);
         return DataResponseDTO.of(infoList);
     }
-
-    @PostMapping("/load_save")
-    public String load_save(){
-        return commodityService.load_save();
-    }
 }
