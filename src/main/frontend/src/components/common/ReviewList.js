@@ -120,14 +120,11 @@ const ReviewListBlock = styled.ul`
 `;
 
 const EmptyBlock = styled.div`
-  min-height: 45vh;
+  height: 185px;
+  padding: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  @media screen and (max-height: 568px) {
-    min-height: 30vh;
-  }
 `;
 
 export default React.memo(ReviewList);

@@ -35,6 +35,7 @@ function handleMarketThumbnail(name) {
 
 const MarketList = () => {
   const [markets, setMarkets] = useState([]);
+  const [isEmpty, setIsEmpty] = useState(false);
 
   const navigate = useNavigate();
 
@@ -45,6 +46,7 @@ const MarketList = () => {
   useEffect(() => {
     const fetchData = () => {
       getMarketList(location).then(data => {
+        setIsEmpty(data.length === 0);
         setMarkets(data);
       });
     };
@@ -75,7 +77,9 @@ const MarketList = () => {
     [markets, navigate]
   );
 
-  return (
+  return isEmpty ? (
+    <EmptyBlock>매장 데이터가 없습니다.</EmptyBlock>
+  ) : (
     <Container>
       <MarketListBlock>{marketListItem}</MarketListBlock>
     </Container>
@@ -117,6 +121,14 @@ const MarketListBlock = styled.ul`
     text-align: center;
     color: var(--black);
   }
+`;
+
+const EmptyBlock = styled.div`
+  height: 185px;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export default React.memo(MarketList);

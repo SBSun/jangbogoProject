@@ -266,8 +266,11 @@ const CommoditySelectPage = styled.ul`
 `;
 
 const EmptyBlock = styled.div`
-  margin-top: 30vh;
-  text-align: center;
+  height: 185px;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export default React.memo(CommodityList);
