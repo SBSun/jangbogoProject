@@ -124,14 +124,16 @@ public class CommodityService {
         return new CommodityResponseDto.InfoList(list, page.toResponse());
     }
 
-    @Scheduled(fixedDelay = 300000)
+    // 매달 수요일 오전 6시에 실행
+    @Scheduled(cron = "0 0 6 ? * 3")
     @Transactional
     public void getCommodityData(){
         commodityRepository.truncate();
 
+        List<String> categoryNames = categoryService.findNamesByDepth(2);
         String result = "";
 
-        int maxCommodityCount = 5000;
+        int maxCommodityCount = 16000;
         int start = 1, end = 1000, cycle;
 
         cycle = maxCommodityCount / 1000;
@@ -141,7 +143,7 @@ public class CommodityService {
 
         try {
             while(cycle > 0){
-                URL url = new URL("http://openapi.seoul.go.kr:8088/736c497a7462797539316141576a42/json/ListNecessariesPricesService/"+start+"/"+end+"///2023-03/");
+                URL url = new URL("http://openapi.seoul.go.kr:8088/736c497a7462797539316141576a42/json/ListNecessariesPricesService/"+start+"/"+end+"///2023-04/");
                 BufferedReader bf;
                 bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
                 result = bf.readLine();
@@ -162,6 +164,10 @@ public class CommodityService {
                         continue;
 
                     String a_name = (String)tmp.get("A_NAME");
+
+                    if(a_name.isEmpty())
+                        continue;
+
                     a_name = a_name.substring(0, a_name.indexOf(" "));
                     if(a_name.contains("("))
                         a_name = a_name.substring(0, a_name.indexOf("("));
@@ -169,6 +175,17 @@ public class CommodityService {
                         a_name = "조기";
                     if(a_name.contains("호박"))
                         a_name = "애호박";
+
+                    boolean isExist = false;
+                    for(String name : categoryNames){
+                        if(a_name.equals(name)){
+                            isExist = true;
+                            break;
+                        }
+                    }
+                    if(!isExist)
+                        continue;
+
                     System.out.println("name : " + a_name);
 
                     Double m_seq = (Double)tmp.get("M_SEQ");

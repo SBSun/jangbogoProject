@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -95,5 +97,10 @@ public class CategoryService {
                 .orElseThrow(() -> new RestApiException(CommonErrorCode.CATEGORY_NOT_FOUND));
 
         return category.getId();
+    }
+
+    public List<String> findNamesByDepth(int depth){
+
+        return categoryRepository.findNamesByDepth(depth);
     }
 }

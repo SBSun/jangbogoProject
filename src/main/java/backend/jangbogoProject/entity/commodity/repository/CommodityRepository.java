@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Repository
 public interface CommodityRepository extends JpaRepository<Commodity, Integer>, CommodityRepositoryCustom  {
 
     @Query(value = "ALTER TABLE commodity AUTO_INCREMENT = 1", nativeQuery = true)
