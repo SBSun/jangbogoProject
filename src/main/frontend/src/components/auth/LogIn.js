@@ -42,14 +42,16 @@ const Login = ({
 
       <SocialLoginForm>
         <p>소셜 로그인</p>
-        <a href='/oauth2/authorization/kakao' className='kakao'>
-          <RiKakaoTalkFill className='kakao-logo' />
-          <span>카카오톡으로 로그인</span>
-        </a>
-        <a href='/oauth2/authorization/naver' className='naver'>
-          <SiNaver className='naver-logo' />
-          <span>네이버로 로그인</span>
-        </a>
+        <div className='button-group'>
+          <a href='/oauth2/authorization/kakao' className='kakao'>
+            <RiKakaoTalkFill className='kakao-logo' />
+            {/* <span>카카오톡으로 로그인</span> */}
+          </a>
+          <a href='/oauth2/authorization/naver' className='naver'>
+            <SiNaver className='naver-logo' />
+            {/* <span>네이버로 로그인</span> */}
+          </a>
+        </div>
       </SocialLoginForm>
     </>
   );
@@ -58,21 +60,23 @@ const Login = ({
 // CSS
 const LoginForm = styled.form`
   margin: 56px 0 0 0;
-  padding: 1rem;
+  padding: 3rem;
+  padding-bottom: 1rem;
   display: flex;
   flex-direction: column;
 
-  > input {
+  input {
     height: 2.5rem;
     border: 1px solid var(--light-gray);
     padding: 0.5rem 1rem;
+
     &:nth-child(1) {
-      border-radius: 10px 10px 0 0;
+      border-radius: 10px;
+      margin-bottom: 0.5rem;
     }
     &:nth-child(2) {
-      border-radius: 0 0 10px 10px;
-      border-top: none;
-      margin: 0 0 1rem 0;
+      border-radius: 10px;
+      margin-bottom: 2rem;
     }
   }
   > button:nth-child(4) {
@@ -90,31 +94,38 @@ const SocialLoginForm = styled.div`
     color: var(--gray);
     margin-bottom: 1rem;
   }
-  a {
-    width: 80%;
-    text-decoration: none;
-    color: white;
-    margin: 1rem 0;
-    padding: 1rem;
-    display: inherit;
-    align-items: center;
-    border-radius: 15px;
-    cursor: pointer;
 
-    svg {
-      padding-right: 1rem;
-      font-size: 1.5rem;
+  .button-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    a {
+      width: 10vw;
+      text-decoration: none;
+      color: white;
+      margin: 1rem;
+      padding: 1rem;
+      display: inherit;
+      justify-content: center;
+      align-items: center;
+      border-radius: 15px;
+      cursor: pointer;
+
+      svg {
+        font-size: 2rem;
+      }
     }
-    span {
-      padding-left: 1rem;
+
+    .kakao {
+      flex: 1;
+      background: #fee500;
+      color: black;
     }
-  }
-  .kakao {
-    background: #fee500;
-    color: black;
-  }
-  .naver {
-    background: #03c75a;
+    .naver {
+      flex: 1;
+      background: #03c75a;
+    }
   }
 `;
 

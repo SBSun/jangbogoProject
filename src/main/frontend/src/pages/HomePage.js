@@ -59,9 +59,6 @@ const Home = () => {
           <div>
             <p>장보고 - 서울시 식자재 조회</p>
             문의 : <b>hc9064@gmail.com</b>
-            <br />
-            <br />
-            <b>현재 모바일 해상도만 지원하고 있습니다.</b>
           </div>
         </Contact>
       </HomeContainer>
