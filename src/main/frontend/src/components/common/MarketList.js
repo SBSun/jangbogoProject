@@ -1,8 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { getMarketList } from '../../lib/api/etc';
 import styled, { keyframes } from 'styled-components';
+
+import { getMarketList } from '../../lib/api/etc';
 
 function handleMarketThumbnail(name) {
   switch (true) {
@@ -34,6 +35,7 @@ function handleMarketThumbnail(name) {
 }
 
 const MarketList = () => {
+  // 매장 데이터 상태
   const [markets, setMarkets] = useState([]);
   const [isEmpty, setIsEmpty] = useState(false);
 
@@ -43,25 +45,76 @@ const MarketList = () => {
   const location = sessionStorage.getItem('location');
   const storeLocation = useSelector(state => state.location);
 
+  // X축 마우스 스크롤
+  const scrollRef = useRef(null);
+  const [isDrag, setIsDrag] = useState(false);
+  const [startX, setStartX] = useState();
+
+  const onDragStart = e => {
+    e.preventDefault();
+    console.log(e);
+    setIsDrag(true);
+    setStartX(e.pageX + scrollRef.current.scrollLeft);
+  };
+
+  const onDragEnd = () => {
+    setIsDrag(false);
+  };
+
+  const throttle = (func, ms) => {
+    let throttled = false;
+    return (...args) => {
+      if (!throttled) {
+        throttled = true;
+        setTimeout(() => {
+          func(...args);
+          throttled = false;
+        }, ms);
+      }
+    };
+  };
+
+  const onDragMove = e => {
+    if (isDrag) {
+      const { scrollWidth, clientWidth, scrollLeft } = scrollRef.current;
+
+      scrollRef.current.scrollLeft = startX - e.pageX;
+
+      if (scrollLeft === 0) {
+        setStartX(e.pageX);
+      } else if (scrollWidth <= clientWidth + scrollLeft) {
+        setStartX(e.pageX + scrollLeft);
+      }
+    }
+  };
+
+  const delay = 25;
+  const onThrottleDragMove = throttle(onDragMove, delay);
+
   useEffect(() => {
     const fetchData = () => {
-      getMarketList(location).then(data => {
-        setIsEmpty(data.length === 0);
-        setMarkets(data);
-      });
+      getMarketList(location)
+        .then(data => {
+          setIsEmpty(data.length === 0);
+          setMarkets(data);
+        })
+        .catch(error => {
+          if (error.response.status === 404) setIsEmpty(true);
+        });
     };
 
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storeLocation.id]);
 
-  const marketListItem = useMemo(
+  // 매장 데이터 동적 생성
+  const marketListItems = useMemo(
     () =>
       markets.map(market => {
         const thumbnail = handleMarketThumbnail(market.name);
 
         return (
-          <li
+          <MarketItemStyled
             key={market.marketId}
             onClick={() => {
               navigate(`/market/${market.marketId}`, {
@@ -71,7 +124,7 @@ const MarketList = () => {
           >
             <img src={`/assets/market/${thumbnail}.png`} alt='thumbnail' />
             <div className='market_name'>{market.name}</div>
-          </li>
+          </MarketItemStyled>
         );
       }),
     [markets, navigate]
@@ -80,9 +133,15 @@ const MarketList = () => {
   return isEmpty ? (
     <EmptyBlock>매장 데이터가 없습니다.</EmptyBlock>
   ) : (
-    <Container>
-      <MarketListBlock>{marketListItem}</MarketListBlock>
-    </Container>
+    <MarketListBlock
+      onMouseDown={onDragStart}
+      onMouseMove={isDrag ? onThrottleDragMove : null}
+      onMouseUp={onDragEnd}
+      onMouseLeave={onDragEnd}
+      ref={scrollRef}
+    >
+      {marketListItems}
+    </MarketListBlock>
   );
 };
 
@@ -96,11 +155,8 @@ const fadeIn = keyframes`
   }
 `;
 
-const Container = styled.div`
-  animation: ${fadeIn} 0.5s ease-in forwards;
-`;
-
 const MarketListBlock = styled.ul`
+  animation: ${fadeIn} 0.5s ease-in forwards;
   display: flex;
   overflow-x: scroll;
   scrollbar-width: none;
@@ -108,16 +164,19 @@ const MarketListBlock = styled.ul`
   ::-webkit-scrollbar {
     display: none;
   }
+`;
 
-  > li {
-    padding: 0.5rem 1rem;
-  }
-  > li > img {
+const MarketItemStyled = styled.li`
+  user-select: none;
+  padding: 0.5rem 1rem;
+
+  img {
     padding: 1rem 0;
     width: 7.5rem;
     height: 7.5rem;
+    -webkit-user-drag: none;
   }
-  > li > .market_name {
+  .market_name {
     text-align: center;
     color: var(--black);
   }

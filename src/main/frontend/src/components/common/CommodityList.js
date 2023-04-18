@@ -1,5 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
+import styled, { keyframes } from 'styled-components';
+import Slider from 'react-slick';
+
 import {
   getCommodityList,
   getCatagoryList,
@@ -7,7 +10,6 @@ import {
   getMarketItemList,
   getLowPriceItemList,
 } from '../../lib/api/commodity';
-import styled, { keyframes } from 'styled-components';
 
 function handleCommodityThumbnail(id) {
   switch (id) {
@@ -62,6 +64,15 @@ function handleCommodityThumbnail(id) {
     }
   }
 }
+
+// Carousel 설정
+const settings = {
+  infinite: false,
+  speed: 500,
+  slidesToShow: 3,
+  slidesToScroll: 3,
+  autoplay: false,
+};
 
 const CommodityList = ({ modify, recordSize, keyword }) => {
   // 품목 데이터 상태
@@ -118,7 +129,7 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
   }, [selectAPI, endPage]);
 
   // 받아온 품목 데이터 동적 생성
-  const commodityListItem = commoditys.map((commodity, index) => {
+  const commodityListItems = commoditys.map((commodity, index) => {
     const thumbnail = handleCommodityThumbnail(commodity.categoryId);
 
     return (
@@ -154,12 +165,12 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
   const commodityBlock = isEmpty ? (
     <EmptyBlock>품목이 없습니다.</EmptyBlock>
   ) : modify === 'PRICE' ? (
-    <Container>
-      <CommodityXScrollBlock>{commodityListItem}</CommodityXScrollBlock>
-    </Container>
+    <CommodityXScrollBlock {...settings}>
+      {commodityListItems}
+    </CommodityXScrollBlock>
   ) : (
     <>
-      <CommodityYScrollBlock>{commodityListItem}</CommodityYScrollBlock>
+      <CommodityYScrollBlock>{commodityListItems}</CommodityYScrollBlock>
       <CommoditySelectPage curPage={curPage}>{pageButtons}</CommoditySelectPage>
     </>
   );
@@ -194,18 +205,9 @@ const fadeIn = keyframes`
   }
 `;
 
-const Container = styled.div`
+const CommodityXScrollBlock = styled(Slider)`
   animation: ${fadeIn} 0.5s ease-in forwards;
-`;
-
-const CommodityXScrollBlock = styled.ul`
   display: flex;
-  overflow-x: auto;
-  scrollbar-width: none;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 const CommodityYScrollBlock = styled.ul`
@@ -225,8 +227,10 @@ const CommodityYScrollBlock = styled.ul`
 
 const CommodityItemStyled = styled.li`
   padding: 0.5rem 1rem;
+  -webkit-user-drag: none;
 
   img {
+    user-select: none;
     padding: 1rem 0;
     width: 7.5rem;
     height: 7.5rem;
