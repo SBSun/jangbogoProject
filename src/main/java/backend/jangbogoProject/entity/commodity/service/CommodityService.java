@@ -175,6 +175,8 @@ public class CommodityService {
                         a_name = "조기";
                     if(a_name.contains("호박"))
                         a_name = "애호박";
+                    if(a_name.contains("계란"))
+                        a_name = "달걀";
 
                     boolean isExist = false;
                     for(String name : categoryNames){
