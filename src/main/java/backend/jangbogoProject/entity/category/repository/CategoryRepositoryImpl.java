@@ -19,6 +19,7 @@ public class CategoryRepositoryImpl implements CategoryRepositoryCustom{
 
     @Override
     public List<String> findNamesByDepth(int depth) {
+
         return queryFactory
                 .select(category.name)
                 .from(category)

@@ -4,6 +4,8 @@ import backend.jangbogoProject.entity.commodity.dto.CommodityResponseDto;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.NumberPath;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import java.util.List;
 import static backend.jangbogoProject.entity.commodity.QCommodity.commodity;
 import static backend.jangbogoProject.entity.market.QMarket.market;
 import static backend.jangbogoProject.entity.category.QCategory.category;
+import static backend.jangbogoProject.utils.RepositorySupport.*;
 
 @RequiredArgsConstructor
 @Repository
@@ -40,11 +43,11 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
                 ))
                 .from(commodity)
                 .join(market)
-                    .on(market.id.eq(commodity.M_SEQ)
-                            .and(market.gu_id.eq(gu_id)))
+                    .on(toEqExpression(market.id, commodity.M_SEQ)
+                            .and(toEqExpression(market.gu_id, gu_id)))
                 .join(category)
-                    .on(category.id.eq(commodity.category_id))
-                .where(commodity.A_PRICE.ne("0"))
+                    .on(toEqExpression(category.id, commodity.category_id))
+                .where(toNeExpression(commodity.A_PRICE, "0"))
                 .orderBy(category.name.asc())
                 .offset(startIndex)
                 .limit(recordSize)
@@ -210,5 +213,19 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
         em.createNativeQuery("TRUNCATE TABLE commodity").executeUpdate();
         em.createNativeQuery("TRUNCATE TABLE market").executeUpdate();
         em.createNativeQuery("SET FOREIGN_KEY_CHECKS = 1").executeUpdate();
+    }
+
+    private BooleanExpression eqMarketId(Integer marketId){
+        if(marketId == null){
+            return null;
+        }
+        return market.id.eq(marketId);
+    }
+
+    private BooleanExpression eqGuId(Integer guId){
+        if(guId == null){
+            return null;
+        }
+        return market.gu_id.eq(guId);
     }
 }
