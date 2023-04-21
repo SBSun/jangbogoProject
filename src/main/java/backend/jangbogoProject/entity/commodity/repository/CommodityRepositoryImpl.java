@@ -4,8 +4,6 @@ import backend.jangbogoProject.entity.commodity.dto.CommodityResponseDto;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.NumberPath;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,11 +41,11 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
                 ))
                 .from(commodity)
                 .join(market)
-                    .on(toEqExpression(market.id, commodity.M_SEQ)
-                            .and(toEqExpression(market.gu_id, gu_id)))
+                    .on(toEq(market.id, commodity.M_SEQ)
+                            .and(toEq(market.gu_id, gu_id)))
                 .join(category)
-                    .on(toEqExpression(category.id, commodity.category_id))
-                .where(toNeExpression(commodity.A_PRICE, "0"))
+                    .on(toEq(category.id, commodity.category_id))
+                .where(toNe(commodity.A_PRICE, "0"))
                 .orderBy(category.name.asc())
                 .offset(startIndex)
                 .limit(recordSize)
@@ -69,12 +67,12 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
                 ))
                 .from(commodity)
                 .join(market)
-                    .on(market.id.eq(commodity.M_SEQ)
-                        .and(market.gu_id.eq(gu_id)))
+                    .on(toEq(market.id, commodity.M_SEQ)
+                        .and(toEq(market.gu_id, gu_id)))
                 .join(category)
-                    .on(category.name.contains(keyword))
-                .where(commodity.A_PRICE.ne("0")
-                    .and(commodity.category_id.eq(category.id)))
+                    .on(containsKeyword(category.name, keyword))
+                .where(toNe(commodity.A_PRICE, "0")
+                    .and(toEq(commodity.category_id, category.id)))
                 .orderBy(category.name.asc())
                 .offset(startIndex)
                 .limit(recordSize)
@@ -96,11 +94,11 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
                 ))
                 .from(commodity)
                 .join(market)
-                    .on(market.id.eq(market_id))
+                    .on(toEq(market.id, market_id))
                 .join(category)
-                    .on(category.id.eq(commodity.category_id))
-                .where(commodity.A_PRICE.ne("0")
-                    .and(commodity.M_SEQ.eq(market.id)))
+                    .on(toEq(category.id, commodity.category_id))
+                .where(toNe(commodity.A_PRICE, "0")
+                    .and(toEq(market.id, commodity.M_SEQ)))
                 .orderBy(category.name.asc())
                 .offset(startIndex)
                 .limit(recordSize)
@@ -122,12 +120,12 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
                 ))
                 .from(commodity)
                 .join(market)
-                    .on(market.gu_id.eq(gu_id))
+                    .on(toEq(market.gu_id, gu_id))
                 .join(category)
-                    .on(category.id.eq(category_id))
-                .where(commodity.A_PRICE.ne("0")
-                    .and(category.id.eq(commodity.category_id))
-                    .and(market.id.eq(commodity.M_SEQ)))
+                    .on(toEq(category.id, category_id))
+                .where(toNe(commodity.A_PRICE, "0")
+                    .and(toEq(category.id, commodity.category_id))
+                    .and(toEq(market.id, commodity.M_SEQ)))
                 .orderBy(category.name.asc())
                 .offset(startIndex)
                 .limit(recordSize)
@@ -149,12 +147,12 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
                 ))
                 .from(commodity)
                 .join(market)
-                    .on(market.gu_id.eq(gu_id))
+                    .on(toEq(market.gu_id, gu_id))
                 .join(category)
-                    .on(category.id.eq(commodity.category_id))
-                .where(commodity.A_PRICE.ne("0")
-                    .and(category.parent.id.eq(parent_id))
-                    .and(market.id.eq(commodity.M_SEQ)))
+                    .on(toEq(category.id, commodity.category_id))
+                .where(toNe(commodity.A_PRICE, "0")
+                    .and(toEq(category.parent.id, parent_id))
+                    .and(toEq(market.id, commodity.M_SEQ)))
                 .orderBy(category.name.asc())
                 .offset(startIndex)
                 .limit(recordSize)
@@ -167,7 +165,7 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
         List<Integer> marketIds = queryFactory
                 .select(market.id)
                 .from(market)
-                .where(market.gu_id.eq(gu_id))
+                .where(toEq(market.gu_id, gu_id))
                 .fetch();
 
         System.out.println(marketIds.size());
@@ -176,7 +174,7 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
                 .select(commodity.category_id, commodity.A_PRICE.min())
                 .from(commodity)
                 .where(commodity.M_SEQ.in(marketIds)
-                        .and(commodity.A_PRICE.ne("0")))
+                        .and(toNe(commodity.A_PRICE, "0")))
                 .groupBy(commodity.category_id)
                 .fetch();
 
@@ -200,8 +198,8 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
                 .join(market)
                         .on(market.id.in(marketIds))
                 .join(category)
-                        .on(category.id.eq(commodity.category_id))
-                .where(market.id.eq(commodity.M_SEQ)
+                        .on(toEq(category.id, commodity.category_id))
+                .where(toEq(market.id, commodity.M_SEQ)
                         .and(builder))
                 .orderBy(category.name.asc())
                 .fetch();
@@ -213,19 +211,5 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
         em.createNativeQuery("TRUNCATE TABLE commodity").executeUpdate();
         em.createNativeQuery("TRUNCATE TABLE market").executeUpdate();
         em.createNativeQuery("SET FOREIGN_KEY_CHECKS = 1").executeUpdate();
-    }
-
-    private BooleanExpression eqMarketId(Integer marketId){
-        if(marketId == null){
-            return null;
-        }
-        return market.id.eq(marketId);
-    }
-
-    private BooleanExpression eqGuId(Integer guId){
-        if(guId == null){
-            return null;
-        }
-        return market.gu_id.eq(guId);
     }
 }
