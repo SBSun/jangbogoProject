@@ -27,7 +27,7 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<CommodityResponseDto.Info> getCommodities(int gu_id, int startIndex, int recordSize) {
+    public List<CommodityResponseDto.Info> getCommodities(Long guId, int startIndex, int recordSize) {
         return queryFactory
                 .select(Projections.constructor(CommodityResponseDto.Info.class,
                     commodity.id,
@@ -42,7 +42,7 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
                 .from(commodity)
                 .join(market)
                     .on(toEq(market.id, commodity.M_SEQ)
-                            .and(toEq(market.gu_id, gu_id)))
+                            .and(toEq(market.gu_id, guId)))
                 .join(category)
                     .on(toEq(category.id, commodity.category_id))
                 .where(toNe(commodity.A_PRICE, "0"))
@@ -53,7 +53,7 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
     }
 
     @Override
-    public List<CommodityResponseDto.Info> findByKeyword(int gu_id, String keyword, int startIndex, int recordSize) {
+    public List<CommodityResponseDto.Info> findByKeyword(Long guId, String keyword, int startIndex, int recordSize) {
         return queryFactory
                 .select(Projections.constructor(CommodityResponseDto.Info.class,
                     commodity.id,
@@ -68,7 +68,7 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
                 .from(commodity)
                 .join(market)
                     .on(toEq(market.id, commodity.M_SEQ)
-                        .and(toEq(market.gu_id, gu_id)))
+                        .and(toEq(market.gu_id, guId)))
                 .join(category)
                     .on(containsKeyword(category.name, keyword))
                 .where(toNe(commodity.A_PRICE, "0")
@@ -80,7 +80,7 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
     }
 
     @Override
-    public List<CommodityResponseDto.Info> findByMarket(int market_id, int startIndex, int recordSize) {
+    public List<CommodityResponseDto.Info> findByMarket(Long marketId, int startIndex, int recordSize) {
         return queryFactory
                 .select(Projections.constructor(CommodityResponseDto.Info.class,
                     commodity.id,
@@ -94,7 +94,7 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
                 ))
                 .from(commodity)
                 .join(market)
-                    .on(toEq(market.id, market_id))
+                    .on(toEq(market.id, marketId))
                 .join(category)
                     .on(toEq(category.id, commodity.category_id))
                 .where(toNe(commodity.A_PRICE, "0")
@@ -106,7 +106,7 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
     }
 
     @Override
-    public List<CommodityResponseDto.Info> findByChildCategory(int gu_id, int category_id, int startIndex, int recordSize) {
+    public List<CommodityResponseDto.Info> findByChildCategory(Long guId, Long categoryId, int startIndex, int recordSize) {
         return queryFactory
                 .select(Projections.constructor(CommodityResponseDto.Info.class,
                     commodity.id,
@@ -120,9 +120,9 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
                 ))
                 .from(commodity)
                 .join(market)
-                    .on(toEq(market.gu_id, gu_id))
+                    .on(toEq(market.gu_id, guId))
                 .join(category)
-                    .on(toEq(category.id, category_id))
+                    .on(toEq(category.id, categoryId))
                 .where(toNe(commodity.A_PRICE, "0")
                     .and(toEq(category.id, commodity.category_id))
                     .and(toEq(market.id, commodity.M_SEQ)))
@@ -133,7 +133,7 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
     }
 
     @Override
-    public List<CommodityResponseDto.Info> findByParentCategory(int gu_id, int parent_id, int startIndex, int recordSize) {
+    public List<CommodityResponseDto.Info> findByParentCategory(Long guId, Long parentId, int startIndex, int recordSize) {
         return queryFactory
                 .select(Projections.constructor(CommodityResponseDto.Info.class,
                     commodity.id,
@@ -147,11 +147,11 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
                 ))
                 .from(commodity)
                 .join(market)
-                    .on(toEq(market.gu_id, gu_id))
+                    .on(toEq(market.gu_id, guId))
                 .join(category)
                     .on(toEq(category.id, commodity.category_id))
                 .where(toNe(commodity.A_PRICE, "0")
-                    .and(toEq(category.parent.id, parent_id))
+                    .and(toEq(category.parent.id, parentId))
                     .and(toEq(market.id, commodity.M_SEQ)))
                 .orderBy(category.name.asc())
                 .offset(startIndex)
@@ -160,12 +160,12 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
     }
 
     @Override
-    public List<CommodityResponseDto.Info> getLowestPriceCommodities(int gu_id) {
+    public List<CommodityResponseDto.Info> getLowestPriceCommodities(Long guId) {
 
-        List<Integer> marketIds = queryFactory
+        List<Long> marketIds = queryFactory
                 .select(market.id)
                 .from(market)
-                .where(toEq(market.gu_id, gu_id))
+                .where(toEq(market.gu_id, guId))
                 .fetch();
 
         System.out.println(marketIds.size());

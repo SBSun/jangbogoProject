@@ -18,8 +18,8 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @PostMapping("/create")
-    public int createCategory(@RequestBody @Valid CategoryRequestDTO categoryRequestDTO){
-        return categoryService.create(categoryRequestDTO);
+    public void createCategory(@RequestBody @Valid CategoryRequestDTO categoryRequestDTO){
+        categoryService.create(categoryRequestDTO);
     }
 
     @GetMapping("/findByName")

@@ -12,10 +12,10 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CategoryResponseDTO {
-    private int id;
+    private Long id;
     private String name;
     private String parentName;
-    private Long depth;
+    private int depth;
     private List<CategoryResponseDTO> children;
 
     public static CategoryResponseDTO of(Category category){

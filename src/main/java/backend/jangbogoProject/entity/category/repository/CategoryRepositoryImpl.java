@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 import static backend.jangbogoProject.entity.category.QCategory.category;
+import static backend.jangbogoProject.utils.RepositorySupport.*;
 
 @RequiredArgsConstructor
 @Repository
@@ -23,7 +24,7 @@ public class CategoryRepositoryImpl implements CategoryRepositoryCustom{
         return queryFactory
                 .select(category.name)
                 .from(category)
-                .where(category.depth.eq((long)depth))
+                .where(toEq(category.depth, depth))
                 .fetch();
     }
 }

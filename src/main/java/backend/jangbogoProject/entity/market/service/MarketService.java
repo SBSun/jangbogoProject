@@ -1,10 +1,10 @@
 package backend.jangbogoProject.entity.market.service;
 
+import backend.jangbogoProject.entity.market.dto.MarketResponseDto;
 import backend.jangbogoProject.exception.errorCode.CommonErrorCode;
 import backend.jangbogoProject.exception.exception.RestApiException;
 import backend.jangbogoProject.entity.market.repository.MarketRepository;
 import backend.jangbogoProject.entity.gu.Gu;
-import backend.jangbogoProject.entity.market.dto.MarketInfoProjection;
 import backend.jangbogoProject.entity.market.Market;
 import backend.jangbogoProject.entity.gu.service.GuService;
 import lombok.RequiredArgsConstructor;
@@ -22,32 +22,35 @@ public class MarketService {
 
     @Transactional
     public void save(Market _market, String guName){
+
+        /*
         if(!guService.existsById(_market.getGu_id())){
             Gu gu = Gu.builder()
                     .id(_market.getGu_id())
                     .name(guName)
                     .build();
+
             guService.save(gu);
-        }
+        }*/
 
         marketRepository.save(_market);
     }
 
-    public Market findById(int id){
-        Market market = marketRepository.findById(id).get();
+    public MarketResponseDto.Info findById(Long id){
+        MarketResponseDto.Info info = marketRepository.findById(id);
 
-        if(market == null)
+        if(info == null)
             throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
 
-        return market;
+        return info;
     }
 
-    public boolean existsById(int id){
-        return marketRepository.existsById(id);
+    public boolean existsById(Long id){
+        return marketRepository.existsById(id.intValue());
     }
 
-    public String getMarketName(int id){
-        String marketName = marketRepository.getMarketName(id);
+    public String getMarketName(Long id){
+        String marketName = marketRepository.findNameById(id);
 
         if(marketName.isEmpty())
             throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
@@ -55,8 +58,8 @@ public class MarketService {
         return marketName;
     }
 
-    public List<MarketInfoProjection> findMarketsInGu(int gu_id){
-        List<MarketInfoProjection> marketInfoList = marketRepository.findMarketsInGu(gu_id);
+    public List<MarketResponseDto.Info> findMarketsInGu(Long gu_id){
+        List<MarketResponseDto.Info> marketInfoList = marketRepository.findMarketsByGu(gu_id);
 
         if(marketInfoList.isEmpty())
             throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
@@ -64,13 +67,13 @@ public class MarketService {
         return marketInfoList;
     }
 
-    public List<MarketInfoProjection> findMarketsByName(String name){
-        List<MarketInfoProjection> marketInfoList = marketRepository.findMarketsByName(name);
+    public List<MarketResponseDto.Info> findMarketsByName(String name){
+        List<MarketResponseDto.Info> infoList = marketRepository.findMarketsByName(name);
 
-        if(marketInfoList.isEmpty())
+        if(infoList.isEmpty())
             throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
 
-        return marketInfoList;
+        return infoList;
     }
 
     public void truncateMarket(){

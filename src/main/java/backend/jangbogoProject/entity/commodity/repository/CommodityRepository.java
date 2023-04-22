@@ -18,33 +18,33 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer>, 
             "FROM commodity c1 " +
             "INNER JOIN market m ON m.gu_id = ?1 AND c1.market_id = m.market_id " +
             "WHERE c1.price > 0", nativeQuery = true)
-    int getCommodityCnt(int gu_id);
+    int getCommodityCnt(Long guId);
 
     @Query(value = "SELECT COUNT(*) " +
             "FROM commodity c1 " +
             "INNER JOIN market m ON m.market_id = ?1 " +
             "INNER JOIN category c2 ON c1.category_id = c2.category_id " +
             "WHERE c1.price > 0 AND c1.market_id = m.market_id  ", nativeQuery = true)
-    int findByMarketCnt(int market_id);
+    int findByMarketCnt(Long marketId);
 
     @Query(value = "SELECT COUNT(*) " +
             "FROM commodity c1 " +
             "INNER JOIN market m ON m.gu_id = ?1 AND c1.market_id = m.market_id " +
             "INNER JOIN category c2 ON c2.name LIKE %?2% " +
             "WHERE c1.category_id = c2.category_id AND c1.price > 0", nativeQuery = true)
-    int findByKeywordCnt(int gu_id, String keyword);
+    int findByKeywordCnt(Long guId, String keyword);
 
     @Query(value = "SELECT COUNT(*) " +
             "FROM commodity c1 " +
             "INNER JOIN market m ON m.gu_id = ?1 AND c1.market_id = m.market_id " +
             "INNER JOIN category c2 ON c2.parent_id = ?2 " +
             "WHERE c1.price > 0 AND c1.category_id = c2.category_id", nativeQuery = true)
-    int findByParentCategoryCnt(int gu_id, int parent_id);
+    int findByParentCategoryCnt(Long guId, Long parentId);
 
     @Query(value = "SELECT COUNT(*) " +
             "FROM commodity c1 " +
             "INNER JOIN market m ON m.gu_id = ?1 AND c1.market_id = m.market_id " +
             "INNER JOIN category c2 ON c2.category_id = ?2 " +
             "WHERE c1.price > 0 AND c1.category_id = c2.category_id", nativeQuery = true)
-    int findByChildCategoryCnt(int gu_id, int category_id);
+    int findByChildCategoryCnt(Long guId, Long categoryId);
 }

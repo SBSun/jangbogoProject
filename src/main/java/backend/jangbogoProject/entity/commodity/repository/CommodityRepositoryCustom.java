@@ -6,17 +6,17 @@ import java.util.List;
 
 public interface CommodityRepositoryCustom {
 
-    List<CommodityResponseDto.Info> getCommodities(int gu_id, int startIndex, int recordSize);
+    List<CommodityResponseDto.Info> getCommodities(Long guId, int startIndex, int recordSize);
 
-    List<CommodityResponseDto.Info> findByKeyword(int gu_id, String keyword, int startIndex, int recordSize);
+    List<CommodityResponseDto.Info> findByKeyword(Long guId, String keyword, int startIndex, int recordSize);
 
-    List<CommodityResponseDto.Info> findByMarket(int market_id, int startIndex, int recordSize);
+    List<CommodityResponseDto.Info> findByMarket(Long marketId, int startIndex, int recordSize);
 
-    List<CommodityResponseDto.Info> findByChildCategory(int gu_id, int category_id, int startIndex, int recordSize);
+    List<CommodityResponseDto.Info> findByChildCategory(Long guId, Long categoryId, int startIndex, int recordSize);
 
-    List<CommodityResponseDto.Info> findByParentCategory(int gu_id, int parent_id, int startIndex, int recordSize);
+    List<CommodityResponseDto.Info> findByParentCategory(Long guId, Long parentId, int startIndex, int recordSize);
 
-    List<CommodityResponseDto.Info> getLowestPriceCommodities(int gu_id);
+    List<CommodityResponseDto.Info> getLowestPriceCommodities(Long guId);
 
     void truncate();
 }

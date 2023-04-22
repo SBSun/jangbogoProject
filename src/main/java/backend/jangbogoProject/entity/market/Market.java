@@ -14,14 +14,14 @@ import javax.persistence.Id;
 public class Market {
     @Id
     @Column(name = "market_id")
-    private int id;
+    private Long id;
     @Column(nullable = false)
     private String name;
     @Column(name = "gu_id", nullable = false)
-    private int gu_id;
+    private Long gu_id;
 
     @Builder
-    public Market(int id, String name, int gu_id) {
+    public Market(Long id, String name, Long gu_id) {
         this.id = id;
         this.name = name;
         this.gu_id = gu_id;

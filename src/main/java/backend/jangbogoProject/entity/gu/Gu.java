@@ -14,12 +14,12 @@ import javax.persistence.Id;
 public class Gu {
     @Id
     @Column(name = "gu_id")
-    private int id;
+    private Long id;
     @Column(nullable = false)
     private String name;
 
     @Builder
-    public Gu(int id, String name) {
+    public Gu(Long id, String name) {
         this.id = id;
         this.name = name;
     }

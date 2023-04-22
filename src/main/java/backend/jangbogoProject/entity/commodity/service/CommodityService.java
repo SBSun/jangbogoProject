@@ -36,12 +36,12 @@ public class CommodityService {
     private final CategoryService categoryService;
 
     @ExecutionTimeChecker
-    public CommodityResponseDto.InfoList getCommodities(int gu_id, SearchRequestDTO searchRequestDTO){
+    public CommodityResponseDto.InfoList getCommodities(Long guId, SearchRequestDTO searchRequestDTO){
 
         int startIndex = searchRequestDTO.getOffset();
         int recordSize = searchRequestDTO.getRecordSize();
 
-        int totalDataCnt = commodityRepository.getCommodityCnt(gu_id);
+        int totalDataCnt = commodityRepository.getCommodityCnt(guId);
 
         if(totalDataCnt == 0)
             throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
@@ -49,14 +49,14 @@ public class CommodityService {
         Page page = new Page(searchRequestDTO, totalDataCnt);
 
         List<CommodityResponseDto.Info> list
-                = commodityRepository.getCommodities(gu_id, startIndex, recordSize);
+                = commodityRepository.getCommodities(guId, startIndex, recordSize);
 
         return new CommodityResponseDto.InfoList(list, page.toResponse());
     }
 
-    public List<CommodityResponseDto.Info> getLowestPriceCommodities(int gu_id){
+    public List<CommodityResponseDto.Info> getLowestPriceCommodities(Long guId){
 
-        List<CommodityResponseDto.Info> lowestPriceCommodities = commodityRepository.getLowestPriceCommodities(gu_id);
+        List<CommodityResponseDto.Info> lowestPriceCommodities = commodityRepository.getLowestPriceCommodities(guId);
 
         if(lowestPriceCommodities.isEmpty())
             throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
@@ -64,41 +64,41 @@ public class CommodityService {
         return lowestPriceCommodities;
     }
 
-    public CommodityResponseDto.InfoList findByKeyword(int gu_id, SearchRequestDTO searchRequestDTO){
+    public CommodityResponseDto.InfoList findByKeyword(Long guId, SearchRequestDTO searchRequestDTO){
         String keyword = searchRequestDTO.getKeyword();
         int startIndex = searchRequestDTO.getOffset();
         int recordSize = searchRequestDTO.getRecordSize();
 
-        int totalDataCnt = commodityRepository.findByKeywordCnt(gu_id, keyword);
+        int totalDataCnt = commodityRepository.findByKeywordCnt(guId, keyword);
         if(totalDataCnt == 0)
             throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
 
         Page page = new Page(searchRequestDTO, totalDataCnt);
 
         List<CommodityResponseDto.Info> list
-                = commodityRepository.findByKeyword(gu_id, keyword, startIndex, recordSize);
+                = commodityRepository.findByKeyword(guId, keyword, startIndex, recordSize);
 
         return new CommodityResponseDto.InfoList(list, page.toResponse());
     }
 
     public CommodityResponseDto.InfoList findByMarket(SearchRequestDTO searchRequestDTO){
-        int market_id = Integer.parseInt(searchRequestDTO.getKeyword());
+        Long marketId = Long.parseLong(searchRequestDTO.getKeyword());
         int startIndex = searchRequestDTO.getOffset();
         int recordSize = searchRequestDTO.getRecordSize();
 
-        int totalDataCnt = commodityRepository.findByMarketCnt(market_id);
+        int totalDataCnt = commodityRepository.findByMarketCnt(marketId);
         if(totalDataCnt == 0)
             throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
 
         Page page = new Page(searchRequestDTO, totalDataCnt);
 
         List<CommodityResponseDto.Info> list
-                = commodityRepository.findByMarket(market_id, startIndex, recordSize);
+                = commodityRepository.findByMarket(marketId, startIndex, recordSize);
 
         return new CommodityResponseDto.InfoList(list, page.toResponse());
     }
 
-    public CommodityResponseDto.InfoList findByCategory(int gu_id, SearchRequestDTO searchRequestDTO){
+    public CommodityResponseDto.InfoList findByCategory(Long guId, SearchRequestDTO searchRequestDTO){
         String keyword = searchRequestDTO.getKeyword();
         int startIndex = searchRequestDTO.getOffset();
         int recordSize = searchRequestDTO.getRecordSize();
@@ -109,11 +109,11 @@ public class CommodityService {
         int totalDataCnt;
 
         if(category.getDepth() == 1){
-            list = commodityRepository.findByParentCategory(gu_id, category.getId(), startIndex, recordSize);
-            totalDataCnt = commodityRepository.findByParentCategoryCnt(gu_id, category.getId());
+            list = commodityRepository.findByParentCategory(guId, category.getId(), startIndex, recordSize);
+            totalDataCnt = commodityRepository.findByParentCategoryCnt(guId, category.getId());
         }else{
-            list = commodityRepository.findByChildCategory(gu_id, category.getId(), startIndex, recordSize);
-            totalDataCnt = commodityRepository.findByChildCategoryCnt(gu_id, category.getId());
+            list = commodityRepository.findByChildCategory(guId, category.getId(), startIndex, recordSize);
+            totalDataCnt = commodityRepository.findByChildCategoryCnt(guId, category.getId());
         }
 
         if(totalDataCnt == 0)
@@ -192,11 +192,11 @@ public class CommodityService {
 
                     Double m_seq = (Double)tmp.get("M_SEQ");
                     String gu_code = (String)tmp.get("M_GU_CODE");
-                    if(!marketService.existsById(m_seq.intValue())){
+                    if(!marketService.existsById(m_seq.longValue())){
                         Market market = Market.builder()
-                                .id(m_seq.intValue())
+                                .id(m_seq.longValue())
                                 .name((String)tmp.get("M_NAME"))
-                                .gu_id(Integer.parseInt(gu_code))
+                                .gu_id(Long.parseLong(gu_code))
                                 .build();
 
                         marketService.save(market, (String)tmp.get("M_GU_NAME"));
@@ -206,11 +206,11 @@ public class CommodityService {
                     String add_col = (String)tmp.get("ADD_COL");
                     String p_date = (String)tmp.get("P_DATE");
 
-                    int category_id = categoryService.findIdByName(a_name);
+                    Long category_id = categoryService.findIdByName(a_name);
 
                     Commodity commodity = Commodity.builder()
-                            .id(start + i)
-                            .m_SEQ(m_seq.intValue())
+                            .id((long)start + i)
+                            .m_SEQ(m_seq.longValue())
                             .category_id(category_id)
                             .a_UNIT(a_unit)
                             .a_PRICE(a_price)

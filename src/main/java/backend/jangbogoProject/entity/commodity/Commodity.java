@@ -11,11 +11,11 @@ public class Commodity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "commodity_id")
-    private int id;
+    private Long id;
     @Column(nullable = false, name = "market_id")
-    private int M_SEQ;
+    private Long M_SEQ;
     @Column(nullable = false, name = "category_id")
-    private int category_id;
+    private Long category_id;
     @Column(nullable = false, name = "unit")
     private String A_UNIT;
     @Column(nullable = false, name = "price")
@@ -26,7 +26,7 @@ public class Commodity {
     private String P_DATE;
 
     @Builder
-    public Commodity(int id, int m_SEQ, int category_id, String a_UNIT, String a_PRICE, String add_COL, String p_DATE) {
+    public Commodity(Long id, Long m_SEQ, Long category_id, String a_UNIT, String a_PRICE, String add_COL, String p_DATE) {
         this.id = id;
         M_SEQ = m_SEQ;
         this.category_id = category_id;

@@ -19,34 +19,36 @@ public class CommodityController {
     private final CommodityService commodityService;
 
     @GetMapping("/getCommodities")
-    public DataResponseDTO<CommodityResponseDto.InfoList> getCommodities(@RequestParam @NotNull int gu_id, SearchRequestDTO searchRequestDTO){
-        CommodityResponseDto.InfoList infoList = commodityService.getCommodities(gu_id, searchRequestDTO);
+    public DataResponseDTO<CommodityResponseDto.InfoList> getCommodities(@RequestParam @NotNull Long guId, SearchRequestDTO searchRequestDTO){
+        CommodityResponseDto.InfoList infoList = commodityService.getCommodities(guId, searchRequestDTO);
         return DataResponseDTO.of(infoList);
     }
 
     @GetMapping("/getLowestPriceCommodities")
-    public DataResponseDTO<CommodityResponseDto.InfoList> getLowestPriceCommodities(@RequestParam @NotNull int gu_id){
-        System.out.println(gu_id);
-        List<CommodityResponseDto.Info> infoList = commodityService.getLowestPriceCommodities(gu_id);
+    public DataResponseDTO<CommodityResponseDto.InfoList> getLowestPriceCommodities(@RequestParam @NotNull Long guId){
+        List<CommodityResponseDto.Info> infoList = commodityService.getLowestPriceCommodities(guId);
 
         return DataResponseDTO.of(new CommodityResponseDto.InfoList(infoList, null));
     }
 
     @GetMapping("/findByCategory")
-    public DataResponseDTO<CommodityResponseDto.InfoList> findByCategory(@RequestParam @NotNull int gu_id, SearchRequestDTO searchRequestDTO){
-        CommodityResponseDto.InfoList infoList = commodityService.findByCategory(gu_id, searchRequestDTO);
+    public DataResponseDTO<CommodityResponseDto.InfoList> findByCategory(@RequestParam @NotNull Long guId, SearchRequestDTO searchRequestDTO){
+        CommodityResponseDto.InfoList infoList = commodityService.findByCategory(guId, searchRequestDTO);
+
         return DataResponseDTO.of(infoList);
     }
 
     @GetMapping("/findByMarket")
     public DataResponseDTO<CommodityResponseDto.InfoList> findByMarket(SearchRequestDTO searchRequestDTO){
         CommodityResponseDto.InfoList infoList = commodityService.findByMarket(searchRequestDTO);
+
         return DataResponseDTO.of(infoList);
     }
 
     @GetMapping("/findByKeyword")
-    public DataResponseDTO<CommodityResponseDto.InfoList> findByKeyword(@RequestParam @NotNull int gu_id, SearchRequestDTO searchRequestDTO){
-        CommodityResponseDto.InfoList infoList = commodityService.findByKeyword(gu_id, searchRequestDTO);
+    public DataResponseDTO<CommodityResponseDto.InfoList> findByKeyword(@RequestParam @NotNull Long guId, SearchRequestDTO searchRequestDTO){
+        CommodityResponseDto.InfoList infoList = commodityService.findByKeyword(guId, searchRequestDTO);
+
         return DataResponseDTO.of(infoList);
     }
 }

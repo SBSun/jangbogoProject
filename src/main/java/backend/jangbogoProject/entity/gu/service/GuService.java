@@ -1,9 +1,9 @@
 package backend.jangbogoProject.entity.gu.service;
 
+import backend.jangbogoProject.entity.gu.dto.GuResponseDto;
 import backend.jangbogoProject.exception.errorCode.CommonErrorCode;
 import backend.jangbogoProject.exception.exception.RestApiException;
 import backend.jangbogoProject.entity.gu.repository.GuRepository;
-import backend.jangbogoProject.entity.gu.dto.GuInfoProjection;
 import backend.jangbogoProject.entity.gu.Gu;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class GuService {
         guRepository.save(gu);
     }
 
-    public Gu findById(int id){
+    public Gu findById(Long id){
         Gu gu = guRepository.findById(id).get();
 
         if(gu == null)
@@ -32,12 +32,12 @@ public class GuService {
         return gu;
     }
 
-    public boolean existsById(int id){
+    public boolean existsById(Long id){
         return guRepository.existsById(id);
     }
 
-    public String getGuName(int id){
-        String guName = guRepository.getGuName(id);
+    public String findNameById(Long id){
+        String guName = guRepository.findNameById(id);
 
         if(guName.isEmpty())
             throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
@@ -45,12 +45,12 @@ public class GuService {
         return guName;
     }
 
-    public List<GuInfoProjection> findAllGuInfo(){
-        List<GuInfoProjection> guInfoList = guRepository.findAllGuInfo();
+    public List<GuResponseDto.Info> findAllGuInfo(){
+        List<GuResponseDto.Info> infoList = guRepository.findAllGuInfo();
 
-        if(guInfoList.isEmpty())
+        if(infoList.isEmpty())
             throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
 
-        return guInfoList;
+        return infoList;
     }
 }

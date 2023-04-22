@@ -25,11 +25,11 @@ public class QCommodity extends EntityPathBase<Commodity> {
 
     public final StringPath ADD_COL = createString("ADD_COL");
 
-    public final NumberPath<Integer> category_id = createNumber("category_id", Integer.class);
+    public final NumberPath<Long> category_id = createNumber("category_id", Long.class);
 
-    public final NumberPath<Integer> id = createNumber("id", Integer.class);
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final NumberPath<Integer> M_SEQ = createNumber("M_SEQ", Integer.class);
+    public final NumberPath<Long> M_SEQ = createNumber("M_SEQ", Long.class);
 
     public final StringPath P_DATE = createString("P_DATE");
 

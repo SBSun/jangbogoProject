@@ -20,7 +20,7 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     @Transactional
-    public int create(CategoryRequestDTO categoryRequestDTO){
+    public void create(CategoryRequestDTO categoryRequestDTO){
         if(categoryRepository.existsByName(categoryRequestDTO.getName())){
             throw new RestApiException(CommonErrorCode.ALREADY_SAVED_CATEGORY);
         }
@@ -33,7 +33,7 @@ public class CategoryService {
                     .orElseGet(() ->
                             Category.builder()
                                     .name("ROOT")
-                                    .depth(0l)
+                                    .depth(0)
                                     .build()
                     );
 
@@ -62,7 +62,7 @@ public class CategoryService {
             parent.getChildren().add(category);
         }
 
-        return categoryRepository.save(category).getId();
+        categoryRepository.save(category);
     }
 
     public CategoryResponseDTO findById(Long id){
@@ -92,7 +92,7 @@ public class CategoryService {
         return categoryResponseDTO;
     }
 
-    public int findIdByName(String name){
+    public Long findIdByName(String name){
         Category category = categoryRepository.findByName(name)
                 .orElseThrow(() -> new RestApiException(CommonErrorCode.CATEGORY_NOT_FOUND));
 

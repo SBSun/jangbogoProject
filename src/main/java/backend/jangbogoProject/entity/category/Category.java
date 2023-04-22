@@ -16,7 +16,7 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
-    private int id;
+    private Long id;
 
     @Column(name = "name")
     private String name;
@@ -26,7 +26,7 @@ public class Category {
     private Category parent;
 
     @Column(name = "depth")
-    private Long depth;
+    private int depth;
 
     @OneToMany(mappedBy = "parent")
     private List<Category> children = new ArrayList<>();

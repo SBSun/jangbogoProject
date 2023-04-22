@@ -10,9 +10,9 @@ public class CommodityResponseDto {
     @Getter
     @AllArgsConstructor
     public static class Info{
-        private int commodityId;
+        private Long commodityId;
         private String marketName;
-        private int categoryId;
+        private Long categoryId;
         private String categoryName;
         private String unit;
         private String price;

@@ -1,7 +1,7 @@
 package backend.jangbogoProject.dto;
 
 import backend.jangbogoProject.entity.commodity.dto.CommodityResponseDto;
-import backend.jangbogoProject.entity.market.dto.MarketInfoProjection;
+import backend.jangbogoProject.entity.market.dto.MarketResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -12,6 +12,6 @@ public class SearchResponseDto {
     @AllArgsConstructor
     public static class SearchDataList{
         private List<CommodityResponseDto.Info> commodityList;
-        private List<MarketInfoProjection> marketList;
+        private List<MarketResponseDto.Info> marketList;
     }
 }

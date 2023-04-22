@@ -30,12 +30,12 @@ public class CommodityRepositoryTest {
     @DisplayName("구 내의 상품들 반환")
     public void getCommodities(){
         // given
-        int gu_id = 110000;
+        Long guId = 110000L;
         int startIndex = 0;
         int recordSize = 10;
 
         // when
-        List<CommodityResponseDto.Info> commodityList = commodityRepository.getCommodities(gu_id, startIndex, recordSize);
+        List<CommodityResponseDto.Info> commodityList = commodityRepository.getCommodities(guId, startIndex, recordSize);
 
         // then
         for (int i = 0; i < commodityList.size(); i++) {
@@ -48,13 +48,13 @@ public class CommodityRepositoryTest {
     @DisplayName("구 내의 검색한 상품들 반환")
     public void findByKeyword(){
         // given
-        int gu_id = 110000;
+        Long guId = 110000L;
         String keyword = "배";
         int startIndex = 0;
         int recordSize = 10;
 
         // when
-        List<CommodityResponseDto.Info> commodityList = commodityRepository.findByKeyword(gu_id, keyword, startIndex, recordSize);
+        List<CommodityResponseDto.Info> commodityList = commodityRepository.findByKeyword(guId, keyword, startIndex, recordSize);
 
         // then
         for (int i = 0; i < commodityList.size(); i++) {
@@ -67,12 +67,12 @@ public class CommodityRepositoryTest {
     @DisplayName("특정 마켓 내 상품들 반환")
     public void findByMarket(){
         // given
-        int market_id = 1;
+        Long marketId = 1L;
         int startIndex = 0;
         int recordSize = 10;
 
         // when
-        List<CommodityResponseDto.Info> commodityList = commodityRepository.findByMarket(market_id, startIndex, recordSize);
+        List<CommodityResponseDto.Info> commodityList = commodityRepository.findByMarket(marketId, startIndex, recordSize);
 
         // then
         for (int i = 0; i < commodityList.size(); i++) {
@@ -85,13 +85,13 @@ public class CommodityRepositoryTest {
     @DisplayName("구 내의 특정 카테고리 상품들 반환")
     public void findByChildCategory(){
         // given
-        int gu_id = 110000;
-        int category_id = 10;   // 닭고기
+        Long guId = 110000L;
+        Long categoryId = 10L;   // 닭고기
         int startIndex = 0;
         int recordSize = 10;
 
         // when
-        List<CommodityResponseDto.Info> commodityList = commodityRepository.findByChildCategory(gu_id, category_id, startIndex, recordSize);
+        List<CommodityResponseDto.Info> commodityList = commodityRepository.findByChildCategory(guId, categoryId, startIndex, recordSize);
 
         // then
         for (int i = 0; i < commodityList.size(); i++) {
@@ -104,13 +104,13 @@ public class CommodityRepositoryTest {
     @DisplayName("구 내의 특정 상위 카테고리 상품들 반환")
     public void findByParentCategory(){
         // given
-        int gu_id = 110000;
-        int parent_id = 3;    // 수산물
+        Long guId = 110000L;
+        Long parentId = 3L;    // 수산물
         int startIndex = 0;
         int recordSize = 10;
 
         // when
-        List<CommodityResponseDto.Info> commodityList = commodityRepository.findByParentCategory(gu_id, parent_id, startIndex, recordSize);
+        List<CommodityResponseDto.Info> commodityList = commodityRepository.findByParentCategory(guId, parentId, startIndex, recordSize);
 
         // then
         for (int i = 0; i < commodityList.size(); i++) {
@@ -123,10 +123,10 @@ public class CommodityRepositoryTest {
     @DisplayName("구 내의 카테고리 별 최저가 상품들 반환")
     public void getLowestPriceCommodities(){
         // given
-        int gu_id = 110000;
+        Long guId = 110000L;
 
         // when
-        List<CommodityResponseDto.Info> commodityList = commodityRepository.getLowestPriceCommodities(gu_id);
+        List<CommodityResponseDto.Info> commodityList = commodityRepository.getLowestPriceCommodities(guId);
 
         // then
         for (int i = 0; i < commodityList.size(); i++) {

@@ -19,9 +19,9 @@ public class QMarket extends EntityPathBase<Market> {
 
     public static final QMarket market = new QMarket("market");
 
-    public final NumberPath<Integer> gu_id = createNumber("gu_id", Integer.class);
+    public final NumberPath<Long> gu_id = createNumber("gu_id", Long.class);
 
-    public final NumberPath<Integer> id = createNumber("id", Integer.class);
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final StringPath name = createString("name");
 

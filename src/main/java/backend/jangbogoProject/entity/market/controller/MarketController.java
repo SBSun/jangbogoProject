@@ -1,6 +1,6 @@
 package backend.jangbogoProject.entity.market.controller;
 
-import backend.jangbogoProject.entity.market.dto.MarketInfoProjection;
+import backend.jangbogoProject.entity.market.dto.MarketResponseDto;
 import backend.jangbogoProject.entity.market.service.MarketService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -20,8 +20,8 @@ public class MarketController {
     private final MarketService marketService;
 
     @GetMapping("/findMarketsInGu")
-    public List<MarketInfoProjection> findMarketsInGu(@RequestParam @NotNull int gu_id){
-        List<MarketInfoProjection> list = marketService.findMarketsInGu(gu_id);
+    public List<MarketResponseDto.Info> findMarketsInGu(@RequestParam @NotNull Long gu_id){
+        List<MarketResponseDto.Info> list = marketService.findMarketsInGu(gu_id);
 
         return list;
     }
