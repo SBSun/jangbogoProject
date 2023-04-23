@@ -20,8 +20,8 @@ public class MarketController {
     private final MarketService marketService;
 
     @GetMapping("/findMarketsInGu")
-    public List<MarketResponseDto.Info> findMarketsInGu(@RequestParam @NotNull Long gu_id){
-        List<MarketResponseDto.Info> list = marketService.findMarketsInGu(gu_id);
+    public List<MarketResponseDto.Info> findMarketsInGu(@RequestParam @NotNull Long guId){
+        List<MarketResponseDto.Info> list = marketService.findMarketsInGu(guId);
 
         return list;
     }
