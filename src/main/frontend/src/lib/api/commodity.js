@@ -4,7 +4,7 @@ import client from './client';
 export const getCommodityList = async (id, curPage, recordSize) => {
   return await client
     .get(
-      `/commodity/getCommodities?gu_id=${id}&curPage=${curPage}&recordSize=${recordSize}`
+      `/commodity/getCommodities?guId=${id}&curPage=${curPage}&recordSize=${recordSize}`
     )
     .then(res => {
       return res.data;
@@ -15,7 +15,7 @@ export const getCommodityList = async (id, curPage, recordSize) => {
 export const getCatagoryList = async (id, curPage, recordSize, keyword) => {
   return await client
     .get(
-      `/commodity/findByCategory?gu_id=${id}&curPage=${curPage}&recordSize=${recordSize}&keyword=${keyword}`
+      `/commodity/findByCategory?guId=${id}&curPage=${curPage}&recordSize=${recordSize}&keyword=${keyword}`
     )
     .then(res => {
       return res.data;
@@ -26,7 +26,7 @@ export const getCatagoryList = async (id, curPage, recordSize, keyword) => {
 export const getSearchList = async (id, curPage, recordSize, keyword) => {
   return await client
     .get(
-      `/commodity/findByKeyword?gu_id=${id}&curPage=${curPage}&recordSize=${recordSize}&keyword=${keyword}`
+      `/commodity/findByKeyword?guId=${id}&curPage=${curPage}&recordSize=${recordSize}&keyword=${keyword}`
     )
     .then(res => {
       return res.data;
@@ -47,7 +47,7 @@ export const getMarketItemList = async (curPage, recordSize, keyword) => {
 // 지역 내 최저가 품목 리스트 API
 export const getLowPriceItemList = async id => {
   return await client
-    .get(`/commodity/getLowestPriceCommodities?gu_id=${id}`)
+    .get(`/commodity/getLowestPriceCommodities?guId=${id}`)
     .then(res => {
       return res.data;
     });
