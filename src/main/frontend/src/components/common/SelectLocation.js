@@ -3,7 +3,7 @@ import styled, { keyframes } from 'styled-components';
 
 const SelectLocation = ({ isVisible, locationList, onItemClick }) => {
   const locationListItem = locationList.map((item, index) => (
-    <li key={index} title={item.name} id={item.gu_Id} onClick={onItemClick}>
+    <li key={index} title={item.name} id={item.guId} onClick={onItemClick}>
       {item.name}
     </li>
   ));

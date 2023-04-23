@@ -2,7 +2,8 @@ import client from './client';
 
 // 매장 리스트 API
 export const getMarketList = async id => {
-  return await client.get(`/market/findMarketsInGu?gu_id=${id}`).then(res => {
+  return await client.get(`/market/findMarketsInGu?guId=${id}`).then(res => {
+    console.log(res);
     return res.data;
   });
 };
