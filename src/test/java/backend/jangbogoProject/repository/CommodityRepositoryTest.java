@@ -35,15 +35,15 @@ public class CommodityRepositoryTest {
     public void getCommodities(){
         // given
         Long guId = 110000L;
-        int startIndex = 0;
-        int recordSize = 10;
+        PageRequestDto pageRequest = new PageRequestDto(1, 10);
+        Pageable pageable = pageRequest.of();
 
         // when
-        List<CommodityResponseDto.Info> commodityList = commodityRepository.getCommodities(guId, startIndex, recordSize);
+        Page<CommodityResponseDto.Info> infoList = commodityRepository.getCommodities(guId, pageable);
 
         // then
-        for (int i = 0; i < commodityList.size(); i++) {
-            CommodityResponseDto.Info info = commodityList.get(i);
+        for (int i = 0; i < infoList.getNumberOfElements(); i++) {
+            CommodityResponseDto.Info info = infoList.getContent().get(i);
             System.out.println(info.toString());
         }
     }
@@ -54,15 +54,15 @@ public class CommodityRepositoryTest {
         // given
         Long guId = 110000L;
         String keyword = "배";
-        int startIndex = 0;
-        int recordSize = 10;
+        PageRequestDto pageRequest = new PageRequestDto(1, 10);
+        Pageable pageable = pageRequest.of();
 
         // when
-        List<CommodityResponseDto.Info> commodityList = commodityRepository.findByKeyword(guId, keyword, startIndex, recordSize);
+        Page<CommodityResponseDto.Info> infoList = commodityRepository.findByKeyword(guId, keyword, pageable);
 
         // then
-        for (int i = 0; i < commodityList.size(); i++) {
-            CommodityResponseDto.Info info = commodityList.get(i);
+        for (int i = 0; i < infoList.getNumberOfElements(); i++) {
+            CommodityResponseDto.Info info = infoList.getContent().get(i);
             System.out.println(info.toString());
         }
     }
@@ -72,7 +72,7 @@ public class CommodityRepositoryTest {
     public void findByMarket(){
         // given
         Long marketId = 1L;
-        PageRequestDto pageRequest = new PageRequestDto(3, 10);
+        PageRequestDto pageRequest = new PageRequestDto(1, 10);
         Pageable pageable = pageRequest.of();
 
         // when
@@ -91,15 +91,15 @@ public class CommodityRepositoryTest {
         // given
         Long guId = 110000L;
         Long categoryId = 10L;   // 닭고기
-        int startIndex = 0;
-        int recordSize = 10;
+        PageRequestDto pageRequest = new PageRequestDto(1, 10);
+        Pageable pageable = pageRequest.of();
 
         // when
-        List<CommodityResponseDto.Info> commodityList = commodityRepository.findByChildCategory(guId, categoryId, startIndex, recordSize);
+        Page<CommodityResponseDto.Info> infoList = commodityRepository.findByChildCategory(guId, categoryId, pageable);
 
         // then
-        for (int i = 0; i < commodityList.size(); i++) {
-            CommodityResponseDto.Info info = commodityList.get(i);
+        for (int i = 0; i < infoList.getNumberOfElements(); i++) {
+            CommodityResponseDto.Info info = infoList.getContent().get(i);
             System.out.println(info.toString());
         }
     }
@@ -110,15 +110,15 @@ public class CommodityRepositoryTest {
         // given
         Long guId = 110000L;
         Long parentId = 3L;    // 수산물
-        int startIndex = 0;
-        int recordSize = 10;
+        PageRequestDto pageRequest = new PageRequestDto(1, 10);
+        Pageable pageable = pageRequest.of();
 
         // when
-        List<CommodityResponseDto.Info> commodityList = commodityRepository.findByParentCategory(guId, parentId, startIndex, recordSize);
+        Page<CommodityResponseDto.Info> infoList = commodityRepository.findByParentCategory(guId, parentId, pageable);
 
         // then
-        for (int i = 0; i < commodityList.size(); i++) {
-            CommodityResponseDto.Info info = commodityList.get(i);
+        for (int i = 0; i < infoList.getNumberOfElements(); i++) {
+            CommodityResponseDto.Info info = infoList.getContent().get(i);
             System.out.println(info.toString());
         }
     }

@@ -18,8 +18,8 @@ public class PageRequestDto {
     }
 
     public PageRequestDto(int page, int size) {
-        setPage(this.page);
-        setSize(this.size);
+        setPage(page);
+        setSize(size);
     }
 
     public PageRequest of() {

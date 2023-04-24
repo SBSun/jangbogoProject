@@ -8,15 +8,15 @@ import java.util.List;
 
 public interface CommodityRepositoryCustom {
 
-    List<CommodityResponseDto.Info> getCommodities(Long guId, int startIndex, int recordSize);
+    Page<CommodityResponseDto.Info> getCommodities(Long guId, Pageable pageable);
 
-    List<CommodityResponseDto.Info> findByKeyword(Long guId, String keyword, int startIndex, int recordSize);
+    Page<CommodityResponseDto.Info> findByKeyword(Long guId, String keyword, Pageable pageable);
 
     Page<CommodityResponseDto.Info> findByMarket(Long marketId, Pageable pageable);
 
-    List<CommodityResponseDto.Info> findByChildCategory(Long guId, Long categoryId, int startIndex, int recordSize);
+    Page<CommodityResponseDto.Info> findByChildCategory(Long guId, Long categoryId, Pageable pageable);
 
-    List<CommodityResponseDto.Info> findByParentCategory(Long guId, Long parentId, int startIndex, int recordSize);
+    Page<CommodityResponseDto.Info> findByParentCategory(Long guId, Long parentId, Pageable pageable);
 
     List<CommodityResponseDto.Info> getLowestPriceCommodities(Long guId);
 

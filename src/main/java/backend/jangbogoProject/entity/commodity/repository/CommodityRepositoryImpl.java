@@ -34,8 +34,8 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<CommodityResponseDto.Info> getCommodities(Long guId, int startIndex, int recordSize) {
-        return queryFactory
+    public Page<CommodityResponseDto.Info> getCommodities(Long guId, Pageable pageable) {
+        List<CommodityResponseDto.Info> infoList = queryFactory
                 .select(Projections.constructor(CommodityResponseDto.Info.class,
                     commodity.id,
                     market.name,
@@ -54,14 +54,27 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
                     .on(toEq(category.id, commodity.category_id))
                 .where(toNe(commodity.A_PRICE, "0"))
                 .orderBy(category.name.asc())
-                .offset(startIndex)
-                .limit(recordSize)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
+
+        Long count = queryFactory
+                .select(commodity.count())
+                .from(commodity)
+                .join(market)
+                    .on(toEq(market.id, commodity.M_SEQ)
+                        .and(toEq(market.gu_id, guId)))
+                .join(category)
+                    .on(toEq(category.id, commodity.category_id))
+                .where(toNe(commodity.A_PRICE, "0"))
+                .fetchOne();
+
+        return new PageImpl<>(infoList, pageable, count);
     }
 
     @Override
-    public List<CommodityResponseDto.Info> findByKeyword(Long guId, String keyword, int startIndex, int recordSize) {
-        return queryFactory
+    public Page<CommodityResponseDto.Info> findByKeyword(Long guId, String keyword, Pageable pageable) {
+        List<CommodityResponseDto.Info> infoList = queryFactory
                 .select(Projections.constructor(CommodityResponseDto.Info.class,
                     commodity.id,
                     market.name,
@@ -81,9 +94,23 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
                 .where(toNe(commodity.A_PRICE, "0")
                     , toEq(commodity.category_id, category.id))
                 .orderBy(category.name.asc())
-                .offset(startIndex)
-                .limit(recordSize)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
+
+        Long count = queryFactory
+                .select(commodity.count())
+                .from(commodity)
+                .join(market)
+                    .on(toEq(market.id, commodity.M_SEQ)
+                        , toEq(market.gu_id, guId))
+                .join(category)
+                    .on(containsKeyword(category.name, keyword))
+                .where(toNe(commodity.A_PRICE, "0")
+                        , toEq(commodity.category_id, category.id))
+                .fetchOne();
+
+        return new PageImpl<>(infoList, pageable, count);
     }
 
     @Override
@@ -126,8 +153,8 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
     }
 
     @Override
-    public List<CommodityResponseDto.Info> findByChildCategory(Long guId, Long categoryId, int startIndex, int recordSize) {
-        return queryFactory
+    public Page<CommodityResponseDto.Info> findByChildCategory(Long guId, Long categoryId, Pageable pageable) {
+        List<CommodityResponseDto.Info> infoList = queryFactory
                 .select(Projections.constructor(CommodityResponseDto.Info.class,
                     commodity.id,
                     market.name,
@@ -147,14 +174,28 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
                     , toEq(category.id, commodity.category_id)
                     , toEq(market.id, commodity.M_SEQ))
                 .orderBy(category.name.asc())
-                .offset(startIndex)
-                .limit(recordSize)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
+
+        Long count = queryFactory
+                .select(commodity.count())
+                .from(commodity)
+                .join(market)
+                    .on(toEq(market.gu_id, guId))
+                .join(category)
+                    .on(toEq(category.id, categoryId))
+                .where(toNe(commodity.A_PRICE, "0")
+                    , toEq(category.id, commodity.category_id)
+                    , toEq(market.id, commodity.M_SEQ))
+                .fetchOne();
+
+        return new PageImpl<>(infoList, pageable, count);
     }
 
     @Override
-    public List<CommodityResponseDto.Info> findByParentCategory(Long guId, Long parentId, int startIndex, int recordSize) {
-        return queryFactory
+    public Page<CommodityResponseDto.Info> findByParentCategory(Long guId, Long parentId, Pageable pageable) {
+        List<CommodityResponseDto.Info> infoList = queryFactory
                 .select(Projections.constructor(CommodityResponseDto.Info.class,
                     commodity.id,
                     market.name,
@@ -174,9 +215,23 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
                     .and(toEq(category.parent.id, parentId))
                     .and(toEq(market.id, commodity.M_SEQ)))
                 .orderBy(category.name.asc())
-                .offset(startIndex)
-                .limit(recordSize)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
+
+        Long count = queryFactory
+                .select(commodity.count())
+                .from(commodity)
+                .join(market)
+                .on(toEq(market.gu_id, guId))
+                .join(category)
+                .on(toEq(category.parent.id, parentId))
+                .where(toNe(commodity.A_PRICE, "0")
+                        , toEq(category.id, commodity.category_id)
+                        , toEq(market.id, commodity.M_SEQ))
+                .fetchOne();
+
+        return new PageImpl<>(infoList, pageable, count);
     }
 
     @Override

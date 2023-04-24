@@ -9,15 +9,14 @@ import backend.jangbogoProject.entity.commodity.repository.CommodityRepository;
 import backend.jangbogoProject.entity.category.dto.CategoryResponseDTO;
 import backend.jangbogoProject.entity.commodity.Commodity;
 import backend.jangbogoProject.entity.market.Market;
-import backend.jangbogoProject.dto.SearchRequestDTO;
 import backend.jangbogoProject.entity.commodity.dto.CommodityResponseDto;
-import backend.jangbogoProject.entity.Page;
 import backend.jangbogoProject.entity.category.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -38,22 +37,9 @@ public class CommodityService {
     private final CategoryService categoryService;
 
     @ExecutionTimeChecker
-    public CommodityResponseDto.InfoList getCommodities(Long guId, SearchRequestDTO searchRequestDTO){
+    public Page<CommodityResponseDto.Info> getCommodities(Long guId, Pageable pageable){
 
-        int startIndex = searchRequestDTO.getOffset();
-        int recordSize = searchRequestDTO.getRecordSize();
-
-        int totalDataCnt = commodityRepository.getCommodityCnt(guId);
-
-        if(totalDataCnt == 0)
-            throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
-
-        Page page = new Page(searchRequestDTO, totalDataCnt);
-
-        List<CommodityResponseDto.Info> list
-                = commodityRepository.getCommodities(guId, startIndex, recordSize);
-
-        return new CommodityResponseDto.InfoList(list, page.toResponse());
+        return commodityRepository.getCommodities(guId, pageable);
     }
 
     public List<CommodityResponseDto.Info> getLowestPriceCommodities(Long guId){
@@ -66,52 +52,29 @@ public class CommodityService {
         return lowestPriceCommodities;
     }
 
-    public CommodityResponseDto.InfoList findByKeyword(Long guId, SearchRequestDTO searchRequestDTO){
-        String keyword = searchRequestDTO.getKeyword();
-        int startIndex = searchRequestDTO.getOffset();
-        int recordSize = searchRequestDTO.getRecordSize();
+    public Page<CommodityResponseDto.Info> findByKeyword(Long guId, String keyword, Pageable pageable){
 
-        int totalDataCnt = commodityRepository.findByKeywordCnt(guId, keyword);
-        if(totalDataCnt == 0)
-            throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
-
-        Page page = new Page(searchRequestDTO, totalDataCnt);
-
-        List<CommodityResponseDto.Info> list
-                = commodityRepository.findByKeyword(guId, keyword, startIndex, recordSize);
-
-        return new CommodityResponseDto.InfoList(list, page.toResponse());
+        return commodityRepository.findByKeyword(guId, keyword, pageable);
     }
 
-    public org.springframework.data.domain.Page<CommodityResponseDto.Info> findByMarket(Long marketId, Pageable pageable){
+    public Page<CommodityResponseDto.Info> findByMarket(Long marketId, Pageable pageable){
 
         return commodityRepository.findByMarket(marketId, pageable);
     }
 
-    public CommodityResponseDto.InfoList findByCategory(Long guId, SearchRequestDTO searchRequestDTO){
-        String keyword = searchRequestDTO.getKeyword();
-        int startIndex = searchRequestDTO.getOffset();
-        int recordSize = searchRequestDTO.getRecordSize();
+    public Page<CommodityResponseDto.Info> findByCategory(Long guId, String categoryName, Pageable pageable){
 
-        CategoryResponseDTO category = categoryService.findByName(keyword);
+        CategoryResponseDTO category = categoryService.findByName(categoryName);
 
-        List<CommodityResponseDto.Info> list;
-        int totalDataCnt;
+        Page<CommodityResponseDto.Info> infoList;
 
         if(category.getDepth() == 1){
-            list = commodityRepository.findByParentCategory(guId, category.getId(), startIndex, recordSize);
-            totalDataCnt = commodityRepository.findByParentCategoryCnt(guId, category.getId());
+            infoList = commodityRepository.findByParentCategory(guId, category.getId(), pageable);
         }else{
-            list = commodityRepository.findByChildCategory(guId, category.getId(), startIndex, recordSize);
-            totalDataCnt = commodityRepository.findByChildCategoryCnt(guId, category.getId());
+            infoList = commodityRepository.findByChildCategory(guId, category.getId(), pageable);
         }
 
-        if(totalDataCnt == 0)
-            throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
-
-        Page page = new Page(searchRequestDTO, totalDataCnt);
-
-        return new CommodityResponseDto.InfoList(list, page.toResponse());
+        return infoList;
     }
 
     // 매달 수요일 오전 6시에 실행
