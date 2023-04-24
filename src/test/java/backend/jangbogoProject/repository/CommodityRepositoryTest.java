@@ -1,6 +1,7 @@
 package backend.jangbogoProject.repository;
 
 import backend.jangbogoProject.TestConfig;
+import backend.jangbogoProject.dto.PageRequestDto;
 import backend.jangbogoProject.entity.commodity.dto.CommodityResponseDto;
 import backend.jangbogoProject.entity.commodity.repository.CommodityRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -10,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -68,15 +72,15 @@ public class CommodityRepositoryTest {
     public void findByMarket(){
         // given
         Long marketId = 1L;
-        int startIndex = 0;
-        int recordSize = 10;
+        PageRequestDto pageRequest = new PageRequestDto(3, 10);
+        Pageable pageable = pageRequest.of();
 
         // when
-        List<CommodityResponseDto.Info> commodityList = commodityRepository.findByMarket(marketId, startIndex, recordSize);
+        Page<CommodityResponseDto.Info> infoList = commodityRepository.findByMarket(marketId, pageable);
 
         // then
-        for (int i = 0; i < commodityList.size(); i++) {
-            CommodityResponseDto.Info info = commodityList.get(i);
+        for (int i = 0; i < infoList.getNumberOfElements(); i++) {
+            CommodityResponseDto.Info info = infoList.getContent().get(i);
             System.out.println(info.toString());
         }
     }

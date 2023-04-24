@@ -17,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -81,21 +83,9 @@ public class CommodityService {
         return new CommodityResponseDto.InfoList(list, page.toResponse());
     }
 
-    public CommodityResponseDto.InfoList findByMarket(SearchRequestDTO searchRequestDTO){
-        Long marketId = Long.parseLong(searchRequestDTO.getKeyword());
-        int startIndex = searchRequestDTO.getOffset();
-        int recordSize = searchRequestDTO.getRecordSize();
+    public org.springframework.data.domain.Page<CommodityResponseDto.Info> findByMarket(Long marketId, Pageable pageable){
 
-        int totalDataCnt = commodityRepository.findByMarketCnt(marketId);
-        if(totalDataCnt == 0)
-            throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
-
-        Page page = new Page(searchRequestDTO, totalDataCnt);
-
-        List<CommodityResponseDto.Info> list
-                = commodityRepository.findByMarket(marketId, startIndex, recordSize);
-
-        return new CommodityResponseDto.InfoList(list, page.toResponse());
+        return commodityRepository.findByMarket(marketId, pageable);
     }
 
     public CommodityResponseDto.InfoList findByCategory(Long guId, SearchRequestDTO searchRequestDTO){

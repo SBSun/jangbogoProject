@@ -1,10 +1,14 @@
 package backend.jangbogoProject.entity.commodity.controller;
 
+import backend.jangbogoProject.dto.PageRequestDto;
 import backend.jangbogoProject.dto.SearchRequestDTO;
 import backend.jangbogoProject.entity.commodity.dto.CommodityResponseDto;
 import backend.jangbogoProject.dto.DataResponseDTO;
 import backend.jangbogoProject.entity.commodity.service.CommodityService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,10 +43,13 @@ public class CommodityController {
     }
 
     @GetMapping("/findByMarket")
-    public DataResponseDTO<CommodityResponseDto.InfoList> findByMarket(SearchRequestDTO searchRequestDTO){
-        CommodityResponseDto.InfoList infoList = commodityService.findByMarket(searchRequestDTO);
+    public Page<CommodityResponseDto.Info> findByMarket(@RequestParam @NotNull Long marketId, PageRequestDto pageRequestDto){
 
-        return DataResponseDTO.of(infoList);
+        Pageable pageable = pageRequestDto.of();
+        Page<CommodityResponseDto.Info> infoList = commodityService.findByMarket(marketId, pageable);
+
+        System.out.println(infoList.getContent());
+        return infoList;
     }
 
     @GetMapping("/findByKeyword")

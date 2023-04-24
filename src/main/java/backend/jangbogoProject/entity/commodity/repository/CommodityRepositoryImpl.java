@@ -9,6 +9,9 @@ import com.querydsl.core.types.dsl.SimpleExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -84,8 +87,8 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
     }
 
     @Override
-    public List<CommodityResponseDto.Info> findByMarket(Long marketId, int startIndex, int recordSize) {
-        return queryFactory
+    public Page<CommodityResponseDto.Info> findByMarket(Long marketId, Pageable pageable) {
+        List<CommodityResponseDto.Info> infoList = queryFactory
                 .select(Projections.constructor(CommodityResponseDto.Info.class,
                     commodity.id,
                     market.name,
@@ -104,9 +107,22 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
                 .where(toNe(commodity.A_PRICE, "0")
                     , toEq(market.id, commodity.M_SEQ))
                 .orderBy(category.name.asc())
-                .offset(startIndex)
-                .limit(recordSize)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
+
+        Long count = queryFactory
+                .select(commodity.count())
+                .from(commodity)
+                .join(market)
+                    .on(toEq(market.id, marketId))
+                .join(category)
+                    .on(toEq(category.id, commodity.category_id))
+                .where(toNe(commodity.A_PRICE, "0")
+                        , toEq(market.id, commodity.M_SEQ))
+                .fetchOne();
+
+        return new PageImpl<>(infoList, pageable, count);
     }
 
     @Override
