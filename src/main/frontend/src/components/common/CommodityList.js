@@ -116,9 +116,9 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
     const fetchData = () => {
       selectAPI()
         .then(data => {
-          setIsEmpty(data?.data?.infoList.length === 0);
-          setCommoditys(data?.data?.infoList);
-          setEndPage(data?.data?.pageResponseDTO.endPage);
+          setIsEmpty(data?.content.length === 0);
+          setCommoditys(data?.content);
+          setEndPage(data?.totalPages);
         })
         .catch(error => {
           if (error.response.status === 404) setIsEmpty(true);

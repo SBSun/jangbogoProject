@@ -1,21 +1,19 @@
 import client from './client';
 
 // 품목 리스트 API
-export const getCommodityList = async (id, curPage, recordSize) => {
+export const getCommodityList = async (id, page, size) => {
   return await client
-    .get(
-      `/commodity/getCommodities?guId=${id}&curPage=${curPage}&recordSize=${recordSize}`
-    )
+    .get(`/commodity/getCommodities?guId=${id}&page=${page}&size=${size}`)
     .then(res => {
       return res.data;
     });
 };
 
 // 카테고리 별 품목 리스트 API
-export const getCatagoryList = async (id, curPage, recordSize, keyword) => {
+export const getCatagoryList = async (id, page, size, keyword) => {
   return await client
     .get(
-      `/commodity/findByCategory?guId=${id}&curPage=${curPage}&recordSize=${recordSize}&keyword=${keyword}`
+      `/commodity/findByCategory?guId=${id}&page=${page}&size=${size}&categoryName=${keyword}`
     )
     .then(res => {
       return res.data;
@@ -23,10 +21,10 @@ export const getCatagoryList = async (id, curPage, recordSize, keyword) => {
 };
 
 // 검색 품목 리스트 API
-export const getSearchList = async (id, curPage, recordSize, keyword) => {
+export const getSearchList = async (id, page, size, keyword) => {
   return await client
     .get(
-      `/commodity/findByKeyword?guId=${id}&curPage=${curPage}&recordSize=${recordSize}&keyword=${keyword}`
+      `/commodity/findByKeyword?guId=${id}&page=${page}&size=${size}&keyword=${keyword}`
     )
     .then(res => {
       return res.data;
@@ -34,10 +32,10 @@ export const getSearchList = async (id, curPage, recordSize, keyword) => {
 };
 
 // 특정 매장 품목 리스트 API
-export const getMarketItemList = async (curPage, recordSize, keyword) => {
+export const getMarketItemList = async (page, size, marketId) => {
   return await client
     .get(
-      `/commodity/findByMarket?curPage=${curPage}&recordSize=${recordSize}&keyword=${keyword}`
+      `/commodity/findByMarket?marketId=${marketId}&page=${page}&size=${size}`
     )
     .then(res => {
       return res.data;

@@ -118,7 +118,10 @@ const MarketList = () => {
             key={market.marketId}
             onClick={() => {
               navigate(`/market/${market.marketId}`, {
-                state: { name: market.name, thumbnail: thumbnail },
+                state: {
+                  name: market.name,
+                  thumbnail: thumbnail,
+                },
               });
             }}
           >
