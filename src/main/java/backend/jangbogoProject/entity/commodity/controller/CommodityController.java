@@ -31,10 +31,10 @@ public class CommodityController {
     }
 
     @GetMapping("/getLowestPriceCommodities")
-    public List<CommodityResponseDto.Info> getLowestPriceCommodities(@RequestParam @NotNull Long guId){
+    public CommodityResponseDto.InfoList getLowestPriceCommodities(@RequestParam @NotNull Long guId){
         List<CommodityResponseDto.Info> infoList = commodityService.getLowestPriceCommodities(guId);
 
-        return infoList;
+        return new CommodityResponseDto.InfoList(infoList);
     }
 
     @GetMapping("/findByCategory")

@@ -21,4 +21,10 @@ public class CommodityResponseDto {
             return commodityId + ", " + marketName + ", " + categoryName + ", " + price + ", " + unit + ", " + remarks + ", " + date;
         }
     }
+
+    @Getter
+    @AllArgsConstructor
+    public static class InfoList{
+        private List<CommodityResponseDto.Info> content;
+    }
 }
