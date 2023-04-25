@@ -13,38 +13,4 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer>, 
 
     @Query(value = "ALTER TABLE commodity AUTO_INCREMENT = 1", nativeQuery = true)
     void resetIncrement();
-
-    @Query(value = "SELECT COUNT(*) " +
-            "FROM commodity c1 " +
-            "INNER JOIN market m ON m.gu_id = ?1 AND c1.market_id = m.market_id " +
-            "WHERE c1.price > 0", nativeQuery = true)
-    int getCommodityCnt(Long guId);
-
-    @Query(value = "SELECT COUNT(*) " +
-            "FROM commodity c1 " +
-            "INNER JOIN market m ON m.market_id = ?1 " +
-            "INNER JOIN category c2 ON c1.category_id = c2.category_id " +
-            "WHERE c1.price > 0 AND c1.market_id = m.market_id  ", nativeQuery = true)
-    int findByMarketCnt(Long marketId);
-
-    @Query(value = "SELECT COUNT(*) " +
-            "FROM commodity c1 " +
-            "INNER JOIN market m ON m.gu_id = ?1 AND c1.market_id = m.market_id " +
-            "INNER JOIN category c2 ON c2.name LIKE %?2% " +
-            "WHERE c1.category_id = c2.category_id AND c1.price > 0", nativeQuery = true)
-    int findByKeywordCnt(Long guId, String keyword);
-
-    @Query(value = "SELECT COUNT(*) " +
-            "FROM commodity c1 " +
-            "INNER JOIN market m ON m.gu_id = ?1 AND c1.market_id = m.market_id " +
-            "INNER JOIN category c2 ON c2.parent_id = ?2 " +
-            "WHERE c1.price > 0 AND c1.category_id = c2.category_id", nativeQuery = true)
-    int findByParentCategoryCnt(Long guId, Long parentId);
-
-    @Query(value = "SELECT COUNT(*) " +
-            "FROM commodity c1 " +
-            "INNER JOIN market m ON m.gu_id = ?1 AND c1.market_id = m.market_id " +
-            "INNER JOIN category c2 ON c2.category_id = ?2 " +
-            "WHERE c1.price > 0 AND c1.category_id = c2.category_id", nativeQuery = true)
-    int findByChildCategoryCnt(Long guId, Long categoryId);
 }

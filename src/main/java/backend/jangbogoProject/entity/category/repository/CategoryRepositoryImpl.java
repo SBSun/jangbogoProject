@@ -1,5 +1,6 @@
 package backend.jangbogoProject.entity.category.repository;
 
+import backend.jangbogoProject.entity.category.Category;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,16 @@ public class CategoryRepositoryImpl implements CategoryRepositoryCustom{
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<String> findNamesByDepth(int depth) {
+    public Category findByName(String name) {
+        return queryFactory
+                .select(category)
+                .from(category)
+                .where(toEq(category.name, name))
+                .fetchOne();
+    }
 
+    @Override
+    public List<String> findNamesByDepth(int depth) {
         return queryFactory
                 .select(category.name)
                 .from(category)

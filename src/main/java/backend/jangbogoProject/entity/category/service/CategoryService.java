@@ -29,13 +29,13 @@ public class CategoryService {
 
         // 상위 카테고리가 없다면 대분류로 등록
         if(categoryRequestDTO.getParentName() == null){
-            Category rootCategory = categoryRepository.findByName("ROOT")
-                    .orElseGet(() ->
-                            Category.builder()
-                                    .name("ROOT")
-                                    .depth(0)
-                                    .build()
-                    );
+            Category rootCategory = categoryRepository.findByName("ROOT");
+            if(rootCategory == null){
+                rootCategory = Category.builder()
+                        .name("ROOT")
+                        .depth(0)
+                        .build();
+            }
 
             // ROOT 카테고리가 없는 상황에서 상위 카테고리가 없는 카테고리를 등록하려 한다면 ROOT 카테고리 생성
             if(!categoryRepository.existsByName("ROOT")){
@@ -50,8 +50,10 @@ public class CategoryService {
         }else{
             String parentName = categoryRequestDTO.getParentName();
 
-            Category parent = categoryRepository.findByName(parentName)
-                    .orElseThrow(() -> new RestApiException(CommonErrorCode.PARENT_CATEGORY_NOT_FOUND));
+            Category parent = categoryRepository.findByName(parentName);
+            if(parent == null){
+                throw new RestApiException(CommonErrorCode.PARENT_CATEGORY_NOT_FOUND);
+            }
 
             category = Category.builder()
                     .name(categoryRequestDTO.getName())
@@ -75,8 +77,10 @@ public class CategoryService {
     }
 
     public CategoryResponseDTO findByName(String name){
-        Category category = categoryRepository.findByName(name)
-                .orElseThrow(() -> new RestApiException(CommonErrorCode.CATEGORY_NOT_FOUND));
+        Category category = categoryRepository.findByName(name);
+        if(category == null){
+            throw new RestApiException(CommonErrorCode.CATEGORY_NOT_FOUND);
+        }
 
         CategoryResponseDTO categoryResponseDTO = CategoryResponseDTO.of(category);
 
@@ -93,8 +97,10 @@ public class CategoryService {
     }
 
     public Long findIdByName(String name){
-        Category category = categoryRepository.findByName(name)
-                .orElseThrow(() -> new RestApiException(CommonErrorCode.CATEGORY_NOT_FOUND));
+        Category category = categoryRepository.findByName(name);
+        if(category == null){
+            new RestApiException(CommonErrorCode.CATEGORY_NOT_FOUND);
+        }
 
         return category.getId();
     }
