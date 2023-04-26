@@ -6,7 +6,7 @@ import backend.jangbogoProject.entity.market.service.MarketService;
 import backend.jangbogoProject.exception.errorCode.CommonErrorCode;
 import backend.jangbogoProject.exception.exception.RestApiException;
 import backend.jangbogoProject.entity.commodity.repository.CommodityRepository;
-import backend.jangbogoProject.entity.category.dto.CategoryResponseDTO;
+import backend.jangbogoProject.entity.category.dto.CategoryResponseDto;
 import backend.jangbogoProject.entity.commodity.Commodity;
 import backend.jangbogoProject.entity.market.Market;
 import backend.jangbogoProject.entity.commodity.dto.CommodityResponseDto;
@@ -62,9 +62,10 @@ public class CommodityService {
         return commodityRepository.findByMarket(marketId, pageable);
     }
 
+    /*
     public Page<CommodityResponseDto.Info> findByCategory(Long guId, String categoryName, Pageable pageable){
 
-        CategoryResponseDTO category = categoryService.findByName(categoryName);
+        CategoryResponseDto.Info category = categoryService.findByName(categoryName);
 
         Page<CommodityResponseDto.Info> infoList;
 
@@ -192,5 +193,5 @@ public class CommodityService {
         }catch(Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }

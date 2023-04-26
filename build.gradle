@@ -39,6 +39,8 @@ dependencies {
 	// QueryDSL
 	implementation 'com.querydsl:querydsl-jpa' // QueryDSL 을 사용하기 위한 라이브러리
 	implementation 'com.querydsl:querydsl-apt' // QClass 를 생성하기 위한 라이브러리
+	implementation 'com.querydsl:querydsl-sql'
+	implementation 'com.querydsl:querydsl-sql-codegen'
 
 	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa"
 	annotationProcessor 'jakarta.persistence:jakarta.persistence-api'

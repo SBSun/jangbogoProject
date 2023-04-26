@@ -1,7 +1,7 @@
 package backend.jangbogoProject.entity.category.controller;
 
 import backend.jangbogoProject.entity.category.dto.CategoryRequestDTO;
-import backend.jangbogoProject.entity.category.dto.CategoryResponseDTO;
+import backend.jangbogoProject.entity.category.dto.CategoryResponseDto;
 import backend.jangbogoProject.entity.category.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -17,18 +17,20 @@ import javax.validation.constraints.NotBlank;
 public class CategoryController {
     private final CategoryService categoryService;
 
+    /*
     @PostMapping("/create")
     public void createCategory(@RequestBody @Valid CategoryRequestDTO categoryRequestDTO){
         categoryService.create(categoryRequestDTO);
     }
 
-    @GetMapping("/findByName")
-    public CategoryResponseDTO findByName(@RequestParam @NotBlank String name){
-        return categoryService.findByName(name);
+    */
+    @GetMapping("/findAll")
+    public CategoryResponseDto findAll(){
+        return categoryService.createCategoryRoot();
     }
 
-    @GetMapping("/findAll")
-    public CategoryResponseDTO findAll(){
-        return categoryService.findAll();
+    @GetMapping("/findByName")
+    public CategoryResponseDto findByName(@RequestParam @NotBlank String name){
+        return categoryService.findByName(name);
     }
 }

@@ -18,16 +18,10 @@ public class Category {
     @Column(name = "category_id")
     private Long id;
 
-    @Column(name = "name")
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
-    private Category parent;
+    private Long parentId;
 
-    @Column(name = "depth")
     private int depth;
-
-    @OneToMany(mappedBy = "parent")
-    private List<Category> children = new ArrayList<>();
 }

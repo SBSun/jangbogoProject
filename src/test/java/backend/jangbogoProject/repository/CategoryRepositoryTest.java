@@ -2,9 +2,8 @@ package backend.jangbogoProject.repository;
 
 import backend.jangbogoProject.TestConfig;
 import backend.jangbogoProject.entity.category.Category;
-import backend.jangbogoProject.entity.category.dto.CategoryResponseDTO;
+import backend.jangbogoProject.entity.category.dto.CategoryResponseDto;
 import backend.jangbogoProject.entity.category.repository.CategoryRepository;
-import backend.jangbogoProject.entity.market.dto.MarketResponseDto;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,19 +24,19 @@ public class CategoryRepositoryTest {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    /*
     @Test
     @DisplayName("카테고리 이름으로 으로 카테고리 정보 반환")
     public void findByName(){
         // given
-        String categoryName = "달걀";
+        String categoryName = "수산물";
 
         // when
-        Category category = categoryRepository.findByName(categoryName);
+        CategoryResponseDto.Info info = categoryRepository.findByName(categoryName);
 
         // then
-        CategoryResponseDTO categoryResponseDTO = CategoryResponseDTO.of(category);
-        System.out.println(categoryResponseDTO.toString());
-    }
+
+    }*/
 
     @Test
     @DisplayName("특정 Depth에 해당하는 카테고리들의 이름 반환")

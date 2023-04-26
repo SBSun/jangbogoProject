@@ -37,6 +37,7 @@ public class CommodityController {
         return new CommodityResponseDto.InfoList(infoList);
     }
 
+    /*
     @GetMapping("/findByCategory")
     public Page<CommodityResponseDto.Info> findByCategory(@RequestParam @NotNull Long guId
             , @RequestParam @NotBlank String categoryName, PageRequestDto pageRequestDto){
@@ -44,7 +45,7 @@ public class CommodityController {
         Page<CommodityResponseDto.Info> infoList = commodityService.findByCategory(guId, categoryName, pageable);
 
         return infoList;
-    }
+    }*/
 
     @GetMapping("/findByMarket")
     public Page<CommodityResponseDto.Info> findByMarket(@RequestParam @NotNull Long marketId
