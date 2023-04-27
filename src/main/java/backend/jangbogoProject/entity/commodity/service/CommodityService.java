@@ -2,6 +2,7 @@ package backend.jangbogoProject.entity.commodity.service;
 
 
 import backend.jangbogoProject.aop.ExecutionTimeChecker;
+import backend.jangbogoProject.entity.category.Category;
 import backend.jangbogoProject.entity.market.service.MarketService;
 import backend.jangbogoProject.exception.errorCode.CommonErrorCode;
 import backend.jangbogoProject.exception.exception.RestApiException;
@@ -62,10 +63,10 @@ public class CommodityService {
         return commodityRepository.findByMarket(marketId, pageable);
     }
 
-    /*
+
     public Page<CommodityResponseDto.Info> findByCategory(Long guId, String categoryName, Pageable pageable){
 
-        CategoryResponseDto.Info category = categoryService.findByName(categoryName);
+        Category category = categoryService.findByName(categoryName);
 
         Page<CommodityResponseDto.Info> infoList;
 
@@ -79,7 +80,7 @@ public class CommodityService {
     }
 
     // 매달 수요일 오전 6시에 실행
-    @Scheduled(cron = "0 0 6 ? * 3")
+    @Scheduled(fixedDelay = 5000000)
     @Transactional
     public void getCommodityData(){
         commodityRepository.truncate();
@@ -193,5 +194,5 @@ public class CommodityService {
         }catch(Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
 }

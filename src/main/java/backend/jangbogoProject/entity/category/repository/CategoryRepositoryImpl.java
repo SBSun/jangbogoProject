@@ -1,5 +1,6 @@
 package backend.jangbogoProject.entity.category.repository;
 
+import backend.jangbogoProject.entity.category.Category;
 import backend.jangbogoProject.entity.category.QCategory;
 import backend.jangbogoProject.entity.category.dto.CategoryResponseDto;
 import com.querydsl.core.types.Projections;
@@ -34,7 +35,15 @@ public class CategoryRepositoryImpl implements CategoryRepositoryCustom{
     }
 
     @Override
-    public List<CategoryResponseDto> findByName(String name) {
+    public Category findByName(String name) {
+        return queryFactory
+                .selectFrom(category)
+                .where(toEq(category.name, name))
+                .fetchOne();
+    }
+
+    @Override
+    public List<CategoryResponseDto> findSubCategoriesByName(String name) {
 
         String sql = "WITH RECURSIVE subcategories AS (" +
                 " SELECT c.*" +
@@ -60,6 +69,15 @@ public class CategoryRepositoryImpl implements CategoryRepositoryCustom{
                 )).collect(Collectors.toList());
 
         return subCategories;
+    }
+
+    @Override
+    public Long findIdByName(String name) {
+        return queryFactory
+                .select(category.id)
+                .from(category)
+                .where(toEq(category.name, name))
+                .fetchOne();
     }
 
     @Override

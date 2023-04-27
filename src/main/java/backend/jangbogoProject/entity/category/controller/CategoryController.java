@@ -29,8 +29,8 @@ public class CategoryController {
         return categoryService.createCategoryRoot();
     }
 
-    @GetMapping("/findByName")
-    public CategoryResponseDto findByName(@RequestParam @NotBlank String name){
-        return categoryService.findByName(name);
+    @GetMapping("/findSubCategoriesByName")
+    public CategoryResponseDto findSubCategoriesByName(@RequestParam @NotBlank String name){
+        return categoryService.findSubCategoriesByName(name);
     }
 }

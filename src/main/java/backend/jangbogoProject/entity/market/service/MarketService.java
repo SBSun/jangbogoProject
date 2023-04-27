@@ -37,7 +37,7 @@ public class MarketService {
     }
 
     public MarketResponseDto.Info findById(Long id){
-        MarketResponseDto.Info info = marketRepository.findById(id);
+        MarketResponseDto.Info info = marketRepository.findByMarketId(id);
 
         if(info == null)
             throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
@@ -46,7 +46,7 @@ public class MarketService {
     }
 
     public boolean existsById(Long id){
-        return marketRepository.existsById(id.intValue());
+        return marketRepository.existsById(id);
     }
 
     public String getMarketName(Long id){

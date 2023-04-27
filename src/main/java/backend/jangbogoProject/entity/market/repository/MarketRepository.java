@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
-public interface MarketRepository extends JpaRepository<Market, Integer>, MarketRepositoryCustom {
+public interface MarketRepository extends JpaRepository<Market, Long>, MarketRepositoryCustom {
     @Modifying
     @Transactional
     @Query(value = "TRUNCATE TABLE market", nativeQuery = true)

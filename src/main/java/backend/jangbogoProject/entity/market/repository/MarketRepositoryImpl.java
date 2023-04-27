@@ -18,7 +18,7 @@ public class MarketRepositoryImpl implements MarketRepositoryCustom{
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public MarketResponseDto.Info findById(Long id) {
+    public MarketResponseDto.Info findByMarketId(Long id) {
         return queryFactory
                 .select(Projections.constructor(MarketResponseDto.Info.class,
                         market.id,

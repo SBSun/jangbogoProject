@@ -27,12 +27,12 @@ public class CategoryRepositoryTest {
 
     @Test
     @DisplayName("카테고리 이름으로 으로 카테고리 정보 반환")
-    public void findByName(){
+    public void findSubCategoriesByName(){
         // given
         String categoryName = "수산물";
 
         // when
-        List<CategoryResponseDto> categories = categoryRepository.findByName(categoryName);
+        List<CategoryResponseDto> categories = categoryRepository.findSubCategoriesByName(categoryName);
 
         // then
         for (int i = 0; i < categories.size(); i++) {

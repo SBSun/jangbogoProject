@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface MarketRepositoryCustom {
 
-    MarketResponseDto.Info findById(Long id);
+    MarketResponseDto.Info findByMarketId(Long id);
 
     String findNameById(Long id);
 
