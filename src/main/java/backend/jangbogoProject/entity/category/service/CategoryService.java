@@ -103,7 +103,7 @@ public class CategoryService {
                 .map(c -> new CategoryResponseDto(c.getId(), c.getName(), c.getParentId(), c.getDepth()))
                 .collect(Collectors.groupingBy(p -> p.getParentId()));
 
-        CategoryResponseDto rootCategoryDto = new CategoryResponseDto(1l, "ROOT", null, 0);
+        CategoryResponseDto rootCategoryDto = new CategoryResponseDto(0l, "ROOT", null, 0);
         addSubCategories(rootCategoryDto, groupingByParent);
 
         return rootCategoryDto;
@@ -131,8 +131,16 @@ public class CategoryService {
 
     public CategoryResponseDto findByName(String name){
         // exists 함수 구현하기
+        List<CategoryResponseDto> categories = categoryRepository.findByName(name);
+        // 찾는 카테고리를 List에서 꺼내온 후 제거
+        CategoryResponseDto parentCategory = categories.get(0);
+        categories.remove(0);
 
-        return categoryRepository.findByName(name);
+        Map<Long, List<CategoryResponseDto>> groupingByParent = categories.stream()
+                .collect(Collectors.groupingBy(p -> p.getParentId()));
+
+        addSubCategories(parentCategory, groupingByParent);
+        return parentCategory;
     }
 
     public List<String> findNamesByDepth(int depth){

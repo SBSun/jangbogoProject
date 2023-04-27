@@ -20,7 +20,7 @@ public class Category {
 
     private String name;
 
-    @JoinColumn(name = "parent_id")
+    @Column(name = "parent_id")
     private Long parentId;
 
     private int depth;

@@ -29,15 +29,37 @@ public class CategoryRepositoryImpl implements CategoryRepositoryCustom{
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public CategoryResponseDto findByCategoryId(Long categoryId) {
+    public List<CategoryResponseDto> findByCategoryId(Long categoryId) {
         return null;
     }
 
     @Override
-    public CategoryResponseDto findByName(String name) {
+    public List<CategoryResponseDto> findByName(String name) {
 
+        String sql = "WITH RECURSIVE subcategories AS (" +
+                " SELECT c.*" +
+                " FROM category c" +
+                " WHERE name = :name" +
+                " UNION ALL" +
+                " SELECT c.*" +
+                " FROM category c" +
+                " JOIN subcategories sub" +
+                " ON c.parent_id = sub.category_id" +
+                ")" +
+                " SELECT sub.category_id as id, sub.name, sub.parent_id as parentId, sub.depth" +
+                " FROM subcategories sub";
 
-        return null;
+        Query q = em.createNativeQuery(sql).setParameter("name", name);
+        List<Object[]> resultList = q.getResultList();
+        List<CategoryResponseDto> subCategories = resultList.stream()
+                .map(child -> new CategoryResponseDto(
+                        ((Integer) child[0]).longValue(),
+                        (String) child[1],
+                        ((Integer) child[2]).longValue(),
+                        (Integer) child[3]
+                )).collect(Collectors.toList());
+
+        return subCategories;
     }
 
     @Override

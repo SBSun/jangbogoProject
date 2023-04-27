@@ -24,7 +24,7 @@ public class CategoryRepositoryTest {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    /*
+
     @Test
     @DisplayName("카테고리 이름으로 으로 카테고리 정보 반환")
     public void findByName(){
@@ -32,11 +32,14 @@ public class CategoryRepositoryTest {
         String categoryName = "수산물";
 
         // when
-        CategoryResponseDto.Info info = categoryRepository.findByName(categoryName);
+        List<CategoryResponseDto> categories = categoryRepository.findByName(categoryName);
 
         // then
-
-    }*/
+        for (int i = 0; i < categories.size(); i++) {
+            CategoryResponseDto c = categories.get(i);
+            System.out.println(c.getId() + ", " + c.getName() + ", " + c.getParentId() + ", " + c.getDepth());
+        }
+    }
 
     @Test
     @DisplayName("특정 Depth에 해당하는 카테고리들의 이름 반환")

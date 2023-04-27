@@ -8,9 +8,9 @@ import java.util.Optional;
 
 public interface CategoryRepositoryCustom {
 
-    CategoryResponseDto findByCategoryId(Long categoryId);
+    List<CategoryResponseDto> findByCategoryId(Long categoryId);
 
-    CategoryResponseDto findByName(String name);
+    List<CategoryResponseDto> findByName(String name);
 
     List<String> findNamesByDepth(int depth);
 }
