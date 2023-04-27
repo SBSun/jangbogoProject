@@ -80,7 +80,8 @@ public class CommodityService {
     }
 
     // 매달 수요일 오전 6시에 실행
-    @Scheduled(fixedDelay = 5000000)
+    //@Scheduled(cron = "0 0 6 ? * 3")
+    @Scheduled(cron = "0 0 6 ? * 3")
     @Transactional
     public void getCommodityData(){
         commodityRepository.truncate();
