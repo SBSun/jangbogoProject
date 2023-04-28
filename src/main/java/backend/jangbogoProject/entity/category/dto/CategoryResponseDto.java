@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 @Setter
 @NoArgsConstructor
 public class CategoryResponseDto {
-
     private Long id;
     private String name;
     private Long parentId;

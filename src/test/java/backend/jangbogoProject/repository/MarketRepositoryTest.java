@@ -25,12 +25,12 @@ public class MarketRepositoryTest {
 
     @Test
     @DisplayName("Id로 Market 정보 반환")
-    public void findById(){
+    public void findByMarketId(){
         // given
-        Long marketId = 1l;
+        Long marketId = 11l;
 
         // when
-        MarketResponseDto.Info info = marketRepository.findById(marketId);
+        MarketResponseDto.Info info = marketRepository.findByMarketId(marketId);
 
         // then
         System.out.println(info.toString());
@@ -40,7 +40,7 @@ public class MarketRepositoryTest {
     @DisplayName("Id로 Market name 반환")
     public void findNameById(){
         // given
-        Long marketId = 1l;
+        Long marketId = 11l;
 
         // when
         String name = marketRepository.findNameById(marketId);

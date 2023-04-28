@@ -86,7 +86,7 @@ public class CategoryService {
     public CategoryResponseDto findSubCategoriesByName(String name){
         // exists 함수 구현하기
         List<CategoryResponseDto> categories = categoryRepository.findSubCategoriesByName(name);
-        // 찾는 카테고리를 List에서 꺼내온 후 제거
+        // 상위 카테고리를 List에서 꺼내온 후 제거
         CategoryResponseDto parentCategory = categories.get(0);
         categories.remove(0);
 
@@ -103,6 +103,7 @@ public class CategoryService {
     }
 
     public CategoryResponseDto createCategoryRoot(){
+
         Map<Long, List<CategoryResponseDto>> groupingByParent = categoryRepository.findAll().stream()
                 .map(c -> new CategoryResponseDto(c.getId(), c.getName(), c.getParentId(), c.getDepth()))
                 .collect(Collectors.groupingBy(p -> p.getParentId()));
