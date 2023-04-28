@@ -30,16 +30,37 @@ public class CategoryRepositoryImpl implements CategoryRepositoryCustom{
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<CategoryResponseDto> findByCategoryId(Long categoryId) {
-        return null;
-    }
-
-    @Override
     public Category findByName(String name) {
         return queryFactory
                 .selectFrom(category)
                 .where(toEq(category.name, name))
                 .fetchOne();
+    }
+
+    @Override
+    public Category findByCategoryId(Long categoryId) {
+        return queryFactory
+                .selectFrom(category)
+                .where(toEq(category.id, categoryId))
+                .fetchOne();
+    }
+
+    @Override
+    public Long findIdByName(String name) {
+        return queryFactory
+                .select(category.id)
+                .from(category)
+                .where(toEq(category.name, name))
+                .fetchOne();
+    }
+
+    @Override
+    public List<String> findNamesByDepth(int depth) {
+        return queryFactory
+                .select(category.name)
+                .from(category)
+                .where(toEq(category.depth, depth))
+                .fetch();
     }
 
     @Override
@@ -69,23 +90,5 @@ public class CategoryRepositoryImpl implements CategoryRepositoryCustom{
                 )).collect(Collectors.toList());
 
         return subCategories;
-    }
-
-    @Override
-    public Long findIdByName(String name) {
-        return queryFactory
-                .select(category.id)
-                .from(category)
-                .where(toEq(category.name, name))
-                .fetchOne();
-    }
-
-    @Override
-    public List<String> findNamesByDepth(int depth) {
-        return queryFactory
-                .select(category.name)
-                .from(category)
-                .where(toEq(category.depth, depth))
-                .fetch();
     }
 }

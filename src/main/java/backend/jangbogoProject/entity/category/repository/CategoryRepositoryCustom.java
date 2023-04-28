@@ -10,11 +10,11 @@ public interface CategoryRepositoryCustom {
 
     Category findByName(String name);
 
-    List<CategoryResponseDto> findByCategoryId(Long categoryId);
-
-    List<CategoryResponseDto> findSubCategoriesByName(String name);
+    Category findByCategoryId(Long categoryId);
 
     Long findIdByName(String name);
 
     List<String> findNamesByDepth(int depth);
+
+    List<CategoryResponseDto> findSubCategoriesByName(String name);
 }
