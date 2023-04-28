@@ -14,50 +14,50 @@ import {
 function handleCommodityThumbnail(id) {
   switch (id) {
     // 정육
-    case 9:
+    case 8:
       return 'egg';
-    case 10:
+    case 9:
       return 'chicken';
-    case 13:
+    case 12:
       return 'pork';
-    case 21:
+    case 20:
       return 'beef';
     // 수산물
-    case 6:
+    case 5:
       return 'galchi';
-    case 7:
+    case 6:
       return 'myeolchi';
-    case 8:
+    case 7:
       return 'mackerel';
-    case 12:
+    case 11:
       return 'dongtae';
-    case 14:
+    case 13:
       return 'myeongtae';
-    case 25:
+    case 24:
       return 'squid';
-    case 26:
+    case 25:
       return 'zogi';
     // 채소
-    case 15:
+    case 14:
       return 'radish';
-    case 18:
+    case 17:
       return 'cabbage';
-    case 20:
+    case 19:
       return 'lettuce';
-    case 22:
+    case 21:
       return 'zucchini';
-    case 23:
+    case 22:
       return 'onion';
-    case 24:
+    case 23:
       return 'cucumber';
     // 과일
-    case 11:
+    case 10:
       return 'jujube';
-    case 16:
+    case 15:
       return 'chestnut';
-    case 17:
+    case 16:
       return 'pear';
-    case 19:
+    case 18:
       return 'apple';
     default: {
       return 'none';
@@ -116,6 +116,7 @@ const CommodityList = ({ modify, recordSize, keyword }) => {
     const fetchData = () => {
       selectAPI()
         .then(data => {
+          console.log(data.content);
           setIsEmpty(data?.content.length === 0);
           setCommoditys(data?.content);
           setEndPage(data?.totalPages);
