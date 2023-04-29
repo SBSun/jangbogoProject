@@ -285,6 +285,11 @@ public class CommodityRepositoryImpl implements CommodityRepositoryCustom{
         em.createNativeQuery("SET FOREIGN_KEY_CHECKS = 0").executeUpdate();
         em.createNativeQuery("TRUNCATE TABLE commodity").executeUpdate();
         em.createNativeQuery("TRUNCATE TABLE market").executeUpdate();
+
+    }
+
+    @Override
+    public void foreignKeyChecksOn() {
         em.createNativeQuery("SET FOREIGN_KEY_CHECKS = 1").executeUpdate();
     }
 }

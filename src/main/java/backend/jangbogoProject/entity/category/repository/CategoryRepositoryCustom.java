@@ -12,6 +12,8 @@ public interface CategoryRepositoryCustom {
 
     Category findByCategoryId(Long categoryId);
 
+    List<Category> findByDepth(int depth);
+
     Long findIdByName(String name);
 
     List<String> findNamesByDepth(int depth);

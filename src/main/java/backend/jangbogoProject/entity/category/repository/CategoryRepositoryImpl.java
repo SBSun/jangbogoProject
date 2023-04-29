@@ -46,6 +46,14 @@ public class CategoryRepositoryImpl implements CategoryRepositoryCustom{
     }
 
     @Override
+    public List<Category> findByDepth(int depth) {
+        return queryFactory
+                .selectFrom(category)
+                .where(toEq(category.depth, depth))
+                .fetch();
+    }
+
+    @Override
     public Long findIdByName(String name) {
         return queryFactory
                 .select(category.id)

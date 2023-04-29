@@ -21,4 +21,6 @@ public interface CommodityRepositoryCustom {
     List<CommodityResponseDto.Info> getLowestPriceCommodities(Long guId);
 
     void truncate();
+
+    void foreignKeyChecksOn();
 }

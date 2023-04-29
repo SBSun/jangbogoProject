@@ -18,23 +18,6 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class MarketService {
     private final MarketRepository marketRepository;
-    private final GuService guService;
-
-    @Transactional
-    public void save(Market _market, String guName){
-
-        /*
-        if(!guService.existsById(_market.getGu_id())){
-            Gu gu = Gu.builder()
-                    .id(_market.getGu_id())
-                    .name(guName)
-                    .build();
-
-            guService.save(gu);
-        }*/
-
-        marketRepository.save(_market);
-    }
 
     public MarketResponseDto.Info findById(Long id){
         MarketResponseDto.Info info = marketRepository.findByMarketId(id);

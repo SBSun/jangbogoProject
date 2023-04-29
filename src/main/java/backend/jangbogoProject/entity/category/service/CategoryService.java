@@ -73,6 +73,15 @@ public class CategoryService {
         return category;
     }
 
+    public List<Category> findByDepth(int depth){
+        List<Category> categories = categoryRepository.findByDepth(depth);
+        if(categories.isEmpty()){
+            new RestApiException(CommonErrorCode.CATEGORY_NOT_FOUND);
+        }
+
+        return categories;
+    }
+
     public Long findIdByName(String name){
         Long id = categoryRepository.findIdByName(name);
 
