@@ -26,8 +26,7 @@ public class Commodity {
     private String P_DATE;
 
     @Builder
-    public Commodity(Long id, Long m_SEQ, Long category_id, String a_UNIT, String a_PRICE, String add_COL, String p_DATE) {
-        this.id = id;
+    public Commodity(Long m_SEQ, Long category_id, String a_UNIT, String a_PRICE, String add_COL, String p_DATE) {
         M_SEQ = m_SEQ;
         this.category_id = category_id;
         A_UNIT = a_UNIT;

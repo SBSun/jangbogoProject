@@ -3,6 +3,7 @@ package backend.jangbogoProject.entity.commodity.service;
 
 import backend.jangbogoProject.aop.ExecutionTimeChecker;
 import backend.jangbogoProject.entity.category.Category;
+import backend.jangbogoProject.entity.commodity.repository.CommodityBulkRepository;
 import backend.jangbogoProject.entity.gu.Gu;
 import backend.jangbogoProject.entity.gu.repository.GuRepository;
 import backend.jangbogoProject.entity.gu.service.GuService;
@@ -42,6 +43,7 @@ import java.util.stream.Collectors;
 public class CommodityService {
 
     private final CommodityRepository commodityRepository;
+    private final CommodityBulkRepository commodityBulkRepository;
     private final MarketRepository marketRepository;
     private final GuRepository guRepository;
     private final CategoryService categoryService;
@@ -93,7 +95,6 @@ public class CommodityService {
     @Scheduled(fixedDelay = 5000000)
     @Transactional
     public void getCommodityData(){
-        commodityRepository.truncate();
 
         List<Category> categories = categoryService.findByDepth(2);
         Map<String, Long> categoryMap = new HashMap<>();
@@ -117,8 +118,6 @@ public class CommodityService {
 
         if(maxCommodityCount > 0)
             cycle++;
-
-        long startTime = System.currentTimeMillis();
 
         try {
             while(cycle > 0){
@@ -191,7 +190,6 @@ public class CommodityService {
                     String p_date = (String)tmp.get("P_DATE");
 
                     Commodity commodity = Commodity.builder()
-                            .id((long)start + i)
                             .m_SEQ(m_seq)
                             .category_id(categoryId)
                             .a_UNIT(a_unit)
@@ -222,12 +220,15 @@ public class CommodityService {
             e.printStackTrace();
         }
 
+        commodityRepository.truncate();
+
         guRepository.saveAll(gus);
         marketRepository.saveAll(markets);
-        commodityRepository.saveAll(commodities);
+        long startTime = System.currentTimeMillis();
+        commodityBulkRepository.saveAll(commodities);
 
         long stopTime = System.currentTimeMillis();
-        System.out.println("메서드 실행 시간 : " + (stopTime - startTime));
+        System.out.println("JPA saveAll() 적용  : " + (stopTime - startTime));
         commodityRepository.foreignKeyChecksOn();
     }
 }

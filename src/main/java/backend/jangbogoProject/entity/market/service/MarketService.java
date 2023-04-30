@@ -59,6 +59,7 @@ public class MarketService {
         return infoList;
     }
 
+    @Transactional
     public void truncateMarket(){
         marketRepository.truncateMarket();
     }
