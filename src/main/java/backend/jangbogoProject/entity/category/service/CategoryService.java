@@ -9,6 +9,7 @@ import backend.jangbogoProject.entity.category.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,7 @@ public class CategoryService {
 
 
     @Transactional
-    public void create(CategoryRequestDTO categoryRequestDTO){
+    public Category create(CategoryRequestDTO categoryRequestDTO){
         if(categoryRepository.existsByName(categoryRequestDTO.getName())){
             throw new RestApiException(CommonErrorCode.ALREADY_SAVED_CATEGORY);
         }
@@ -31,7 +32,7 @@ public class CategoryService {
         Category category;
 
         // 상위 카테고리가 없다면 대분류로 등록
-        if(categoryRequestDTO.getParentName() == null){
+        if(!StringUtils.hasText(categoryRequestDTO.getParentName())){
 
             category = Category.builder()
                     .name(categoryRequestDTO.getName())
@@ -54,7 +55,7 @@ public class CategoryService {
                     .build();
         }
 
-        categoryRepository.save(category);
+        return categoryRepository.save(category);
     }
 
     public Category findById(Long id){
