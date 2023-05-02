@@ -3,6 +3,7 @@ package backend.jangbogoProject.entity.commodity.service;
 
 import backend.jangbogoProject.aop.ExecutionTimeChecker;
 import backend.jangbogoProject.entity.category.Category;
+import backend.jangbogoProject.entity.category.repository.CategoryRepository;
 import backend.jangbogoProject.entity.commodity.repository.CommodityBulkRepository;
 import backend.jangbogoProject.entity.gu.Gu;
 import backend.jangbogoProject.entity.gu.repository.GuRepository;
@@ -46,7 +47,7 @@ public class CommodityService {
     private final CommodityBulkRepository commodityBulkRepository;
     private final MarketRepository marketRepository;
     private final GuRepository guRepository;
-    private final CategoryService categoryService;
+    private final CategoryRepository categoryRepository;
 
     @ExecutionTimeChecker
     public Page<CommodityResponseDto.Info> getCommodities(Long guId, Pageable pageable){
@@ -56,12 +57,7 @@ public class CommodityService {
 
     public List<CommodityResponseDto.Info> getLowestPriceCommodities(Long guId){
 
-        List<CommodityResponseDto.Info> lowestPriceCommodities = commodityRepository.getLowestPriceCommodities(guId);
-
-        if(lowestPriceCommodities.isEmpty())
-            throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
-
-        return lowestPriceCommodities;
+        return commodityRepository.getLowestPriceCommodities(guId);
     }
 
     public Page<CommodityResponseDto.Info> findByKeyword(Long guId, String keyword, Pageable pageable){
@@ -74,10 +70,9 @@ public class CommodityService {
         return commodityRepository.findByMarket(marketId, pageable);
     }
 
-
     public Page<CommodityResponseDto.Info> findByCategory(Long guId, String categoryName, Pageable pageable){
 
-        Category category = categoryService.findByName(categoryName);
+        Category category = categoryRepository.findByName(categoryName);
 
         Page<CommodityResponseDto.Info> infoList;
 
@@ -95,7 +90,7 @@ public class CommodityService {
     @Transactional
     public void getCommodityData(){
 
-        List<Category> categories = categoryService.findByDepth(2);
+        List<Category> categories = categoryRepository.findByDepth(2);
         Map<String, Long> categoryMap = new HashMap<>();
         for (int i = 0; i < categories.size(); i++) {
             categoryMap.put(categories.get(i).getName(), categories.get(i).getId());

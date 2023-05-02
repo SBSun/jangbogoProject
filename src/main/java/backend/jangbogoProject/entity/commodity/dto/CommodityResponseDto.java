@@ -7,6 +7,7 @@ public class CommodityResponseDto {
 
     @Getter
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class Info{
         private Long commodityId;
         private String marketName;

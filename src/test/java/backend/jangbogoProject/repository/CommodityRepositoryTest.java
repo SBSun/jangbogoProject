@@ -2,7 +2,9 @@ package backend.jangbogoProject.repository;
 
 import backend.jangbogoProject.TestConfig;
 import backend.jangbogoProject.dto.PageRequestDto;
+import backend.jangbogoProject.entity.commodity.Commodity;
 import backend.jangbogoProject.entity.commodity.dto.CommodityResponseDto;
+import backend.jangbogoProject.entity.commodity.repository.CommodityBulkRepository;
 import backend.jangbogoProject.entity.commodity.repository.CommodityRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.DisplayName;
@@ -14,8 +16,11 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.persistence.EntityManager;
+import javax.sql.DataSource;
+import java.util.ArrayList;
 import java.util.List;
 
 @DataJpaTest
