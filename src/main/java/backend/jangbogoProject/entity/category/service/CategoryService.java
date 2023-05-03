@@ -68,7 +68,7 @@ public class CategoryService {
     public Category findByName(String name){
         Category category = categoryRepository.findByName(name);
         if(category == null){
-            new RestApiException(CommonErrorCode.CATEGORY_NOT_FOUND);
+            throw new RestApiException(CommonErrorCode.CATEGORY_NOT_FOUND);
         }
 
         return category;
@@ -76,9 +76,6 @@ public class CategoryService {
 
     public List<Category> findByDepth(int depth){
         List<Category> categories = categoryRepository.findByDepth(depth);
-        if(categories.isEmpty()){
-            new RestApiException(CommonErrorCode.CATEGORY_NOT_FOUND);
-        }
 
         return categories;
     }
@@ -87,7 +84,7 @@ public class CategoryService {
         Long id = categoryRepository.findIdByName(name);
 
         if(id == null){
-            new RestApiException(CommonErrorCode.CATEGORY_NOT_FOUND);
+            throw new RestApiException(CommonErrorCode.CATEGORY_NOT_FOUND);
         }
 
         return id;
