@@ -12,7 +12,6 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import java.util.Locale;
 
 @SpringBootApplication
-@EnableJpaAuditing
 @EnableAspectJAutoProxy
 @EnableScheduling
 public class JangbogoProjectApplication {
