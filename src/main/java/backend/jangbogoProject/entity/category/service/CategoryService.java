@@ -91,8 +91,12 @@ public class CategoryService {
     }
 
     public CategoryResponseDto findSubCategoriesByName(String name){
-        // exists 함수 구현하기
         List<CategoryResponseDto> categories = categoryRepository.findSubCategoriesByName(name);
+
+        if(categories.isEmpty()){
+            throw new RestApiException(CommonErrorCode.CATEGORY_NOT_FOUND);
+        }
+
         // 상위 카테고리를 List에서 꺼내온 후 제거
         CategoryResponseDto parentCategory = categories.get(0);
         categories.remove(0);
