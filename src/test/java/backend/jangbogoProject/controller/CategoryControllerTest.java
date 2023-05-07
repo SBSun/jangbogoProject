@@ -44,7 +44,7 @@ public class CategoryControllerTest {
     @DisplayName("[GET] 카테고리 목록 조회")
     public void findAll() throws Exception {
         // given
-        String url = "/categories/findAll";
+        String url = "/categories";
         CategoryResponseDto responseDto = createRootCategory();
         doReturn(responseDto).when(categoryService).createCategoryRoot();
 
@@ -64,7 +64,7 @@ public class CategoryControllerTest {
     @DisplayName("[GET] 카테고리의 하위 카테고리까지 조회")
     public void findSubCategoriesByName() throws Exception {
         // given
-        String url = "/categories/findSubCategoriesByName";
+        String url = "/categories/채소";
         CategoryResponseDto responseDto = categoryResponseDto();
         doReturn(responseDto).when(categoryService).findSubCategoriesByName("채소");
 
@@ -86,7 +86,7 @@ public class CategoryControllerTest {
     @DisplayName("[GET][ERROR] 카테고리의 하위 카테고리까지 조회 / 존재하지 않는 카테고리")
     public void findSubCategoriesByName_NotFound() throws Exception {
         // given
-        String url = "/categories/findSubCategoriesByName";
+        String url = "/categories/채소";
         doThrow(new RestApiException(CommonErrorCode.CATEGORY_NOT_FOUND))
                 .when(categoryService)
                 .findSubCategoriesByName("채소");
@@ -104,28 +104,10 @@ public class CategoryControllerTest {
 
     @Test
     @WithMockUser
-    @DisplayName("[GET][ERROR] 카테고리의 하위 카테고리까지 조회 / 잘못된 파라미터")
-    public void findSubCategoriesByName_INVALID_PARAMETER() throws Exception {
-        // given
-        String url = "/categories/findSubCategoriesByName";
-
-        // when
-        final ResultActions resultActions = mockMvc.perform(
-                get(url)
-                        .param("name", "")
-                        .contentType(MediaType.APPLICATION_JSON)
-        );
-
-        // then
-        resultActions.andExpect(status().isBadRequest());
-    }
-
-    @Test
-    @WithMockUser
     @DisplayName("[POST] 카테고리 추가")
     public void create() throws Exception {
         // given
-        String url = "/categories/create";
+        String url = "/categories";
         CategoryRequestDTO requestDTO = categoryRequestDTO("감자", "채소");
         doReturn(Category.builder().build()).when(categoryService).create(requestDTO);
 
@@ -145,7 +127,7 @@ public class CategoryControllerTest {
     @DisplayName("[POST][ERROR] 카테고리 추가 / 카테고리 중복")
     public void create_ALREADY_SAVED_CATEGORY() throws Exception {
         // given
-        String url = "/categories/create";
+        String url = "/categories";
         CategoryRequestDTO requestDTO = categoryRequestDTO("감자", "채소");
         doThrow(new RestApiException(CommonErrorCode.ALREADY_SAVED_CATEGORY))
                 .when(categoryService)
@@ -167,7 +149,7 @@ public class CategoryControllerTest {
     @DisplayName("[POST][ERROR] 카테고리 추가 / 존재하지 않는 상위 카테고리 ")
     public void create_PARENT_CATEGORY_NOT_FOUND() throws Exception {
         // given
-        String url = "/categories/create";
+        String url = "/categories";
         CategoryRequestDTO requestDTO = categoryRequestDTO("감자", "채소");
         doThrow(new RestApiException(CommonErrorCode.PARENT_CATEGORY_NOT_FOUND))
                 .when(categoryService)
@@ -189,7 +171,7 @@ public class CategoryControllerTest {
     @DisplayName("[POST][ERROR] 카테고리 추가 / 잘못된 파라미터 ")
     public void create_INVALID_PARAMETER() throws Exception {
         // given
-        String url = "/categories/create";
+        String url = "/categories";
 
         // when
         final ResultActions resultActions = mockMvc.perform(post(url)

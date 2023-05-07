@@ -5,6 +5,7 @@ import backend.jangbogoProject.entity.user.dto.UserRequestDto;
 import backend.jangbogoProject.entity.user.dto.UserResponseDto;
 import backend.jangbogoProject.entity.user.User;
 import backend.jangbogoProject.exception.errorCode.CommonErrorCode;
+import backend.jangbogoProject.exception.errorCode.UserErrorCode;
 import backend.jangbogoProject.exception.exception.RestApiException;
 import backend.jangbogoProject.security.PrincipalDetails;
 import backend.jangbogoProject.entity.user.service.UserService;
@@ -32,63 +33,63 @@ public class UserController {
         return userService.findAllUser();
     }
 
-    @GetMapping("/user/checkEmail")
+    @GetMapping("/users/check")
     public boolean checkEmail(@RequestParam @NotBlank @Email String email) {
 
         return userService.checkEmail(email);
     }
 
-    @PostMapping("/user/signUpUser")
-    public DataResponseDTO<UserResponseDto.Info> signUpUser(@RequestBody @Valid UserRequestDto.SignUp signUp) {
-        if(signUp == null)
-            throw new RestApiException(CommonErrorCode.INVALID_PARAMETER);
+    @PostMapping("/users")
+    public UserResponseDto.Info signUpUser(@RequestBody @Valid UserRequestDto.SignUp signUp) {
 
-        return DataResponseDTO.of(userService.signUp(signUp));
+        return userService.signUp(signUp);
     }
 
-    @PatchMapping("/user/edit")
-    public ResponseEntity<String> editUser(@RequestBody @Valid UserRequestDto.Edit edit, @AuthenticationPrincipal PrincipalDetails principalDetails){
-        userService.editUser(edit, principalDetails.getUser().getEmail());
+    @PatchMapping("/users")
+    public UserResponseDto.Info editUser(@RequestBody @Valid UserRequestDto.Edit edit, @AuthenticationPrincipal PrincipalDetails principalDetails){
+        if(principalDetails.getUser() == null)
+            throw new RestApiException(UserErrorCode.INACTIVE_USER);
 
-        return new ResponseEntity<>("회원 정보 수정 성공", HttpStatus.OK);
+        return userService.editUser(edit, principalDetails.getUser().getEmail());
     }
 
-    @DeleteMapping("/user/delete")
-    public ResponseEntity<String> deleteUser(HttpServletRequest request, @AuthenticationPrincipal PrincipalDetails principalDetails){
-
-        System.out.println("principalDetails.getUser().getEmail() : " + principalDetails.getUser().getEmail());
+    @DeleteMapping("/users")
+    public void deleteUser(HttpServletRequest request, @AuthenticationPrincipal PrincipalDetails principalDetails){
+        if(principalDetails.getUser() == null)
+            throw new RestApiException(UserErrorCode.INACTIVE_USER);
 
         userService.logout(request);
         userService.deleteUser(principalDetails.getUsername());
-        return new ResponseEntity<>("회원 탈퇴 성공", HttpStatus.OK);
     }
 
-    @PostMapping("/user/login")
+    @PostMapping("/users/login")
     public UserResponseDto.LoginSuccessInfo login(@RequestBody @Valid UserRequestDto.Login login) {
 
         return userService.login(login);
     }
 
-    @GetMapping("/user/getLoginUser")
-    public DataResponseDTO<UserResponseDto.LoginUserInfo> getLoginUser(@AuthenticationPrincipal PrincipalDetails principalDetails){
+    @GetMapping("/users/loginUser")
+    public UserResponseDto.LoginUserInfo getLoginUser(@AuthenticationPrincipal PrincipalDetails principalDetails){
         User user = principalDetails.getUser();
+
+        if(user == null)
+            throw new RestApiException(UserErrorCode.INACTIVE_USER);
 
         String email = user.getEmail();
         String name = user.getName();
         String loginType = user.getLoginType();
 
         UserResponseDto.LoginUserInfo loginUserInfo = new UserResponseDto.LoginUserInfo(email, name, loginType);
-
-        return DataResponseDTO.of(loginUserInfo);
+        return loginUserInfo;
     }
 
-    @PostMapping("/user/reissue")
+    @PostMapping("/users/reissue")
     public UserResponseDto.TokenInfo reissue(@RequestBody @Valid UserRequestDto.Reissue reissue){
         UserResponseDto.TokenInfo tokenInfo = userService.reissue(reissue);
         return tokenInfo;
     }
 
-    @PostMapping("/user/logout")
+    @PostMapping("/users/logout")
     public String logout(HttpServletRequest request) {
         return userService.logout(request);
     }

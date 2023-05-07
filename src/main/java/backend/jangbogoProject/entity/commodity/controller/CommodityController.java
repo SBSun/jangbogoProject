@@ -17,11 +17,11 @@ import java.util.List;
 @Validated
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/commodity")
+@RequestMapping("")
 public class CommodityController {
     private final CommodityService commodityService;
 
-    @GetMapping("/getCommodities")
+    @GetMapping("/commodities")
     public Page<CommodityResponseDto.Info> getCommodities(@RequestParam @NotNull Long guId
             , PageRequestDto pageRequestDto){
         Pageable pageable = pageRequestDto.of();
@@ -30,7 +30,7 @@ public class CommodityController {
         return infoList;
     }
 
-    @GetMapping("/getLowestPriceCommodities")
+    @GetMapping("/commodities/lowest")
     public CommodityResponseDto.InfoList getLowestPriceCommodities(@RequestParam @NotNull Long guId){
         List<CommodityResponseDto.Info> infoList = commodityService.getLowestPriceCommodities(guId);
 
@@ -38,17 +38,17 @@ public class CommodityController {
     }
 
 
-    @GetMapping("/findByCategory")
+    @GetMapping("/commodities/categories/{categoryName}")
     public Page<CommodityResponseDto.Info> findByCategory(@RequestParam @NotNull Long guId
-            , @RequestParam @NotBlank String categoryName, PageRequestDto pageRequestDto){
+            , @PathVariable @NotBlank String categoryName, PageRequestDto pageRequestDto){
         Pageable pageable = pageRequestDto.of();
         Page<CommodityResponseDto.Info> infoList = commodityService.findByCategory(guId, categoryName, pageable);
 
         return infoList;
     }
 
-    @GetMapping("/findByMarket")
-    public Page<CommodityResponseDto.Info> findByMarket(@RequestParam @NotNull Long marketId
+    @GetMapping("/commodities/markets/{marketId}")
+    public Page<CommodityResponseDto.Info> findByMarket(@PathVariable @NotNull Long marketId
             , PageRequestDto pageRequestDto){
         Pageable pageable = pageRequestDto.of();
         Page<CommodityResponseDto.Info> infoList = commodityService.findByMarket(marketId, pageable);
@@ -57,9 +57,9 @@ public class CommodityController {
         return infoList;
     }
 
-    @GetMapping("/findByKeyword")
+    @GetMapping("/commodities/search/{keyword}")
     public Page<CommodityResponseDto.Info> findByKeyword(@RequestParam @NotNull Long guId
-            , @RequestParam @NotBlank String keyword, PageRequestDto pageRequestDto){
+            , @PathVariable @NotBlank String keyword, PageRequestDto pageRequestDto){
         Pageable pageable = pageRequestDto.of();
         Page<CommodityResponseDto.Info> infoList = commodityService.findByKeyword(guId, keyword, pageable);
 

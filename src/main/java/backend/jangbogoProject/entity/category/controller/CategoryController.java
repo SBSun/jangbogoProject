@@ -16,23 +16,21 @@ import javax.validation.constraints.NotNull;
 @Validated
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/categories")
 public class CategoryController {
     private final CategoryService categoryService;
 
-    @PostMapping("/create")
+    @PostMapping("/categories")
     public void create(@RequestBody @Valid CategoryRequestDTO categoryRequestDTO){
         categoryService.create(categoryRequestDTO);
     }
 
-    @GetMapping("/findAll")
+    @GetMapping("/categories")
     public CategoryResponseDto findAll(){
         return categoryService.createCategoryRoot();
     }
 
-    @GetMapping("/findSubCategoriesByName")
-    public CategoryResponseDto findSubCategoriesByName(@RequestParam(required = false) @NotBlank String name){
-
+    @GetMapping("/categories/{name}")
+    public CategoryResponseDto findSubCategoriesByName(@PathVariable String name){
         return categoryService.findSubCategoriesByName(name);
     }
 }

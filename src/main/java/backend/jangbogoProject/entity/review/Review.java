@@ -34,4 +34,8 @@ public class Review extends BaseTimeEntity {
     public void update(String content){
         this.content = content;
     }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
 }

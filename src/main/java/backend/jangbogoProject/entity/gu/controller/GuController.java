@@ -11,11 +11,10 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/gu")
 public class GuController {
     private final GuService guService;
 
-    @GetMapping("/findAllGuInfo")
+    @GetMapping("/gus")
     public List<GuResponseDto.Info> findAllGuInfo(){
         return guService.findAllGuInfo();
     }

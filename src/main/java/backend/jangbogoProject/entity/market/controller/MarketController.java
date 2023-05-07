@@ -15,11 +15,10 @@ import java.util.List;
 @Validated
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/market")
 public class MarketController {
     private final MarketService marketService;
 
-    @GetMapping("/findMarketsInGu")
+    @GetMapping("/markets")
     public List<MarketResponseDto.Info> findMarketsInGu(@RequestParam @NotNull Long guId){
         List<MarketResponseDto.Info> list = marketService.findMarketsInGu(guId);
 
