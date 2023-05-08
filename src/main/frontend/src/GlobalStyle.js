@@ -18,8 +18,15 @@ const GlobalStyle = styled.createGlobalStyle`
   }
 
   body {
-    font-family: 'Noto Sans KR';
+    word-break: keep-all;
+    font-family: Pretendard, -apple-system, BlinkMacSystemFont, Bazier Square,
+      Noto Sans KR, Segoe UI, Apple SD Gothic Neo, Roboto, Helvetica Neue, Arial,
+      sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol,
+      Noto Color Emoji;
+    letter-spacing: -0.3px;
     color: var(--black);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   @media (min-width: 415px) {

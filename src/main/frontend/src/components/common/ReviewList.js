@@ -9,7 +9,7 @@ import { MdModeEdit, MdDelete } from 'react-icons/md';
 const ReviewList = ({ marketId, marketName, thumbnail }) => {
   // 리뷰 데이터
   const [reviews, setReviews] = useState([]);
-  const [isEmpty, setIsEmpty] = useState(false);
+  const [isEmpty, setIsEmpty] = useState(true);
 
   const { isLogin, email } = useSelector(state => state.auth);
 
@@ -19,6 +19,9 @@ const ReviewList = ({ marketId, marketName, thumbnail }) => {
   const fetchData = useCallback(async () => {
     try {
       const data = await getMarketReviewList(marketId);
+      if (data.length === 0) {
+        return setIsEmpty(true);
+      }
       setReviews(data);
       setIsEmpty(false);
     } catch (error) {
