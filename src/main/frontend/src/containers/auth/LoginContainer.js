@@ -57,12 +57,22 @@ function LoginContainer() {
     }
   }
 
+  function onNaverLogin() {
+    navigate('/oauth2/authorization/naver');
+  }
+
+  function onKakaoLogin() {
+    navigate('/oauth2/authorization/kakao');
+  }
+
   return (
     <Login
       email={email}
       password={password}
       handleInputChange={handleInputChange}
       handleSubmit={handleSubmit}
+      onNaverLogin={onNaverLogin}
+      onKakaoLogin={onKakaoLogin}
       moveSignUp={moveSignUp}
     />
   );

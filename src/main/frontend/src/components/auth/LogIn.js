@@ -1,9 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { SiNaver } from 'react-icons/si';
-import { RiKakaoTalkFill } from 'react-icons/ri';
-
 import Header from '../common/Header';
 import Button from '../common/Button';
 
@@ -12,6 +9,8 @@ const Login = ({
   password,
   handleInputChange,
   handleSubmit,
+  onNaverLogin,
+  onKakaoLogin,
   moveSignUp,
 }) => {
   return (
@@ -42,16 +41,16 @@ const Login = ({
 
       <SocialLoginForm>
         <p>소셜 로그인</p>
-        <div className='button-group'>
-          <a href='/oauth2/authorization/kakao' className='kakao'>
-            <RiKakaoTalkFill className='kakao-logo' />
-            {/* <span>카카오톡으로 로그인</span> */}
-          </a>
-          <a href='/oauth2/authorization/naver' className='naver'>
-            <SiNaver className='naver-logo' />
-            {/* <span>네이버로 로그인</span> */}
-          </a>
-        </div>
+
+        <Button type={'button'} onClick={onNaverLogin}>
+          <img src='/assets/svg/naver_icon.svg' alt='naver' />
+          <span>네이버 로그인</span>
+        </Button>
+
+        <Button type={'button'} onClick={onKakaoLogin}>
+          <img src='/assets/svg/kakao_icon.svg' alt='kakao' />
+          <span>카카오 로그인</span>
+        </Button>
       </SocialLoginForm>
     </>
   );
@@ -69,62 +68,61 @@ const LoginForm = styled.form`
     height: 2.5rem;
     border: 1px solid var(--light-gray);
     padding: 0.5rem 1rem;
+    border-radius: 12px;
 
     &:nth-child(1) {
-      border-radius: 10px;
       margin-bottom: 0.5rem;
     }
     &:nth-child(2) {
-      border-radius: 10px;
       margin-bottom: 2rem;
     }
   }
-  > button:nth-child(4) {
-    margin-top: 10px;
+
+  button {
+    cursor: pointer;
+    border-radius: 12px;
+
+    &:nth-child(4) {
+      margin-top: 0.5rem;
+    }
   }
 `;
 
 const SocialLoginForm = styled.div`
   margin-top: 1rem;
   display: flex;
+  padding: 0 3rem 3rem 3rem;
   flex-direction: column;
-  align-items: center;
 
   p {
+    text-align: center;
     color: var(--gray);
     margin-bottom: 1rem;
   }
 
-  .button-group {
+  button {
+    padding: 1rem;
+    border-radius: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 
-    a {
-      width: 10vw;
-      text-decoration: none;
-      color: white;
-      margin: 1rem;
-      padding: 1rem;
-      display: inherit;
-      justify-content: center;
-      align-items: center;
-      border-radius: 15px;
-      cursor: pointer;
-
-      svg {
-        font-size: 2rem;
-      }
+    img {
+      width: 2rem;
     }
 
-    .kakao {
-      flex: 1;
-      background: #fee500;
-      color: black;
-    }
-    .naver {
-      flex: 1;
+    &:nth-child(2) {
       background: #03c75a;
+    }
+    &:last-child {
+      margin-top: 0.5rem;
+      background: #fee500;
+
+      span {
+        color: #000;
+        opacity: 0.8;
+      }
     }
   }
 `;
