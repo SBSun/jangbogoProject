@@ -42,15 +42,15 @@ const Login = ({
       <SocialLoginForm>
         <p>소셜 로그인</p>
 
-        <Button type={'button'} onClick={onNaverLogin}>
+        <a href='/oauth2/authorization/naver'>
           <img src='/assets/svg/naver_icon.svg' alt='naver' />
           <span>네이버 로그인</span>
-        </Button>
+        </a>
 
-        <Button type={'button'} onClick={onKakaoLogin}>
+        <a href='/oauth2/authorization/kakao'>
           <img src='/assets/svg/kakao_icon.svg' alt='kakao' />
           <span>카카오 로그인</span>
-        </Button>
+        </a>
       </SocialLoginForm>
     </>
   );
@@ -100,8 +100,9 @@ const SocialLoginForm = styled.div`
     margin-bottom: 1rem;
   }
 
-  button {
-    padding: 1rem;
+  a {
+    text-decoration: none;
+    padding: 0.5rem;
     border-radius: 12px;
     display: flex;
     justify-content: center;
@@ -110,6 +111,11 @@ const SocialLoginForm = styled.div`
 
     img {
       width: 2rem;
+    }
+
+    span {
+      color: white;
+      font-weight: 500;
     }
 
     &:nth-child(2) {
