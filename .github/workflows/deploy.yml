@@ -36,9 +36,12 @@ jobs:
     
     # (3) application.yml 생성
     - uses: actions/checkout@v3
-    - run: touch ./src/main/resources/application.yml
-    - run: echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.yml
-    - run: cat ./src/main/resources/application.yml
+    - run: |
+        mkdir -p ./src/main/resources 
+        cd ./src/main/resources
+        touch ./application.yml
+        echo "${{ secrets.APPLICATION }}" > ./application.yml
+        cat application.yml
 
     # (4) Gradle build (Test 제외)
     - name: Build with Gradle
