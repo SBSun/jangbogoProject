@@ -1,1 +1,91 @@
+spring:
+  resources:
+    static-locations: classpath:/resource/static/**, classpath:/frontend
+  # 데이터 소스 설정
+  datasource:
+    username: ENC(NaD/q830n6tkozj1IEgybg==)
+    url: ENC(D69xB4WtMCMhyF7TX1Q+bB7mCAkmUl9qckYdlCGKLkWygqmukHUoZUe/nWMjbKnIFZvnVnjSn7Z+yQ7Qdxv8Tb2Tfsi/YRmmdjGZrD/Y+2jZ/sF5fHs8NqqkvcJh1u/DAk9wc8gumvY/XuphfzCxtFV79tDbAW7wBibQUH5cHbBtY91jbkh7MEtitwziduxi)
+    password: ENC(k+a35js4wgajxsfCRAbB+vW51fzbA0IV)
+  # JPA
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+  # MVC
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  # Redis
+  redis:
+    host: 127.0.0.1
+    port: 6379
+  # Security OAuth
+  security:
+    oauth2.client:
+      registration:
+        naver:
+          clientId: ENC(ujvp8lwPjEHh6weR0AhzMN3JZTMALiAmFrtJqTOuuGE=)
+          clientSecret : ENC(tPMNnZDJ3CKwd4hRpVkZuwod/fNJTwaw)
+          clientAuthenticationMethod: post
+          authorizationGrantType: authorization_code
+          redirectUri: "http://52.78.59.168:8080/login/oauth2/code/naver"
+          scope:
+            - name
+            - email
+          clientName: Naver
+
+        kakao:
+          clientId: ENC(CQZLbHaa86QpJE4Nd+b5a60O1Dnehx4eFWGAzN1SoeSxn6cUY2JgSnGGHmHcTycA)
+          clientSecret: ENC(B57A03r99jIlhrExGz/xC8L/TbeDdbEI29O9HlzbNfir1ttUQjHKIp+KoE6L9Qdv)
+          clientAuthenticationMethod: post
+          authorizationGrantType: authorization_code
+          redirectUri: "http://52.78.59.168:8080/login/oauth2/code/kakao"
+          scope:
+            - profile_nickname
+            - account_email
+          clientName: Kakao
+
+        google:
+          clientId: ENC(2cEbMlfJqukXB/ThRTqEWDNmbKd0hWvGvhGZ4DR8ugtpdlcmAYnfi5URHSeUZy0m3Z9AYQG8i79S3yG3Rv3GA/T+PzW/VVgyfCk+tcgHhwHH1Kp1P0z83Q==)
+          clientSecret: ENC(xpebbMRy/abh/BS8OYgdkuWMyyAYSuIy2cIsQV1DnebC0XWoGzj0diFQscsXOc/L)
+          scope:
+            - profile
+            - email
+
+      # Provider 설정
+      provider:
+        naver:
+          authorizationUri: https://nid.naver.com/oauth2.0/authorize
+          tokenUri: https://nid.naver.com/oauth2.0/token
+          userInfoUri: https://openapi.naver.com/v1/nid/me
+          userNameAttribute: response
+
+        kakao:
+          authorization-uri: https://kauth.kakao.com/oauth/authorize
+          token-uri: https://kauth.kakao.com/oauth/token
+          user-info-uri: https://kapi.kakao.com/v2/user/me
+          user-name-attribute: id
+server:
+  port: ${PORT:8080}
+jwt:
+  secret: VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa
+
+  access:
+    expiration: 1800000 #  (1000L(ms -> s) * 60L(s -> m) * 30L(m -> h))
+    header: Authorization
+
+  refresh:
+    expiration: 1209600000 #  (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h) * 24L(h -> 하루) * 14(2주))
+    header: Authorization-refresh
+
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+
+logging:
+  level:
+    root: info
+    backend: debug
 

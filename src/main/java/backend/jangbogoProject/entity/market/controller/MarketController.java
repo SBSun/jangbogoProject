@@ -3,6 +3,7 @@ package backend.jangbogoProject.entity.market.controller;
 import backend.jangbogoProject.entity.market.dto.MarketResponseDto;
 import backend.jangbogoProject.entity.market.service.MarketService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,6 @@ public class MarketController {
     @GetMapping("/markets")
     public List<MarketResponseDto.Info> findMarketsInGu(@RequestParam @NotNull Long guId){
         List<MarketResponseDto.Info> list = marketService.findMarketsInGu(guId);
-
         return list;
     }
 }
