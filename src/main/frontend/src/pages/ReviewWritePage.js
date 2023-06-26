@@ -23,7 +23,6 @@ const ReviewWrite = () => {
 
   const onChange = e => {
     setContent(e.target.value);
-    console.log(content);
   };
   const onSubmit = e => {
     e.preventDefault();
@@ -35,7 +34,6 @@ const ReviewWrite = () => {
     const fetchData = () => {
       postMarketReview(params.id, auth.email, content)
         .then(res => {
-          console.log(res);
           alert('리뷰가 작성되었습니다.');
           navigate(`/market/${params.id}`, {
             replace: true,

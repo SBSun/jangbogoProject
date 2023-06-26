@@ -6,14 +6,10 @@ import Header from '../components/common/Header';
 import Navigation from '../components/common/Navigation';
 import SelectLocationContainer from '../containers/SelectLoactionContainer';
 
-const SearchPage = () => {
-  return <Search />;
-};
-
 // 추천 검색어
 const RECOMMENDED_KEYWORDS = ['돼지고기', '사과', '고등어', '쇠고기', '양파'];
 
-const Search = () => {
+const SearchPage = () => {
   const [input, setInput] = useState('');
   const navigate = useNavigate();
 

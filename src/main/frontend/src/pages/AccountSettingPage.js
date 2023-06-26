@@ -79,7 +79,6 @@ const AccountSetting = () => {
     if (isDelete) {
       const fetchData = () => {
         deleteAccount().then(res => {
-          console.log(res);
           storeDispatch(postLogout());
           alert('계정이 삭제되었습니다.');
           navigate('/', { replace: true });
@@ -105,7 +104,6 @@ const AccountSetting = () => {
     const fetchData = () => {
       editUserInfo(passwordConfirm, name)
         .then(res => {
-          console.log(res);
           storeDispatch(postLogin({ ...auth, name: name }));
           alert('사용자 정보가 변경되었습니다.');
           navigate('/mypage', { replace: true });

@@ -22,8 +22,6 @@ const GlobalStyle = styled.createGlobalStyle`
     font-family: 'Spoqa Han Sans Neo', 'sans-serif';
     letter-spacing: -0.3px;
     color: var(--black);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
   }
 
   @media (min-width: 415px) {

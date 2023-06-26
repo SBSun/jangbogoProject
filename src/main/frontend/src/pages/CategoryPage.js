@@ -8,10 +8,6 @@ import Header from '../components/common/Header';
 import Navigation from '../components/common/Navigation';
 import SelectLocationContainer from '../containers/SelectLoactionContainer';
 
-const CategoryPage = () => {
-  return <Category />;
-};
-
 // 상세 정보 리스트
 const meatDetialItems = [
   { id: 2, name: '정육', text: '전체보기' },
@@ -47,7 +43,7 @@ const fruitDetailItems = [
   { id: 19, name: '사과', text: '사과' },
 ];
 
-const Category = () => {
+const CategoryPage = () => {
   const [checked, setChecked] = useState({
     meat: false,
     seafood: false,

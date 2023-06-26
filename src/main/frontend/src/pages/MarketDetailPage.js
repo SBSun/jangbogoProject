@@ -9,10 +9,6 @@ import CommodityList from '../components/common/CommodityList';
 import ReviewList from '../components/common/ReviewList';
 
 const MarketDetailPage = () => {
-  return <MarketDetail />;
-};
-
-const MarketDetail = () => {
   const location = useLocation();
   const { name, thumbnail } = location.state;
   const { isLogin } = useSelector(state => state.auth);

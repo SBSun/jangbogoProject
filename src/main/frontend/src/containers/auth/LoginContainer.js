@@ -36,7 +36,6 @@ function LoginContainer() {
     event.preventDefault();
     try {
       const data = await login(email, password);
-      console.log(data);
 
       storeDispatch(
         postLogin({

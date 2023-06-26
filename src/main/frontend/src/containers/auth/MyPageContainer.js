@@ -23,7 +23,6 @@ const MyPageContainer = () => {
   const onAccountClick = () => {
     if (auth.loginType === 'Social')
       return alert('소셜 로그인 상태에선 설정할 수 없습니다.');
-    console.log(auth.loginType);
     navigate('/mypage/account');
   };
 

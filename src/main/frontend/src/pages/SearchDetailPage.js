@@ -8,10 +8,6 @@ import Header from '../components/common/Header';
 import Navigation from '../components/common/Navigation';
 
 const SearchDetailPage = () => {
-  return <SearchDetail />;
-};
-
-const SearchDetail = () => {
   const params = useParams();
   const navigate = useNavigate();
 
