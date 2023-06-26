@@ -17,7 +17,7 @@ const ReviewEdit = () => {
   const { name, thumbnail } = location.state;
 
   const [content, setContent] = useState('');
-  console.log(params.reviewId);
+
   const onChange = e => {
     setContent(e.target.value);
   };

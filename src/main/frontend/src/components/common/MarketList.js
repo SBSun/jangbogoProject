@@ -52,7 +52,6 @@ const MarketList = () => {
 
   const onDragStart = e => {
     e.preventDefault();
-    console.log(e);
     setIsDrag(true);
     setStartX(e.pageX + scrollRef.current.scrollLeft);
   };

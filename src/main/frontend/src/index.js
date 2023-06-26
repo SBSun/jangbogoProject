@@ -5,7 +5,6 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-// import { composeWithDevTools } from 'redux-devtools-extension';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import rootReducer from './modules/index';

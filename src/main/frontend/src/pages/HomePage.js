@@ -9,20 +9,6 @@ import CommodityList from '../components/common/CommodityList';
 import MarketList from '../components/common/MarketList';
 
 const HomePage = () => {
-  return <Home />;
-};
-
-// React Slick
-const settings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  autoplay: true,
-};
-
-const Home = () => {
   return (
     <>
       <Header modify={'LOGO_BLOCK'} title={''} />
@@ -65,6 +51,16 @@ const Home = () => {
       <Navigation />
     </>
   );
+};
+
+// React Slick
+const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  autoplay: true,
 };
 
 // CSS

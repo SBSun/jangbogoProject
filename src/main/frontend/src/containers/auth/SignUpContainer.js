@@ -67,8 +67,6 @@ const SignUpContainer = () => {
     // eslint-disable-next-line no-useless-escape
     const PASSWORD_REGEX = /^[\da-zA-Z0-9!@#]{8,}$/;
 
-    console.log(validate);
-
     email.match(EMAIL_REGEX)
       ? setValidate(validate => ({ ...validate, email: true }))
       : setValidate(validate => ({ ...validate, email: false }));
@@ -103,7 +101,6 @@ const SignUpContainer = () => {
     const fetchData = () => {
       checkEmail(email)
         .then(data => {
-          console.log(data);
           setValidate(validate => ({ ...validate, emailConfirm: data }));
           data
             ? alert('사용 가능한 이메일입니다')
@@ -121,7 +118,6 @@ const SignUpContainer = () => {
       const fetchData = () => {
         signUp(email, password, name)
           .then(res => {
-            console.log(res.data);
             alert('가입되었습니다.');
             navigate('/', { replace: true });
           })
