@@ -20,6 +20,65 @@
 - MySQL
 - AWS
 
+## Project UI
+
+![flow](https://github.com/SBSun/jangbogoProject/assets/100837398/1f4b3e01-98c1-4717-a1cb-47bd2d025b3e)
+
+## File Tree
+
+### Front-end
+```
+src
+ ┣ components
+ ┃ ┣ auth
+ ┃ ┃ ┣ LogIn.js
+ ┃ ┃ ┣ MyPage.js
+ ┃ ┃ ┗ SignUp.js
+ ┃ ┗ common
+ ┃ ┃ ┣ Button.js
+ ┃ ┃ ┣ CommodityList.js
+ ┃ ┃ ┣ Header.js
+ ┃ ┃ ┣ MarketList.js
+ ┃ ┃ ┣ Navigation.js
+ ┃ ┃ ┣ ReviewList.js
+ ┃ ┃ ┗ SelectLocation.js
+ ┣ containers
+ ┃ ┣ auth
+ ┃ ┃ ┣ LoginContainer.js
+ ┃ ┃ ┣ MyPageContainer.js
+ ┃ ┃ ┣ RedirectContainer.js
+ ┃ ┃ ┗ SignUpContainer.js
+ ┃ ┗ SelectLoactionContainer.js
+ ┣ lib
+ ┃ ┗ api
+ ┃ ┃ ┣ auth.js
+ ┃ ┃ ┣ client.js
+ ┃ ┃ ┣ commodity.js
+ ┃ ┃ ┣ etc.js
+ ┃ ┃ ┗ review.js
+ ┣ modules
+ ┃ ┣ auth.js
+ ┃ ┣ index.js
+ ┃ ┗ location.js
+ ┣ pages
+ ┃ ┣ AccountSettingPage.js
+ ┃ ┣ CatagoryDetailPage.js
+ ┃ ┣ CategoryPage.js
+ ┃ ┣ HomePage.js
+ ┃ ┣ LoginPage.js
+ ┃ ┣ MarketDetailPage.js
+ ┃ ┣ MyPagePage.js
+ ┃ ┣ RedirectPage.js
+ ┃ ┣ ReviewEditPage.js
+ ┃ ┣ ReviewWritePage.js
+ ┃ ┣ SearchDetailPage.js
+ ┃ ┣ SearchPage.js
+ ┃ ┗ SignUpPage.js
+ ┣ .DS_Store
+ ┣ App.js
+ ┣ GlobalStyle.js
+ ┗ index.js
+```
 ## Reference
 
 [공공데이터](http://data.seoul.go.kr/dataList/OA-1170/S/1/datasetView.do)
