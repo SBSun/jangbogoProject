@@ -20,7 +20,7 @@
 - MySQL
 - AWS
 
-## Project UI
+## UI Mock Up
 
 ![flow](https://github.com/SBSun/jangbogoProject/assets/100837398/1f4b3e01-98c1-4717-a1cb-47bd2d025b3e)
 
